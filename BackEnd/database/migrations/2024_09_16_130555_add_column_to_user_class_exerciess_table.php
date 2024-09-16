@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('trainer_sessions', function (Blueprint $table) {
+        Schema::table('class_exerciess', function (Blueprint $table) {
             //
             $table->foreignId('class_id')->constrained('classes','id')->onDelete('cascade')->onUpdate('cascade');
-
+            $table->foreignId('exercise_id')->constrained('exercises','id')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -23,9 +23,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('trainer_sessions', function (Blueprint $table) {
+        Schema::table('class_exerciess', function (Blueprint $table) {
             //
-            $table->dropForeign('trainer_sessions_class_id_foreign');
+            $table->dropForeign('class_exerciess_exercise_id_foreign');
+            $table->dropColumn('exercise_id');
+            $table->dropForeign('class_exerciess_class_id_foreign');
             $table->dropColumn('class_id');
         });
     }

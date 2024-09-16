@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('trainees', function (Blueprint $table) {
             $table->id();
             $table->text('goals')->nullable();
-            $table->integer('no_invite');
+            $table->integer('no_vouchers');
             $table->dateTime('expiration_date')->nullable();
             $table->foreign('id')->references('id')->on('users')
             ->onDelete('cascade')

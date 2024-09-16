@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount')->default(0.0);
-            $table->enum('payment_method', ['Credit', 'Bank Transfers','PayPal','Mobile Payments']);
-            $table->string('bill_image');
+            $table->time('session_start')->nullable();
+            $table->time('session_end')->nullable();
+            $table->decimal('session_duration')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('schedules');
     }
 };

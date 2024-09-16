@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('reports', function (Blueprint $table) {
+        Schema::table('schedules', function (Blueprint $table) {
             //
-            $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('class_id')->constrained('classes','id')->onDelete('cascade')->onUpdate('cascade');
+
         });
     }
 
@@ -22,10 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('reports', function (Blueprint $table) {
+        Schema::table('schedules', function (Blueprint $table) {
             //
-            $table->dropForeign('reports_user_id_foreign');
-            $table->dropColumn('user_id');
+            $table->dropForeign('schedules_class_id_foreign');
+            $table->dropColumn('class_id');
         });
     }
 };
