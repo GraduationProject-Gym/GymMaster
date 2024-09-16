@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { RegisterationComponent } from './components/registeration/registeration.component';
 import { LoginComponent } from './components/login/login.component';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from './components/error/error.component';
 
 export const routes: Routes = [
     { path: "", component: RegisterationComponent },
