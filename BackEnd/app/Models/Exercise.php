@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Schedule extends Model
+class Exercise extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'session_start',
-        'session_end',
-        'class_id'
+        'name',
+        'category',
+        'no_of_times',
     ];
     public function gymClass()
     {
-        return $this->belongsTo(GymClass::class);
+       return $this->belongsToMany(GymClass::class, 'class_exercies', 'exercies_id', 'class_id');
     }
 }
