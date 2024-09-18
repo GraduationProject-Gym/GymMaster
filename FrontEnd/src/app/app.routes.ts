@@ -8,6 +8,5 @@ export const routes: Routes = [
     { path: "", component:  LandingPageComponent },
     { path: "registeration", component: RegisterationComponent },
     { path: "login", component: LoginComponent },
-    // { path: "login", component: LandingPageComponent },
     { path: "**", component: ErrorComponent }
 ];

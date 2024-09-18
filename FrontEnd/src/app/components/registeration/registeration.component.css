@@ -1,12 +1,16 @@
 .Registration
 {
-  width: 200px;
+  /* width: 200px;
   background-color: #ff6207;
   color: white;
   height: 50px;
   padding-top:10px ;
   border-radius: 10px;
   position: relative;
-  left: 650px;
+  left: 650px; */
+  color:  #ff6207;
+
+  font-size: 3rem;
+  font-weight: bold
 }
 

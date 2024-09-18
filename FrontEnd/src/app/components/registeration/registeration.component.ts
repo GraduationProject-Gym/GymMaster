@@ -19,7 +19,8 @@ export class RegisterationComponent {
     name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     // email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
-    age: new FormControl(null, [Validators.required, Validators.min(1)]),
+    age: new FormControl(null, [Validators.required, Validators.minLength(30)]),
+    goal: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),
     address: new FormControl(null, Validators.required),
     password: new FormControl(null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}')]),
@@ -37,6 +38,9 @@ export class RegisterationComponent {
   }
   get EmailValid() {
     return this.myForm.controls['email'].valid;
+  }
+  get GoalValid() {
+    return this.myForm.controls['goal'].valid;
   }
   get PhoneValid() {
     return this.myForm.controls['phone'].valid;
