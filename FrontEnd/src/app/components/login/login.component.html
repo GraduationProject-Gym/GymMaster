@@ -1,14 +1,19 @@
-<!-- <p>login works!</p> -->
-
-<form [formGroup]="loginForm">
+<form [formGroup]="loginForm" class="form form-background w-75">
+    <h1 class="title d-flex justify-content-center">Login</h1>
     <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
+        <label for="email" class="w-25">Email address</label>
+        <input formControlName="email" class="w-75 m-auto" type="email" class="form-control" id="email"
             aria-describedby="emailHelp" placeholder="Enter email">
+        @if (!emailValid){
+        <div class="error-msg">
+            Email is not valid
+        </div>
+        }
+        <label for="password" class="w-25 mt-3">Password</label>
+        <input formControlName="password" class="w-75 m-auto" type="password" class="form-control"
+            id="password" name="password" placeholder="Password">
+        <div class="d-flex justify-content-center mt-3">
+            <button (click)="loginAction()" type="submit" class="btn">Login</button>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <button (click)="loginAction()" type="submit" class="btn btn-primary">Submit</button>
 </form>

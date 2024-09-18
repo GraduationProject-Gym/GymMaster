@@ -11,13 +11,14 @@
   box-shadow: none;
 }
 
-.navbar-custom .navbar-brand, .navbar-custom .nav-link {
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
   color: #f8f9fa;
 }
+
 .navbar-custom {
   color: #ff6207;
 }
-
 
 .nav-link:hover {
   color: #ff6207;
@@ -26,7 +27,11 @@
 .btn {
   background-color: #ff6207;
   color: white;
-  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.btn:hover {
+  color: #ff6207;
 }
 
 /* .overlay {
@@ -46,22 +51,20 @@
 
 .form-background {
   background-color: #fff;
-  border: 1px solid  #ff6207;
+  border: 1px solid #ff6207;
   padding: 20px;
   border-radius: 8px;
   font-family: 'Roboto', sans-serif;
 }
 
-.form
-{
+.form {
   margin: auto;
   margin-top: 170px;
   margin-bottom: 70px;
-
 }
 
-
-html, body {
+html,
+body {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   background-color: #fff;
@@ -69,4 +72,9 @@ html, body {
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.error-msg {
+  color: #ff6207;
+  margin-left: 10px;
 }
