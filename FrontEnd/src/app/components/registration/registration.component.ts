@@ -5,16 +5,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
 
 
 @Component({
-  selector: 'app-registeration',
+  selector: 'app-Registration',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule,
   ],
-  templateUrl: './registeration.component.html',
-  styleUrls: ['./registeration.component.css']
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
-export class RegisterationComponent {
+export class RegistrationComponent {
   myForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     // email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
@@ -81,7 +81,7 @@ export class RegisterationComponent {
   }
 
 
-  Registeration() {
+  Registration() {
 
     this.passwordMatcher();
 

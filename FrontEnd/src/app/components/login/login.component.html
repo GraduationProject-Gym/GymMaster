@@ -10,10 +10,17 @@
         </div>
         }
         <label for="password" class="w-25 mt-3">Password</label>
-        <input formControlName="password" class="w-75 m-auto" type="password" class="form-control"
-            id="password" name="password" placeholder="Password">
+        <input formControlName="password" class="w-75 m-auto" type="password" class="form-control" id="password"
+            name="password" placeholder="Password">
+        @if (!passwordValid){
+        <div class="error-msg">
+            Password is not valid
+        </div>
+        }
+        <div><a routerLink="/forgotPassword"></a></div>
         <div class="d-flex justify-content-center mt-3">
             <button (click)="loginAction()" type="submit" class="btn">Login</button>
         </div>
+        <div>You don't have an account? <a routerLink="/registration">Sign up</a></div>
     </div>
 </form>
