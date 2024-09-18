@@ -51,4 +51,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relationship with Equipments
+    public function useEquipment()
+    {
+       return $this->belongsToMany(User::class, 'user_equipment', 'user_id', 'equipment_id');
+    }
+
+    public function gymClass()
+    {
+       return $this->belongsToMany(GymClass::class, 'user_class', 'user_id', 'class_id');
+    }
 }
