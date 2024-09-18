@@ -8,10 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Subscription;
+use App\Models\Vouchers;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
-   
+
     /**
      * The attributes that are mass assignable.
      *
@@ -26,8 +29,17 @@ class User extends Authenticatable
         'age',
         'image',
         'gender',
-        'role' 
+        'role'
     ];
+
+    public function UserSubscription()
+    {
+        return $this->hasMany(Subscription::class,'user_id','id');
+    }
+
+    public function UserVoucher(){
+        return $this->hasMany(Vouchers::class, 'user_id','id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
