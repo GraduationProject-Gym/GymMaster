@@ -32,6 +32,7 @@ class User extends Authenticatable
         'role'
     ];
 
+    
     public function UserSubscription()
     {
         return $this->hasMany(Subscription::class,'user_id','id');

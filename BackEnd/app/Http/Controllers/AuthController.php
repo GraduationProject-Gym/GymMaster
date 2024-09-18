@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Trainee;
+use App\Models\Trainer;
+use App\Models\Memberships;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\TraineeResource;
+use App\Http\Resources\TrainerResource;
+use App\Http\Resources\MembershipResource;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -27,9 +33,8 @@ class AuthController extends Controller
         $imagePath = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imagePath = $image->store('public/images');
+            $imagePath = $image->store('images', 'user_images');
         }
-
         // Create a new user
         $user = User::create([
             'name' => $request->name,
@@ -42,10 +47,43 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'role' => $request->role,
         ]);
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => new UserResource($user),
-        ], 201);
+        if ($request->role === 'trainee') {
+            $trainee = Trainee::create([
+                'goals' => $request->goals,
+                'no_vouchers' => $request->no_vouchers,
+                'expiration_date' => $request->expiration_date,
+                'membership_id' => $request->membership_id,
+                'id' => $user->id,
+            ]);
+            $membership = Memberships::findOrFail($request->membership_id);
+        }
+        if ($request->role === 'trainer') {
+            $cvPath = null;
+            if ($request->hasFile('cv')) {
+                $cv = $request->file('cv');
+                $cvPath = $cv->store('cvs', 'user_cvs');
+            }
+            $trainer = Trainer::create([
+                'cv' => $cvPath,
+                'id' => $user->id,
+            ]);
+        }
+        if($request->role === 'trainee'){
+            return response()->json([
+                'message' => 'User registered successfully',
+                'user' => new UserResource($user),
+                'traineeData' => new TraineeResource($trainee),
+                'traineeMembership' => new MembershipResource($membership),
+            ], 201);
+        }
+        else if($request->role === 'trainer'){
+            return response()->json([
+                'message' => 'User registered successfully',
+                'user' => new UserResource($user),
+                'trainerData' => new TrainerResource($trainer),
+            ], 201);
+        }
+        
     }
 
     /**
