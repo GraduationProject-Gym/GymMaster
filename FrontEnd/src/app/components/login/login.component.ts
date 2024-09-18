@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { EmailValidator, FormControl, FormGroup, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
+import { EmailValidator, FormControl, FormGroup, FormsModule, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
+    // FormsModule,
+    // CommonModule,
     ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
@@ -12,11 +15,20 @@ import { EmailValidator, FormControl, FormGroup, ReactiveFormsModule, RequiredVa
 })
 export class LoginComponent {
   loginForm = new FormGroup({
-    email: new FormControl(null,Validators.required),
-    password: new FormControl(null,Validators.required)
+    email: new FormControl(null, [Validators.required, Validators.pattern('/^[^\s@]+@[^\s@]+\.[^\s@]+$/')]),
+    password: new FormControl(null, [Validators.required, Validators.pattern('(?=.[a-z])(?=.[A-Z])(?=.\\d)(?=.[@$!%*?&]).{8,}')]),
   });
 
-  loginAction(){
-    console.log(this.loginForm);
+  get emailValid() {
+    return this.loginForm.controls['email'].valid;
+  }
+
+  loginAction() {
+    console.log(this.loginForm.value);
+    // if (this.loginForm.valid) {
+    //   //redirect to home page
+    // } else {
+    //   alert("Login data is not valid")
+    // }
   }
 }
