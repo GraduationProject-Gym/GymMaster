@@ -44,6 +44,14 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        
+        'user_images'=>[
+            'driver' => 'local',
+            'root' => public_path('images/users'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trainees', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->text('goals')->nullable();
-            $table->integer('no_vouchers')->default(0);
-            $table->dateTime('expiration_date')->nullable();
-            $table->foreign('id')->references('id')->on('users')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+            $table->time('session_start')->nullable();
+            $table->time('session_end')->nullable();
+            $table->decimal('session_duration')->nullable();
             $table->timestamps();
-
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trainees');
+        Schema::dropIfExists('schedules');
     }
 };

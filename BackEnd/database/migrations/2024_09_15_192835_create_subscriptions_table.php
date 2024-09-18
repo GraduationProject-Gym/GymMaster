@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->integer('duration');
-            $table->text('trainer_notes')->nullable();
+            $table->decimal('amount')->default(0.0);
+            $table->enum('payment_method', ['Credit', 'Bank Transfers','PayPal','Mobile Payments']);
+            $table->string('bill_image');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('subscriptions');
     }
 };

@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('exercises', function (Blueprint $table) {
+        Schema::table('class_equipments', function (Blueprint $table) {
             //
-            $table->foreignId('class_id')->constrained('classes','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('class_id')->constrained('gymclass','id')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('equipment_id')->constrained('equipments','id')->onDelete('cascade')->onUpdate('cascade');
-
         });
     }
 
@@ -24,12 +23,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('exercises', function (Blueprint $table) {
+        Schema::table('class_equipments', function (Blueprint $table) {
             //
-            $table->dropForeign('exercises_class_id_foreign');
-            $table->dropColumn('class_id');
-            $table->dropForeign('exercises_equipment_id_foreign');
+            $table->dropForeign('class_equipments_equipment_id_foreign');
             $table->dropColumn('equipment_id');
+            $table->dropForeign('class_equipments_class_id_foreign');
+            $table->dropColumn('class_id');
         });
     }
 };

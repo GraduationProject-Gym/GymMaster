@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_exercises', function (Blueprint $table) {
+        Schema::create('user_equipments', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('check_out')->nullable();
-            $table->dateTime('check_in')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_exercises');
+        Schema::dropIfExists('user_equipments');
     }
 };
