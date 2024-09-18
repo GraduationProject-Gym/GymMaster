@@ -34,7 +34,7 @@ class RegisterRequest extends FormRequest
             'goals' => ['nullable', 'string', 'max:500', 'required_if:role,trainee'],
             'no_vouchers' => ['nullable', 'integer', 'min:0', 'required_if:role,trainee'],  // Default 0
             'expiration_date' => ['nullable', 'date', 'required_if:role,trainee'],
-            'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:2048', 'required_if:role,trainer'],
+            'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10000', 'required_if:role,trainer'],
         ];
     }
 

@@ -47,6 +47,9 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'role' => $request->role,
         ]);
+        // return response()->json($request);
+        
+
         if ($request->role === 'trainee') {
             $trainee = Trainee::create([
                 'goals' => $request->goals,
@@ -59,6 +62,7 @@ class AuthController extends Controller
         }
         if ($request->role === 'trainer') {
             $cvPath = null;
+
             if ($request->hasFile('cv')) {
                 $cv = $request->file('cv');
                 $cvPath = $cv->store('cvs', 'user_cvs');
@@ -67,6 +71,7 @@ class AuthController extends Controller
                 'cv' => $cvPath,
                 'id' => $user->id,
             ]);
+
         }
         if($request->role === 'trainee'){
             return response()->json([
