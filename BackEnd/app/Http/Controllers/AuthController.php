@@ -14,6 +14,7 @@ use App\Http\Resources\TrainerResource;
 use App\Http\Resources\MembershipResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -110,6 +111,19 @@ class AuthController extends Controller
         return response()->json([
             'token' => $user->createToken($request->device_name)->plainTextToken
         ]);
+    }
+
+    // Logout
+    public function logout(Request $request){
+        $user = Auth::user();
+        if($user){
+            // $user->tokens()->delete(); // logout from all devo=ices
+            $user->currentAccessToken()->delete();
+            return response()->json([
+                "message"=>"Logged out"
+            ]);
+        }
+    
     }
 
     /**
