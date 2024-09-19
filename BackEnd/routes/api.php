@@ -11,5 +11,6 @@ Route::get('/user', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'store'])->middleware('auth:sanctum');
 Route::post('login', [AuthController::class, 'login'])->middleware('auth:sanctum');
-Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/lo
+gout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
 // Route::post('api/reg', [AuthController::class, 'store']);
