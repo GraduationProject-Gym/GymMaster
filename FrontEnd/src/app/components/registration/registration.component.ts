@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-Registration',
   standalone: true,
@@ -17,8 +15,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
 export class RegistrationComponent {
   myForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-    // email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
+    email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
     age: new FormControl(null, [Validators.required, Validators.minLength(30)]),
     goal: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),

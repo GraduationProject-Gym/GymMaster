@@ -17,7 +17,7 @@
     <input formControlName="email" type="email" name="email" class="form-control" id="email1" aria-describedby="emailHelp" required>
     <div *ngIf="myForm.controls['email'].invalid && myForm.controls['email'].touched" class="error-msg">
       <div *ngIf="myForm.controls['email'].errors?. ['required']">Email is required</div>
-      <div *ngIf="myForm.controls['email'].errors?. ['email']">Enter a valid email address</div>
+      <div *ngIf="myForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>
     </div>
   </div>
 

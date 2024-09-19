@@ -1,26 +1,28 @@
-<form [formGroup]="loginForm" class="form form-background w-75">
+<form [formGroup]="loginForm" (ngSubmit)="loginAction()" class="form form-background w-75">
     <h1 class="title d-flex justify-content-center">Login</h1>
     <div class="form-group">
         <label for="email" class="w-25">Email address</label>
-        <input formControlName="email" class="w-75 m-auto" type="email" class="form-control" id="email"
-            aria-describedby="emailHelp" placeholder="Enter email">
-        @if (!emailValid){
-        <div class="error-msg">
-            Email is not valid
-        </div>
+        <input formControlName="email" type="email" class="form-control w-75 m-auto" id="email" name="email"
+            placeholder="Enter email">
+        @if (emailInValid){
+            <div class="error-msg">
+                Enter valid email
+            </div>
         }
         <label for="password" class="w-25 mt-3">Password</label>
-        <input formControlName="password" class="w-75 m-auto" type="password" class="form-control" id="password"
-            name="password" placeholder="Password">
-        @if (!passwordValid){
-        <div class="error-msg">
-            Password is not valid
-        </div>
-        }
-        <div><a routerLink="/forgotPassword"></a></div>
+        <input formControlName="password" type="password" class="form-control w-75 m-auto" id="password" name="password"
+            placeholder="Password">
+        <!-- <div *ngIf="passwordInValid" class="error-msg">
+            <div *ngIf="loginForm.controls['password'].errors?. ['required']">Password is required</div>
+            <div *ngIf="loginForm.controls['password'].errors?. ['pattern']">Enter a valid password</div>
+        </div> -->
         <div class="d-flex justify-content-center mt-3">
-            <button (click)="loginAction()" type="submit" class="btn">Login</button>
+            <button type="submit" class="btn">Login</button>
         </div>
-        <div>You don't have an account? <a routerLink="/registration">Sign up</a></div>
+        <div class="d-flex justify-content-center mt-3">
+            <div class="me-3">Forgot your password? <a routerLink="/forgotPassword" class="lnk mt-5">Click here</a>
+            </div>
+            <div>You don't have an account? <a routerLink="/registration" class="lnk">Sign up</a></div>
+        </div>
     </div>
 </form>
