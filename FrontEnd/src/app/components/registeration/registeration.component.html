@@ -1,4 +1,4 @@
-<form [formGroup]="myForm" action="#" method="post" class="form w-75  form-background">
+<form [formGroup]="myForm"  class="form w-75  form-background">
   <h1  class="d-flex justify-content-center Registration "> Creat Your Account</h1>
 
   <!-- Name Field -->
@@ -34,7 +34,7 @@
   <div class="mb-3">
     <label for="membership_id" class="form-label">Membership ID</label>
     <input formControlName="membership_id" type="number"  class="form-control" name="membership_id" id="membership_id" required>
-    <div *ngIf="myForm.controls['membership_id'].errors?.['required'] && myForm.controls['membership_id'].touched" class="text-danger">
+    <div *ngIf="myForm.controls['membership_id'].errors?.['required'] && myForm.controls['membership_id'].touched" class="error-msg">
       Membership ID is required.
     </div>
     <div *ngIf="myForm.controls['membership_id'].errors?.['min'] && myForm.controls['membership_id'].touched" class="text-danger">

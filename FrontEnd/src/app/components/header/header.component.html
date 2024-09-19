@@ -1,32 +1,70 @@
-<div style="position: relative;">
-    <nav class="navbar navbar-expand-lg navbar-custom" style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 2;">
+<!-- <div style="position: relative;" >
+    <nav class="navbar navbar-expand-lg navbar-custom bg-dark" style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 2;">
       <div class="container-fluid">
           <a class="navbar-brand" href="#" style="color:#ff6207; font-weight: bolder;"> GymMaster</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon "> </span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto ">
             <li class="nav-item mx-3">
-              <a class="nav-link" routerLink="/Home" routerLinkActive="active">Classes</a>
+              <a class="nav-link" href="#Classes" routerLinkActive="active"  (click)="closeMenu()" >Classes</a>
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" routerLink="/Users" routerLinkActive="active">About</a>
+              <a class="nav-link" href="#About" routerLinkActive="active"  (click)="closeMenu()">About</a>
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" routerLink="/Users/10" routerLinkActive="active">Contact</a>
+              <a class="nav-link" href="#Contact" routerLinkActive="active" (click)="closeMenu()">Contact</a>
             </li>
             <li class="nav-item mx-3">
-              <a class="nav-link" routerLink="/sandy" routerLinkActive="active">Schedules</a>
+              <a class="nav-link" href="#Schedules" routerLinkActive="active"  (click)="closeMenu()">Schedules</a>
             </li>
-            <li class="nav-item mx-3">
-              <button class="btn" routerLink="/registeration"  rationterLinkActive="active">Sign Up</button>
-              <button class="btn" routerLink="/login" routerLinkActive="active">Sign In</button>
-            </li>
+              <li class="nav-item mx-3">
+                <button class="btn" routerLink="/registeration"  routerLinkActive="active"  (click)="closeMenu()">Sign Up</button>
+                <button class="btn" routerLink="/login" routerLinkActive="active"  (click)="closeMenu()">Sign In</button>
+              </li>
           </ul>
         </div>
       </div>
-    </div>
+      <div class="d-flex align-items-center">
+        <img src="/png-user-icon-person-icon-png-people-person-user-icon-2240.png.crdownload" alt="User" style="width:40px; height:40px; border-radius:50%;">
+      </div>
+
+  </nav>
+</div>
+ -->
+
+ <div style="position: relative;">
+  <nav class="navbar navbar-expand-lg navbar-custom bg-dark" style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 2;">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="#" style="color:#ff6207; font-weight: bolder;">GymMaster</a>
+          <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMenu()">
+            <span class="navbar-toggler-icon" ></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item mx-3">
+                      <a class="nav-link" href="#Classes" routerLinkActive="active" (click)="closeMenu()">Classes</a>
+                  </li>
+                  <li class="nav-item mx-3">
+                      <a class="nav-link" href="#About" routerLinkActive="active" (click)="closeMenu()">About</a>
+                  </li>
+                  <li class="nav-item mx-3">
+                      <a class="nav-link" href="#Contact" routerLinkActive="active" (click)="closeMenu()">Contact</a>
+                  </li>
+                  <li class="nav-item mx-3">
+                      <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
+                  </li>
+                  <li class="nav-item mx-3 d-flex">
+                      <button class="btn " routerLink="/registeration" routerLinkActive="active" (click)="closeMenu()">Sign Up</button>
+                      <button class="btn" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Sign In</button>
+                  </li>
+              </ul>
+              <div class="d-flex align-items-center ms-3">
+                <img src="/png-user-icon-person-icon-png-people-person-user-icon-2240.png.crdownload" alt="User" style="width:40px; height:40px; border-radius:50%;">
+              </div>
+          </div>
+      </div>
   </nav>
 </div>
 

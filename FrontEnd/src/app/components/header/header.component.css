@@ -1,0 +1,20 @@
+/* @media (max-width: 991px) {
+  .navbar-collapse {
+      background-color:white;
+  }
+
+  .navbar-nav .nav-link {
+      color: #ff6207;
+  }
+
+} */
+
+.navbar-toggler-icon {
+  background-image: none;
+}
+
+.navbar-toggler-icon::before {
+  content: "\2630";
+  font-size: 24px;
+  color: #ff6207;
+}

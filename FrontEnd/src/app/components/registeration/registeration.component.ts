@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { RegisterService } from '../../services/register.service';
+import { Init } from 'v8';
 
 
 
@@ -11,10 +13,28 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
     ReactiveFormsModule,
     CommonModule,
   ],
+  providers:[RegisterService],
   templateUrl: './registeration.component.html',
   styleUrls: ['./registeration.component.css']
 })
-export class RegisterationComponent {
+export class RegisterationComponent implements OnInit{
+
+  userData: any []=[];
+  constructor(private registerServ:RegisterService){
+  }
+
+
+  ngOnInit(): void {
+    console.log( this.registerServ.registration( ))
+    }
+
+
+
+
+
+
+
+
   myForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     // email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
@@ -52,7 +72,7 @@ export class RegisterationComponent {
     return this.myForm.controls['password'].valid;
   }
   get ConfirmPasswordValid() {
-    return this.myForm.controls['confirmPassword'].valid;
+    return this.myForm.controls['confirmPassword'].valid ;
   }
   get GenderValid() {
     return this.myForm.controls['gender'].valid;
@@ -69,7 +89,7 @@ export class RegisterationComponent {
   showErrorAlert = false;
 
 
-   passwordMatcher() {
+  passwordMatcher() {
     const password = this.myForm.controls['password'].value;
     const confirmPassword = this.myForm.controls['confirmPassword'].value;
 
@@ -79,6 +99,17 @@ export class RegisterationComponent {
       this.myForm.controls['confirmPassword'].setErrors(null);
     }
   }
+
+  // passwordMatcher() {
+  //   const password = this.myForm.controls['password'].value;
+  //   const confirmPassword = this.myForm.controls['confirmPassword'].value;
+
+  //   if (password === confirmPassword) {
+  //     this.myForm.controls['confirmPassword'].setErrors(null );
+  //   } else {
+  //     this.myForm.controls['confirmPassword'].setErrors({passwordMismatch: true});
+  //   }
+  // }
 
 
   Registeration() {
