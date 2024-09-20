@@ -1,12 +1,15 @@
+
 <div class="containerQoute">
   <img src="/No Gym, No Problem.jfif" alt="Background Image">
   <div class="overlayQoute"></div>
   <div class="contentQoute">
     <h1>GYM MASTER</h1>
     <h3>WORK HARDER, GET STRONGER</h3>
-    <a class="btn mt-5" routerLink="/registration" routerLinkActive="active"  > BECOME A MEMBER  </a>
+    <a class="btn mt-5" routerLink="/registration" routerLinkActive="active">BECOME A MEMBER</a>
+
   </div>
 </div>
+
 
                             <!-- categories -->
 <div  id="categories" class="m-5">
@@ -47,10 +50,14 @@
 <div class="container" id="Schedules">
   <h2 class="text-center m-5" style="color:#ff6207;">Gym Schedule</h2>
     <table class="table table-bordered">
+      <thead>
           <tr>
               <th>Day</th>
               <th colspan="3">Classes</th>
           </tr>
+        </thead>
+        <tbody>
+
       @for ( classGroup of classes; track classGroup.day) {
         <tr>
           <td>{{ classGroup.day }}</td>
@@ -64,6 +71,7 @@
         }
         </tr>
       }
+    </tbody>
     </table>
 </div>
 

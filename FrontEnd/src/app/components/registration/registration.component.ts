@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
 import { RegisterService } from '../../services/register.service';
 import { Init } from 'v8';
 import { RouterModule } from '@angular/router';
+// import { LoginComponent } from '../login/login.component';
 
 
 
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    // LoginComponent,
     RouterModule
 
   ],
@@ -32,13 +34,7 @@ export class RegistrationComponent implements OnInit{
     }
 
 
-
-
-
-
-
-
-  myForm = new FormGroup({
+    registrationForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     // email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -50,42 +46,43 @@ export class RegistrationComponent implements OnInit{
     confirmPassword: new FormControl(null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}')]),
     gender: new FormControl(null, Validators.required),
     image: new FormControl(null),
+    role: new FormControl(null),
     membership_id: new FormControl(null, [Validators.required, Validators.min(1)]),
     });
 
   get NameValid() {
-    return this.myForm.controls['name'].valid;
+    return this.registrationForm.controls['name'].valid;
   }
   get AgeValid() {
-    return this.myForm.controls['age'].valid;
+    return this.registrationForm.controls['age'].valid;
   }
   get EmailValid() {
-    return this.myForm.controls['email'].valid;
+    return this.registrationForm.controls['email'].valid;
   }
   get GoalValid() {
-    return this.myForm.controls['goal'].valid;
+    return this.registrationForm.controls['goal'].valid;
   }
   get PhoneValid() {
-    return this.myForm.controls['phone'].valid;
+    return this.registrationForm.controls['phone'].valid;
   }
   get AddressValid() {
-    return this.myForm.controls['address'].valid;
+    return this.registrationForm.controls['address'].valid;
   }
   get PasswordValid() {
-    return this.myForm.controls['password'].valid;
+    return this.registrationForm.controls['password'].valid;
   }
   get ConfirmPasswordValid() {
-    return this.myForm.controls['confirmPassword'].valid ;
+    return this.registrationForm.controls['confirmPassword'].valid ;
   }
   get GenderValid() {
-    return this.myForm.controls['gender'].valid;
+    return this.registrationForm.controls['gender'].valid;
   }
   get MembershipValid() {
-    return this.myForm.controls['membership_id'].valid;
+    return this.registrationForm.controls['membership_id'].valid;
   }
 
   get ImageValid() {
-    return this.myForm.controls['image'].valid;
+    return this.registrationForm.controls['image'].valid;
   }
 
   showSuccessAlert = false;
@@ -93,24 +90,24 @@ export class RegistrationComponent implements OnInit{
 
 
   passwordMatcher() {
-    const password = this.myForm.controls['password'].value;
-    const confirmPassword = this.myForm.controls['confirmPassword'].value;
+    const password = this.registrationForm.controls['password'].value;
+    const confirmPassword = this.registrationForm.controls['confirmPassword'].value;
 
     if (password !== confirmPassword) {
-      this.myForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
+      this.registrationForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
     } else {
-      this.myForm.controls['confirmPassword'].setErrors(null);
+      this.registrationForm.controls['confirmPassword'].setErrors(null);
     }
   }
 
   // passwordMatcher() {
-  //   const password = this.myForm.controls['password'].value;
-  //   const confirmPassword = this.myForm.controls['confirmPassword'].value;
+  //   const password = this.registrationForm.controls['password'].value;
+  //   const confirmPassword = this.registrationForm.controls['confirmPassword'].value;
 
   //   if (password === confirmPassword) {
-  //     this.myForm.controls['confirmPassword'].setErrors(null );
+  //     this.registrationForm.controls['confirmPassword'].setErrors(null );
   //   } else {
-  //     this.myForm.controls['confirmPassword'].setErrors({passwordMismatch: true});
+  //     this.registrationForm.controls['confirmPassword'].setErrors({passwordMismatch: true});
   //   }
   // }
 
@@ -119,31 +116,31 @@ export class RegistrationComponent implements OnInit{
 
     this.passwordMatcher();
 
-    if (this.myForm.valid) {
+    if (this.registrationForm.valid) {
       this.showSuccessAlert = true;
       this.showErrorAlert = false;
     } else {
-      this.myForm.markAllAsTouched();
+      this.registrationForm.markAllAsTouched();
       this.showSuccessAlert = false;
       this.showErrorAlert = true;
     }
-    console.log('Name:', this.myForm.controls['name'].value);
-    console.log('Age:', this.myForm.controls['age'].value);
-    console.log('Membership ID:', this.myForm.controls['membership_id'].value);
-    console.log('Gender:', this.myForm.controls['gender'].value);
-    console.log('Password:', this.myForm.controls['password'].value);
-    console.log('Confirm Password:', this.myForm.controls['confirmPassword'].value);
-    console.log('Address:', this.myForm.controls['address'].value);
-    console.log('Phone:', this.myForm.controls['phone'].value);
+    console.log('Name:', this.registrationForm.controls['name'].value);
+    console.log('Age:', this.registrationForm.controls['age'].value);
+    console.log('Membership ID:', this.registrationForm.controls['membership_id'].value);
+    console.log('Gender:', this.registrationForm.controls['gender'].value);
+    console.log('Password:', this.registrationForm.controls['password'].value);
+    console.log('Confirm Password:', this.registrationForm.controls['confirmPassword'].value);
+    console.log('Address:', this.registrationForm.controls['address'].value);
+    console.log('Phone:', this.registrationForm.controls['phone'].value);
 
-    console.log(this.myForm.controls['name'].valid)
-    console.log(this.myForm.controls['age'].valid)
-    console.log(this.myForm.controls['membership_id'].valid)
-    console.log(this.myForm.controls['gender'].valid)
-    console.log(this.myForm.controls['password'].valid)
-    console.log(this.myForm.controls['confirmPassword'].valid)
-    console.log(this.myForm.controls['address'].valid)
-    console.log(this.myForm.controls['phone'].valid)
+    console.log(this.registrationForm.controls['name'].valid)
+    console.log(this.registrationForm.controls['age'].valid)
+    console.log(this.registrationForm.controls['membership_id'].valid)
+    console.log(this.registrationForm.controls['gender'].valid)
+    console.log(this.registrationForm.controls['password'].valid)
+    console.log(this.registrationForm.controls['confirmPassword'].valid)
+    console.log(this.registrationForm.controls['address'].valid)
+    console.log(this.registrationForm.controls['phone'].valid)
 
   }
 }
