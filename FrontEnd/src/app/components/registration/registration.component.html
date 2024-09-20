@@ -1,5 +1,10 @@
 <form [formGroup]="myForm"  class="form w-75  form-background">
-  <h1  class="d-flex justify-content-center Registration "> Creat Your Account</h1>
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="registration">Create Your Account</h1>
+    <p>or <a routerLink="/login" routerLinkActive="active">Sign In Your Account</a></p>
+  </div>
+
+
 
   <!-- Name Field -->
   <div class="mb-3">

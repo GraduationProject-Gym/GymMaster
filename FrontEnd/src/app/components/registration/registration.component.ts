@@ -3,21 +3,24 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
 import { Init } from 'v8';
+import { RouterModule } from '@angular/router';
 
 
 
 @Component({
-  selector: 'app-registeration',
+  selector: 'app-registration',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    RouterModule
+
   ],
   providers:[RegisterService],
-  templateUrl: './registeration.component.html',
-  styleUrls: ['./registeration.component.css']
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
-export class RegisterationComponent implements OnInit{
+export class RegistrationComponent implements OnInit{
 
   userData: any []=[];
   constructor(private registerServ:RegisterService){

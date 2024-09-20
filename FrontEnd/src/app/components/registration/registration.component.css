@@ -1,4 +1,4 @@
-.Registration
+.registration
 {
   /* width: 200px;
   background-color: #ff6207;
@@ -12,5 +12,8 @@
 
   font-size: 3rem;
   font-weight: bold
+}
+a{
+  color: #ff6207;
 }
 
