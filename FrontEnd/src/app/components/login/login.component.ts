@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../../services/authentication/login/login.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -68,11 +68,13 @@ export class LoginComponent {
       device_name: this.getDeviceName() // Get device name
     };
 
-    // const data = {
-    //   email: 'yousef6@gmail.com',
-    //   password: '123456789',
-    //   device_name: 'device' // Get device name
-    // };
+    /* postman test
+      {
+      "email": "yousef6@gmail.com",
+      "password": "123456789",
+      "device_name": "device"
+      }
+    */
 
     console.log(data); // Test component output
 
