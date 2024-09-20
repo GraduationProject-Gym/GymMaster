@@ -53,6 +53,14 @@ return [
             'throw' => false,
         ],
 
+        'user_cvs'=>[
+            'driver' => 'local',
+            'root' => public_path('cvs/users'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

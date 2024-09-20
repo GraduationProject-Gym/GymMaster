@@ -129,23 +129,6 @@ export class RegistrationComponent implements OnInit{
       this.showSuccessAlert = false;
       this.showErrorAlert = true;
     }
-    console.log('Name:', this.registrationForm.controls['name'].value);
-    console.log('Age:', this.registrationForm.controls['age'].value);
-    console.log('Membership ID:', this.registrationForm.controls['membership_id'].value);
-    console.log('Gender:', this.registrationForm.controls['gender'].value);
-    console.log('Password:', this.registrationForm.controls['password'].value);
-    console.log('Confirm Password:', this.registrationForm.controls['confirmPassword'].value);
-    console.log('Address:', this.registrationForm.controls['address'].value);
-    console.log('Phone:', this.registrationForm.controls['phone'].value);
-
-    console.log(this.registrationForm.controls['name'].valid)
-    console.log(this.registrationForm.controls['age'].valid)
-    console.log(this.registrationForm.controls['membership_id'].valid)
-    console.log(this.registrationForm.controls['gender'].valid)
-    console.log(this.registrationForm.controls['password'].valid)
-    console.log(this.registrationForm.controls['confirmPassword'].valid)
-    console.log(this.registrationForm.controls['address'].valid)
-    console.log(this.registrationForm.controls['phone'].valid)
 
   }
 }
