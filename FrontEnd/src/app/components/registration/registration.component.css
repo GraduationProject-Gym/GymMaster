@@ -16,4 +16,7 @@
 a{
   color: #ff6207;
 }
+input,textarea, .form-check{
+  margin-left: 10px;
+}
 
