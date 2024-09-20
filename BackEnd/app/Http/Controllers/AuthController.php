@@ -102,7 +102,7 @@ class AuthController extends Controller
 
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
 
@@ -132,7 +132,7 @@ class AuthController extends Controller
                 "message"=>"Logged out"
             ]);
         }
-    
+
     }
 
     /**
