@@ -62,19 +62,25 @@ export class LoginComponent {
     this.formSubmitted = true; // Mark form as submitted
 
     // if (this.loginForm.valid) {
-      const data = {
-        email: this.loginForm.value.email || '',
-        password: this.loginForm.value.password || '',
-        device_name: this.getDeviceName() // Get device name
-      };
+    const data = {
+      email: this.loginForm.value.email || '',
+      password: this.loginForm.value.password || '',
+      device_name: this.getDeviceName() // Get device name
+    };
 
-      console.log(data); // Test component output
+    // const data = {
+    //   email: 'yousef6@gmail.com',
+    //   password: '123456789',
+    //   device_name: 'device' // Get device name
+    // };
 
-      // Call login service and handle response
-      this.loginService.login(data).subscribe({
-        next: (response) => { console.log(response); },
-        error: (error) => { console.log(error); }
-      });
+    console.log(data); // Test component output
+
+    // Call login service and handle response
+    this.loginService.login(data).subscribe({
+      next: (response) => { console.log(response); },
+      error: (error) => { console.log(error); }
+    });
     // } else {
     //   console.log('Form is invalid'); // Log if form is invalid
     // }

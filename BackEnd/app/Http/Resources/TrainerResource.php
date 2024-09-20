@@ -16,7 +16,7 @@ class TrainerResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'cv' => $this-> cv,
+            'cv' => $this-> cv ? asset('cvs/users/' . $this->cv) : null,
         ];
     }
 }

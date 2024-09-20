@@ -14,6 +14,7 @@ use App\Http\Resources\TrainerResource;
 use App\Http\Resources\MembershipResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -48,6 +49,9 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'role' => $request->role,
         ]);
+        // return response()->json($request);
+
+
         if ($request->role === 'trainee') {
             $trainee = Trainee::create([
                 'goals' => $request->goals,
@@ -60,6 +64,7 @@ class AuthController extends Controller
         }
         if ($request->role === 'trainer') {
             $cvPath = null;
+
             if ($request->hasFile('cv')) {
                 $cv = $request->file('cv');
                 $cvPath = $cv->store('cvs', 'user_cvs');
@@ -68,6 +73,7 @@ class AuthController extends Controller
                 'cv' => $cvPath,
                 'id' => $user->id,
             ]);
+
         }
         if($request->role === 'trainee'){
             return response()->json([
@@ -84,14 +90,11 @@ class AuthController extends Controller
                 'trainerData' => new TrainerResource($trainer),
             ], 201);
         }
-        
+
     }
 
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
-
-        // \Log::info('Login Request Data:', $request->all()); // Log incoming data
-
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
@@ -106,9 +109,21 @@ class AuthController extends Controller
             ], 403);
         }
         return response()->json([
-            // 'token' => "done"
             'token' => $user->createToken($request->device_name)->plainTextToken
         ]);
+    }
+
+    // Logout
+    public function logout(Request $request){
+        $user = Auth::user();
+        if($user){
+            // $user->tokens()->delete(); // logout from all devo=ices
+            $user->currentAccessToken()->delete();
+            return response()->json([
+                "message"=>"Logged out"
+            ]);
+        }
+    
     }
     
     /**
