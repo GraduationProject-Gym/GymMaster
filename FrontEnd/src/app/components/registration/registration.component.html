@@ -74,11 +74,11 @@
 
   <!-- Confirm Password Field -->
 <div class="mb-3">
-  <label for="confirmPassword" class="form-label">Confirm Password</label>
-  <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
-  <div *ngIf="registrationForm.controls['confirmPassword'].invalid && registrationForm.controls['confirmPassword'].touched" class="error-msg">
-    <div *ngIf="registrationForm.controls['confirmPassword'].errors?.['required']">Please confirm your password</div>
-    <div *ngIf="registrationForm.controls['confirmPassword'].errors?.['passwordMismatch']">Passwords do not match</div>
+  <label for="password_confirmation" class="form-label">Confirm Password</label>
+  <input formControlName="password_confirmation" type="password" class="form-control" name="password_confirmation" id="confirmPassword" required>
+  <div *ngIf="registrationForm.controls['password_confirmation'].invalid && registrationForm.controls['password_confirmation'].touched" class="error-msg">
+    <div *ngIf="registrationForm.controls['password_confirmation'].errors?.['required']">Please confirm your password</div>
+    <!-- <div *ngIf="registrationForm.controls['password_confirmation'].errors?.['passwordMismatch']">Passwords do not match</div> -->
   </div>
 </div>
 

@@ -61,8 +61,8 @@
       @for ( classGroup of classes; track classGroup.day) {
         <tr>
           <td>{{ classGroup.day }}</td>
-
-          @for ( class  of classGroup.classes; track class.id) {
+<!-- change name to id -->
+          @for ( class  of classGroup.classes; track class.name) {
           <td>
             <p>{{class.name}}</p>
             <p>{{class.trainer}}</p>
