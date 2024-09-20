@@ -4,8 +4,6 @@
     <p>or <a routerLink="/login" routerLinkActive="active">Sign In Your Account</a></p>
   </div>
 
-
-
   <!-- Name Field -->
   <div class="mb-3">
     <label for="name" class="form-label">User Name</label>
@@ -22,7 +20,7 @@
     <input formControlName="email" type="email" name="email" class="form-control" id="email1" aria-describedby="emailHelp" required>
     <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched" class="error-msg">
       <div *ngIf="registrationForm.controls['email'].errors?. ['required']">Email is required</div>
-      <div *ngIf="registrationForm.controls['email'].errors?. ['email']">Enter a valid email address</div>
+      <div *ngIf="registrationForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>
     </div>
   </div>
 
@@ -33,17 +31,6 @@
     <div *ngIf="registrationForm.controls['age'].invalid && registrationForm.controls['age'].touched" class="error-msg">
       <div *ngIf="registrationForm.controls['age'].errors?. ['required']">Age is required</div>
       <div *ngIf="registrationForm.controls['age'].errors?.['min']">Age must be a positive number</div>
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label for="membership_id" class="form-label">Membership ID</label>
-    <input formControlName="membership_id" type="number"  class="form-control" name="membership_id" id="membership_id" required>
-    <div *ngIf="registrationForm.controls['membership_id'].errors?.['required'] && registrationForm.controls['membership_id'].touched" class="error-msg">
-      Membership ID is required.
-    </div>
-    <div *ngIf="registrationForm.controls['membership_id'].errors?.['min'] && registrationForm.controls['membership_id'].touched" class="text-danger">
-      Membership ID must be at least 1.
     </div>
   </div>
 
@@ -94,7 +81,6 @@
     <div *ngIf="registrationForm.controls['confirmPassword'].errors?.['passwordMismatch']">Passwords do not match</div>
   </div>
 </div>
-
 
   <!-- Gender Field -->
   <label>Gender</label>

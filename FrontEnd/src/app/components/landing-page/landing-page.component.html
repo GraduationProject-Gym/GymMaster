@@ -57,12 +57,12 @@
           </tr>
         </thead>
         <tbody>
-
+      <!-- change names & add day in backend-->
       @for ( classGroup of classes; track classGroup.day) {
         <tr>
           <td>{{ classGroup.day }}</td>
 
-          @for ( class  of classGroup.classes; track class.name) {
+          @for ( class  of classGroup.classes; track class.id) {
           <td>
             <p>{{class.name}}</p>
             <p>{{class.trainer}}</p>

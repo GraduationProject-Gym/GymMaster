@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { RegisterService } from '../../services/register.service';
 import { Init } from 'v8';
 import { RouterModule } from '@angular/router';
+import { RegistrationService } from '../../services/registration.service';
 // import { LoginComponent } from '../login/login.component';
 
 
@@ -18,26 +18,35 @@ import { RouterModule } from '@angular/router';
     RouterModule
 
   ],
-  providers:[RegisterService],
+  providers:[RegistrationService],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit{
 
-  userData: any []=[];
-  constructor(private registerServ:RegisterService){
+
+
+  constructor(private registerServ:RegistrationService){
   }
 
 
   ngOnInit(): void {
-    console.log( this.registerServ.registration( ))
+    // console.log( this.registerServ.register(data).subscribe (
+    //   (next)=>{},
+    //   (error)=>{console.log(this.error)}
+
+  //   )
+  // )
     }
+  error(error: any) {
+    throw new Error('Method not implemented.');
+  }
 
 
     registrationForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-    // email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
+    email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
+    // email: new FormControl(null, [Validators.required, Validators.email]),
     age: new FormControl(null, [Validators.required, Validators.minLength(30)]),
     goal: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),
@@ -47,7 +56,6 @@ export class RegistrationComponent implements OnInit{
     gender: new FormControl(null, Validators.required),
     image: new FormControl(null),
     role: new FormControl(null),
-    membership_id: new FormControl(null, [Validators.required, Validators.min(1)]),
     });
 
   get NameValid() {
@@ -76,9 +84,6 @@ export class RegistrationComponent implements OnInit{
   }
   get GenderValid() {
     return this.registrationForm.controls['gender'].valid;
-  }
-  get MembershipValid() {
-    return this.registrationForm.controls['membership_id'].valid;
   }
 
   get ImageValid() {
