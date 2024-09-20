@@ -11,7 +11,7 @@ class Trainer extends Model
 {
 
     use HasFactory;
-    protected $fillable = ['cv'];
+    protected $fillable = ['cv', 'user_id'];
     public function TraineeUser(){
         return $this->belongsTo(User::class, 'id','id');
     }
