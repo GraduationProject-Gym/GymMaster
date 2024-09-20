@@ -13,6 +13,7 @@ use App\Http\Resources\TraineeResource;
 use App\Http\Resources\TrainerResource;
 use App\Http\Resources\MembershipResource;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -86,6 +87,30 @@ class AuthController extends Controller
         
     }
 
+    public function login(LoginRequest $request)
+    {
+
+        // \Log::info('Login Request Data:', $request->all()); // Log incoming data
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'email' => ['The provided credentials are incorrect.'],
+            ], 401);
+        }
+
+        if ($user->tokens()->count() > 3) {
+            return response()->json([
+                "error" => "You have exceeded the number of allowed logged in accounts. Please logout from one of them and try again."
+            ], 403);
+        }
+        return response()->json([
+            // 'token' => "done"
+            'token' => $user->createToken($request->device_name)->plainTextToken
+        ]);
+    }
+    
     /**
      * Display the specified resource.
      */

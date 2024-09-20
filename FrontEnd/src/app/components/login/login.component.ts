@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { RouterModule } from '@angular/router';
@@ -17,50 +17,67 @@ import { RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-
 export class LoginComponent {
+  formSubmitted = false; // Track if the form has been submitted
 
   // Create request to use login service
   constructor(private loginService: LoginService) { }
 
   // Create form elements and set up their basic validation rules
   loginForm = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
-    password: new FormControl(null, [Validators.required, Validators.pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}/)])
+    email: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) // Validate email format
+    ]),
+    password: new FormControl(null, [
+      Validators.required,
+      Validators.pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}/) // Validate password complexity
+    ])
   });
 
-  // Set up validation rules
-  get emailInValid() {
-    return this.loginForm.controls['email'].invalid &&
-      this.loginForm.controls['email'].touched &&
-      this.loginForm.controls['email'].dirty;
+  // Set up validation rules for email
+  get emailRequired() {
+    return this.loginForm.controls['email'].errors?.['required'] &&
+      this.loginForm.controls['email'].touched;
   }
 
-  get passwordInValid() {
-    return this.loginForm.controls['password'].invalid &&
-      this.loginForm.controls['password'].touched &&
-      this.loginForm.controls['password'].dirty;
+  get emailFormatInvalid() {
+    return this.loginForm.controls['email'].errors?.['pattern'] &&
+      this.loginForm.controls['email'].touched;
+  }
+
+  // Set up validation rules for password
+  get passwordRequired() {
+    return this.loginForm.controls['password'].errors?.['required'] &&
+      this.loginForm.controls['password'].touched;
+  }
+
+  get passwordFormatInvalid() {
+    return this.loginForm.controls['password'].errors?.['pattern'] &&
+      this.loginForm.controls['password'].touched;
   }
 
   // Check user authentication and authorization
   loginAction() {
-    if (this.loginForm.valid) {
+    this.formSubmitted = true; // Mark form as submitted
 
+    // if (this.loginForm.valid) {
       const data = {
         email: this.loginForm.value.email || '',
         password: this.loginForm.value.password || '',
-        device_name: this.getDeviceName()
+        device_name: this.getDeviceName() // Get device name
       };
 
-      console.log(data); //test component output
+      console.log(data); // Test component output
 
+      // Call login service and handle response
       this.loginService.login(data).subscribe({
         next: (response) => { console.log(response); },
         error: (error) => { console.log(error); }
       });
-    } else {
-      console.log('Form is invalid');
-    }
+    // } else {
+    //   console.log('Form is invalid'); // Log if form is invalid
+    // }
   }
 
   // Get device name

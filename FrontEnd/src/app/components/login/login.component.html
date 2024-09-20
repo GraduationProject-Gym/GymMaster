@@ -1,21 +1,35 @@
 <form [formGroup]="loginForm" (ngSubmit)="loginAction()" class="form form-background w-75">
     <h1 class="title d-flex justify-content-center">Login</h1>
+    @if (!loginForm.valid && formSubmitted) {
+    <div class="alert alert-danger">
+        Enter valid data
+    </div>
+    }
     <div class="form-group">
         <label for="email" class="w-25">Email address</label>
         <input formControlName="email" type="email" class="form-control w-75 m-auto" id="email" name="email"
             placeholder="Enter email">
-        @if (emailInValid){
-            <div class="error-msg">
-                Enter valid email
-            </div>
+        @if (emailRequired){
+        <div class="error-msg">
+            Email is required
+        </div>
+        } @else if (emailFormatInvalid){
+        <div class="error-msg">
+            Enter a valid email
+        </div>
         }
         <label for="password" class="w-25 mt-3">Password</label>
         <input formControlName="password" type="password" class="form-control w-75 m-auto" id="password" name="password"
             placeholder="Password">
-        <!-- <div *ngIf="passwordInValid" class="error-msg">
-            <div *ngIf="loginForm.controls['password'].errors?. ['required']">Password is required</div>
-            <div *ngIf="loginForm.controls['password'].errors?. ['pattern']">Enter a valid password</div>
-        </div> -->
+        @if (passwordRequired){
+        <div class="error-msg">
+            Password is required
+        </div>
+        } @else if (passwordFormatInvalid){
+        <div class="error-msg">
+            Enter a valid password
+        </div>
+        }
         <div class="d-flex justify-content-center mt-3">
             <button type="submit" class="btn">Login</button>
         </div>
