@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('trainees', function (Blueprint $table) {
             //
-            $table->foreignId('membership_id')->default(20)->constrained('trainees','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('membership_id')->default(20)->constrained('memberships','id')->onDelete('cascade')->onUpdate('cascade');
 
         });
     }

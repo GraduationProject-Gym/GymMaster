@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        // Apply the auth middleware only to certain methods, e.g., logout
+        $this->middleware('auth:sanctum')->only(['logout']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -38,14 +43,6 @@ class AuthController extends Controller
             $imagePath = $image->store('images', 'user_images');
         }
         // Create a new user
-        $user = User::where('email', $request->email)->first();
-        $user1 = User::where('phone', $request->phone)->first();
-        if($user){
-            return response()->json(['message' => 'this email are used'], 404);
-        }
-        if($user1){
-            return response()->json(['message' => 'this phone are used'], 404);
-        }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -57,30 +54,24 @@ class AuthController extends Controller
             'gender' => $request->gender,
             'role' => $request->role,
         ]);
+        // return response()->json($request);
 
-        // return response()->json($user->id);
 
         if ($request->role === 'trainee') {
             $trainee = Trainee::create([
-                'goals' => $request->goals,
-                'no_vouchers' => $request->no_vouchers,
-                'expiration_date' => $request->expiration_date,
-                'membership_id' => $request->membership_id,
                 'user_id' => $user->id,
             ]);
-            $membership = Memberships::findOrFail($request->membership_id);
         }
         if ($request->role === 'trainer') {
             $cvPath = null;
+
             if ($request->hasFile('cv')) {
                 $cv = $request->file('cv');
                 $cvPath = $cv->store('cvs', 'user_cvs');
             }
-            $userId =   $user->id;
-
             $trainer = Trainer::create([
                 'cv' => $cvPath,
-                'user_id' => $userId
+                'user_id' => $user->id,
             ]);
 
         }
@@ -89,7 +80,6 @@ class AuthController extends Controller
                 'message' => 'User registered successfully',
                 'user' => new UserResource($user),
                 'traineeData' => new TraineeResource($trainee),
-                'traineeMembership' => new MembershipResource($membership),
             ], 201);
         }
         else if($request->role === 'trainer'){
@@ -132,7 +122,7 @@ class AuthController extends Controller
                 "message"=>"Logged out"
             ]);
         }
-
+    
     }
 
     /**
