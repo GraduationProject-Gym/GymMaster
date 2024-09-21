@@ -1,6 +1,7 @@
 
+<img src="/form4.jpg" alt="Background Image">
 
-<form [formGroup]="registrationForm"  class="form w-75  form-background">
+<form [formGroup]="registrationForm"  class="form   form-background">
   <div class="d-flex flex-column align-items-center">
     <h1 class="registration">Create Your Account</h1>
   </div>
@@ -37,16 +38,6 @@
     </div>
   </div>
 
-
-  <div class="mb-3">
-    <label for="goal" class="form-label">What is your goal?</label>
-    <input formControlName="goal"  class="form-control" name="goal" id="goal" required placeholder="your goal" required>
-    <div *ngIf="registrationForm.controls['goal'].invalid && registrationForm.controls['goal'].touched" class="error-msg">
-      <div *ngIf="registrationForm.controls['goal'].errors?.['required']">Goal is required</div>
-      <div *ngIf="registrationForm.controls['goal'].errors?.['minlength']"> Goal must be at least 10 characters long</div>
-    </div>
-  </div>
-
   <!-- Phone Field -->
   <div class="mb-3">
     <label for="phone" class="form-label">Phone</label>
@@ -76,15 +67,6 @@
     </div>
   </div>
 
-  <!-- Confirm Password Field -->
-<!-- <div class="mb-3">
-  <label for="confirmPassword" class="form-label">Confirm Password</label>
-  <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
-  <div *ngIf="registrationForm.controls['confirmPassword'].invalid && registrationForm.controls['confirmPassword'].touched" class="error-msg">
-    <div *ngIf="registrationForm.controls['confirmPassword'].errors?.['required']">Please confirm your password</div>
-    <div *ngIf="registrationForm.controls['confirmPassword'].errors?.['passwordMismatch']">Passwords do not match</div>
-  </div>
-</div> -->
 
 <div class="mb-3">
   <label for="confirmPassword" class="form-label">Confirm Password</label>
@@ -115,7 +97,7 @@
   </div>
 
   <!-- Image Field -->
-  <div class="mb-3">
+  <div class="mb-3" >
     <label for="image" class="form-label">Upload Image</label>
     <input formControlName="image" type="file" class="form-control" id="image" name="image">
   </div>
@@ -125,7 +107,7 @@
     Please fix the errors in the form.
   </div>
 
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center ">
     <button type="button" class="btn" (click)="Registeration()">Register</button>
   </div>
 </form>
