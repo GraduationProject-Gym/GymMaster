@@ -15,22 +15,22 @@ import { RegistrationService } from '../../services/authentication/registration/
     // LoginComponent,
     RouterModule
   ],
-  providers:[RegistrationService],
+  providers: [RegistrationService],
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
 
-  constructor(private registrationService:RegistrationService, private router: Router){
+  constructor(private registrationService: RegistrationService, private router: Router) {
   }
   error(error: any) {
   }
 
-    registrationForm = new FormGroup({
+  registrationForm = new FormGroup({
     // name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-    userName: new FormControl(null, [Validators.required,Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
+    userName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
     email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
-    age: new FormControl(null, [Validators.required,Validators.min(10)]),
+    age: new FormControl(null, [Validators.required, Validators.min(10)]),
     goal: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),
     address: new FormControl(null, Validators.required),
@@ -39,7 +39,7 @@ export class RegistrationComponent {
     gender: new FormControl(null, Validators.required),
     image: new FormControl(null),
     role: new FormControl("trainee"),
-    });
+  });
 
   get userNameValid() {
     return this.registrationForm.controls['userName'].valid;
@@ -62,9 +62,6 @@ export class RegistrationComponent {
   get PasswordValid() {
     return this.registrationForm.controls['password'].valid;
   }
-  // get ConfirmPasswordValid() {
-  //   return this.registrationForm.controls['confirmPassword'].valid ;
-  // }
   get GenderValid() {
     return this.registrationForm.controls['gender'].valid;
   }
@@ -88,6 +85,10 @@ export class RegistrationComponent {
       return true; // Return true if passwords match
     }
   }
+  get ConfirmPasswordRequired() {
+    return this.registrationForm.controls['confirmPassword'].errors?.['required'] &&
+      this.registrationForm.controls['confirmPassword'].touched;
+  }
   get ConfirmPasswordValid() {
     return !this.registrationForm.controls['confirmPassword'].errors;
     // Return false if passwords do not match
@@ -109,21 +110,22 @@ export class RegistrationComponent {
         image: this.registrationForm.value.image || '',
         role: this.registrationForm.value.role || ''
       };
-       // Call Registration  service and handle response
-      this.registrationService.register(data).subscribe ({
-      next: (response) => { console.log(response);
-        // this.router.navigate(['/login'])
-        // window.location.assign('/login');
-        // window.location.replace('/login');
-        // window.location.assign('http://localhost:4200/login');
-        // window.location.href = '/login';
-      },
+      // Call Registration  service and handle response
+      this.registrationService.register(data).subscribe({
+        next: (response) => {
+          console.log(response);
+          // this.router.navigate(['/login'])
+          // window.location.assign('/login');
+          // window.location.replace('/login');
+          // window.location.assign('http://localhost:4200/login');
+          // window.location.href = '/login';
+        },
 
-      error: (error) => { console.log(error); }
+        error: (error) => { console.log(error); }
       });
-      } else {
+    } else {
       console.log('Form is invalid');
-        }
+    }
 
     // this.passwordMatcher();
 

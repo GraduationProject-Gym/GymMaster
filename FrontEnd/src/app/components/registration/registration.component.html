@@ -1,4 +1,4 @@
-<form [formGroup]="registrationForm"  class="form w-75  form-background">
+<form [formGroup]="registrationForm" class="form w-75  form-background">
   <div class="d-flex flex-column align-items-center">
     <h1 class="registration">Create Your Account</h1>
     <p>or <a routerLink="/login" routerLinkActive="active">Sign In Your Account</a></p>
@@ -8,7 +8,8 @@
   <div class="mb-3">
     <label for="name" class="form-label">User Name</label>
     <input formControlName="userName" type="text" class="form-control" id="name" name="name" required>
-    <div *ngIf="registrationForm.controls['userName'].invalid && registrationForm.controls['userName'].touched" class="error-msg">
+    <div *ngIf="registrationForm.controls['userName'].invalid && registrationForm.controls['userName'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['userName'].errors?.['required']">User name is required</div>
       <div *ngIf="registrationForm.controls['userName'].errors?.['pattern']">
         User name must be 3 to 15 characters long and can contain letters, numbers, underscores, or hyphens
@@ -19,8 +20,10 @@
   <!-- Email Field -->
   <div class="mb-3">
     <label for="email1" class="form-label">Email address</label>
-    <input formControlName="email" type="email" name="email" class="form-control" id="email1" aria-describedby="emailHelp" required>
-    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched" class="error-msg">
+    <input formControlName="email" type="email" name="email" class="form-control" id="email1"
+      aria-describedby="emailHelp" required>
+    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['email'].errors?. ['required']">Email is required</div>
       <div *ngIf="registrationForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>
     </div>
@@ -38,10 +41,13 @@
 
   <div class="mb-3">
     <label for="goal" class="form-label">What is your goal?</label>
-    <textarea formControlName="goal"  class="form-control" name="goal" id="goal" required placeholder="your goal"> </textarea>
-    <div *ngIf="registrationForm.controls['goal'].invalid && registrationForm.controls['goal'].touched" class="error-msg">
+    <textarea formControlName="goal" class="form-control" name="goal" id="goal" required
+      placeholder="your goal"> </textarea>
+    <div *ngIf="registrationForm.controls['goal'].invalid && registrationForm.controls['goal'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['goal'].errors?.['required']">Goal is required</div>
-      <div *ngIf="registrationForm.controls['goal'].errors?.['minlength']"> Goal must be at least 10 characters long</div>
+      <div *ngIf="registrationForm.controls['goal'].errors?.['minlength']"> Goal must be at least 10 characters long
+      </div>
     </div>
   </div>
 
@@ -49,9 +55,11 @@
   <div class="mb-3">
     <label for="phone" class="form-label">Phone</label>
     <input formControlName="phone" type="text" class="form-control" id="phone" name="phone" required>
-    <div *ngIf="registrationForm.controls['phone'].invalid && registrationForm.controls['phone'].touched" class="error-msg">
+    <div *ngIf="registrationForm.controls['phone'].invalid && registrationForm.controls['phone'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['phone'].errors?. ['required']">Phone number is required</div>
-      <div *ngIf="registrationForm.controls['phone'].errors?.['pattern']">Enter a valid phone number (e.g., 01234567890)</div>
+      <div *ngIf="registrationForm.controls['phone'].errors?.['pattern']">Enter a valid phone number (e.g., 01234567890)
+      </div>
     </div>
   </div>
 
@@ -59,7 +67,8 @@
   <div class="mb-3">
     <label for="address" class="form-label">Address</label>
     <input formControlName="address" type="text" class="form-control" name="address" id="address" required>
-    <div *ngIf="registrationForm.controls['address'].invalid && registrationForm.controls['address'].touched" class="error-msg">
+    <div *ngIf="registrationForm.controls['address'].invalid && registrationForm.controls['address'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['address'].errors?. ['required']">Address is required</div>
     </div>
   </div>
@@ -68,14 +77,16 @@
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
     <input formControlName="password" type="password" class="form-control" name="password" id="password" required>
-    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched" class="error-msg">
+    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['password'].errors?. ['required']">Password is required</div>
-      <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and a special character</div>
+      <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters
+        long, include uppercase and lowercase letters, a number, and a special character</div>
     </div>
   </div>
 
   <!-- Confirm Password Field -->
-<!-- <div class="mb-3">
+  <!-- <div class="mb-3">
   <label for="confirmPassword" class="form-label">Confirm Password</label>
   <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
   <div *ngIf="registrationForm.controls['confirmPassword'].invalid && registrationForm.controls['confirmPassword'].touched" class="error-msg">
@@ -84,26 +95,37 @@
   </div>
 </div> -->
 
-<div class="mb-3">
-  <label for="confirmPassword" class="form-label">Confirm Password</label>
-  <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
-  <div *ngIf="!ConfirmPasswordValid && registrationForm.controls['confirmPassword'].touched" class="error-msg">
-    <div class="error-msg">
-      Passwords do not match
-    </div>
+  <div class="mb-3">
+    <label for="confirmPassword" class="form-label">Confirm Password</label>
+    <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword"
+      id="confirmPassword" required>
+    <ng-container *ngIf="ConfirmPasswordRequired; else passwordMismatch">
+      <div class="error-msg">
+        Confirm password is required
+      </div>
+    </ng-container>
+
+    <ng-template #passwordMismatch>
+      <div *ngIf="!ConfirmPasswordValid && registrationForm.controls['confirmPassword'].touched" class="error-msg" #passwordMismatch>
+        <div class="error-msg">
+          Passwords do not match
+        </div>
+      </div>
+    </ng-template>
   </div>
-</div>
 
 
 
   <!-- Gender Field -->
   <label>Gender</label>
   <div class="form-check mt-3">
-    <input formControlName="gender" class="form-check-input " type="radio" name="gender" id="male" value="male" required>
+    <input formControlName="gender" class="form-check-input " type="radio" name="gender" id="male" value="male"
+      required>
     <label class="form-check-label" for="male">Male</label>
   </div>
   <div class="form-check">
-    <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+    <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="female" value="female"
+      required>
     <label class="form-check-label" for="female">Female</label>
   </div>
 

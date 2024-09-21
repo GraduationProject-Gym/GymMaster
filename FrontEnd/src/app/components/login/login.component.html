@@ -1,10 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="loginAction()" class="form form-background w-75">
     <h1 class="title d-flex justify-content-center">Login</h1>
-    @if (!loginForm.valid && formSubmitted) {
-    <div class="alert alert-danger">
-        Enter valid data
-    </div>
-    }
     <div class="form-group">
         <label for="email" class="w-25">Email address</label>
         <input formControlName="email" type="email" class="form-control w-75 m-auto" id="email" name="email"
@@ -30,6 +25,11 @@
             Enter a valid password
         </div>
         }
+        @if (!loginForm.valid && formSubmitted) {
+            <div class="alert alert-danger">
+                Enter valid data
+            </div>
+            }
         <div class="d-flex justify-content-center mt-3">
             <button type="submit" class="btn">Login</button>
         </div>
