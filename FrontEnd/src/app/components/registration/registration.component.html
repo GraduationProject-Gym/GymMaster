@@ -1,7 +1,8 @@
+
+
 <form [formGroup]="registrationForm"  class="form w-75  form-background">
   <div class="d-flex flex-column align-items-center">
     <h1 class="registration">Create Your Account</h1>
-    <p>or <a routerLink="/login" routerLinkActive="active">Sign In Your Account</a></p>
   </div>
 
   <!-- Name Field -->
@@ -36,9 +37,10 @@
     </div>
   </div>
 
+
   <div class="mb-3">
     <label for="goal" class="form-label">What is your goal?</label>
-    <textarea formControlName="goal"  class="form-control" name="goal" id="goal" required placeholder="your goal"> </textarea>
+    <input formControlName="goal"  class="form-control" name="goal" id="goal" required placeholder="your goal" required>
     <div *ngIf="registrationForm.controls['goal'].invalid && registrationForm.controls['goal'].touched" class="error-msg">
       <div *ngIf="registrationForm.controls['goal'].errors?.['required']">Goal is required</div>
       <div *ngIf="registrationForm.controls['goal'].errors?.['minlength']"> Goal must be at least 10 characters long</div>
@@ -127,3 +129,4 @@
     <button type="button" class="btn" (click)="Registeration()">Register</button>
   </div>
 </form>
+

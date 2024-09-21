@@ -1,15 +1,16 @@
 <div style="position: relative;">
   <nav class="navbar navbar-expand-lg navbar-custom bg-dark" style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 2;">
       <div class="container-fluid">
-          <a class="navbar-brand" href="#" style="color:#ff6207; font-weight: bolder;">GymMaster</a>
+          <a class="navbar-brand" routerLink="/home"  routerLinkActive="active" style="color:#ff6207; font-weight: bolder;">GymMaster</a>
           <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMenu()">
             <span class="navbar-toggler-icon" ></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ms-auto">
-                  <!-- <li class="nav-item mx-3">
-                      <a class="nav-link" href="#Classes" routerLinkActive="active" (click)="closeMenu()">Classes</a>
-                  </li> -->
+                <li class="nav-item mx-3">
+                  <a class="nav-link" href="/home" (click)="closeMenu()">Home</a>
+                </li>
+
                   <li class="nav-item mx-3">
                       <a class="nav-link" href="#categories" routerLinkActive="active" (click)="closeMenu()">Categories</a>
                   </li>
@@ -19,10 +20,11 @@
                   <li class="nav-item mx-3">
                       <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
                   </li>
-                  <!-- <li class="nav-item mx-3 d-flex">
-                      <button class="btn " routerLink="/registeration" routerLinkActive="active" (click)="closeMenu()">Sign Up</button>
-                      <button class="btn" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Sign In</button>
-                  </li> -->
+                  <li class="nav-item mx-3 d-flex">
+                      <button class="btn" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</button>
+                  </li>
+                  <!-- <button class="btn " routerLink="/registeration" routerLinkActive="active" (click)="closeMenu()">Sign Up</button> -->
+
 
                                             <!-- if user made login -->
               <!-- <div class="d-flex align-items-center ms-3">

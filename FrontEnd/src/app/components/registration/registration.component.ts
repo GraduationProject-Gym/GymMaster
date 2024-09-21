@@ -4,7 +4,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
 import { Init } from 'v8';
 import { Router, RouterModule } from '@angular/router';
 import { RegistrationService } from '../../services/authentication/registration/registration.service';
-// import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +11,6 @@ import { RegistrationService } from '../../services/authentication/registration/
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    // LoginComponent,
     RouterModule
   ],
   providers:[RegistrationService],
@@ -20,7 +18,6 @@ import { RegistrationService } from '../../services/authentication/registration/
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-
   constructor(private registrationService:RegistrationService, private router: Router){
   }
   error(error: any) {
@@ -109,23 +106,20 @@ export class RegistrationComponent {
         image: this.registrationForm.value.image || '',
         role: this.registrationForm.value.role || ''
       };
-       // Call Registration  service and handle response
-      this.registrationService.register(data).subscribe ({
-      next: (response) => { console.log(response);
-        // this.router.navigate(['/login'])
-        // window.location.assign('/login');
-        // window.location.replace('/login');
-        // window.location.assign('http://localhost:4200/login');
-        // window.location.href = '/login';
-      },
-
-      error: (error) => { console.log(error); }
-      });
-      } else {
-      console.log('Form is invalid');
-        }
-
-    // this.passwordMatcher();
+        // Call Registration service and handle response
+    this.registrationService.register(data).subscribe({
+      next: (response) => {
+        console.log(response);
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 2000);      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  } else {
+    console.warn('Form is invalid');
+  }
 
     if (this.registrationForm.valid) {
       this.showErrorAlert = false;
@@ -134,7 +128,4 @@ export class RegistrationComponent {
       this.showErrorAlert = true;
     }
   }
-
-
-
 }
