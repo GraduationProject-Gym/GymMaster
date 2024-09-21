@@ -96,7 +96,6 @@ export class RegistrationComponent {
         password: this.registrationForm.value.password || '',
         // confirmPassword: this.registrationForm.value.confirmPassword || '',
         age: this.registrationForm.value.age || 10,
-        goal: this.registrationForm.value.goal || '',
         phone: this.registrationForm.value.phone || '',
         address: this.registrationForm.value.address || '',
         gender: this.registrationForm.value.gender || '',
