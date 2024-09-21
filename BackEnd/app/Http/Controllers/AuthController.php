@@ -58,17 +58,13 @@ class AuthController extends Controller
             'role' => $request->role,
         ]);
 
-        // return response()->json($user->id);
 
         if ($request->role === 'trainee') {
             $trainee = Trainee::create([
-                'goals' => $request->goals,
-                'no_vouchers' => $request->no_vouchers,
-                'expiration_date' => $request->expiration_date,
-                'membership_id' => $request->membership_id,
                 'user_id' => $user->id,
+                'membership_id' => 1,
             ]);
-            $membership = Memberships::findOrFail($request->membership_id);
+            $membership = Memberships::find($trainee->membership_id);
         }
         if ($request->role === 'trainer') {
             $cvPath = null;
@@ -92,6 +88,7 @@ class AuthController extends Controller
                 'traineeMembership' => new MembershipResource($membership),
             ], 201);
         }
+
         else if($request->role === 'trainer'){
             return response()->json([
                 'message' => 'User registered successfully',

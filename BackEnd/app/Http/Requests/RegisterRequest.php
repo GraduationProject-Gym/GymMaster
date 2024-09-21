@@ -23,7 +23,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['nullable', 'string', 'max:11'],
             'address' => ['nullable', 'string'],
@@ -31,9 +31,9 @@ class RegisterRequest extends FormRequest
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             'gender' => 'required',
             'role' => 'required',
-            'goals' => ['nullable', 'string', 'max:500', 'required_if:role,trainee'],
-            'no_vouchers' => ['nullable', 'integer', 'min:0', 'required_if:role,trainee'],  // Default 0
-            'expiration_date' => ['nullable', 'date', 'required_if:role,trainee'],
+            // 'goals' => ['nullable', 'string', 'max:500', 'required_if:role,trainee'],
+            // 'no_vouchers' => ['nullable', 'integer', 'min:0', 'required_if:role,trainee'],  // Default 0
+            // 'expiration_date' => ['nullable', 'date', 'required_if:role,trainee'],
             'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10000', 'required_if:role,trainer'],
         ];
     }

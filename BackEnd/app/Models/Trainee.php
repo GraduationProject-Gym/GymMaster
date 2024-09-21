@@ -13,7 +13,7 @@ class Trainee extends Model
     use HasFactory;
     // admin will add no_vouchers
     // expiration_date will update automatic when update membership
-    protected $fillable = ['goals','no_vouchers','expiration_date','membership_id', 'user_id'];
+    protected $fillable = ['goals','membership_id', 'user_id'];
     public function TraineeMembership(){
         return $this->belongsTo(Memberships::class, 'membership_id','id');
     }

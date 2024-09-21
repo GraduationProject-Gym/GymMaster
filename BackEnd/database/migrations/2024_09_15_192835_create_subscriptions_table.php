@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('amount')->default(0.0);
             $table->enum('payment_method', ['Credit', 'Bank Transfers','PayPal','Mobile Payments']);
-            $table->string('bill_image');
+            // $table->string('bill_image');
             $table->timestamps();
         });
     }
