@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('used_weight')->nullable();
+            $table->integer('number_of_equipments');
             $table->timestamps();
         });
     }

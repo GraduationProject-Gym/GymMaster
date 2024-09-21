@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        // Apply the auth middleware only to certain methods, e.g., logout
+        $this->middleware('auth:sanctum')->only(['logout']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -54,13 +59,8 @@ class AuthController extends Controller
 
         if ($request->role === 'trainee') {
             $trainee = Trainee::create([
-                'goals' => $request->goals,
-                'no_vouchers' => $request->no_vouchers,
-                'expiration_date' => $request->expiration_date,
-                'membership_id' => $request->membership_id,
-                'id' => $user->id,
+                'user_id' => $user->id,
             ]);
-            $membership = Memberships::findOrFail($request->membership_id);
         }
         if ($request->role === 'trainer') {
             $cvPath = null;
@@ -71,7 +71,7 @@ class AuthController extends Controller
             }
             $trainer = Trainer::create([
                 'cv' => $cvPath,
-                'id' => $user->id,
+                'user_id' => $user->id,
             ]);
 
         }
@@ -80,7 +80,6 @@ class AuthController extends Controller
                 'message' => 'User registered successfully',
                 'user' => new UserResource($user),
                 'traineeData' => new TraineeResource($trainee),
-                'traineeMembership' => new MembershipResource($membership),
             ], 201);
         }
         else if($request->role === 'trainer'){
