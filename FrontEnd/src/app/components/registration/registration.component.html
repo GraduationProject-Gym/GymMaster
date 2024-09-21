@@ -21,7 +21,7 @@
   <!-- Email Field -->
   <div class="mb-3">
     <label for="email1" class="form-label">Email address</label>
-    <input formControlName="email" type="email" name="email" class="form-control" id="email1" aria-describedby="emailHelp" required>
+    <input formControlName="email" type="email" name="email" class="form-control" id="email1"  required>
     <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched" class="error-msg">
       <div *ngIf="registrationForm.controls['email'].errors?. ['required']">Email is required</div>
       <div *ngIf="registrationForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>

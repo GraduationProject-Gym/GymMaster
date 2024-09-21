@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ClassesComponent } from './components/trainer/classes/classes.component';
 
 
 export const routes: Routes = [
@@ -12,6 +13,8 @@ export const routes: Routes = [
     { path: "registration", component: RegistrationComponent },
     { path: "login", component: LoginComponent },
     { path: "forgotPassword", component: ForgotPasswordComponent },
+    { path: "trainer/classes", component: ClassesComponent },
+    // { path: "trainer/Trainees", component: TraineesComponent },
     { path: "**", component: ErrorComponent }
 ];
 

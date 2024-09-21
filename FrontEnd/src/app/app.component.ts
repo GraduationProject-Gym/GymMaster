@@ -5,6 +5,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ClassesComponent } from './components/trainer/classes/classes.component';
+import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,9 @@ import { FooterComponent } from './components/footer/footer.component';
     HeaderComponent,
     LandingPageComponent,
     LoginComponent,
-    FooterComponent
+    FooterComponent,
+    ClassesComponent,
+    UpdateClassComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
