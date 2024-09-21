@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class LoginService {
 
   constructor(private readonly http: HttpClient) { }
-  private readonly loginUrl = "http://localhost:8000/api/login";
+  private readonly loginUrl = "http://localhost:8004/api/login";
 
   login(data: { email: string, password: string, device_name: string }) {
     console.log(data); // Test sent payload

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-import { Init } from 'v8';
+// import { Init } from 'v8';
 import { Router, RouterModule } from '@angular/router';
 import { RegistrationService } from '../../services/authentication/registration/registration.service';
 // import { LoginComponent } from '../login/login.component';
@@ -23,12 +23,28 @@ export class RegistrationComponent {
 
   constructor(private registrationService: RegistrationService, private router: Router) {
   }
+
+  // Extract image name from its path
+  imageName: string | null = null;
+
+  onFileChange(event: any): void {
+    // const input = event.target as HTMLInputElement;
+    // if (input.files && input.files.length > 0) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.registrationForm.patchValue({ image: file.name });
+    }
+    // }
+  }
+
+
   error(error: any) {
   }
 
   registrationForm = new FormGroup({
     // name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-    userName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
+    name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
     email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
     age: new FormControl(null, [Validators.required, Validators.min(10)]),
     goal: new FormControl(null, [Validators.required, Validators.minLength(8)]),
@@ -41,8 +57,11 @@ export class RegistrationComponent {
     role: new FormControl("trainee"),
   });
 
+
+  selectedFile: File | null = null;
+
   get userNameValid() {
-    return this.registrationForm.controls['userName'].valid;
+    return this.registrationForm.controls['name'].valid;
   }
   get AgeValid() {
     return this.registrationForm.controls['age'].valid;
@@ -97,28 +116,25 @@ export class RegistrationComponent {
 
   Registeration() {
     if (this.registrationForm.valid) {
-      const data = {
-        userName: this.registrationForm.value.userName || '',
-        email: this.registrationForm.value.email || '',
-        password: this.registrationForm.value.password || '',
-        // confirmPassword: this.registrationForm.value.confirmPassword || '',
-        age: this.registrationForm.value.age || 10,
-        goal: this.registrationForm.value.goal || '',
-        phone: this.registrationForm.value.phone || '',
-        address: this.registrationForm.value.address || '',
-        gender: this.registrationForm.value.gender || '',
-        image: this.registrationForm.value.image || '',
-        role: this.registrationForm.value.role || ''
-      };
+      const formData = new FormData();
+      Object.keys(this.registrationForm.value).forEach(key => {
+        if (key === 'image') {
+          const file = this.selectedFile;
+          if (file) {
+            // console.log(file);
+            formData.append('image', file);
+          }
+        } else {
+          formData.append(key, this.registrationForm.get([key])?.value);
+        }
+      });
+
       // Call Registration  service and handle response
-      this.registrationService.register(data).subscribe({
+      // console.log(formData);
+      this.registrationService.register(formData).subscribe({
         next: (response) => {
           console.log(response);
-          // this.router.navigate(['/login'])
-          // window.location.assign('/login');
-          // window.location.replace('/login');
-          // window.location.assign('http://localhost:4200/login');
-          // window.location.href = '/login';
+          this.router.navigate(['/login'])
         },
 
         error: (error) => { console.log(error); }
@@ -126,8 +142,6 @@ export class RegistrationComponent {
     } else {
       console.log('Form is invalid');
     }
-
-    // this.passwordMatcher();
 
     if (this.registrationForm.valid) {
       this.showErrorAlert = false;

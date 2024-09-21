@@ -7,11 +7,11 @@
   <!-- Name Field -->
   <div class="mb-3">
     <label for="name" class="form-label">User Name</label>
-    <input formControlName="userName" type="text" class="form-control" id="name" name="name" required>
-    <div *ngIf="registrationForm.controls['userName'].invalid && registrationForm.controls['userName'].touched"
+    <input formControlName="name" type="text" class="form-control" id="name" name="name" required>
+    <div *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched"
       class="error-msg">
-      <div *ngIf="registrationForm.controls['userName'].errors?.['required']">User name is required</div>
-      <div *ngIf="registrationForm.controls['userName'].errors?.['pattern']">
+      <div *ngIf="registrationForm.controls['name'].errors?.['required']">User name is required</div>
+      <div *ngIf="registrationForm.controls['name'].errors?.['pattern']">
         User name must be 3 to 15 characters long and can contain letters, numbers, underscores, or hyphens
       </div>
     </div>
@@ -19,7 +19,7 @@
 
   <!-- Email Field -->
   <div class="mb-3">
-    <label for="email1" class="form-label">Email address</label>
+    <label for="email" class="form-label">Email address</label>
     <input formControlName="email" type="email" name="email" class="form-control" id="email1"
       aria-describedby="emailHelp" required>
     <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched"
@@ -137,7 +137,7 @@
   <!-- Image Field -->
   <div class="mb-3">
     <label for="image" class="form-label">Upload Image</label>
-    <input formControlName="image" type="file" class="form-control" id="image" name="image">
+    <input formControlName="image" type="file" class="form-control" id="image" name="image" (change)="onFileChange($event)">
   </div>
 
   <!-- Alerts -->

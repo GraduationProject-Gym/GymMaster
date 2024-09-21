@@ -4,6 +4,13 @@
     font-weight: bold
 }
 
-.lnk{
+.lnk {
     color: #ff6207;
+}
+
+.form {
+    width: 50%;
+    margin: auto;
+    margin-top: 170px;
+    margin-bottom: 70px;
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,13 +6,17 @@ import { Injectable } from '@angular/core';
 })
 export class RegistrationService {
   constructor(private readonly http: HttpClient) { }
-  private readonly registrationUrl = "http://localhost:8002/api/register";
+  private readonly registrationUrl = "http://localhost:8000/api/register";
 
-  register(data: {
-    email: string, password: string, userName: string,
-    age: number, goal: string, phone: string,
-    address: string, gender: string, role: string, image: string
-  }) {
+  register(data: FormData) {
+    // const headers = new HttpHeaders({
+    //   // 'Accept': 'application/json',
+    //   "Content-Type": "application/json",
+    //   "Accept": "application/json",
+    //   "Authorization": "Bearer YOUR_ACCESS_TOKEN",
+    //   "X-Custom-Header": "CustomValue"
+    //   // You can add more headers here if needed
+    // });
     console.log(data); // Test sent payload
     return this.http.post(this.registrationUrl, data);
   }

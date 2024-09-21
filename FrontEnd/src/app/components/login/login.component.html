@@ -1,8 +1,8 @@
-<form [formGroup]="loginForm" (ngSubmit)="loginAction()" class="form form-background w-75">
+<form [formGroup]="loginForm" (ngSubmit)="loginAction()" class="form form-background">
     <h1 class="title d-flex justify-content-center">Login</h1>
     <div class="form-group">
-        <label for="email" class="w-25">Email address</label>
-        <input formControlName="email" type="email" class="form-control w-75 m-auto" id="email" name="email"
+        <label for="email">Email address</label>
+        <input formControlName="email" type="email" class="form-control" id="email" name="email"
             placeholder="Enter email">
         @if (emailRequired){
         <div class="error-msg">
@@ -13,8 +13,8 @@
             Enter a valid email
         </div>
         }
-        <label for="password" class="w-25 mt-3">Password</label>
-        <input formControlName="password" type="password" class="form-control w-75 m-auto" id="password" name="password"
+        <label for="password" class="mt-3">Password</label>
+        <input formControlName="password" type="password" class="form-control" id="password" name="password"
             placeholder="Password">
         @if (passwordRequired){
         <div class="error-msg">
