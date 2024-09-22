@@ -41,6 +41,14 @@ class AuthController extends Controller
             $image = $request->file('image');
             $imagePath = $image->store('images', 'user_images');
         }
+        $user = User::where('email', $request->email)->first();
+        $user1 = User::where('phone', $request->phone)->first();
+        if($user){
+            return response()->json(['message' => 'this email are used']);
+        }
+        if($user1){
+            return response()->json(['message' => 'this phone are used']);
+        }
         // Create a new user
         $user = User::create([
             'name' => $request->name,
