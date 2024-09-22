@@ -1,0 +1,93 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.bg-image {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+h2{
+  color: #ff6207;
+}
+.container {
+  position: relative;
+  margin: 40 auto;
+  padding: 20px;
+  max-width: 600px;
+  z-index: 1;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.detail-group {
+  margin-bottom: 15px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.btn, .btn-cancel {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn {
+  background-color: #e9472a;
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: auto;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  /* .badge{
+    background-color: #ff6207;
+  } */
+
+  .badge {
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+  }
+
+  .bg-success {
+    background-color: #28a745;
+  }
+
+  .bg-danger {
+    background-color: #dc3545;
+  }
+
+
+  .btn, .btn-cancel {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .bg-image {
+    width: 100%;
+    height: 123vh;
+  }
+}

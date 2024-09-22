@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ClassesComponent } from './components/trainer/classes/classes.component';
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
+import { ShowClassComponent } from './components/trainer/show-class/show-class.component';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,9 @@ import { UpdateClassComponent } from './components/trainer/update-class/update-c
     LoginComponent,
     FooterComponent,
     ClassesComponent,
-    UpdateClassComponent
-  ],
+    UpdateClassComponent,
+    ShowClassComponent
+    ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

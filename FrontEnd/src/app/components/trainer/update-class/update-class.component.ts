@@ -15,8 +15,8 @@ import { ClassService } from '../../../services/trainer/class/class.service';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    ClassService
   ],
+  providers: [ClassService] ,
   templateUrl: './update-class.component.html',
   styleUrl: './update-class.component.css'
 })
@@ -28,7 +28,6 @@ import { ClassService } from '../../../services/trainer/class/class.service';
     equipment: string = 'Yoga Mats';
     description: string = 'A yoga class focused on flexibility and balance.';
     //api
-
     // className: string = '';
     // sessions: number = 0;
     // status: string = '';
