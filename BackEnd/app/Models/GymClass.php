@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GymClass extends Model
 {
     use HasFactory;
+    protected $table = 'gymclass';
     protected $fillable = [
         'name',
         'description',
@@ -15,6 +16,7 @@ class GymClass extends Model
         'status',
         'max_trainee'
     ];
+
     public function useEquipment()
     {
        return $this->belongsToMany(GymClass::class, 'class_equipment', 'class_id', 'equipment_id');

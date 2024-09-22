@@ -61,7 +61,7 @@ export class LoginComponent {
   loginAction() {
     this.formSubmitted = true; // Mark form as submitted
 
-    // if (this.loginForm.valid) {
+    if (this.loginForm.valid) {
     const data = {
       email: this.loginForm.value.email || '',
       password: this.loginForm.value.password || '',
@@ -86,9 +86,9 @@ export class LoginComponent {
          },
       error: (error) => { console.log(error); }
     });
-    // } else {
-    //   console.log('Form is invalid'); // Log if form is invalid
-    // }
+    } else {
+      console.log('Form is invalid'); // Log if form is invalid
+    }
   }
 
   // Get device name
