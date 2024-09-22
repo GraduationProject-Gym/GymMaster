@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/authentication/login/login.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent {
   formSubmitted = false; // Track if the form has been submitted
 
   // Create request to use login service
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router: Router) { }
 
   // Create form elements and set up their basic validation rules
   loginForm = new FormGroup({
@@ -80,7 +80,10 @@ export class LoginComponent {
 
     // Call login service and handle response
     this.loginService.login(data).subscribe({
-      next: (response) => { console.log(response); },
+      next: (response) => {
+         console.log(response);
+         this.router.navigate(['/trainee'])
+         },
       error: (error) => { console.log(error); }
     });
     // } else {

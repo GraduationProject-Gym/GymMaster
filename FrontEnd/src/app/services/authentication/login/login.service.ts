@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs';
 // import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -8,13 +9,15 @@ import { Injectable } from '@angular/core';
 export class LoginService {
 
   constructor(private readonly http: HttpClient) { }
-  private readonly loginUrl = "http://localhost:8004/api/login";
+  private readonly loginUrl = "http://localhost:8000/api/login";
 
   login(data: { email: string, password: string, device_name: string }) {
     console.log(data); // Test sent payload
-    return this.http.post(this.loginUrl, data);
-    // .pipe(tap((result) => {
-    //   localStorage.setItem('authUser', JSON.stringify(result));
-    // }));
+    return this.http.post(this.loginUrl, data).pipe(tap((response: any) => {
+      if (response && response.token) {
+        localStorage.setItem('authUser', JSON.stringify(response));
+      }
+    }));
   }
 }
+
