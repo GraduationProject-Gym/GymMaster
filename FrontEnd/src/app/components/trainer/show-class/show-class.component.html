@@ -10,9 +10,10 @@
           <p><strong>Number of Sessions:</strong> <span class="badge">{{ sessions }}</span></p>
           <p><strong>Status:</strong> <span class="badge" [ngClass]="{'bg-success': status === 'active', 'bg-danger': status === 'inactive'}">{{ status }}</span></p>
         </div> -->
+
         <div class="col-md-6">
           <p><strong>Number of Sessions:</strong> <span class="badge bg-light ">{{ sessions }}</span></p>
-          <p><strong>Status:</strong> <span class="badge" [ngClass]="{'bg-success': status === 'active', 'bg-danger': status === 'inactive'}">{{ status }}</span></p>
+          <p><strong>Status:</strong> <span class="badge bg-light" [ngClass]="{'bg-success': status === 'active', 'bg-danger': status === 'inactive'}">{{ status }}</span></p>
         </div>
 
         <div class="col-md-6">
