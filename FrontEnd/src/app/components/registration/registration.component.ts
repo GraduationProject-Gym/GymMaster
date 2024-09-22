@@ -18,12 +18,7 @@ import { RegistrationService } from '../../services/authentication/registration/
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-<<<<<<< HEAD
-
-  constructor(private registrationService: RegistrationService, private router: Router) {
-=======
   constructor(private registrationService:RegistrationService, private router: Router){
->>>>>>> landing-registration
   }
 
   // Extract image name from its path
@@ -48,12 +43,7 @@ export class RegistrationComponent {
     // name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
     email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
-<<<<<<< HEAD
-    age: new FormControl(null, [Validators.required, Validators.min(10)]),
-    goal: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-=======
     age: new FormControl(null, [Validators.required,Validators.min(10)]),
->>>>>>> landing-registration
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),
     address: new FormControl(null, Validators.required),
     password: new FormControl(null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}')]),
@@ -120,7 +110,6 @@ export class RegistrationComponent {
 
   Registeration() {
     if (this.registrationForm.valid) {
-<<<<<<< HEAD
       const formData = new FormData();
       Object.keys(this.registrationForm.value).forEach(key => {
         if (key === 'image') {
@@ -147,34 +136,6 @@ export class RegistrationComponent {
     } else {
       console.log('Form is invalid');
     }
-=======
-      const data = {
-        userName: this.registrationForm.value.userName || '',
-        email: this.registrationForm.value.email || '',
-        password: this.registrationForm.value.password || '',
-        // confirmPassword: this.registrationForm.value.confirmPassword || '',
-        age: this.registrationForm.value.age || 10,
-        phone: this.registrationForm.value.phone || '',
-        address: this.registrationForm.value.address || '',
-        gender: this.registrationForm.value.gender || '',
-        image: this.registrationForm.value.image || '',
-        role: this.registrationForm.value.role || ''
-      };
-        // Call Registration service and handle response
-    this.registrationService.register(data).subscribe({
-      next: (response) => {
-        console.log(response);
-        setTimeout(() => {
-          this.router.navigate(['/home']);
-        }, 2000);      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-  } else {
-    console.warn('Form is invalid');
-  }
->>>>>>> landing-registration
 
     if (this.registrationForm.valid) {
       this.showErrorAlert = false;
