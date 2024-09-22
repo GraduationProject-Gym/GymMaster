@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 <form [formGroup]="registrationForm" class="form w-75  form-background">
+=======
+
+<img src="/form4.jpg" alt="Background Image">
+
+<form [formGroup]="registrationForm"  class="form   form-background">
+>>>>>>> landing-registration
   <div class="d-flex flex-column align-items-center">
     <h1 class="registration">Create Your Account</h1>
-    <p>or <a routerLink="/login" routerLinkActive="active">Sign In Your Account</a></p>
   </div>
 
   <!-- Name Field -->
@@ -19,11 +25,17 @@
 
   <!-- Email Field -->
   <div class="mb-3">
+<<<<<<< HEAD
     <label for="email" class="form-label">Email address</label>
     <input formControlName="email" type="email" name="email" class="form-control" id="email1"
       aria-describedby="emailHelp" required>
     <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched"
       class="error-msg">
+=======
+    <label for="email1" class="form-label">Email address</label>
+    <input formControlName="email" type="email" name="email" class="form-control" id="email1"  required>
+    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched" class="error-msg">
+>>>>>>> landing-registration
       <div *ngIf="registrationForm.controls['email'].errors?. ['required']">Email is required</div>
       <div *ngIf="registrationForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>
     </div>
@@ -39,6 +51,7 @@
     </div>
   </div>
 
+<<<<<<< HEAD
   <div class="mb-3">
     <label for="goal" class="form-label">What is your goal?</label>
     <textarea formControlName="goal" class="form-control" name="goal" id="goal" required
@@ -51,6 +64,8 @@
     </div>
   </div>
 
+=======
+>>>>>>> landing-registration
   <!-- Phone Field -->
   <div class="mb-3">
     <label for="phone" class="form-label">Phone</label>
@@ -85,6 +100,7 @@
     </div>
   </div>
 
+<<<<<<< HEAD
   <!-- Confirm Password Field -->
   <!-- <div class="mb-3">
   <label for="confirmPassword" class="form-label">Confirm Password</label>
@@ -94,6 +110,8 @@
     <div *ngIf="registrationForm.controls['confirmPassword'].errors?.['passwordMismatch']">Passwords do not match</div>
   </div>
 </div> -->
+=======
+>>>>>>> landing-registration
 
   <div class="mb-3">
     <label for="confirmPassword" class="form-label">Confirm Password</label>
@@ -135,7 +153,7 @@
   </div>
 
   <!-- Image Field -->
-  <div class="mb-3">
+  <div class="mb-3" >
     <label for="image" class="form-label">Upload Image</label>
     <input formControlName="image" type="file" class="form-control" id="image" name="image" (change)="onFileChange($event)">
   </div>
@@ -145,7 +163,12 @@
     Please fix the errors in the form.
   </div>
 
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center ">
     <button type="button" class="btn" (click)="Registeration()">Register</button>
   </div>
+<<<<<<< HEAD
 </form>
+=======
+</form>
+
+>>>>>>> landing-registration
