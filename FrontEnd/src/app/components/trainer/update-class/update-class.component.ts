@@ -1,43 +1,52 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-classes',
+  selector: 'app-update-class',
   standalone: true,
-  imports: [
-    RouterModule,
-    HeaderComponent,
+  imports: [ HeaderComponent,
     FooterComponent,
-    CommonModule
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule
   ],
-  templateUrl: './classes.component.html',
-  styleUrls: ['./classes.component.css']
+  templateUrl: './update-class.component.html',
+  styleUrl: './update-class.component.css'
 })
-export class ClassesComponent {
-  className: string = 'Yoga';
-  image: string = '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif';
-  description: string = 'Strength training focuses on increasing muscle strength and mass through weight lifting and resistance exercises.';
-  activeGroup: string | undefined;
-  groups = [
-    {
-      id: 'group1',
-      title: 'Group 1',
-      days: 'Monday - Friday',
-      hours: '10:00 AM - 4:00 PM',
-    },
-    {
-      id: 'group2',
-      title: 'Group 2',
-      days: 'Saturday - Sunday',
-      hours: '11:00 AM - 5:00 PM',
-    }
-  ];
 
-  toggleDetails(group: string) {
-    this.activeGroup = this.activeGroup === group ? undefined : group;
+  export class UpdateClassComponent {
+    className: string = 'Yoga';
+    sessions: number = 5;
+    status: string = 'active';
+    equipment: string = 'Yoga Mats';
+    description: string = 'A yoga class focused on flexibility and balance.';
+
+    groups = [
+      { days: 'Monday, Wednesday, Friday', hours: '10:00 AM - 11:30 AM' },
+      { days: 'Tuesday, Thursday', hours: '6:00 PM - 7:30 PM' }
+    ];
+
+    constructor(private router: Router) {}
+
+    save() {
+      console.log('Updated Class Info:', {
+        className: this.className,
+        sessions: this.sessions,
+        status: this.status,
+        groups: this.groups,
+        equipment: this.equipment,
+        description: this.description
+      });
+
+      this.router.navigate(['/trainer/classes']);
+    }
+
+    cancel() {
+      this.router.navigate(['/trainer/classes']);
+    }
   }
-}
-  

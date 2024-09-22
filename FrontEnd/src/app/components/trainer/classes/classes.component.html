@@ -1,34 +1,38 @@
-<app-header></app-header>
 <div class="className">
   <h1>{{ className }} Class</h1>
 </div>
-<div class="d-flex m-5">
-  <div class="d-flex flex-column align-items-center" style="flex: 1;">
-    <div *ngFor="let group of groups" style="text-align: center;">
-      <div class="card" (click)="toggleDetails(group.id)">
-        <h5>{{ group.title }}</h5>
-      </div>
-      <div *ngIf="activeGroup === group.id" class="details">
-        <p class="details-title">Details:</p>
-        <p>Days: <span class="details-info">{{ group.days }}</span></p>
-        <p>Hours: <span class="details-info">{{ group.hours }}</span></p>
-        <a routerLink="/trainer/Trainees" routerLinkActive="active" class="btn-trainees">View Trainees</a>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="d-flex m-5" style="width: 100%; max-width: 1200px;">
+    <div style="flex: 1;" class="m-5">
+      <div class="d-flex flex-column align-items-center">
+        <div *ngFor="let group of groups" style="width: 100%; max-width: 600px; text-align: center;">
+          <div class="card" (click)="toggleDetails(group.id)">
+            <h5>{{ group.title }}</h5>
+          </div>
+          <div *ngIf="activeGroup === group.id" class="details" style="width: 100%; max-width: 600px;">
+            <p class="details-title">Details:</p>
+            <p>Days: <span class="details-info">{{ group.days }}</span></p>
+            <p>Hours: <span class="details-info">{{ group.hours }}</span></p>
+            <a routerLink="/trainer/Trainees" routerLinkActive="active" class="btn-trainees">View Trainees</a>
+          </div>
+        </div>
+        <div class="buttons mt-3">
+          <button class="btn">Delete</button>
+          <button class="btn" (click)="goToUpdatePage()">Update</button>
+          <button class="btn">Show</button>
+        </div>
       </div>
     </div>
+    <div class="content" style="flex: 1;">
+      <img [src]="image" alt="Group Image" style="width: 100%; max-width: 600px;">
+      <div class="description mt-3" style="width: 100%; max-width: 600px;">{{ description }}</div>
+    </div>
   </div>
-  <div class="content" style="flex: 1; text-align: left;">
-    <img [src]="image" alt="Group Image" style="width: 100%; max-width: 600px;">
-    <div class="description" style="width: 100%; max-width: 600px;">{{ description }}</div>
-  </div>
-</div>
-<div class="buttons">
-  <button class="btn">Delete</button>
-  <button class="btn">Update</button>
-  <button class="btn">Show</button>
 </div>
 
 
 
 
 
-<app-footer></app-footer>
+
+

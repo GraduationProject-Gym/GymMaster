@@ -1,29 +1,55 @@
-<app-header></app-header>
-<div class="className">
-  <h1>{{ className }} Class</h1>
-</div>
-<div class="d-flex m-5">
-  <div class="d-flex flex-column align-items-center" style="flex: 1;">
-    <div *ngFor="let group of groups" style="text-align: center;">
-      <div class="card" (click)="toggleDetails(group.id)">
-        <h5>{{ group.title }}</h5>
-      </div>
-      <div *ngIf="activeGroup === group.id" class="details">
-        <p class="details-title">Details:</p>
-        <p>Days: <span class="details-info">{{ group.days }}</span></p>
-        <p>Hours: <span class="details-info">{{ group.hours }}</span></p>
-        <a routerLink="/trainer/Trainees" routerLinkActive="active" class="btn-trainees">View Trainees</a>
-      </div>
+<img src="/form4.jpg" alt="Background Image">
+
+<div class="edit-container">
+  <h2>Edit Class</h2>
+
+  <!-- Edit Class Information -->
+  <form (ngSubmit)="save()" >
+    <div class="form-group">
+      <label for="className">Class Name:</label>
+      <input id="className" type="text" [(ngModel)]="className" name="className" class="form-control">
     </div>
-  </div>
-  <div class="content" style="flex: 1; text-align: left;">
-    <img [src]="image" alt="Group Image" class="group-image">
-    <div class="description">{{ description }}</div>
-  </div>
+
+    <div class="form-group">
+      <label for="sessions">Number of Sessions:</label>
+      <input id="sessions" type="number" [(ngModel)]="sessions" name="sessions" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" [(ngModel)]="status" name="status" class="form-control">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <!-- Group Information -->
+    <div *ngFor="let group of groups; let i = index" class="form-group">
+      <h3>Group {{ i + 1 }}</h3>
+      <label for="groupDays">Days (Group {{ i + 1 }}):</label>
+      <input id="groupDays" type="text" [(ngModel)]="group.days" name="groupDays{{ i }}" class="form-control">
+
+      <label for="groupHours">Hours (Group {{ i + 1 }}):</label>
+      <input id="groupHours" type="text" [(ngModel)]="group.hours" name="groupHours{{ i }}" class="form-control">
+    </div>
+
+    <!-- Equipment Information -->
+    <div class="form-group">
+      <label for="equipment">Equipment Name:</label>
+      <input id="equipment" type="text" [(ngModel)]="equipment" name="equipment" class="form-control">
+    </div>
+
+    <!-- Class Description -->
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="description" name="description" class="form-control" rows="5"></textarea>
+    </div>
+
+    <!-- Save and Cancel Buttons -->
+    <button type="submit" class="btn-save">Save</button>
+    <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+  </form>
 </div>
-<div class="buttons">
-  <button class="btn update-btn">Delete</button>
-  <button class="btn update-btn">Update</button>
-  <button class="btn update-btn">Show</button>
-</div>
-<app-footer></app-footer>
+
+
+
