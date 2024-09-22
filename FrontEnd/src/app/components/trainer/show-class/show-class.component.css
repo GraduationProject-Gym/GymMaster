@@ -67,10 +67,14 @@ h2{
     background-color: #ff6207;
   } */
 
-  .badge {
-    color: white;
+  /* span .badge {
+    background-color: red;
+    color: #ff6207;
     padding: 5px 10px;
     border-radius: 12px;
+  } */
+  span{
+    color:#ff6207;
   }
 
   .bg-success {

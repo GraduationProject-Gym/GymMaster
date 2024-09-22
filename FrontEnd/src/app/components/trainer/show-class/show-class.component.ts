@@ -61,11 +61,13 @@ export class ShowClassComponent {
   status: string = 'Active';
   equipment: string = 'Yoga Mats';
   description: string = 'A yoga class focused on flexibility and balance.';
-
+  // days:string= 'Tuesday, Thursday';
+  // hours:string= '6:00 PM - 7:30 PM';
   groups = [
-    { days: 'Monday, Wednesday, Friday', hours: '10:00 AM - 11:30 AM' },
-    { days: 'Tuesday, Thursday', hours: '6:00 PM - 7:30 PM' }
+    { days: 'Monday', hours: '10:00 AM - 11:30 AM' },
+    { days: 'Thursday', hours: '6:00 PM - 7:30 PM' }
   ];
+
 
   constructor(private router: Router) {}
 
