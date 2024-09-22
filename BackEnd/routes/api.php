@@ -24,3 +24,7 @@ Route::apiResource('membership',MembershipController::class);
 Route::apiResource('subscribe',SubscriptionController::class);
 Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
 Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
+
+
+Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
