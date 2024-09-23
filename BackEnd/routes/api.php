@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\SubscriptionController ;
+use App\Http\Controllers\TraineeClassController;
 
 
 
@@ -22,6 +23,8 @@ Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('p
 // membership
 
 Route::apiResource('membership',MembershipController::class);
+Route::apiResource('trainee-class',TraineeClassController::class);
+Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->middleware('guest');
 
 // subscription
 Route::apiResource('subscribe',SubscriptionController::class);
