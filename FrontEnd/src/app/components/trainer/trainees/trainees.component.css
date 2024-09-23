@@ -1,3 +1,11 @@
+h1{
+  font-size: 1.8rem;
+  color: #e9472a;
+  font-weight: bold;
+  margin-top: 100px;
+  align-items: center;
+
+}
 .card {
   background-color: #ffffff;
   border: none;
@@ -6,8 +14,7 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-  margin-top: 200px;
-  margin-left: 50px;
+  margin: 50px;
 }
 
 .card:hover {
