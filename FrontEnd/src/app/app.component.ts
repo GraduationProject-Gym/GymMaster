@@ -9,6 +9,7 @@ import { ClassesComponent } from './components/trainer/classes/classes.component
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
 import { ShowClassComponent } from './components/trainer/show-class/show-class.component';
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
+import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ import { AddClassComponent } from './components/trainer/add-class/add-class.comp
     ClassesComponent,
     UpdateClassComponent,
     ShowClassComponent,
-    AddClassComponent
+    AddClassComponent,
+    TraineesComponent
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

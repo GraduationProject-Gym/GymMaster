@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let trainee of trainees">
+      <div class="card shadow-lg mb-5" style="width: 100%;">
+        <div class="card-img-wrapper">
+          <img [src]="trainee.image" class="card-img-top " [alt]="trainee.name">
+        </div>
+        <div class="card-body ">
+          <h5 class="card-title mb-3 text-center">{{ trainee.name }}</h5>
+          <p class="card-text"><strong>Trainer Name:</strong> {{ trainee.trainerName }}</p>
+          <p class="card-text"><strong>Class Name:</strong> {{ trainee.className }}</p>
+          <p class="card-text"><strong>Number of Sessions Attended:</strong> {{ trainee.sessionsAttended }}</p>
+          <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
+          <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
+          <p class="card-text"><strong>Trainee Review on Captain:</strong> {{ trainee.review }}</p>
+          <p class="card-text">
+            <strong>Trainee Rate on Captain:</strong>
+            <span class="star-rating">
+              <i *ngFor="let star of [].constructor(5); let i = index"
+                class="fa-star"
+                [ngClass]="i < trainee.rating ? 'fas' : 'far'"
+                style="color: #ff6207;"></i>
+            </span>
+          </p>
+
+          <a href="#" class="btn btn-primary mt-3">Add Comment</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
