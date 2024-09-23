@@ -18,8 +18,6 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  formSubmitted = false; // Track if the form has been submitted
-
   // Create request to use login service
   constructor(private loginService: LoginService, private router: Router) { }
 
@@ -58,6 +56,7 @@ export class LoginComponent {
   }
 
   // Check user authentication and authorization
+  formSubmitted = false; // Track if the form has been submitted
   errorMessage: string | null = null;
 
   loginAction() {
@@ -78,6 +77,8 @@ export class LoginComponent {
          this.router.navigate(['/trainee']);
          },
       error: (error) => { 
+        console.log(error);
+        // this.errorMessage = error;
         this.errorMessage = 'Login failed. Please try again.';
        }
     });
