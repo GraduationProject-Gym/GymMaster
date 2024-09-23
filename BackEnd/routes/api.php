@@ -28,3 +28,7 @@ Route::apiResource('subscribe',SubscriptionController::class);
 Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
 Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
 
+
+// api
+Route::post('/create-payment-intent', [SubscriptionController::class, 'store']);
+Route::post('/confirm-payment', [SubscriptionController::class, 'confirmPayment']);
