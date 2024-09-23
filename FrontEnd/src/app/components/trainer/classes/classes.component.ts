@@ -36,13 +36,13 @@ export class ClassesComponent {
     {
       id: 1,
       title: 'Session 1',
-      days: 'Monday - Friday',
+      days: 'Monday',
       hours: '10:00 AM - 4:00 PM',
     },
     {
       id: 2,
       title: 'Session 2',
-      days: 'Saturday - Sunday',
+      days: 'Saturday ',
       hours: '11:00 AM - 5:00 PM',
     }
   ];
