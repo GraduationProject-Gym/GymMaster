@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  font-size: 18px;
 }
 
 .bg-image {
@@ -12,14 +13,17 @@ body {
   left: 0;
   z-index: -1;
 }
-h2{
+
+h2 {
   color: #ff6207;
+  font-size: 28px;
 }
+
 .container {
   position: relative;
   margin: 40 auto;
   padding: 20px;
-  max-width: 600px;
+  max-width: 800px;
   z-index: 1;
 }
 
@@ -37,21 +41,37 @@ h2{
   text-align: center;
 }
 
-.btn, .btn-cancel {
-  padding: 10px 15px;
-  margin: 5px;
+.cancelBtn {
+  padding: 8px ;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.btn {
-  background-color: #e9472a;
-  color: white;
-}
-
-.btn-cancel {
   background-color: #ccc;
+  margin-left: 5px;
+
+}
+
+
+.cancelBtn:hover {
+  color: #ff6207;
+  background-color: transparent;}
+
+h6 {
+  font-size: 20px;
+
+}
+
+p, span, .badge {
+  font-size: 18px;
+
+}
+
+.badge {
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  background-color:  #ff6207;
+
 }
 
 @media (max-width: 768px) {
@@ -63,33 +83,28 @@ h2{
     padding: 15px;
   }
 
-  /* .badge{
-    background-color: #ff6207;
-  } */
-
-  /* span .badge {
-    background-color: red;
-    color: #ff6207;
-    padding: 5px 10px;
-    border-radius: 12px;
-  } */
-  span{
-    color:#ff6207;
+  body {
+    font-size: 16px;
   }
 
-  .bg-success {
-    background-color: #28a745;
+  h2 {
+    font-size: 24px;
   }
 
-  .bg-danger {
-    background-color: #dc3545;
+  h6 {
+    font-size: 18px;
   }
 
+  p, span, .badge {
+    font-size: 16px;
+  }
 
   .btn, .btn-cancel {
     width: 100%;
     margin-top: 10px;
+    font-size: 16px;
   }
+
   .bg-image {
     width: 100%;
     height: 123vh;

@@ -61,23 +61,33 @@
     </div>
   </div>
 
-  <!-- Password Field -->
-  <div class="mb-3">
+  <!-- <div class="mb-3">
     <label for="password" class="form-label">Password</label>
-    <input formControlName="password" type="password" class="form-control" name="password" id="password" required>
+    <div class="input-group">
+      <input formControlName="password" type="password" class="form-control" name="password" id="password" required>
+      <div class="input-group-append">
+        <span class="input-group-text" id="togglePassword" style="cursor:pointer;" (click)="showPassword()">
+          <i class="far fa-eye" id="eyeIcon"></i>
+        </span>
+      </div>
+    </div>
+  </div>
     <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched"
       class="error-msg">
       <div *ngIf="registrationForm.controls['password'].errors?. ['required']">Password is required</div>
       <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters
         long, include uppercase and lowercase letters, a number, and a special character</div>
     </div>
-  </div>
-
 
   <div class="mb-3">
     <label for="confirmPassword" class="form-label">Confirm Password</label>
     <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword"
       id="confirmPassword" required>
+      <div class="input-group-append">
+        <span class="input-group-text2" id="togglePassword" style="cursor:pointer;" (click)="showPassword()">
+          <i class="far fa-eye2" id="eyeIcon"></i>
+        </span>
+      </div>
     <ng-container *ngIf="ConfirmPasswordRequired; else passwordMismatch">
       <div class="error-msg">
         Confirm password is required
@@ -91,8 +101,35 @@
         </div>
       </div>
     </ng-template>
+  </div> -->
+
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <div class="input-group">
+      <input formControlName="password" type="password" class="form-control" name="password" id="password" required>
+      <div class="input-group-append">
+        <span class="input-group-text" id="togglePassword" style="cursor:pointer;" (click)="showPassword('password')">
+          <i class="far fa-eye" id="eyeIcon"></i>
+        </span>
+      </div>
+    </div>
+    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched" class="error-msg">
+      <div *ngIf="registrationForm.controls['password'].errors?.['required']">Password is required</div>
+      <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and a special character</div>
+    </div>
   </div>
 
+  <div class="mb-3">
+    <label for="confirmPassword" class="form-label">Confirm Password</label>
+    <div class="input-group">
+      <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
+      <div class="input-group-append">
+        <span class="input-group-text" id="toggleConfirmPassword" style="cursor:pointer;" (click)="showPassword('confirmPassword')">
+          <i class="far fa-eye" id="confirmEyeIcon"></i>
+        </span>
+      </div>
+    </div>
+  </div>
 
 
   <!-- Gender Field -->
