@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['VIP', 'Normal']);
-            $table->enum('subscribe_type', ['Daily','weekly' ,'Monthly','Yearly']);
+            $table->enum('subscribe_type', ['weekly' ,'Monthly','Yearly']);
             $table->decimal('amount')->default(0.0);
-            $table->boolean('status')->defaul(1);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

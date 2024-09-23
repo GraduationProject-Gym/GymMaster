@@ -16,9 +16,6 @@ return new class extends Migration
             $table->text('goals')->nullable();
             $table->integer('no_vouchers')->default(0);
             $table->dateTime('expiration_date')->nullable();
-            $table->foreign('id')->references('id')->on('users')
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
             $table->timestamps();
 
         });

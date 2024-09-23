@@ -11,12 +11,14 @@ use App\Models\Review;
 class Trainee extends Model
 {
     use HasFactory;
-    protected $fillable = ['goals','no_vouchers','expiration_date','membership_id'];
+    // admin will add no_vouchers
+    // expiration_date will update automatic when update membership
+    protected $fillable = ['goals','membership_id', 'user_id'];
     public function TraineeMembership(){
         return $this->belongsTo(Memberships::class, 'membership_id','id');
     }
     public function TraineeUser(){
-        return $this->belongsTo(User::class, 'id','id');
+        return $this->belongsTo(User::class, 'id','user_id');
     }
 
     public function ReviewTrainee()

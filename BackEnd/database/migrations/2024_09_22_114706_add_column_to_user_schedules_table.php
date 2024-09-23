@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('trainees', function (Blueprint $table) {
+        Schema::table('schedules', function (Blueprint $table) {
             //
-            $table->foreignId('membership_id')->default(20)->constrained('memberships','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('nameDay');
 
         });
     }
@@ -23,10 +23,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('trainees', function (Blueprint $table) {
+        Schema::table('schedules', function (Blueprint $table) {
             //
-            $table->dropForeign('trainees_membership_id_foreign');
-            $table->dropColumn('membership_id');
+            $table->dropColumn('nameDay');
         });
     }
 };

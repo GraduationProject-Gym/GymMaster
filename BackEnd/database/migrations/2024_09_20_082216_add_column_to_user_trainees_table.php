@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::table('trainees', function (Blueprint $table) {
             //
-            $table->foreignId('membership_id')->default(20)->constrained('memberships','id')->onDelete('cascade')->onUpdate('cascade');
-
+            $table->foreignId('user_id')->constrained('users','id')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -25,8 +24,8 @@ return new class extends Migration
     {
         Schema::table('trainees', function (Blueprint $table) {
             //
-            $table->dropForeign('trainees_membership_id_foreign');
-            $table->dropColumn('membership_id');
+            $table->dropForeign('trainees_user_id_foreign');
+            $table->dropColumn('user_id');
         });
     }
 };
