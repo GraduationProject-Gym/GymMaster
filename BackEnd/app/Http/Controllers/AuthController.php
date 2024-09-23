@@ -16,6 +16,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
+
 class AuthController extends Controller
 {
     public function __construct()
@@ -152,17 +153,26 @@ class AuthController extends Controller
     }
 
     // Logout
-    public function logout(Request $request){
-        $user = Auth::user();
-        if($user){
-            // $user->tokens()->delete(); // logout from all devo=ices
-            $user->currentAccessToken()->delete();
-            return response()->json([
-                "message"=>"Logged out"
-            ]);
+    public function logout(Request $request)
+{
+    $user = Auth::user();
+    
+    if ($user) {
+        $currentToken = $user->currentAccessToken();
+        if ($currentToken) {
+            $currentToken->delete();
         }
-
+        
+        return response()->json([
+            "message" => "Logged out successfully"
+        ]);
     }
+
+    return response()->json([
+        "message" => "User not authenticated"
+    ], 401);
+}
+
 
     public function sendResetLinkEmail(Request $request)
     {
