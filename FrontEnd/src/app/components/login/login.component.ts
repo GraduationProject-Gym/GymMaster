@@ -95,4 +95,22 @@ export class LoginComponent {
   private getDeviceName(): string {
     return navigator.userAgent;
   }
+
+
+  // show & hide password
+
+    showPassword() {
+    const togglePassword = document.getElementById('togglePassword') as HTMLElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    const eyeIcon = document.getElementById('eyeIcon') as HTMLElement;
+
+    if (togglePassword && passwordInput) {
+      const type: string = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+
+      // Toggle the eye icon
+      eyeIcon.classList.toggle('fa-eye-slash');
+      eyeIcon.classList.toggle('fa-eye');
+    }
+  }
 }

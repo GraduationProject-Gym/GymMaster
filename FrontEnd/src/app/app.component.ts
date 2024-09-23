@@ -8,6 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ClassesComponent } from './components/trainer/classes/classes.component';
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
 import { ShowClassComponent } from './components/trainer/show-class/show-class.component';
+import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 
 @Component({
   selector: 'app-root',
@@ -21,11 +22,13 @@ import { ShowClassComponent } from './components/trainer/show-class/show-class.c
     FooterComponent,
     ClassesComponent,
     UpdateClassComponent,
-    ShowClassComponent
+    ShowClassComponent,
+    AddClassComponent
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'FrontEnd';
+
 }

@@ -1,0 +1,72 @@
+<img src="/form4.jpg" alt="Background Image">
+
+<div class="add-container">
+  <h2>Add New Class</h2>
+
+  <form (ngSubmit)="save()">
+
+                <!-- Class Name -->
+    <div class="form-group">
+      <label for="className">Class Name:</label>
+      <input id="className" type="text" name="className" [(ngModel)]="classForm.value.className" class="form-control">
+    </div>
+
+                   <!-- Class Name -->
+    <div class="form-group">
+    <label for="trainerName">Trainer Name:</label>
+    <input id="trainerName" type="text" name="trainerName" [(ngModel)]="classForm.value.trainerName" class="form-control">
+    </div>
+
+            <!-- Number of Sessions -->
+    <div class="form-group">
+      <label for="sessions">Number of Sessions:</label>
+      <input id="sessions" type="number" name="sessions" [(ngModel)]="classForm.value.sessions" class="form-control">
+    </div>
+
+            <!-- Status -->
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" name="status" [(ngModel)]="classForm.value.status" class="form-control">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <!-- Session Information -->
+    <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
+      <h6 class="text-secondary">Session {{ i + 1 }}</h6>
+      <label for="groupDays{{ i }}">Days (Session {{ i + 1 }}):</label>
+      <select id="groupDays{{ i }}" name="groupDays{{ i }}" [(ngModel)]="group.days" class="form-control">
+        <option value="saturday">Saturday</option>
+        <option value="sunday">Sunday</option>
+        <option value="monday">Monday</option>
+        <option value="tuesday">Tuesday</option>
+        <option value="wednesday">Wednesday</option>
+        <option value="thursday">Thursday</option>
+        <option value="friday">Friday</option>
+      </select>
+
+      <label for="groupHours{{ i }}">Hours (Session {{ i + 1 }}):</label>
+      <input id="groupHours{{ i }}" type="text" name="groupHours{{ i }}" [(ngModel)]="group.hours" class="form-control">
+    </div>
+    <button type="button" class="btn btn-primary" (click)="addGroup()">Add Session</button>
+
+    <!-- Equipment Information -->
+    <div class="form-group">
+      <label for="equipment">Equipment Name:</label>
+      <input id="equipment" type="text" name="equipment" [(ngModel)]="classForm.value.equipment" class="form-control">
+    </div>
+
+    <!-- Class Description -->
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" [(ngModel)]="classForm.value.description" class="form-control" rows="5"></textarea>
+    </div>
+
+    <!-- Save and Cancel Buttons -->
+    <div class="text-center">
+      <button type="submit" class="btn text aling center">Save</button>
+      <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -85,6 +85,21 @@ html,body {
   margin-left: 10px;
 }
 
+/* show & hide password*/
+
+.input-group {
+  position: relative;
+}
+
+.input-group-text {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 
 

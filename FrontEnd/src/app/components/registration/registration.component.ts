@@ -15,7 +15,8 @@ import { RegistrationService } from '../../services/authentication/registration/
   ],
   providers: [RegistrationService],
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css',
+  ]
 })
 export class RegistrationComponent {
   constructor(private registrationService:RegistrationService, private router: Router){
@@ -144,4 +145,25 @@ export class RegistrationComponent {
       this.showErrorAlert = true;
     }
   }
+
+  /* show & hide password*/
+
+  showPassword(inputType: string) {
+    const passwordInput = document.getElementById(inputType) as HTMLInputElement;
+    const eyeIcon = document.getElementById(inputType === 'password' ? 'eyeIcon' : 'confirmEyeIcon') as HTMLElement;
+
+    if (passwordInput) {
+      const type: string = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+
+      // ternary operator
+      passwordInput.setAttribute('type', type);
+
+      // Toggle the eye icon
+      eyeIcon.classList.toggle('fa-eye-slash');
+      eyeIcon.classList.toggle('fa-eye');
+    }
+  }
+
+
 }
+

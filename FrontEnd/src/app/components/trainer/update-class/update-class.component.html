@@ -24,12 +24,20 @@
     </div>
 
     <!-- Group Information -->
-    <div *ngFor="let group of groups; let i = index" class="form-group">
+    <!-- <div *ngFor="let group of groups; let i = index" class="form-group">
       <h3>Group {{ i + 1 }}</h3>
       <label for="groupDays">Days (Group {{ i + 1 }}):</label>
       <input id="groupDays" type="text" [(ngModel)]="group.days" name="groupDays{{ i }}" class="form-control">
 
       <label for="groupHours">Hours (Group {{ i + 1 }}):</label>
+      <input id="groupHours" type="text" [(ngModel)]="group.hours" name="groupHours{{ i }}" class="form-control">
+    </div> -->
+    <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
+      <h6 class="text-secondary">Session {{ i + 1 }}</h6>
+      <label for="groupDays">Days (Session {{ i + 1 }}):</label>
+      <input id="groupDays" type="text" [(ngModel)]="group.days" name="groupDays{{ i }}" class="form-control">
+
+      <label for="groupHours">Hours (Session {{ i + 1 }}):</label>
       <input id="groupHours" type="text" [(ngModel)]="group.hours" name="groupHours{{ i }}" class="form-control">
     </div>
 

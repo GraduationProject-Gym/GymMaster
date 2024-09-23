@@ -4,7 +4,7 @@
   <h2 class="text-center mt-5">{{ className }}</h2>
   <div class="card mb-4">
     <div class="card-body">
-      <h5 class="card-title">Class Details</h5>
+      <h4 class="card-title"><strong>Class Details</strong> </h4>
       <div class="row">
         <!-- <div class="col-md-6">
           <p><strong>Number of Sessions:</strong> <span class="badge">{{ sessions }}</span></p>
@@ -12,26 +12,36 @@
         </div> -->
 
         <div class="col-md-6">
-          <p><strong>Number of Sessions:</strong> <span class="badge bg-light ">{{ sessions }}</span></p>
-          <p><strong>Status:</strong> <span class="badge bg-light" [ngClass]="{'bg-success': status === 'active', 'bg-danger': status === 'inactive'}">{{ status }}</span></p>
+          <p><strong>Number of Sessions:</strong> <span class="badge">{{ sessions }}</span></p>
+          <p><strong>Status:</strong> <span class="badge " [ngClass]="{'bg-success': status === 'active', 'bg-danger': status === 'inactive'}">{{ status }}</span></p>
         </div>
 
         <div class="col-md-6">
-          <p><strong>Equipment:</strong> <span class="badge bg-light text-dark">{{ equipment }}</span></p>
-          <p><strong>Description:</strong> <span class="text-muted">{{ description }}</span></p>
+          <p><strong>Equipment:</strong> <span class="badge">{{ equipment }}</span></p>
+          <!-- <p><strong>Description:</strong> <span class="badge bg-info text-warning">{{ description }}</span></p> -->
         </div>
       </div>
 
-      <h6 class="mt-4">Group Information</h6>
-      <div *ngFor="let group of groups; let i = index" class="mb-3 border p-2 rounded">
-        <h6>Group {{ i + 1 }}</h6>
-        <p><strong>Days:</strong> <span class="text-primary">{{ group.days }}</span></p>
-        <p><strong>Hours:</strong> <span class="text-primary">{{ group.hours }}</span></p>
+      <div class="mb-3 border p-3 rounded bg-light shadow-sm">
+        <h6 ><strong>Description:</strong></h6>
+        <p> <span class="badge">{{ description }}</span></p>
+
+      </div>
+      <h6 class="mt-4">
+        <strong>Session Information</strong>
+      </h6>
+      <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
+        <h6 class="text-secondary">Session {{ i + 1 }}</h6>
+        <p><strong>Day:</strong> <span class="badge">{{ group.days }}</span></p>
+        <p><strong>Hours:</strong> <span class="badge">{{ group.hours }}</span></p>
+        <!-- <p><strong>Date:</strong> <span class="badge bg-info">{{ group.date }}</span></p> -->
+        <!-- <p><strong>Location:</strong> <span class="badge bg-warning">{{ group.location }}</span></p> -->
       </div>
 
+
       <div class="text-center mt-4">
-        <button class="btn btn-primary" (click)="edit()">Edit</button>
-        <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        <button class="btn" (click)="edit()">Edit</button>
+        <button class=" cancelBtn" (click)="cancel()">Cancel</button>
       </div>
     </div>
   </div>
