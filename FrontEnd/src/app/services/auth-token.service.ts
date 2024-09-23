@@ -15,7 +15,10 @@ export class AuthTokenService {
   }
 
   removeToken(): void {
+    if (typeof window !== 'undefined') {
       localStorage.removeItem('authToken');
+    }
   }
+
 }
 

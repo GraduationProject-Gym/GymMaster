@@ -64,24 +64,27 @@ export class LoginComponent {
     this.errorMessage = null; // Reset the error message 
 
     if (this.loginForm.valid) {
-    const data = {
-      email: this.loginForm.value.email || '',
-      password: this.loginForm.value.password || '',
-      device_name: this.getDeviceName() // Get device name
-    };
+      const data = {
+        email: this.loginForm.value.email || '',
+        password: this.loginForm.value.password || '',
+        device_name: this.getDeviceName() // Get device name
+      };
 
-    // Call login service and handle response
-    this.loginService.login(data).subscribe({
-      next: (response) => {
-         console.log(response);
-         this.router.navigate(['/trainee']);
-         },
-      error: (error) => { 
-        console.log(error);
-        // this.errorMessage = error;
-        this.errorMessage = 'Login failed. Please try again.';
-       }
-    });
+      // Call login service and handle response
+      this.loginService.login(data).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.router.navigate(['/trainee']);
+        },
+        error: (error) => {
+          // console.log(error);
+          if (error.status === 403) { // Check for the status code directly
+            this.errorMessage = error.error?.message || 'Access denied. Please check your credentials.';
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
     } else {
       console.log('Form is invalid'); // Log if form is invalid
     }
@@ -95,7 +98,7 @@ export class LoginComponent {
 
   // show & hide password
 
-    showPassword() {
+  showPassword() {
     const togglePassword = document.getElementById('togglePassword') as HTMLElement;
     const passwordInput = document.getElementById('password') as HTMLInputElement;
     const eyeIcon = document.getElementById('eyeIcon') as HTMLElement;
