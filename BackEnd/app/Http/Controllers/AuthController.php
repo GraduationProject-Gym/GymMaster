@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\User;
 use App\Models\Trainee;
 use App\Models\Trainer;
@@ -15,7 +14,7 @@ use App\Http\Resources\MembershipResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Password;
 class AuthController extends Controller
 {
     public function __construct()
@@ -60,7 +59,9 @@ class AuthController extends Controller
         if ($request->role === 'trainee') {
             $trainee = Trainee::create([
                 'user_id' => $user->id,
+                'membership_id' => 1,
             ]);
+            $membership = Memberships::findOrFail($request->membership_id);
         }
         if ($request->role === 'trainer') {
             $cvPath = null;
@@ -82,6 +83,7 @@ class AuthController extends Controller
                 'traineeData' => new TraineeResource($trainee),
             ], 201);
         }
+
         else if($request->role === 'trainer'){
             return response()->json([
                 'message' => 'User registered successfully',
@@ -122,7 +124,77 @@ class AuthController extends Controller
                 "message"=>"Logged out"
             ]);
         }
-    
+
+    }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        // Validate the email input
+        $request->validate(['email' => 'required|email']);
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            // Return an error response if the email is not found
+            return response()->json([
+                "message"=>"Email does not exist in our records."
+            ]);
+        }
+        // Send password reset link
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+        // Return appropriate response based on the status
+        if ($status === Password::RESET_LINK_SENT) {
+            // return $this->sendResponse([], 'Password reset link sent!');
+            return response()->json([
+                "message"=>"Password reset link sent!"
+            ]);
+
+        } elseif ($status === Password::RESET_THROTTLED) {
+            // return $this->sendResponse([], 'Password reset link sent!');
+            return response()->json([
+                "message"=>"Password reset link sent!"
+            ]);
+        } else {
+            // return $this->sendError('Unable to send reset link to the provided email.', [], 400);
+            return response()->json([
+                "message"=>"Unable to send reset link to the provided email."
+            ]);
+
+        }
+    }
+    public function resetPassword(Request $request)
+    {
+        // Validate the request data
+        // dd(111);
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        // Attempt to reset the password
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                // Update user's password
+                $user->password = Hash::make($password);
+                $user->save();
+            }
+        );
+
+        // Return appropriate response based on the status
+        if ($status === Password::PASSWORD_RESET) {
+            // return $this->sendResponse([], 'Password reset successful!');
+            return response()->json([
+                "message"=>"Password reset successful!"
+            ]);
+        } else {
+            // return $this->sendError('Invalid token or email.', [], 400);
+            return response()->json([
+                "message"=>"Invalid token or email."
+            ]);
+        }
     }
     
     /**

@@ -6,13 +6,16 @@ import { Injectable } from '@angular/core';
 export class AuthTokenService {
 
   constructor() { }
-  
+
   getToken(): string | null {
-    return localStorage.getItem('authToken');
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('authToken');
+    }
+    return null;
   }
 
   removeToken(): void {
-    localStorage.removeItem('authToken');
+      localStorage.removeItem('authToken');
   }
 }
 

@@ -18,6 +18,6 @@ export class LogoutService {
     this.authTokenService.removeToken();
 
     // Redirect to the login page or home page
-    this.router.navigate(['/trainee']);
+    this.router.navigate(['/login']);
   }
 }

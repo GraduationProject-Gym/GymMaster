@@ -18,8 +18,6 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  formSubmitted = false; // Track if the form has been submitted
-
   // Create request to use login service
   constructor(private loginService: LoginService, private router: Router) { }
 
@@ -58,37 +56,35 @@ export class LoginComponent {
   }
 
   // Check user authentication and authorization
+  formSubmitted = false; // Track if the form has been submitted
+  errorMessage: string | null = null;
+
   loginAction() {
     this.formSubmitted = true; // Mark form as submitted
+    this.errorMessage = null; // Reset the error message 
 
-    // if (this.loginForm.valid) {
+    if (this.loginForm.valid) {
     const data = {
       email: this.loginForm.value.email || '',
       password: this.loginForm.value.password || '',
       device_name: this.getDeviceName() // Get device name
     };
 
-    /* postman test
-      {
-      "email": "yousef6@gmail.com",
-      "password": "123456789",
-      "device_name": "device"
-      }
-    */
-
-    console.log(data); // Test component output
-
     // Call login service and handle response
     this.loginService.login(data).subscribe({
       next: (response) => {
          console.log(response);
-         this.router.navigate(['/trainee'])
+         this.router.navigate(['/trainee']);
          },
-      error: (error) => { console.log(error); }
+      error: (error) => { 
+        console.log(error);
+        // this.errorMessage = error;
+        this.errorMessage = 'Login failed. Please try again.';
+       }
     });
-    // } else {
-    //   console.log('Form is invalid'); // Log if form is invalid
-    // }
+    } else {
+      console.log('Form is invalid'); // Log if form is invalid
+    }
   }
 
   // Get device name

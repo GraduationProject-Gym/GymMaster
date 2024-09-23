@@ -34,10 +34,15 @@
         </div>
         }
         @if (!loginForm.valid && formSubmitted) {
-            <div class="alert alert-danger">
-                Enter valid data
+        <div class="alert alert-danger mt-3">
+            Enter valid data
+        </div>
+        }
+        @if (errorMessage){
+            <div class="alert alert-danger  mt-3">
+                {{ errorMessage }}
             </div>
-            }
+        }
         <div class="d-flex justify-content-center mt-3">
             <button type="submit" class="btn">Login</button>
         </div>

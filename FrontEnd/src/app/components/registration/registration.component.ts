@@ -19,7 +19,7 @@ import { RegistrationService } from '../../services/authentication/registration/
   ]
 })
 export class RegistrationComponent {
-  constructor(private registrationService:RegistrationService, private router: Router){
+  constructor(private registrationService: RegistrationService, private router: Router) {
   }
 
   // Extract image name from its path
@@ -37,14 +37,14 @@ export class RegistrationComponent {
   }
 
 
-  error(error: any) {
-  }
+  // error(error: any) {
+  // }
 
   registrationForm = new FormGroup({
     // name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
     email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
-    age: new FormControl(null, [Validators.required,Validators.min(10)]),
+    age: new FormControl(null, [Validators.required, Validators.min(10)]),
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),
     address: new FormControl(null, Validators.required),
     password: new FormControl(null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}')]),
@@ -109,7 +109,10 @@ export class RegistrationComponent {
     // Return true if passwords match
   }
 
+  errorMessage: string | null = null;
+
   Registeration() {
+    this.errorMessage = null; // Reset the error message 
     if (this.registrationForm.valid) {
       const formData = new FormData();
       Object.keys(this.registrationForm.value).forEach(key => {
@@ -128,11 +131,14 @@ export class RegistrationComponent {
       // console.log(formData);
       this.registrationService.register(formData).subscribe({
         next: (response) => {
-          console.log(response);
+          // console.log(response);
           this.router.navigate(['/login'])
         },
 
-        error: (error) => { console.log(error); }
+        error: (error) => {
+          //  console.log(error);
+          this.errorMessage = 'Registration failed. Please try again.';
+        }
       });
     } else {
       console.log('Form is invalid');
