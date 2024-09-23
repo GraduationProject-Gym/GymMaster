@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->boolean('status')->defaul(1);
-            $table->integer('total_no_of_session');
+            $table->boolean('status')->default(1); 
+            $table->integer('total_no_of_session'); 
             $table->integer('max_trainee');
             $table->timestamps();
         });

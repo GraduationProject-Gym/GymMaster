@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\SubscriptionController ;
-
+use App\Http\Controllers\Api\GymClassController;
+use App\Http\Controllers\Api\ScheduleController;
 
 
 Route::get('/user', function (Request $request) {
@@ -27,4 +28,10 @@ Route::apiResource('membership',MembershipController::class);
 Route::apiResource('subscribe',SubscriptionController::class);
 Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
 Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
+
+//class CURD  
+Route::apiResource('gym-classes', GymClassController::class);
+
+//schedules CURD  
+Route::apiResource('schedules', ScheduleController::class);
 

@@ -12,9 +12,9 @@ class GymClass extends Model
     protected $fillable = [
         'name',
         'description',
-        'total_no_sessions',
+        'total_no_of_session', 
         'status',
-        'max_trainee'
+        'max_trainee',
     ];
 
     public function useEquipment()
@@ -22,9 +22,9 @@ class GymClass extends Model
        return $this->belongsToMany(GymClass::class, 'class_equipment', 'class_id', 'equipment_id');
     }
 
-    public function schedule()
+    public function schedules()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class, 'class_id'); 
     }
 
     public function user()
@@ -36,4 +36,10 @@ class GymClass extends Model
     {
        return $this->belongsToMany(User::class, 'class_exercies', 'class_id', 'exercies_id');
     }
+    public function equipments()
+    {
+        return $this->belongsToMany(Equipment::class, 'class_equipments');
+    }
+
+   
 }

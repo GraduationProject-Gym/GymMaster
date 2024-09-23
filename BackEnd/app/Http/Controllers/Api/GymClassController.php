@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\GymClass;
 class GymClassController extends Controller
 {
     /**
@@ -12,7 +12,7 @@ class GymClassController extends Controller
      */
     public function index()
     {
-        //
+        return GymClass::all();
     }
 
     /**
@@ -28,7 +28,15 @@ class GymClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|integer',
+            'total_no_of_session' => 'required|integer',
+            'max_trainee' => 'required|integer',
+        ]);
+
+        return GymClass::create($validated);
     }
 
     /**
@@ -36,7 +44,7 @@ class GymClassController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return GymClass::findOrFail($id);
     }
 
     /**
@@ -52,7 +60,17 @@ class GymClassController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $gymClass = GymClass::findOrFail($id);
+        $validated = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'sometimes|required|boolean',
+            'total_no_of_session' => 'sometimes|required|integer',
+            'max_trainee' => 'sometimes|required|integer',
+        ]);
+
+        $gymClass->update($validated);
+        return $gymClass;
     }
 
     /**
@@ -60,6 +78,8 @@ class GymClassController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $gymClass = GymClass::findOrFail($id);
+        $gymClass->delete();
+        return response()->noContent();
     }
 }

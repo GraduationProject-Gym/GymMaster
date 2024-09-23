@@ -15,6 +15,6 @@ class Schedule extends Model
     ];
     public function gymClass()
     {
-        return $this->belongsTo(GymClass::class);
+        return $this->belongsTo(GymClass::class, 'class_id'); 
     }
 }
