@@ -15,7 +15,7 @@ export class LoginService {
     console.log(data); // Test sent payload
     return this.http.post(this.loginUrl, data).pipe(tap((response: any) => {
       if (response && response.token) {
-        localStorage.setItem('authUser', JSON.stringify(response));
+        localStorage.setItem('authToken', JSON.stringify(response));
       }
     }));
   }

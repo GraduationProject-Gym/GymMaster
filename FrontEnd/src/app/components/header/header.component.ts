@@ -18,9 +18,9 @@ export class HeaderComponent {
   constructor(private authTokenService: AuthTokenService, private logoutService: LogoutService) {
     this.checkLoginStatus();
   }
-
+  
   checkLoginStatus(): void {
-    this.isLoggedIn = !!this.authTokenService.getToken();
+      this.isLoggedIn = !!this.authTokenService.getToken();
   }
 
   toggleMenu(): void {
@@ -37,5 +37,6 @@ export class HeaderComponent {
 
   logout(): void {
     this.logoutService.logout();
+    this.isLoggedIn = false;
   }
 }
