@@ -35,9 +35,9 @@ class TraineeClassController extends Controller
     public function store(Request $request)
     {
         //
-        // user_id  class_id
         $class_id = $request->class_id;
         $trainee = Trainee::findOrFail(auth::id());
+        // $this->authorize('create', $trainee);
         $trainee_class = GymClass::findOrFail($class_id);
         $exists = UserClass::where('user_id', auth::id())
             ->where('class_id', $class_id)
@@ -50,12 +50,12 @@ class TraineeClassController extends Controller
             ]);
         }
         else{
-            return response()->json(['message'=>'You are join to this class']);
+            return response()->json(['message'=>'You joined to this class']);
         }
         return response()->json([
             'message' => 'You joined to class successfully',
             'trainee_class' => new TraineeClassResource($trainee_class),
-            'traineeData' => new TraineeResource($trainee),
+            // 'traineeData' => new TraineeResource($trainee),
         ], 201);
 
     }
@@ -66,7 +66,7 @@ class TraineeClassController extends Controller
     public function show($id)//GymClass $gymClass)
     {
         $trainee = User::findOrFail(auth::id());
-        $this->authorize('view', $trainee);
+        // $this->authorize('view', $trainee);
         $gymClass = GymClass::findOrFail($id);
         return response()->json([
             'trainee_class' => new TraineeClassResource($gymClass),

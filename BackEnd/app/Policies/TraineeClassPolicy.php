@@ -28,7 +28,7 @@ use App\Models\Trainee;
      */
     public function create(User $user)
     {
-        return $user->role === 'trainer';
+        return $user->role === 'trainee';
     }
 
     /**

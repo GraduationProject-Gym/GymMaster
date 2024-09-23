@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class GymClass extends Model
 {
     use HasFactory;
-    protected $table = 'gymclass';
+    // protected $table = 'gymclass';
+    protected $table = 'gym_classes';
     protected $fillable = [
         'name',
         'description',
@@ -31,6 +32,11 @@ class GymClass extends Model
     public function schedule()
     {
         return $this->hasMany(Schedule::class, 'class_id');
+    }
+
+    public function trainer()
+    {
+        return $this->belongsTo(Trainer::class, 'trainer_id');
     }
 
     public function user()
