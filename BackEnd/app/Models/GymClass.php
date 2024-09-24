@@ -14,7 +14,8 @@ class GymClass extends Model
         'description',
         'total_no_sessions',
         'status',
-        'max_trainee'
+        'max_trainee',
+        'creator_id'
     ];
 
     public function useEquipment()
