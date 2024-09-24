@@ -13,9 +13,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class TraineesComponent {
 
-
-  // comments: any[text: string; date: string; ] = [];
-
   trainees = [
     {
       name: 'SANDY SAMIR',
@@ -28,87 +25,93 @@ export class TraineesComponent {
       rating: 3,
       image: '/Woman athlete exercising with kettlebell.jfif',
       comments: [] as { text: string; date: string; }[],
-      showCommentBox: false,
+      showComments: false,
       newComment: ''
     },
-  //   {
-  //     name: 'JOHN DOE',
-  //     trainerName: 'Mohamed',
-  //     className: 'Pilates',
-  //     sessionsAttended: 5,
-  //     membership: 'Standard',
-  //     subscription: 'Year',
-  //     review: 'Excellent Trainer',
-  //     rating: 5,
-  //     image: '/Woman athlete exercising with kettlebell.jfif',
-  //     showCommentBox: false,
-  //     newComment: ''
-  //   },
-  //   {
-  //     name: 'JANE SMITH',
-  //     trainerName: 'Amira',
-  //     className: 'Zumba',
-  //     sessionsAttended: 3,
-  //     membership: 'VIP',
-  //     subscription: 'Month',
-  //     review: 'Fun Class',
-  //     rating: 4,
-  //     image: '/Woman athlete exercising with kettlebell.jfif',
-  //     showCommentBox: false,
-  //     newComment: ''
-  //   },
-  //   {
-  //     name: 'MIKE JONES',
-  //     trainerName: 'Tamer',
-  //     className: 'CrossFit',
-  //     sessionsAttended: 6,
-  //     membership: 'Standard',
-  //     subscription: 'Month',
-  //     review: 'Challenging but worth it',
-  //     rating: 5,
-  //     image: '/Woman athlete exercising with kettlebell.jfif',
-  //     showCommentBox: false,
-  //     newComment: ''
-  //   },
-  //   {
-  //     name: 'LUCY BROWN',
-  //     trainerName: 'Sara',
-  //     className: 'Spinning',
-  //     sessionsAttended: 2,
-  //     membership: 'Standard',
-  //     subscription: 'Week',
-  //     review: 'Great Energy',
-  //     rating: 4,
-  //     image: '/Woman athlete exercising with kettlebell.jfif',
-  //     showCommentBox: false,
-  //     newComment: ''
-  //   },
-  //   {
-  //     name: 'CHRIS GREEN',
-  //     trainerName: 'Hossam',
-  //     className: 'Boxing',
-  //     sessionsAttended: 7,
-  //     membership: 'VIP',
-  //     subscription: 'Year',
-  //     review: 'Best Trainer',
-  //     rating: 5,
-  //     image: '/Woman athlete exercising with kettlebell.jfif',
-  //     showCommentBox: false,
-  //     newComment: ''
-  //   },
-  //   {
-  //   name: 'SANDY SAMIR',
-  //   trainerName: 'Ahmed',
-  //   className: 'Yoga',
-  //   sessionsAttended: 4,
-  //   membership: 'VIP',
-  //   subscription: 'Month',
-  //   review: 'Good Trainer',
-  //   rating: 3,
-  //   image: '/Woman athlete exercising with kettlebell.jfif',
-  //   showCommentBox: false,
-  //   newComment: ''
-  // },
+    {
+      name: 'JOHN DOE',
+      trainerName: 'Mohamed',
+      className: 'Pilates',
+      sessionsAttended: 5,
+      membership: 'Standard',
+      subscription: 'Year',
+      review: 'Excellent Trainer',
+      rating: 5,
+      image: '/Woman athlete exercising with kettlebell.jfif',
+      comments: [] as { text: string; date: string; }[],
+      showComments: false,
+      newComment: ''
+    },
+    {
+      name: 'JANE SMITH',
+      trainerName: 'Amira',
+      className: 'Zumba',
+      sessionsAttended: 3,
+      membership: 'VIP',
+      subscription: 'Month',
+      review: 'Fun Class',
+      rating: 4,
+      image: '/Woman athlete exercising with kettlebell.jfif',
+      comments: [] as { text: string; date: string; }[],
+      showComments: false,
+      newComment: ''
+    },
+    {
+      name: 'MIKE JONES',
+      trainerName: 'Tamer',
+      className: 'CrossFit',
+      sessionsAttended: 6,
+      membership: 'Standard',
+      subscription: 'Month',
+      review: 'Challenging but worth it',
+      rating: 5,
+      image: '/Woman athlete exercising with kettlebell.jfif',
+      comments: [] as { text: string; date: string; }[],
+      showComments: false,
+      newComment: ''
+    },
+    {
+      name: 'LUCY BROWN',
+      trainerName: 'Sara',
+      className: 'Spinning',
+      sessionsAttended: 2,
+      membership: 'Standard',
+      subscription: 'Week',
+      review: 'Great Energy',
+      rating: 4,
+      image: '/Woman athlete exercising with kettlebell.jfif',
+      comments: [] as { text: string; date: string; }[],
+      showComments: false,
+      newComment: ''
+    },
+    {
+      name: 'CHRIS GREEN',
+      trainerName: 'Hossam',
+      className: 'Boxing',
+      sessionsAttended: 7,
+      membership: 'VIP',
+      subscription: 'Year',
+      review: 'Best Trainer',
+      rating: 5,
+      image: '/Woman athlete exercising with kettlebell.jfif',
+      comments: [] as { text: string; date: string; }[],
+      showComments: false,
+      newComment: ''
+    },
+    {
+    name: 'SANDY SAMIR',
+    trainerName: 'Ahmed',
+    className: 'Yoga',
+    sessionsAttended: 4,
+    membership: 'VIP',
+    subscription: 'Month',
+    review: 'Good Trainer',
+    rating: 3,
+    image: '/Woman athlete exercising with kettlebell.jfif',
+    comments: [] as { text: string; date: string; }[],
+    showComments: false,
+    newComment: ''
+  },
   // {
   //   name: 'JOHN DOE',
   //   trainerName: 'Mohamed',
@@ -190,27 +193,10 @@ export class TraineesComponent {
   ];
 
 
-// submitComment(index: number) {
-//   console.log('New Comment for', this.trainees[index].name + ':', this.trainees[index].newComment);
-//   this.trainees[index].newComment = '';
-//   this.trainees[index].showCommentBox = false;
-// }
+  toggleComments(index: number) {
+    this.trainees[index].showComments = !this.trainees[index].showComments;
+  }
 
-
-
-// submitComment(index: number) {
-//   if (this.trainees[index].newComment.trim() !== '') {
-//     this.trainees[index].comments += this.trainees[index].newComment + '\n';
-//   }
-
-//   this.trainees[index].newComment = '';
-//   this.trainees[index].showCommentBox = false;
-// }
-// }
-
-toggleCommentBox(index: number) {
-  this.trainees[index].showCommentBox = !this.trainees[index].showCommentBox;
-}
 
 submitComment(index: number) {
   if (this.trainees[index].newComment.trim() !== '') {
@@ -222,7 +208,6 @@ submitComment(index: number) {
     this.trainees[index].comments.push(commentWithDate);
   }
   this.trainees[index].newComment = '';
-  this.trainees[index].showCommentBox = false;
 }
 
 

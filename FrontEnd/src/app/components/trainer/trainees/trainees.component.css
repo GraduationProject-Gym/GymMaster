@@ -68,7 +68,10 @@ h1{
   color: #ff6207;
   border: 2px solid #ff6207;
 }
-
+a{
+  color: #ff6207;
+  text-decoration: none;
+}
 
 
 @media (max-width: 768px) {

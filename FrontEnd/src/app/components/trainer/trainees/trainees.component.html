@@ -12,9 +12,14 @@
       <p class="card-text"><strong>Number of Sessions Attended:</strong> {{ trainee.sessionsAttended }}</p>
       <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
       <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
-     
 
-      <div *ngIf="trainee.comments.length > 0" class="mt-3">
+
+
+      <a href="javascript:void(0)" class="mt-3" (click)="toggleComments(i)">
+        {{ trainee.showComments ? 'Hide Comments' : 'Show Comments' }}
+      </a>
+
+      <div *ngIf="trainee.showComments && trainee.comments.length > 0" class="mt-3">
         <h6>Comments:</h6>
         <ul>
           <li *ngFor="let comment of trainee.comments">
@@ -23,19 +28,8 @@
         </ul>
       </div>
 
-      <!-- <p class="card-text"><strong>Trainee Review on Captain:</strong> {{ trainee.review }}</p>
-      <p class="card-text">
-        <strong>Trainee Rate on Captain:</strong>
-        <span class="star-rating">
-          <i *ngFor="let star of [].constructor(5); let j = index"
-            class="fa-star"
-            [ngClass]="j < trainee.rating ? 'fas' : 'far'"
-            style="color: #ff6207;"></i>
-        </span>
-      </p> -->
-      <a class="btn btn-primary mt-3" (click)="toggleCommentBox(i)">Add Comment</a>
 
-      <div *ngIf="trainee.showCommentBox" class="mt-3">
+      <div  class="mt-3">
         <input [(ngModel)]="trainee.newComment" class="form-control" placeholder="Write your comment...">
         <button class="btn btn-success mt-2" (click)="submitComment(i)">Submit Comment</button>
       </div>
