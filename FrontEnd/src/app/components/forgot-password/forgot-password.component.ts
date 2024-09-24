@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ForgotPasswordService } from '../../services/authentication/forgot-password/forgot-password.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -37,9 +37,10 @@ export class ForgotPasswordComponent {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  // Create request to use forgot-password service
+  // Create request to use forgot-password and reset-password services
   constructor(private forgotPasswordService: ForgotPasswordService) { }
 
+  // Send email to reset password 
   sendEmail() {
     this.formSubmitted = true; // Mark form as submitted
     this.errorMessage = null; // Reset the error message 
@@ -66,8 +67,4 @@ export class ForgotPasswordComponent {
       console.log('Form is invalid'); // Log if form is invalid
     }
   }
-
-
-
-
 }

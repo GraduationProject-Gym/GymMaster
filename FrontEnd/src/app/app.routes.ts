@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { ErrorComponent } from './components/error/error.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { TraineeComponent } from './components/trainee/trainee.component';
 import { ClassesComponent } from './components/trainer/classes/classes.component';
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
@@ -17,6 +18,7 @@ export const routes: Routes = [
     { path: "registration", component: RegistrationComponent },
     { path: "login", component: LoginComponent },
     { path: "forgotPassword", component: ForgotPasswordComponent },
+    { path: 'reset-password', component: ResetPasswordComponent },
     { path: "trainee", component: TraineeComponent },
     { path: "trainer/classes", component: ClassesComponent },
     // { path: "trainer/Trainees", component: TraineesComponent },
@@ -26,5 +28,3 @@ export const routes: Routes = [
 
     { path: "**", component: ErrorComponent }
 ];
-
-

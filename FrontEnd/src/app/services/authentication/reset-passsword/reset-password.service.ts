@@ -6,14 +6,26 @@ import { Injectable } from '@angular/core';
 })
 export class ResetPasswordService {
 
-  private readonly resetPasswordUrl = 'https://yourapi.com:8000/api'; // Replace with sent email API
+  private token: string | null = null;
+  private email: string | null = null;
+
   constructor(private readonly http: HttpClient) { }
 
-  resetPassword(data: { email: string }) {
-    return this.http.post(this.resetPasswordUrl, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
+  setTokenAndEmail(token: string, email: string) {
+    this.token = token;
+    this.email = email;
+  }
+
+  resetPassword(newPassword: string) {
+    if (!this.token || !this.email) {
+      throw new Error("Token and email must be set before making a request.");
+    }
+
+    const resetPasswordUrl = `http://localhost:8000/api/reset-password?token=${this.token}&email=${this.email}`;
+    const payload = {
+      token: this.token,
+      email: this.email,
+      newPassword
+    }; return this.http.post(resetPasswordUrl, { payload });
   }
 }
