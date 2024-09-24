@@ -1,7 +1,6 @@
-
 <img src="/form4.jpg" alt="Background Image">
 
-<form [formGroup]="registrationForm"  class="form   form-background">
+<form [formGroup]="registrationForm" class="form   form-background">
   <div class="d-flex flex-column align-items-center">
     <h1 class="registration">Create Your Account</h1>
   </div>
@@ -22,8 +21,9 @@
   <!-- Email Field -->
   <div class="mb-3">
     <label for="email" class="form-label">Email address</label>
-    <input formControlName="email" type="email" name="email" class="form-control" id="email"  required>
-    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched" class="error-msg">
+    <input formControlName="email" type="email" name="email" class="form-control" id="email" required>
+    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['email'].errors?. ['required']">Email is required</div>
       <div *ngIf="registrationForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>
     </div>
@@ -61,48 +61,6 @@
     </div>
   </div>
 
-  <!-- <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <div class="input-group">
-      <input formControlName="password" type="password" class="form-control" name="password" id="password" required>
-      <div class="input-group-append">
-        <span class="input-group-text" id="togglePassword" style="cursor:pointer;" (click)="showPassword()">
-          <i class="far fa-eye" id="eyeIcon"></i>
-        </span>
-      </div>
-    </div>
-  </div>
-    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched"
-      class="error-msg">
-      <div *ngIf="registrationForm.controls['password'].errors?. ['required']">Password is required</div>
-      <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters
-        long, include uppercase and lowercase letters, a number, and a special character</div>
-    </div>
-
-  <div class="mb-3">
-    <label for="confirmPassword" class="form-label">Confirm Password</label>
-    <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword"
-      id="confirmPassword" required>
-      <div class="input-group-append">
-        <span class="input-group-text2" id="togglePassword" style="cursor:pointer;" (click)="showPassword()">
-          <i class="far fa-eye2" id="eyeIcon"></i>
-        </span>
-      </div>
-    <ng-container *ngIf="ConfirmPasswordRequired; else passwordMismatch">
-      <div class="error-msg">
-        Confirm password is required
-      </div>
-    </ng-container>
-
-    <ng-template #passwordMismatch>
-      <div *ngIf="!ConfirmPasswordValid && registrationForm.controls['confirmPassword'].touched" class="error-msg" #passwordMismatch>
-        <div class="error-msg">
-          Passwords do not match
-        </div>
-      </div>
-    </ng-template>
-  </div> -->
-
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
     <div class="input-group">
@@ -113,24 +71,41 @@
         </span>
       </div>
     </div>
-    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched" class="error-msg">
+    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched"
+      class="error-msg">
       <div *ngIf="registrationForm.controls['password'].errors?.['required']">Password is required</div>
-      <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters long, include uppercase and lowercase letters, a number, and a special character</div>
+      <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters
+        long, include uppercase and lowercase letters, a number, and a special character</div>
     </div>
   </div>
 
   <div class="mb-3">
     <label for="confirmPassword" class="form-label">Confirm Password</label>
     <div class="input-group">
-      <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
+      <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword"
+        id="confirmPassword" required>
       <div class="input-group-append">
-        <span class="input-group-text" id="toggleConfirmPassword" style="cursor:pointer;" (click)="showPassword('confirmPassword')">
+        <span class="input-group-text" id="toggleConfirmPassword" style="cursor:pointer;"
+          (click)="showPassword('confirmPassword')">
           <i class="far fa-eye" id="confirmEyeIcon"></i>
         </span>
       </div>
     </div>
-  </div>
 
+    <ng-container *ngIf="ConfirmPasswordRequired; else passwordMismatch">
+      <div class="error-msg">
+        Confirm password is required
+      </div>
+    </ng-container>
+    <ng-template #passwordMismatch>
+      <div *ngIf="!ConfirmPasswordValid && registrationForm.controls['confirmPassword'].touched" class="error-msg"
+        #passwordMismatch>
+        <div class="error-msg">
+          Passwords do not match
+        </div>
+      </div>
+    </ng-template>
+  </div>
 
   <!-- Gender Field -->
   <label>Gender</label>
@@ -151,9 +126,10 @@
   </div>
 
   <!-- Image Field -->
-  <div class="mb-3" >
+  <div class="mb-3">
     <label for="image" class="form-label">Upload Image</label>
-    <input formControlName="image" type="file" class="form-control" id="image" name="image" (change)="onFileChange($event)">
+    <input formControlName="image" type="file" class="form-control" id="image" name="image"
+      (change)="onFileChange($event)">
   </div>
 
   <!-- Alerts -->
