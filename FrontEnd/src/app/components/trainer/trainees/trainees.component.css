@@ -1,11 +1,10 @@
-h1{
-  font-size: 1.8rem;
-  color: #e9472a;
+.custom-title {
+  font-size: 3rem;
   font-weight: bold;
   margin-top: 100px;
-  align-items: center;
-
+  color: #ff6207;
 }
+
 .card {
   background-color: #ffffff;
   border: none;
@@ -72,6 +71,9 @@ a{
   color: #ff6207;
   text-decoration: none;
 }
+
+
+
 
 
 @media (max-width: 768px) {

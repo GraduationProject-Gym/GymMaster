@@ -45,10 +45,10 @@ h1 {
   margin-bottom: 10px;
 }
 
-.details-info {
+/* .details-info {
   font-weight: 600;
   color: #333;
-}
+} */
 
 .btn-trainees {
   display: inline-block;
@@ -161,9 +161,4 @@ h1 {
   margin: 10px;
 
 }
-/* .details1, .details2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-} */
+
