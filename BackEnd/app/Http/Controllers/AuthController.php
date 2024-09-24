@@ -38,11 +38,11 @@ class AuthController extends Controller
     // public function store(RegisterRequest $request)
     public function store(Request $request)
     {
-        
+
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255'], // 'unique:users,email'
+            'password' => ['required', 'string', 'min:8'], // confirmed
             'phone' => ['nullable', 'string', 'max:11'],
             'address' => ['nullable', 'string'],
             'age' => ['nullable', 'integer', 'min:15'],
@@ -164,13 +164,13 @@ class AuthController extends Controller
     public function logout(Request $request)
 {
     $user = Auth::user();
-    
+
     if ($user) {
         $currentToken = $user->currentAccessToken();
         if ($currentToken) {
             $currentToken->delete();
         }
-        
+
         return response()->json([
             "message" => "Logged out successfully"
         ]);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Trainer;
 
 class GymClass extends Model
 {
@@ -14,7 +15,8 @@ class GymClass extends Model
         'description',
         'total_no_sessions',
         'status',
-        'max_trainee'
+        'max_trainee',
+        'trainer_id'
     ];
 
     public function useEquipment()
@@ -32,8 +34,13 @@ class GymClass extends Model
        return $this->belongsToMany(User::class, 'user_class', 'class_id', 'user_id');
     }
 
+
     public function exercies()
     {
        return $this->belongsToMany(User::class, 'class_exercies', 'class_id', 'exercies_id');
+    }
+
+    public function classTrainer(){
+        return $this->belongsTo(Trainer::class, 'id','trainer_id');
     }
 }
