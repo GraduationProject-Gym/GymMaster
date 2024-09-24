@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('gymclass', function (Blueprint $table) {
             //
-            $table->foreignId('creator_id')->constrained('users','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('trainer_id')->constrained('trainers','id')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -24,8 +24,8 @@ return new class extends Migration
     {
         Schema::table('gymclass', function (Blueprint $table) {
             //creator_id
-            $table->dropForeign('gymclass_creator_id_foreign');
-            $table->dropColumn('creator_id');
+            $table->dropForeign('gymclass_trainer_id_foreign');
+            $table->dropColumn('trainer_id');
         });
     }
 };
