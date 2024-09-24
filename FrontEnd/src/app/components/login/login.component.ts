@@ -97,7 +97,6 @@ export class LoginComponent {
 
 
   // show & hide password
-
   showPassword() {
     const togglePassword = document.getElementById('togglePassword') as HTMLElement;
     const passwordInput = document.getElementById('password') as HTMLInputElement;

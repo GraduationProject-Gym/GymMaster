@@ -153,7 +153,6 @@ export class RegistrationComponent {
   }
 
   /* show & hide password*/
-
   showPassword(inputType: string) {
     const passwordInput = document.getElementById(inputType) as HTMLInputElement;
     const eyeIcon = document.getElementById(inputType === 'password' ? 'eyeIcon' : 'confirmEyeIcon') as HTMLElement;

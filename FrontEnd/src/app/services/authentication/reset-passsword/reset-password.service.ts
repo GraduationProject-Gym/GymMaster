@@ -16,16 +16,18 @@ export class ResetPasswordService {
     this.email = email;
   }
 
-  resetPassword(newPassword: string) {
+  resetPassword(password: string, password_confirmation: string) {
     if (!this.token || !this.email) {
       throw new Error("Token and email must be set before making a request.");
     }
 
-    const resetPasswordUrl = `http://localhost:8000/api/reset-password?token=${this.token}&email=${this.email}`;
+    const resetPasswordUrl = 'http://localhost:8000/api/reset-password';
     const payload = {
       token: this.token,
       email: this.email,
-      newPassword
-    }; return this.http.post(resetPasswordUrl, { payload });
+      password,
+      password_confirmation
+    };
+    return this.http.post(resetPasswordUrl, payload);
   }
 }

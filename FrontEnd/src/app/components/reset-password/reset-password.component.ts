@@ -15,48 +15,95 @@ import { ResetPasswordService } from '../../services/authentication/reset-passsw
   ],
   providers: [ResetPasswordService],
   templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+  styleUrls: ['./reset-password.component.css']
 })
-
 export class ResetPasswordComponent implements OnInit {
-  email: string | null = null;
-  token: string | null = null;
-  newPassword: string = '';
-  confirmPassword: string = '';
+  resetPasswordForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private resetPasswordService: ResetPasswordService,
     private router: Router
-  ) { }
+  ) {
+    this.resetPasswordForm = this.createFormGroup();
+  }
 
   ngOnInit(): void {
-    // Get token and email from URL parameters
     this.route.queryParams.subscribe(params => {
-      const token = params['token'];
-      const email = params['email'];
+      const { token, email } = params;
       if (!token || !email) {
-        // Handle missing token or email
-        console.log('Missing token or email in the URL');
+        console.error('Missing token or email in the URL');
+        return;
       }
       this.resetPasswordService.setTokenAndEmail(token, email);
     });
   }
-  
+
+  private createFormGroup(): FormGroup {
+    return new FormGroup({
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}/)
+      ]),
+      confirmPassword: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}/)
+      ])
+    });
+  }
+
+  get passwordRequired() {
+    return this.isControlInvalid('password', 'required');
+  }
+
+  get passwordFormatInvalid() {
+    return this.isControlInvalid('password', 'pattern');
+  }
+
+  private isControlInvalid(controlName: string, errorType: string): boolean {
+    const control = this.resetPasswordForm.controls[controlName];
+    return control.errors?.[errorType] && control.touched;
+  }
+
+  showPassword(inputType: string) {
+    const passwordInput = document.getElementById(inputType) as HTMLInputElement;
+    const eyeIcon = document.getElementById(inputType === 'password' ? 'eyeIcon' : 'confirmEyeIcon') as HTMLElement;
+
+    if (passwordInput) {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      eyeIcon.classList.toggle('fa-eye-slash');
+      eyeIcon.classList.toggle('fa-eye');
+    }
+  }
+
   resetPassword() {
-    if (this.newPassword === this.confirmPassword) {
-      this.resetPasswordService.resetPassword(this.newPassword).subscribe({
-        next: (response) => {
+    if (this.resetPasswordForm.valid && this.passwordsMatch()) {
+      const { password, confirmPassword } = this.resetPasswordForm.value;
+      this.resetPasswordService.resetPassword(password, confirmPassword).subscribe({
+        next: response => {
           console.log('Password reset successful!', response);
-          // Redirect to login or success page
           this.router.navigate(['/login']);
         },
-        error: (error) => {
-          console.log('Error resetting password', error);
+        error: error => {
+          console.error('Error resetting password', error);
         }
       });
     } else {
-      console.error('Passwords do not match');
+      console.error('Passwords do not match or form is invalid');
     }
+  }
+
+  private passwordsMatch(): boolean {
+    const { password, confirmPassword } = this.resetPasswordForm.value;
+    const match = password === confirmPassword;
+
+    if (!match) {
+      this.resetPasswordForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
+    } else {
+      this.resetPasswordForm.controls['confirmPassword'].setErrors(null);
+    }
+
+    return match;
   }
 }
