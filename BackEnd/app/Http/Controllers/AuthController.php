@@ -106,7 +106,7 @@ class AuthController extends Controller
 
         if ($user->tokens()->count() > 3) {
             return response()->json([
-                "error" => "You have exceeded the number of allowed logged in accounts. Please logout from one of them and try again."
+                "message" => "You have exceeded the number of allowed logged in accounts. Please logout from one of them and try again."
             ], 403);
         }
         return response()->json([
@@ -132,12 +132,12 @@ class AuthController extends Controller
         // Validate the email input
         $request->validate(['email' => 'required|email']);
         $user = User::where('email', $request->email)->first();
-
+        
         if (!$user) {
             // Return an error response if the email is not found
             return response()->json([
                 "message"=>"Email does not exist in our records."
-            ]);
+            ],203);
         }
         // Send password reset link
         $status = Password::sendResetLink(
@@ -148,13 +148,14 @@ class AuthController extends Controller
             // return $this->sendResponse([], 'Password reset link sent!');
             return response()->json([
                 "message"=>"Password reset link sent!"
-            ]);
-
+            ],200);
+            
         } elseif ($status === Password::RESET_THROTTLED) {
+            // return ["message"=> "done"];
             // return $this->sendResponse([], 'Password reset link sent!');
             return response()->json([
                 "message"=>"Password reset link sent!"
-            ]);
+            ],200);
         } else {
             // return $this->sendError('Unable to send reset link to the provided email.', [], 400);
             return response()->json([
@@ -188,12 +189,12 @@ class AuthController extends Controller
             // return $this->sendResponse([], 'Password reset successful!');
             return response()->json([
                 "message"=>"Password reset successful!"
-            ]);
+            ],200);
         } else {
             // return $this->sendError('Invalid token or email.', [], 400);
             return response()->json([
                 "message"=>"Invalid token or email."
-            ]);
+            ],400);
         }
     }
     
