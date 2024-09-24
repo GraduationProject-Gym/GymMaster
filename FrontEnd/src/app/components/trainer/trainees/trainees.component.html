@@ -1,39 +1,60 @@
 <div class="container">
   <h1 class="text-center">Trainees In Class</h1>
-<div class="row">
-  <div *ngFor="let trainee of trainees; let i = index" class="card shadow-lg col-md-4 col-lg-3 ">
-    <div class="card-img-wrapper">
-      <img [src]="trainee.image" class="card-img" [alt]="trainee.name">
-    </div>
-    <div class="card-body">
-      <h5 class="card-title mb-3">{{ trainee.name }}</h5>
-      <p class="card-text"><strong>Trainer Name:</strong> {{ trainee.trainerName }}</p>
-      <p class="card-text"><strong>Class Name:</strong> {{ trainee.className }}</p>
-      <p class="card-text"><strong>Number of Sessions Attended:</strong> {{ trainee.sessionsAttended }}</p>
-      <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
-      <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
-
-
-
-      <a href="javascript:void(0)" class="mt-3" (click)="toggleComments(i)">
-        {{ trainee.showComments ? 'Hide Comments' : 'Show Comments' }}
-      </a>
-
-      <div *ngIf="trainee.showComments && trainee.comments.length > 0" class="mt-3">
-        <h6>Comments:</h6>
-        <ul>
-          <li *ngFor="let comment of trainee.comments">
-            {{ comment.text }} <br> <small><i>{{ comment.date }}</i></small>
-          </li>
-        </ul>
+  <div class="row">
+    <div *ngFor="let trainee of trainees; let i = index" class="card shadow-lg col-md-4 col-lg-3">
+      <div class="card-img-wrapper">
+        <img [src]="trainee.image" class="card-img" [alt]="trainee.name">
       </div>
+      <div class="card-body">
+        <h5 class="card-title mb-3">{{ trainee.name }}</h5>
+        <p class="card-text"><strong>Number of Sessions Attended:</strong> {{ trainee.sessionsAttended }}</p>
+        <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
+        <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
 
+        <a href="javascript:void(0)" class="mt-3" (click)="toggleReview(i)">
+          {{ trainee.showReview ? 'Hide Review' : 'Show Review' }}
+        </a>
 
-      <div  class="mt-3">
-        <input [(ngModel)]="trainee.newComment" class="form-control" placeholder="Write your comment...">
-        <button class="btn btn-success mt-2" (click)="submitComment(i)">Submit Comment</button>
+        <div *ngIf="trainee.showReview && trainee.Reviews.length > 0" class="mt-3">
+          <h6>Review:</h6>
+          <ul>
+            <li *ngFor="let review of trainee.Reviews">
+              <ul>
+                <li><strong>Date:</strong> {{ review.date }}</li>
+                <li><strong>Attendance:</strong> {{ review.attendens }}</li>
+                <li><strong>Comment:</strong> {{ review.comment }}</li>
+                <li>
+                  <strong>Rating:</strong> {{ review.rate }}/5
+                  <span class="star-rating">
+                    <i *ngFor="let star of [].constructor(5); let j = index"
+                      class="fa"
+                      [ngClass]="j < review.rate ? 'fas fa-star' : 'far fa-star'"
+                      style="color: #ff6207;"></i>
+                  </span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Input fields for adding new comments and ratings for each trainee individually -->
+        <div class="mt-3">
+          <h6>Add Review:</h6>
+          <div>
+            <label for="comment">Comment:</label>
+            <input id="comment" type="text" [(ngModel)]="trainee.tempReview.comment" class="form-control">
+          </div>
+          <div class="mt-2">
+            <label for="rate">Rating (1-5):</label>
+            <input id="rate" type="number" min="1" max="5" [(ngModel)]="trainee.tempReview.rate" class="form-control">
+            <div *ngIf="(trainee.tempReview.rate > 5 || trainee.tempReview.rate < 1) " class="text-danger mt-2">
+              Rating must be between 1 and 5.
+            </div>
+
+          </div>
+          <button class="btn btn-primary mt-3" (click)="addReview(i)">Submit Review</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

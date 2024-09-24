@@ -12,203 +12,70 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./trainees.component.css']
 })
 export class TraineesComponent {
+    trainees = [
+      {
+        name: 'SANDY SAMIR',
+        sessionsAttended: 4,
+        membership: 'VIP',
+        subscription: 'Month',
+        image: '/Woman athlete exercising with kettlebell.jfif',
+        showReview: false,
+        Reviews: [
+          { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+          { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+        ],
+        tempReview: { comment: '', rate: 1}
+      },
+      {
+        name: 'SANDY SAMIR',
+        sessionsAttended: 4,
+        membership: 'VIP',
+        subscription: 'Month',
+        image: '/Woman athlete exercising with kettlebell.jfif',
+        showReview: false,
+        Reviews: [
+          { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+          { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+        ],
+        tempReview: { comment: '', rate: 1}
+      }, {
+        name: 'SANDY SAMIR',
+        sessionsAttended: 4,
+        membership: 'VIP',
+        subscription: 'Month',
+        image: '/Woman athlete exercising with kettlebell.jfif',
+        showReview: false,
+        Reviews: [
+          { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+          { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+        ],
+        tempReview: { comment: '', rate: 1}
+      }
+    ];
 
-  trainees = [
-    {
-      name: 'SANDY SAMIR',
-      trainerName: 'Ahmed',
-      className: 'Yoga',
-      sessionsAttended: 4,
-      membership: 'VIP',
-      subscription: 'Month',
-      review: 'Good Trainer',
-      rating: 3,
-      image: '/Woman athlete exercising with kettlebell.jfif',
-      comments: [] as { text: string; date: string; }[],
-      showComments: false,
-      newComment: ''
-    },
-    {
-      name: 'JOHN DOE',
-      trainerName: 'Mohamed',
-      className: 'Pilates',
-      sessionsAttended: 5,
-      membership: 'Standard',
-      subscription: 'Year',
-      review: 'Excellent Trainer',
-      rating: 5,
-      image: '/Woman athlete exercising with kettlebell.jfif',
-      comments: [] as { text: string; date: string; }[],
-      showComments: false,
-      newComment: ''
-    },
-    {
-      name: 'JANE SMITH',
-      trainerName: 'Amira',
-      className: 'Zumba',
-      sessionsAttended: 3,
-      membership: 'VIP',
-      subscription: 'Month',
-      review: 'Fun Class',
-      rating: 4,
-      image: '/Woman athlete exercising with kettlebell.jfif',
-      comments: [] as { text: string; date: string; }[],
-      showComments: false,
-      newComment: ''
-    },
-    {
-      name: 'MIKE JONES',
-      trainerName: 'Tamer',
-      className: 'CrossFit',
-      sessionsAttended: 6,
-      membership: 'Standard',
-      subscription: 'Month',
-      review: 'Challenging but worth it',
-      rating: 5,
-      image: '/Woman athlete exercising with kettlebell.jfif',
-      comments: [] as { text: string; date: string; }[],
-      showComments: false,
-      newComment: ''
-    },
-    {
-      name: 'LUCY BROWN',
-      trainerName: 'Sara',
-      className: 'Spinning',
-      sessionsAttended: 2,
-      membership: 'Standard',
-      subscription: 'Week',
-      review: 'Great Energy',
-      rating: 4,
-      image: '/Woman athlete exercising with kettlebell.jfif',
-      comments: [] as { text: string; date: string; }[],
-      showComments: false,
-      newComment: ''
-    },
-    {
-      name: 'CHRIS GREEN',
-      trainerName: 'Hossam',
-      className: 'Boxing',
-      sessionsAttended: 7,
-      membership: 'VIP',
-      subscription: 'Year',
-      review: 'Best Trainer',
-      rating: 5,
-      image: '/Woman athlete exercising with kettlebell.jfif',
-      comments: [] as { text: string; date: string; }[],
-      showComments: false,
-      newComment: ''
-    },
-    {
-    name: 'SANDY SAMIR',
-    trainerName: 'Ahmed',
-    className: 'Yoga',
-    sessionsAttended: 4,
-    membership: 'VIP',
-    subscription: 'Month',
-    review: 'Good Trainer',
-    rating: 3,
-    image: '/Woman athlete exercising with kettlebell.jfif',
-    comments: [] as { text: string; date: string; }[],
-    showComments: false,
-    newComment: ''
-  },
-  // {
-  //   name: 'JOHN DOE',
-  //   trainerName: 'Mohamed',
-  //   className: 'Pilates',
-  //   sessionsAttended: 5,
-  //   membership: 'Standard',
-  //   subscription: 'Year',
-  //   review: 'Excellent Trainer',
-  //   rating: 5,
-  //   image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //   showCommentBox: false,
-  //   newComment: ''
-  // },
-  // {
-  //   name: 'JANE SMITH',
-  //   trainerName: 'Salma',
-  //   className: 'Zumba',
-  //   sessionsAttended: 6,
-  //   membership: 'VIP',
-  //   subscription: 'Month',
-  //   review: 'Very Energetic',
-  //   rating: 4,
-  //   image: '/Woman athlete exercising with kettlebell.jfif',
-  //   showCommentBox: false,
-  //   newComment: ''
-  // },
-  // {
-  //   name: 'ALY AHMED',
-  //   trainerName: 'Kareem',
-  //   className: 'CrossFit',
-  //   sessionsAttended: 8,
-  //   membership: 'Gold',
-  //   subscription: 'Year',
-  //   review: 'Motivating Trainer',
-  //   rating: 5,
-  //   image: '/Woman athlete exercising with kettlebell.jfif',
-  //   showCommentBox: false,
-  //   newComment: ''
-  // },
-  // {
-  //   name: 'LARA GEORGE',
-  //   trainerName: 'Nadia',
-  //   className: 'Aerobics',
-  //   sessionsAttended: 3,
-  //   membership: 'Standard',
-  //   subscription: 'Month',
-  //   review: 'Fun Classes',
-  //   rating: 4,
-  //   image: '/Woman athlete exercising with kettlebell.jfif',
-  //   showCommentBox: false,
-  //   newComment: ''
-  // },
-  // {
-  //   name: 'MIKE BROWN',
-  //   trainerName: 'Youssef',
-  //   className: 'Boxing',
-  //   sessionsAttended: 7,
-  //   membership: 'Platinum',
-  //   subscription: 'Year',
-  //   review: 'Great Technique',
-  //   rating: 5,
-  //   image: '/Woman athlete exercising with kettlebell.jfif',
-  //   showCommentBox: false,
-  //   newComment: ''
-  // },
-  // {
-  //   name: 'Amal',
-  //   trainerName: 'Youssef',
-  //   className: 'Boxing',
-  //   sessionsAttended: 7,
-  //   membership: 'Platinum',
-  //   subscription: 'Year',
-  //   review: 'Great Technique',
-  //   rating: 3,
-  //   image: '/Woman athlete exercising with kettlebell.jfif',
-  //   showCommentBox: false,
-  //   newComment: ''
-  // }
-  ];
+    toggleReview(index: number) {
+      this.trainees[index].showReview = !this.trainees[index].showReview;
+    }
 
+    addReview(index: number) {
+      // if (this.trainees[index].tempReview.rate < 1 || this.trainees[index].tempReview.rate > 5) {
+      //   ('Rating must be between 1 and 5.');
+      //   return;
+      // }
+      const newReview = {
+        date: new Date().toISOString().split('T')[0],
+        attendens: 'N/A',
+        comment: this.trainees[index].tempReview.comment,
+        rate: this.trainees[index].tempReview.rate
+      };
 
-  toggleComments(index: number) {
-    this.trainees[index].showComments = !this.trainees[index].showComments;
+      this.trainees[index].Reviews.push(newReview);
+      this.trainees[index].tempReview = { comment: '', rate: 0 };
+    }
   }
 
 
-submitComment(index: number) {
-  if (this.trainees[index].newComment.trim() !== '') {
-    const currentDate = new Date().toLocaleString();
-    const commentWithDate = {
-      text: this.trainees[index].newComment,
-      date: currentDate
-    };
-    this.trainees[index].comments.push(commentWithDate);
-  }
-  this.trainees[index].newComment = '';
-}
 
 
-}
+
+
