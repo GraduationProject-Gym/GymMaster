@@ -19,5 +19,15 @@ class GymClassController extends Controller
         return response()->json($gymClasses, 200);
     }
 
-   
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $this->authorize('create', GymClass::class);
+
+        $gymClass = GymClass::create($request->all());
+
+        return new GymClassResource($gymClass);
+    }
 }
