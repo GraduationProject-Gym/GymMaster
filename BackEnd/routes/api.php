@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipController;
-use App\Http\Controllers\SubscriptionController ;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\TraineeClassController;
 
 
 
@@ -16,12 +17,14 @@ Route::get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'store']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
+Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
 // membership
 
 Route::apiResource('membership',MembershipController::class);
+Route::apiResource('trainee-class',TraineeClassController::class);
+Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->middleware('guest');
 
 // subscription
 Route::apiResource('subscribe',SubscriptionController::class);

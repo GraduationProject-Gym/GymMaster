@@ -72,7 +72,11 @@ class User extends Authenticatable
 
     public function gymClass()
     {
-       return $this->belongsToMany(GymClass::class, 'user_class', 'user_id', 'class_id');
+       return $this->belongsToMany(GymClass::class, 'user_classes', 'user_id', 'class_id','user_classes');
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomResetPasswordNotification($token));
     }
     public function sendPasswordResetNotification($token)
     {

@@ -13,8 +13,9 @@ class Exercise extends Model
         'category',
         'no_of_times',
     ];
-    public function gymClass()
-    {
-       return $this->belongsToMany(GymClass::class, 'class_exercies', 'exercies_id', 'class_id');
-    }
+    public function classes()
+{
+    return $this->belongsToMany(GymClass::class, 'class_exerciess', 'exercise_id', 'class_id');
+}
+
 }

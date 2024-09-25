@@ -15,11 +15,13 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
+
 class AuthController extends Controller
 {
     public function __construct()
     {
-        // Apply the auth middleware only to certain methods, e.g., logout
+        // Apply the auth middleware only to methods logout
         $this->middleware('auth:sanctum')->only(['logout']);
     }
     /**
@@ -33,9 +35,48 @@ class AuthController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(RegisterRequest $request)
+    // public function store(RegisterRequest $request)
+    public function store(Request $request)
     {
-        //
+        
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['nullable', 'string', 'max:11'],
+            'address' => ['nullable', 'string'],
+            'age' => ['nullable', 'integer', 'min:15'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'gender' => 'required',
+            'role' => 'required',
+            'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10000', 'required_if:role,trainer'],
+        ];
+
+        $messages = [
+            'name.required' => 'Name is required.',
+            'email.required' => 'Email is required.',
+            'email.email' => 'Email must be a valid email address.',
+            'email.unique' => 'The email has already been taken.',
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters.',
+            'password.confirmed' => 'Passwords do not match.',
+            'phone.max' => 'Phone number may not be greater than 11 characters.',
+            'age.min' => 'Age must be at least 15.',
+            'image.image' => 'The file must be an image.',
+            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+            'image.max' => 'The image may not be greater than 2048 kilobytes.',
+            'gender.required' => 'Gender is required.',
+            'role.required' => 'Role is required.',
+        ];
+
+        // Validate the request
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+
         $imagePath = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -115,29 +156,38 @@ class AuthController extends Controller
     }
 
     // Logout
-    public function logout(Request $request){
-        $user = Auth::user();
-        if($user){
-            // $user->tokens()->delete(); // logout from all devo=ices
-            $user->currentAccessToken()->delete();
-            return response()->json([
-                "message"=>"Logged out"
-            ]);
+    public function logout(Request $request)
+{
+    $user = Auth::user();
+    
+    if ($user) {
+        $currentToken = $user->currentAccessToken();
+        if ($currentToken) {
+            $currentToken->delete();
         }
-
+        
+        return response()->json([
+            "message" => "Logged out successfully"
+        ]);
     }
+
+    return response()->json([
+        "message" => "User not authenticated"
+    ], 401);
+}
+
 
     public function sendResetLinkEmail(Request $request)
     {
         // Validate the email input
         $request->validate(['email' => 'required|email']);
         $user = User::where('email', $request->email)->first();
-        
+
         if (!$user) {
             // Return an error response if the email is not found
             return response()->json([
                 "message"=>"Email does not exist in our records."
-            ],203);
+            ]);
         }
         // Send password reset link
         $status = Password::sendResetLink(
@@ -148,14 +198,13 @@ class AuthController extends Controller
             // return $this->sendResponse([], 'Password reset link sent!');
             return response()->json([
                 "message"=>"Password reset link sent!"
-            ],200);
-            
+            ]);
+
         } elseif ($status === Password::RESET_THROTTLED) {
-            // return ["message"=> "done"];
             // return $this->sendResponse([], 'Password reset link sent!');
             return response()->json([
                 "message"=>"Password reset link sent!"
-            ],200);
+            ]);
         } else {
             // return $this->sendError('Unable to send reset link to the provided email.', [], 400);
             return response()->json([
@@ -189,13 +238,14 @@ class AuthController extends Controller
             // return $this->sendResponse([], 'Password reset successful!');
             return response()->json([
                 "message"=>"Password reset successful!"
-            ],200);
+            ]);
         } else {
             // return $this->sendError('Invalid token or email.', [], 400);
             return response()->json([
                 "message"=>"Invalid token or email."
-            ],400);
+            ]);
         }
+
     }
     
     /**
