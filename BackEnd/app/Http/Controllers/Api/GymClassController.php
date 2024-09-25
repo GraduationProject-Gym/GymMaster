@@ -26,9 +26,36 @@ class GymClassController extends Controller
     {
         $this->authorize('create', GymClass::class);
 
-        $gymClass = GymClass::create($request->all());
+    try {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => 'required|boolean',
+            'total_no_of_session' => 'required|integer|min:1',
+            'max_trainee' => 'required|integer|min:1',
+        ]);
+    } catch (ValidationException $e) {
+        $errors = $e->validator->errors();
+        $customMessages = [];
 
-        return new GymClassResource($gymClass);
+        foreach ($errors->all() as $error) {
+            $customMessages[] = $error;  
+        }
+
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $customMessages,
+        ], 422);
+    }
+
+    $gymClass = GymClass::create($validatedData);
+
+    return new GymClassResource($gymClass);
+        // $this->authorize('create', GymClass::class);
+
+        // $gymClass = GymClass::create($request->all());
+
+        // return new GymClassResource($gymClass);
     }
        /**
      * Display the specified resource.
