@@ -29,7 +29,5 @@ export const routes: Routes = [
     { path: 'trainer/add-class', component: AddClassComponent },
     { path: 'trainer/trainees', component: TraineesComponent },
     { path: 'trainer/trainees/report', component:ReportComponent},
-
-
     { path: "**", component: ErrorComponent }
 ];

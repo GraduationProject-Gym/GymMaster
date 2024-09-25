@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/authentication/login/login.service';
 import { Router, RouterModule } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,11 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class LoginComponent {
   // Create request to use login service
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) { }
 
   // Create form elements and set up their basic validation rules
   loginForm = new FormGroup({
@@ -55,6 +60,11 @@ export class LoginComponent {
       this.loginForm.controls['password'].touched;
   }
 
+  // Sanitize input
+  sanitizeInput(input: string): string {
+    return this.sanitizer.sanitize(1, input) || ''; 
+  }
+
   // Check user authentication and authorization
   formSubmitted = false; // Track if the form has been submitted
   errorMessage: string | null = null;
@@ -65,8 +75,8 @@ export class LoginComponent {
 
     if (this.loginForm.valid) {
       const data = {
-        email: this.loginForm.value.email || '',
-        password: this.loginForm.value.password || '',
+        email: this.sanitizeInput(this.loginForm.value.email || ''),
+        password: this.sanitizeInput(this.loginForm.value.password || ''),
         device_name: this.getDeviceName() // Get device name
       };
 

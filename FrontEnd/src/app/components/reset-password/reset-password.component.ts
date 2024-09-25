@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ResetPasswordService } from '../../services/authentication/reset-passsword/reset-password.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reset-password',
@@ -23,7 +24,8 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private resetPasswordService: ResetPasswordService,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.resetPasswordForm = this.createFormGroup();
   }
@@ -67,6 +69,11 @@ export class ResetPasswordComponent implements OnInit {
         this.resetPasswordForm.controls['confirmPassword'].touched);
   }
 
+  // Sanitize password input
+  sanitizeInput(input: string): string {
+    return this.sanitizer.sanitize(1, input) || ''; 
+  }
+
   /* show & hide password*/
   showPassword(inputType: string) {
     const passwordInput = document.getElementById(inputType) as HTMLInputElement;
@@ -92,7 +99,9 @@ export class ResetPasswordComponent implements OnInit {
     this.errorMessage = null; // Reset the error message 
 
     if (this.resetPasswordForm.valid && this.passwordMatcher()) {
-      const { password, confirmPassword } = this.resetPasswordForm.value;
+      const password = this.sanitizeInput(this.resetPasswordForm.value.password || '');
+      const confirmPassword = this.sanitizeInput(this.resetPasswordForm.value.confirmPassword || '');
+
       this.resetPasswordService.resetPassword(password, confirmPassword).subscribe({
         next: response => {
           console.log('Password reset successful!', response);

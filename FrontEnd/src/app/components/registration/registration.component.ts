@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
-// import { Init } from 'v8';
 import { Router, RouterModule } from '@angular/router';
 import { RegistrationService } from '../../services/authentication/registration/registration.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-registration',
@@ -19,8 +19,10 @@ import { RegistrationService } from '../../services/authentication/registration/
   ]
 })
 export class RegistrationComponent {
-  constructor(private registrationService: RegistrationService, private router: Router) {
-  }
+  constructor(
+    private registrationService: RegistrationService,
+    private router: Router,
+    private sanitizer: DomSanitizer) {}
 
   // Extract image name from its path
   imageName: string | null = null;
@@ -109,6 +111,10 @@ export class RegistrationComponent {
     // Return true if passwords match
   }
 
+  sanitizeInput(input: string): string {
+    return this.sanitizer.sanitize(1, input) || '';
+  }
+
   errorMessage: string | null = null;
 
   Registeration() {
@@ -123,7 +129,8 @@ export class RegistrationComponent {
             formData.append('image', file);
           }
         } else {
-          formData.append(key, this.registrationForm.get([key])?.value);
+          const sanitizedValue = this.sanitizeInput(this.registrationForm.get(key)?.value);
+          formData.append(key, sanitizedValue);
         }
       });
 
@@ -132,7 +139,8 @@ export class RegistrationComponent {
       this.registrationService.register(formData).subscribe({
         next: (response) => {
           // console.log(response);
-          this.router.navigate(['/login'])
+          const registeredEmail = this.registrationForm.get('email')?.value;
+          this.router.navigate(['/verification'], { queryParams: { email: registeredEmail } });
         },
 
         error: (error) => {
