@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Trainee;
 use App\Models\Trainer;
 use App\Models\Memberships;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
@@ -16,6 +17,10 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use App\Mail\VerifyEmail;
 
 class AuthController extends Controller
 {
@@ -38,6 +43,7 @@ class AuthController extends Controller
     // public function store(RegisterRequest $request)
     public function store(Request $request)
     {
+
 
         $rules = [
             'name' => ['required', 'string', 'max:255'],
@@ -75,7 +81,10 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+        // dd($this->checkEmailValidity($request->email));
+        if(!$this->checkEmailValidity($request->email)){
+            return response()->json(['message' => 'This email not real']);
+        }
 
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -90,6 +99,7 @@ class AuthController extends Controller
         if($user1){
             return response()->json(['message' => 'this phone are used']);
         }
+
         // Create a new user
         $user = User::create([
             'name' => $request->name,
@@ -101,15 +111,20 @@ class AuthController extends Controller
             'image' => $imagePath,
             'gender' => $request->gender,
             'role' => $request->role,
+            'token'=>Str::random(60),
+            'timer'=>now(),
         ]);
         // return response()->json($request);
-
 
         if ($request->role === 'trainee') {
             $trainee = Trainee::create([
                 'user_id' => $user->id,
             ]);
         }
+
+        Mail::to($user->email)->send(new VerifyEmail($user));
+
+
         if ($request->role === 'trainer') {
             $cvPath = null;
 
@@ -125,18 +140,46 @@ class AuthController extends Controller
         }
         if($request->role === 'trainee'){
             return response()->json([
-                'message' => 'User registered successfully',
+                'message' => 'User registered successfully check your mail to verifiy',
                 'user' => new UserResource($user),
                 'traineeData' => new TraineeResource($trainee),
             ], 201);
         }
         else if($request->role === 'trainer'){
             return response()->json([
-                'message' => 'User registered successfully',
+                'message' => 'User registered successfully check your mail to verifiy',
                 'user' => new UserResource($user),
                 'trainerData' => new TrainerResource($trainer),
             ], 201);
         }
+
+    }
+    public function verifyEmail(Request $request) {
+        $user = User::where('token', $request->token)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Invalid verification token',
+            ], 403);
+        }
+
+        // Check if the token is expired (1 hour = 60 minutes)
+      //  dd(now()->diffInMinutes($user->verification_token_created_at));
+        if (now()->diffInMinutes($user->timer) < -60.0) {
+            return response()->json([
+                'message' => 'Verification token has expired. must be login to resend Verification ',
+            ], 403);
+        }
+
+        // If the token is still valid, verify the user's email
+        $user->email_verified_at = now();
+        $user->token = null; // Clear the token
+        $user-> timer= null; // Clear the timestamp
+        $user->save();
+
+        return response()->json([
+            'message' => 'Your email has been verified.',
+        ], 403);
 
     }
 
@@ -147,14 +190,27 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'email' => ['The provided credentials are incorrect.'],
-            ], 401);
+            ], 403);
+        }
+        if (is_null($user->email_verified_at)) {
+            if (now()->diffInMinutes($user->timer) < -60.0) {
+                $user->token = Str::random(60);
+                $user->timer = now();
+                $user->save();
+
+            // Resend the email
+                Mail::to($user->email)->send(new VerifyEmail($user));
+                return response()->json([
+                    'email' => ['Verification token has expired. A new verification email has been sent.'],
+                ], 403);
+            }
+            return response()->json([
+                'email' => ['Please verify your email before logging in.'],
+            ], 403);
+
         }
 
-        // if ($user->tokens()->count() > 3) {
-        //     return response()->json([
-        //         "error" => "You have exceeded the number of allowed logged in accounts. Please logout from one of them and try again."
-        //     ], 403);
-        // }
+
         return response()->json([
             'token' => $user->createToken($request->device_name)->plainTextToken
         ]);
@@ -196,7 +252,7 @@ class AuthController extends Controller
         }
         // Send password reset link
         $status = Password::sendResetLink(
-            $request->only('email')
+            $request->only(keys: 'email')
         );
         // Return appropriate response based on the status
         if ($status === Password::RESET_LINK_SENT) {
@@ -275,4 +331,52 @@ class AuthController extends Controller
     {
         //
     }
+    private function checkEmailValidity($email)
+    {
+
+    $client = new Client();
+    $apiKey = 'ef414821037d462eb82234bfa2797332';  // Use the API key provided by the service you're using
+    try {
+        $response = $client->request('GET', 'https://emailvalidation.abstractapi.com/v1/', [
+            'query' => [
+                'api_key' => $apiKey,
+                'email' => $email,
+                ]
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+
+        // Check if the response indicates success or failure
+        if (isset($data['error'])) {
+            if ($data['error']['message'] == "Invalid API key") {
+                // Handle invalid API key case
+                \Log::error('Invalid Abstract API key.');
+                return response()->json(['error' => 'Invalid API key. Please contact the admin.'], 400);
+            }
+
+            if ($data['error']['message'] == "Account ran out of credits") {
+                // Handle no credits case
+                \Log::error('Abstract API account has run out of credits.');
+                return response()->json(['error' => 'Abstract API account ran out of credits.'], 400);
+            }
+        }
+
+        // Check if the email is valid based on the Abstract API response
+        if (isset($data['quality_score'])) {
+            // dd(1111);
+            $qualityScore = $data['quality_score'];
+            // Define a threshold for what you consider a valid email
+            $validThreshold = 0.7; // Adjust this threshold as needed
+            return $qualityScore >= $validThreshold;
+        }
+
+        // If no quality score is found, return false
+        return false;
+
+    } catch (\Exception $e) {
+        // Log and handle any other errors
+        \Log::error('Abstract API request failed: ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to validate email. Please try again later.'], 500);
+    }
+}
 }

@@ -67,8 +67,8 @@ class MembershipPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Memberships $memberships): bool
-    {
-        //
-    }
+    // public function forceDelete(User $user, Memberships $memberships): bool
+    // {
+    //     //
+    // }
 }
