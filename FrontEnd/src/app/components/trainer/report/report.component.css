@@ -1,7 +1,6 @@
-
 /* Basic styles for the report container */
 .report-container {
-  max-width: 600px;
+  max-width: 800px; /* توسعة العرض قليلاً */
   margin: 100px auto;
   padding: 20px;
   background-color: #f8f9fa;
