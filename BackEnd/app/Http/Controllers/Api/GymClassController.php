@@ -64,4 +64,19 @@ class GymClassController extends Controller
         }
         
     }
+     /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $gymClass = GymClass::find($id);
+        $this->authorize('delete', $gymClass);
+        if (!$gymClass) {
+            return response()->json(['message' => 'Gym class not found'], 404);
+        }
+    
+        $gymClass->delete();
+    
+        return response()->json(['message' => 'Gym class deleted successfully']);
+    }
 }
