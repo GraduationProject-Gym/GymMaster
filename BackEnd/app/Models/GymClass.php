@@ -41,7 +41,7 @@ class GymClass extends Model
 
     public function user()
     {
-       return $this->belongsToMany(User::class, 'user_class', 'class_id', 'user_id', 'user_classes');
+       return $this->belongsToMany(User::class, 'user_classes', 'class_id', 'user_id');
     }
 
     public function exercises()

@@ -20,14 +20,17 @@ class TraineeClassResource extends JsonResource
         $trainee = User::findOrFail(auth::id());
         $schedules = $this->schedule ? TraineeScheduleResource::collection($this->schedule) : [];
         $trainer = $this->trainer ? new TrainerResource($this->trainer) : null;        // $exercises = $this->exercise ? TraineeExerciseResource::collection($this->exercise) : [];
-
+        $user = $this->user ? new UserResource($this->user) : null;
         return [
             'name' => $this->name,
             'description' => $this->description,
             'status' => $this->status,
             'total_no_of_session' => $this->total_no_of_session,
             'max_trainee' => $this->max_trainee,
-            'traineeData' => new TraineeResource($trainee),
+            // 'traineeData' => new TraineeResource($trainee),
+            'traineesData' => $this->user ? $this->user->map(function ($user) {
+                return new UserResource($user);
+            }) : [],
             'trainerData' => $trainer,
             'scheduleData' => $schedules,
             'exerciseData' => $this->exercises ? $this->exercises->map(function ($exercise) {

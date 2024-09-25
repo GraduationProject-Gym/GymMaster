@@ -37,7 +37,16 @@ class TraineeClassController extends Controller
         //
         $class_id = $request->class_id;
         $trainee = Trainee::findOrFail(auth::id());
+        $currentUser = User::findOrFail(auth::id());
         // $this->authorize('create', $trainee);
+        try {
+            $this->authorize('create', UserClass::class);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to join the class'
+            ], 403);
+        }
+
         $trainee_class = GymClass::findOrFail($class_id);
         $exists = UserClass::where('user_id', auth::id())
             ->where('class_id', $class_id)

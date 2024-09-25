@@ -20,23 +20,24 @@ use App\Models\Trainee;
      */
     public function view(User $user, Trainee $trainee)
     {
-        return $user->role === 'trainee' ;//|| $user->role === 'trainer';
+        // return $user->role === 'trainee' ;//|| $user->role === 'trainer';
     }
 
     /**
      * Determine whether the user can create trainee es.
      */
     public function create(User $user)
-    {
-        return $user->role === 'trainee';
-    }
+{
+    return $user->role === 'trainee';
+}
+
 
     /**
      * Determine whether the user can update the trainee .
      */
     public function update(User $user, Trainee $trainee)
     {
-        return $user->role === 'trainer';
+        // return $user->role === 'trainer';
     }
 
     /**
@@ -44,6 +45,6 @@ use App\Models\Trainee;
      */
     public function delete(User $user, Trainee $trainee)
     {
-        return $user->role === 'trainer';
+        // return $user->role === 'trainer';
     }
 }
