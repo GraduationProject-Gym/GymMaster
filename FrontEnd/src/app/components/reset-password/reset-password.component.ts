@@ -84,9 +84,11 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
 
+  formSubmitted = false; // Track if the form has been submitted
   errorMessage: string | null = null;
 
   resetPassword() {
+    this.formSubmitted = true; // Mark form as submitted
     this.errorMessage = null; // Reset the error message 
 
     if (this.resetPasswordForm.valid && this.passwordMatcher()) {
