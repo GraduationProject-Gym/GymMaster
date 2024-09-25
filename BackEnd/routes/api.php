@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\SubscriptionController ;
 use App\Http\Controllers\Api\GymClassController;
-
+use App\Http\Controllers\Api\EquipmentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,4 +36,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/gym-classes', [GymClassController::class, 'store']);
     Route::put('/gym-classes/{gymClass}', [GymClassController::class, 'update']);
     Route::delete('/gym-classes/{gymClass}', [GymClassController::class, 'destroy']);
+});
+
+
+//equipments 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/equipments', [EquipmentController::class, 'index'])->name('equipments.index');
+    Route::post('/equipments', [EquipmentController::class, 'store'])->name('equipments.store');
+    Route::get('/equipments/{id}', [EquipmentController::class, 'show'])->name('equipments.show');
+    Route::put('/equipments/{id}', [EquipmentController::class, 'update'])->name('equipments.update');
+    Route::delete('/equipments/{id}', [EquipmentController::class, 'destroy'])->name('equipments.destroy');
 });

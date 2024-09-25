@@ -45,4 +45,8 @@ class GymClass extends Model
     {
         return $this->belongsToMany(Exercise::class, 'class_exerciess', 'class_id', 'exercise_id');
     }
+    public function trainer()
+    {
+        return $this->belongsTo(Trainer::class, 'trainer_id');
+    }
 }

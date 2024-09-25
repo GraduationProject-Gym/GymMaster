@@ -82,4 +82,8 @@ class User extends Authenticatable
     {
         return $this->role === 'admin'; 
     }
+    public function trainer()
+    {
+        return $this->hasOne(Trainer::class, 'user_id');
+    }
 }

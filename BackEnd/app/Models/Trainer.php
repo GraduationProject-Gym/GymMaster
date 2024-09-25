@@ -20,4 +20,12 @@ class Trainer extends Model
     {
         return $this->hasMany(Review::class,'id','id');
     }
+    public function gymClasses()
+    {
+        return $this->hasMany(GymClass::class, 'trainer_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
