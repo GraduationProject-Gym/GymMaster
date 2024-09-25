@@ -41,7 +41,7 @@ class AuthController extends Controller
 
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'], // 'unique:users,email'
+            'email' => ['required', 'string', 'email', 'max:255','unique:users,email'],
             'password' => ['required', 'string', 'min:8'], // confirmed
             'phone' => ['nullable', 'string', 'max:11'],
             'address' => ['nullable', 'string'],
@@ -150,11 +150,11 @@ class AuthController extends Controller
             ], 401);
         }
 
-        if ($user->tokens()->count() > 3) {
-            return response()->json([
-                "error" => "You have exceeded the number of allowed logged in accounts. Please logout from one of them and try again."
-            ], 403);
-        }
+        // if ($user->tokens()->count() > 3) {
+        //     return response()->json([
+        //         "error" => "You have exceeded the number of allowed logged in accounts. Please logout from one of them and try again."
+        //     ], 403);
+        // }
         return response()->json([
             'token' => $user->createToken($request->device_name)->plainTextToken
         ]);
