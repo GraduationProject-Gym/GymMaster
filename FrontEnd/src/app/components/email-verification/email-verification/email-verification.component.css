@@ -1,0 +1,33 @@
+.container {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    height: 90vh; 
+}
+
+.form {
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    padding: 20px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; 
+}
+
+.image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.email-verification-image {
+    max-width: 60%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.success-message{
+    color: green;
+    margin-left: 10px;
+}

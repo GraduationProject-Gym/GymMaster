@@ -1,0 +1,42 @@
+<div class="container d-flex">
+    <form [formGroup]="emailVerificationForm" (ngSubmit)="sendEmail()" class="form form-background">
+        <div class="image-container">
+            <img src="/emailVerification.webp" alt="Forgot Password Image" class="forgot-password-image">
+        </div>
+        <h1 class="title d-flex justify-content-center">Verify your email address</h1>
+        <p>
+            You've entered {{email}} as the email address for your account.
+            Please verify this email address by clicking button below.
+        </p>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input formControlName="email" type="email" class="form-control" id="email" name="email"
+                placeholder="Enter email">
+
+            @if (emailRequired){
+            <div class="error-msg">
+                Email is required
+            </div>
+            } @else if (emailFormatInvalid){
+            <div class="error-msg">
+                Enter a valid email
+            </div>
+            }
+
+            @if(successMessage){
+            <div class="success-message">
+                {{ successMessage }}
+            </div>
+            }
+            @else if (errorMessage){
+            <div class="alert alert-danger  mt-3">
+                {{ errorMessage }}
+            </div>
+            }
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" class="btn">Send Email</button>
+            </div>
+        </div>
+    </form>
+</div>

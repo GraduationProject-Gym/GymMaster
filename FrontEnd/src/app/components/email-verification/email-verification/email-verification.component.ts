@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { ForgotPasswordService } from '../../services/authentication/forgot-password/forgot-password.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { EmailVerificationService } from '../../../services/authentication/email-verification/email-verification.service';
 import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-forgot-password',
+  selector: 'app-email-verification',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule
   ],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.css'
+  templateUrl: './email-verification.component.html',
+  styleUrl: './email-verification.component.css'
 })
-export class ForgotPasswordComponent {
+export class EmailVerificationComponent {
   // Create form elements and set up their basic validation rules
-  forgotPasswordForm = new FormGroup({
+  emailVerificationForm = new FormGroup({
     email: new FormControl(null, [
       Validators.required,
       Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) // Validate email format
@@ -24,34 +24,34 @@ export class ForgotPasswordComponent {
   });
 
   get emailRequired() {
-    return this.forgotPasswordForm.controls['email'].errors?.['required'] &&
-      this.forgotPasswordForm.controls['email'].touched;
+    return this.emailVerificationForm.controls['email'].errors?.['required'] &&
+      this.emailVerificationForm.controls['email'].touched;
   }
 
   get emailFormatInvalid() {
-    return this.forgotPasswordForm.controls['email'].errors?.['pattern'] &&
-      this.forgotPasswordForm.controls['email'].touched;
+    return this.emailVerificationForm.controls['email'].errors?.['pattern'] &&
+      this.emailVerificationForm.controls['email'].touched;
   }
 
   formSubmitted = false; // Track if the form has been submitted
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  // Create request to use forgot-password service
-  constructor(private forgotPasswordService: ForgotPasswordService) { }
+  // Create request to use email verification service
+  constructor(private emailVerificationService: EmailVerificationService) { }
 
-  // Send email to reset password 
+  // Send email to verify
   sendEmail() {
     this.formSubmitted = true; // Mark form as submitted
     this.errorMessage = null; // Reset the error message 
 
-    if (this.forgotPasswordForm.valid) {
+    if (this.emailVerificationForm.valid) {
       const data = {
-        email: this.forgotPasswordForm.value.email || ''
+        email: this.emailVerificationForm.value.email || ''
       };
 
-      // Call forgot-password service and handle response
-      this.forgotPasswordService.sendEmail(data).subscribe({
+      // Call email-verification service and handle response
+      this.emailVerificationService.sendVerificationEmail(data).subscribe({
         next: (response) => {
           console.log(response);
           this.successMessage = 'If that email is registered, we have sent you a password reset link!';

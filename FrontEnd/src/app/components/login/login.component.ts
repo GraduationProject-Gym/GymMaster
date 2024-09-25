@@ -73,7 +73,7 @@ export class LoginComponent {
       // Call login service and handle response
       this.loginService.login(data).subscribe({
         next: (response) => {
-          console.log(response);
+          // console.log(response);
           this.router.navigate(['/trainee']);
         },
         error: (error) => {
