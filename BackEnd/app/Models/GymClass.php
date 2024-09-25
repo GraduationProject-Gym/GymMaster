@@ -12,7 +12,7 @@ class GymClass extends Model
     protected $fillable = [
         'name',
         'description',
-        'total_no_sessions',
+        'total_no_of_session',
         'status',
         'max_trainee'
     ];
@@ -35,5 +35,14 @@ class GymClass extends Model
     public function exercies()
     {
        return $this->belongsToMany(User::class, 'class_exercies', 'class_id', 'exercies_id');
+    }
+    public function equipments()
+    {
+        return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
+    }
+
+    public function exercises()
+    {
+        return $this->belongsToMany(Exercise::class, 'class_exerciess', 'class_id', 'exercise_id');
     }
 }

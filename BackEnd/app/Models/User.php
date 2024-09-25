@@ -78,4 +78,8 @@ class User extends Authenticatable
     {
         $this->notify(new CustomResetPasswordNotification($token));
     }
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; 
+    }
 }

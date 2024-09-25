@@ -17,4 +17,8 @@ class Exercise extends Model
     {
        return $this->belongsToMany(GymClass::class, 'class_exercies', 'exercies_id', 'class_id');
     }
+    public function gymClasses()
+    {
+        return $this->belongsToMany(GymClass::class, 'class_exerciess', 'exercise_id', 'class_id');
+    }
 }
