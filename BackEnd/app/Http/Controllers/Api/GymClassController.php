@@ -15,7 +15,7 @@ class GymClassController extends Controller
     public function index()
     {
         $this->authorize('viewAny', GymClass::class);
-        $gymClasses = GymClass::with(['equipments', 'exercises'])->get();
+        $gymClasses = GymClass::with(['equipments', 'exercises','trainer.user'])->get();
         return response()->json($gymClasses, 200);
     }
 

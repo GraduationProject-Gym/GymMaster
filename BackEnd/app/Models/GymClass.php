@@ -49,4 +49,5 @@ class GymClass extends Model
     {
         return $this->belongsTo(Trainer::class, 'trainer_id');
     }
+    
 }
