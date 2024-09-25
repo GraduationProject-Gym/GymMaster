@@ -77,19 +77,35 @@ class GymClassController extends Controller
     {
         try {
             $gymClass = GymClass::findOrFail($id);
-            
+            if (!$gymClass) {
+                return response()->json(['message' => 'Gym class not found'], 404);
+            }
             $this->authorize('update', $gymClass);
-           
-            $gymClass->update($request->all());
     
-           
-            return new GymClassResource($gymClass);
-            
-        } catch (ModelNotFoundException $e) {
-            
-            return response()->json(['message' => 'Gym class not found'], 404);
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'status' => 'required|boolean',
+                'total_no_of_session' => 'required|integer|min:1',
+                'max_trainee' => 'required|integer|min:1',
+            ]);
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            $customMessages = [];
+    
+            foreach ($errors->all() as $error) {
+                $customMessages[] = $error;   
+            }
+    
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $customMessages,  
+            ], 422);
         }
-        
+    
+        $gymClass->update($validatedData);
+    
+        return new GymClassResource($gymClass);
     }
      /**
      * Remove the specified resource from storage.
