@@ -65,9 +65,9 @@ class User extends Authenticatable
     }
 
     // Relationship with Equipments
-    public function useEquipment()
+    public function equipment()
     {
-       return $this->belongsToMany(User::class, 'user_equipment', 'user_id', 'equipment_id');
+       return $this->belongsToMany(User::class, 'user_equipments', 'user_id', 'equipment_id');
     }
 
     public function gymClass()

@@ -16,7 +16,7 @@ class Equipment extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'user_equipment', 'equipment_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_equipments', 'equipment_id', 'user_id');
     }
 
     public function gymClass()

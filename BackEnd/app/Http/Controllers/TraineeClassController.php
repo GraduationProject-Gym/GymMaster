@@ -35,6 +35,9 @@ class TraineeClassController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'class_id' => 'required|exists:gym_classes,id',
+        ]);
         $class_id = $request->class_id;
         $trainee = Trainee::findOrFail(auth::id());
         $currentUser = User::findOrFail(auth::id());

@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipment;
+use App\Models\UserEquipment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\TraineeEquipmentResource;
 
 class EquipmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -61,5 +68,31 @@ class EquipmentController extends Controller
     public function destroy(Equipment $equipment)
     {
         //
+    }
+
+    // work on
+    public function workOn(Request $request)
+    {
+        $request->validate([
+            'equipment_id' => 'required|exists:equipments,id',
+        ]);
+
+        $exists = UserEquipment::where('user_id', auth::id())
+            ->where('equipment_id', $request->equipment_id)
+            ->exists();
+
+        if ($exists) {
+            return response()->json(['message' => 'You already have this equipment'], 400);
+        }
+
+        UserEquipment::create([
+            'user_id' => auth::id(),
+            'equipment_id' => $request->equipment_id
+        ]);
+
+        return response()->json([
+            'message' => 'You have successfully joined our gym with the selected equipment',
+            'equipmentData' => new TraineeEquipmentResource(Equipment::find($request->equipment_id)),
+        ], 201);
     }
 }
