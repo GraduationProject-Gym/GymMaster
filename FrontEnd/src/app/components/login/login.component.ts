@@ -78,8 +78,8 @@ export class LoginComponent {
         },
         error: (error) => {
           // console.log(error);
-          if (error.status === 403) { // Check for the status code directly
-            this.errorMessage = error.error?.message || 'Access denied. Please check your credentials.';
+          if (error.status === 401) { // Check for the status code directly
+            this.errorMessage = error.error?.message;
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }

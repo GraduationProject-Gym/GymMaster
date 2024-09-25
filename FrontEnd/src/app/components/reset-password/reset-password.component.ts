@@ -52,33 +52,44 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
 
+  // Set up validation rules for password
   get passwordRequired() {
-    return this.isControlInvalid('password', 'required');
+    return (this.resetPasswordForm.controls['password'].errors?.['required'] &&
+      this.resetPasswordForm.controls['password'].touched) ||
+      (this.resetPasswordForm.controls['confirmPassword'].errors?.['required'] &&
+        this.resetPasswordForm.controls['confirmPassword'].touched);
   }
 
   get passwordFormatInvalid() {
-    return this.isControlInvalid('password', 'pattern');
+    return (this.resetPasswordForm.controls['password'].errors?.['pattern'] &&
+      this.resetPasswordForm.controls['password'].touched) ||
+      (this.resetPasswordForm.controls['confirmPassword'].errors?.['pattern'] &&
+        this.resetPasswordForm.controls['confirmPassword'].touched);
   }
 
-  private isControlInvalid(controlName: string, errorType: string): boolean {
-    const control = this.resetPasswordForm.controls[controlName];
-    return control.errors?.[errorType] && control.touched;
-  }
-
+  /* show & hide password*/
   showPassword(inputType: string) {
     const passwordInput = document.getElementById(inputType) as HTMLInputElement;
     const eyeIcon = document.getElementById(inputType === 'password' ? 'eyeIcon' : 'confirmEyeIcon') as HTMLElement;
 
     if (passwordInput) {
-      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      const type: string = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+
+      // ternary operator
       passwordInput.setAttribute('type', type);
+
+      // Toggle the eye icon
       eyeIcon.classList.toggle('fa-eye-slash');
       eyeIcon.classList.toggle('fa-eye');
     }
   }
 
+  errorMessage: string | null = null;
+
   resetPassword() {
-    if (this.resetPasswordForm.valid && this.passwordsMatch()) {
+    this.errorMessage = null; // Reset the error message 
+
+    if (this.resetPasswordForm.valid && this.passwordMatcher()) {
       const { password, confirmPassword } = this.resetPasswordForm.value;
       this.resetPasswordService.resetPassword(password, confirmPassword).subscribe({
         next: response => {
@@ -86,7 +97,12 @@ export class ResetPasswordComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         error: error => {
-          console.error('Error resetting password', error);
+          // console.error('Error resetting password', error);
+          if (error.status === 400) { // Check for the status code directly
+            this.errorMessage = error.error?.message || '';
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
         }
       });
     } else {
@@ -94,16 +110,16 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
 
-  private passwordsMatch(): boolean {
-    const { password, confirmPassword } = this.resetPasswordForm.value;
-    const match = password === confirmPassword;
+  passwordMatcher() {
+    const password = this.resetPasswordForm.controls['password'].value;
+    const confirmPassword = this.resetPasswordForm.controls['confirmPassword'].value;
 
-    if (!match) {
-      this.resetPasswordForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
+    if (password !== confirmPassword) {
+      // this.resetPasswordForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
+      return false; // Return false if passwords do not match
     } else {
-      this.resetPasswordForm.controls['confirmPassword'].setErrors(null);
+      // this.resetPasswordForm.controls['confirmPassword'].setErrors(null);
+      return true; // Return true if passwords match
     }
-
-    return match;
   }
 }

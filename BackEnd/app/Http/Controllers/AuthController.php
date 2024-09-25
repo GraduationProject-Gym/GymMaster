@@ -173,16 +173,22 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-
+        // return response()->json([
+        //         "message"=>$request->all()]);
+        
         // Attempt to reset the password
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
+            
             function ($user, $password) {
                 // Update user's password
                 $user->password = Hash::make($password);
                 $user->save();
             }
         );
+        // return response()->json([
+        //     "message"=>"sent"
+        // ]);
 
         // Return appropriate response based on the status
         if ($status === Password::PASSWORD_RESET) {
