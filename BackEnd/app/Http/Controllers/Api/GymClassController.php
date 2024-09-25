@@ -30,4 +30,17 @@ class GymClassController extends Controller
 
         return new GymClassResource($gymClass);
     }
+       /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        try {
+            $gymClass = GymClass::with(['equipments', 'exercises'])->findOrFail($id);
+            $this->authorize('view', $gymClass);
+            return new GymClassResource($gymClass);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Gym class not found'], 404);
+        }
+    }
 }
