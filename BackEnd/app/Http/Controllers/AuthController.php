@@ -123,8 +123,7 @@ class AuthController extends Controller
         }
 
         Mail::to($user->email)->send(new VerifyEmail($user));
-
-
+        
         if ($request->role === 'trainer') {
             $cvPath = null;
 
@@ -164,7 +163,7 @@ class AuthController extends Controller
         }
 
         // Check if the token is expired (1 hour = 60 minutes)
-      //  dd(now()->diffInMinutes($user->verification_token_created_at));
+        // dd(now()->diffInMinutes($user->verification_token_created_at));
         if (now()->diffInMinutes($user->timer) < -60.0) {
             return response()->json([
                 'message' => 'Verification token has expired. must be login to resend Verification ',
