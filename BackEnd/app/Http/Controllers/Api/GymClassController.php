@@ -43,4 +43,25 @@ class GymClassController extends Controller
             return response()->json(['message' => 'Gym class not found'], 404);
         }
     }
+     /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        try {
+            $gymClass = GymClass::findOrFail($id);
+            
+            $this->authorize('update', $gymClass);
+           
+            $gymClass->update($request->all());
+    
+           
+            return new GymClassResource($gymClass);
+            
+        } catch (ModelNotFoundException $e) {
+            
+            return response()->json(['message' => 'Gym class not found'], 404);
+        }
+        
+    }
 }
