@@ -5,6 +5,7 @@ import { FooterComponent } from '../../footer/footer.component';
 import { Router } from '@angular/router';
 import { UpdateClassComponent } from '../update-class/update-class.component';
 import { CommonModule } from '@angular/common';
+import { Init } from 'v8';
 
 @Component({
   selector: 'app-classes',
@@ -48,6 +49,14 @@ export class ClassesComponent {
       hours: '11:00 AM - 5:00 PM',
     }
   ];
+
+
+
+
+
+
+
+
 
   // Toggle class details view
   toggleDetails(classId: number) {

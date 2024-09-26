@@ -5,13 +5,14 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { ErrorComponent } from './components/error/error.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { TraineeComponent } from './components/trainee/trainee.component';
+import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { ClassesComponent } from './components/trainer/classes/classes.component';
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
 import { ShowClassComponent } from './components/trainer/show-class/show-class.component';
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
+import { GoalComponent } from './components/trainee/goal/goal.component';
 
 
 export const routes: Routes = [
@@ -29,7 +30,9 @@ export const routes: Routes = [
     { path: 'trainer/add-class', component: AddClassComponent },
     { path: 'trainer/trainees', component: TraineesComponent },
     { path: 'trainer/trainees/create-report', component:ReportComponent},
-
+    { path: 'trainee-profile', component:TraineeComponent},
+    { path: 'trainee-profile', component:TraineeComponent},
+    { path: 'trainee-goal', component:GoalComponent},
 
     { path: "**", component: ErrorComponent }
 ];

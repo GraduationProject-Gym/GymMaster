@@ -99,6 +99,7 @@ export class RegistrationComponent {
       return true; // Return true if passwords match
     }
   }
+  
   get ConfirmPasswordRequired() {
     return this.registrationForm.controls['confirmPassword'].errors?.['required'] &&
       this.registrationForm.controls['confirmPassword'].touched;
@@ -112,7 +113,7 @@ export class RegistrationComponent {
   errorMessage: string | null = null;
 
   Registeration() {
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
     if (this.registrationForm.valid) {
       const formData = new FormData();
       Object.keys(this.registrationForm.value).forEach(key => {

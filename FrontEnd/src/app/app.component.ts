@@ -11,6 +11,7 @@ import { ShowClassComponent } from './components/trainer/show-class/show-class.c
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
+import { TraineeComponent } from './components/trainee/profile/trainee.component';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,8 @@ import { ReportComponent } from './components/trainer/report/report.component';
     ShowClassComponent,
     AddClassComponent,
     TraineesComponent,
-    ReportComponent
+    ReportComponent,
+    TraineeComponent
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
