@@ -40,10 +40,6 @@ p {
     margin-bottom: 20px; 
 }
 
-.success-message{
-    color: green;
-    margin-left: 10px;
-}
 
 .btn:disabled {
     background-color: #c0c0c0; 

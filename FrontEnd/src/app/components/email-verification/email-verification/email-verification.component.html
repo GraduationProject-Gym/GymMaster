@@ -21,11 +21,11 @@
         <h1 class="title">Verify your email address</h1>
         <p>Kindly verify your email to complete your account registration.</p>
         @if (successMessage){
-        <div class="successMessage">
+        <div class="alert alert-success">
             {{ successMessage }}
         </div>
         } @else if(errorMessage){
-        <div class="errorMessage">
+        <div class="alert alert-danger">
             {{ errorMessage }}
         </div>
         }
