@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ResetPasswordService {
       throw new Error("Token and email must be set before making a request.");
     }
 
-    const resetPasswordUrl = 'http://localhost:8000/api/reset-password';
+    const resetPasswordUrl = `${environment.domain}/reset-password`;
     const payload = {
       token: this.token,
       email: this.email,

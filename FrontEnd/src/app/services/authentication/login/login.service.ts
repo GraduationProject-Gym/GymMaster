@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { tap } from 'rxjs';
 export class LoginService {
 
   constructor(private readonly http: HttpClient) { }
-  private readonly loginUrl = "http://localhost:8000/api/login";
+  private readonly loginUrl = `${environment.domain}/login`;
 
   login(data: { email: string, password: string, device_name: string }) { 
     // console.log(data); // Test sent payload

@@ -78,17 +78,21 @@ export class LoginComponent {
         email: this.sanitizeInput(this.loginForm.value.email || ''),
         password: this.sanitizeInput(this.loginForm.value.password || ''),
         device_name: this.getDeviceName() // Get device name
+      
+        // email: this.loginForm.value.email || '',
+        // password: this.loginForm.value.password || '',
+        // device_name: this.getDeviceName() // Get device name
       };
 
       // Call login service and handle response
       this.loginService.login(data).subscribe({
         next: (response) => {
-          // console.log(response);
+          console.log(response);
           this.router.navigate(['/trainee']);
         },
         error: (error) => {
           // console.log(error);
-          if (error.status === 401) { // Check for the status code directly
+          if (error.status === 403) { // Check for the status code directly
             this.errorMessage = error.error?.message;
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';

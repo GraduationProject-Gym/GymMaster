@@ -22,7 +22,7 @@ export class RegistrationComponent {
   constructor(
     private registrationService: RegistrationService,
     private router: Router,
-    private sanitizer: DomSanitizer) {}
+    private sanitizer: DomSanitizer) { }
 
   // Extract image name from its path
   imageName: string | null = null;
@@ -129,8 +129,10 @@ export class RegistrationComponent {
             formData.append('image', file);
           }
         } else {
-          const sanitizedValue = this.sanitizeInput(this.registrationForm.get(key)?.value);
-          formData.append(key, sanitizedValue);
+          // const sanitizedValue = this.sanitizeInput(this.registrationForm.get(key)?.value);
+          // console.log(sanitizedValue);
+          // formData.append(key, sanitizedValue);
+          formData.append(key, this.registrationForm.get(key)?.value);
         }
       });
 
@@ -138,14 +140,18 @@ export class RegistrationComponent {
       // console.log(formData);
       this.registrationService.register(formData).subscribe({
         next: (response) => {
-          // console.log(response);
+          console.log(response);
           const registeredEmail = this.registrationForm.get('email')?.value;
           this.router.navigate(['/verification'], { queryParams: { email: registeredEmail } });
         },
 
         error: (error) => {
-          //  console.log(error);
-          this.errorMessage = 'Registration failed. Please try again.';
+          if (error.status === 403) { // Check for the status code directly
+            this.errorMessage = error.error?.message.age || "Access Denied";
+            console.log(error.error?.message);
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
         }
       });
     } else {

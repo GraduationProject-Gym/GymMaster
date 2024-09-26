@@ -31,14 +31,14 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const { token, email } = params;
-      if (!token || !email) {
-        console.error('Missing token or email in the URL');
-        return;
-      }
-      this.resetPasswordService.setTokenAndEmail(token, email);
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   const { token, email } = params;
+    //   if (!token || !email) {
+    //     console.error('Missing token or email in the URL');
+    //     return;
+    //   }
+    //   this.resetPasswordService.setTokenAndEmail(token, email);
+    // });
   }
 
   private createFormGroup(): FormGroup {
@@ -98,9 +98,19 @@ export class ResetPasswordComponent implements OnInit {
     this.formSubmitted = true; // Mark form as submitted
     this.errorMessage = null; // Reset the error message 
 
+    const { token, email } = this.route.snapshot.queryParams;
+
+    if (!token || !email) {
+      console.error('Missing token or email in the URL');
+      this.router.navigate(['/error']); // Redirect to an error page if necessary
+      return;
+    }
+
+    this.resetPasswordService.setTokenAndEmail(token, email);
+
     if (this.resetPasswordForm.valid && this.passwordMatcher()) {
-      const password = this.sanitizeInput(this.resetPasswordForm.value.password || '');
-      const confirmPassword = this.sanitizeInput(this.resetPasswordForm.value.confirmPassword || '');
+      let password = this.sanitizeInput(this.resetPasswordForm.value.password || '');
+      let confirmPassword = this.sanitizeInput(this.resetPasswordForm.value.confirmPassword || '');
 
       this.resetPasswordService.resetPassword(password, confirmPassword).subscribe({
         next: response => {
@@ -122,15 +132,13 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   passwordMatcher() {
-    const password = this.resetPasswordForm.controls['password'].value;
-    const confirmPassword = this.resetPasswordForm.controls['confirmPassword'].value;
+    let password = this.resetPasswordForm.controls['password'].value;
+    let confirmPassword = this.resetPasswordForm.controls['confirmPassword'].value;
 
     if (password !== confirmPassword) {
-      // this.resetPasswordForm.controls['confirmPassword'].setErrors({ passwordMismatch: true });
-      return false; // Return false if passwords do not match
+      return false;
     } else {
-      // this.resetPasswordForm.controls['confirmPassword'].setErrors(null);
-      return true; // Return true if passwords match
+      return true; 
     }
   }
 }

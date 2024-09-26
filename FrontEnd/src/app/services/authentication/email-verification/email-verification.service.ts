@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class EmailVerificationService {
 
   constructor(private readonly http:HttpClient) { }
-  private readonly emailVerificationUrl = "http://localhost:8000/api/email-verification";
+  private readonly emailVerificationUrl = `${environment.domain}/email-verification`;
 
   sendVerificationEmail(data: {email: string}) {
     return this.http.post(this.emailVerificationUrl, data);
