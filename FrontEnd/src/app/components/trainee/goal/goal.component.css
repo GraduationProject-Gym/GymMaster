@@ -33,22 +33,7 @@
 }
 
 .card button {
-  /* background-color: #ff6207;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin: 0 10px; */
   width: 30%;
 }
 
-/* .card button:hover {
-  background-color: #e55500;
-} */
 
-/* .card button + button {
-  margin-left: 10px;
-} */

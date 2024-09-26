@@ -13,6 +13,7 @@ import { AddClassComponent } from './components/trainer/add-class/add-class.comp
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
 import { GoalComponent } from './components/trainee/goal/goal.component';
+import { MembershipComponent } from './components/trainee/membership/membership.component';
 
 
 export const routes: Routes = [
@@ -33,6 +34,8 @@ export const routes: Routes = [
     { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-goal', component:GoalComponent},
+    { path: 'trainee-membership', component:MembershipComponent},
 
     { path: "**", component: ErrorComponent }
 ];
+

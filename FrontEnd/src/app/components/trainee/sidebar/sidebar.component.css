@@ -1,16 +1,19 @@
+html, body {
+  height: 100%; /* Make sure the body and html fill the entire height of the viewport */
+  margin: 0;
+}
+
 .sidebar {
   background: #343a40;
   padding: 20px;
   width: 100%;
-  min-height: 100vh;
-
-  /* height: 100vh; */
+  min-height: 100vh; /* Ensure the sidebar takes up the full height of the screen */
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   padding-top: 100px;
+  overflow-y: auto; /* Allows scrolling if the content is taller than the viewport */
 }
-
 .sidebar ul {
   list-style: none;
   padding: 0;
