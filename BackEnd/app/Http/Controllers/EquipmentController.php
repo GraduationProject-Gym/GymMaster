@@ -77,13 +77,13 @@ class EquipmentController extends Controller
             'equipment_id' => 'required|exists:equipments,id',
         ]);
 
-        $exists = UserEquipment::where('user_id', auth::id())
-            ->where('equipment_id', $request->equipment_id)
-            ->exists();
+        // $exists = UserEquipment::where('user_id', auth::id())
+        //     ->where('equipment_id', $request->equipment_id)
+        //     ->exists();
 
-        if ($exists) {
-            return response()->json(['message' => 'You already have this equipment'], 400);
-        }
+        // if ($exists) {
+        //     return response()->json(['message' => 'You already have this equipment'], 400);
+        // }
 
         UserEquipment::create([
             'user_id' => auth::id(),
