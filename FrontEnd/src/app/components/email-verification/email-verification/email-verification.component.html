@@ -1,36 +1,37 @@
 <!-- <div class="container d-flex">
-    <form [formGroup]="emailVerificationForm" (ngSubmit)="sendEmail()" class="form form-background">
-        <div class="image-container">
-            <img src="/emailVerification.webp" alt="Forgot Password Image" class="forgot-password-image">
-        </div>
-        <h1 class="title d-flex justify-content-center">Verify your email address</h1>
-        <p>
-            Kindly verify your email to complete your account registration.
-        </p>
-        
-            @if(successMessage){
-            <div class="success-message">
-                {{ successMessage }}
-            </div>
-            }
-            @else if (errorMessage){
-            <div class="alert alert-danger  mt-3">
-                {{ errorMessage }}
-            </div>
-            }
-            <div class="d-flex justify-content-center mt-3">
-                <button type="submit" class="btn">Verify</button>
-            </div>
-        </div>
-    </form>
+    <div class="image-container">
+        <img src="/emailVerification.webp" alt="Email Verification Image" class="email-verification-image">
+    </div>
+    <h1 class="title">Verify your email address</h1>
+    <p>Kindly verify your email to complete your account registration.</p>
+    @if (message){
+    <div class="message">{{ message }}</div>
+    }
+    <div class="d-flex justify-content-center mt-3">
+        <button type="submit" class="btn" (click)="sendVerificationEmail()" [disabled]="!email">Send Verification
+            Email</button>
+    </div>
 </div> -->
 
-<div class="email-verification">
-    <h2>Email Verification</h2>
-    <p>Your registered email</p>
-    <!-- if (message){
-        <div>message</div>
-    } -->
-    <button (click)="sendVerificationEmail()" [disabled]="!email">Send Verification Email</button>
-  </div>
-  
+<div class="container d-flex">
+    <form class="form form-background">
+        <div class="image-container">
+            <img src="/Verification.png" alt="Email Verification Image" class="email-verification-image">
+        </div>
+        <h1 class="title">Verify your email address</h1>
+        <p>Kindly verify your email to complete your account registration.</p>
+        @if (successMessage){
+        <div class="successMessage">
+            {{ successMessage }}
+        </div>
+        } @else if(errorMessage){
+        <div class="errorMessage">
+            {{ errorMessage }}
+        </div>
+        }
+        <div class="d-flex justify-content-center mt-3">
+            <button type="button" class="btn" (click)="sendVerificationEmail()" [disabled]="!email">Send Verification
+                Email</button>
+        </div>
+    </form>
+</div>
