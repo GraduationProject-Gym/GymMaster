@@ -79,13 +79,13 @@ class GymClassController extends Controller
      */
     public function show(string $id)
     {
-        try {
-            $gymClass = GymClass::with(['equipments', 'exercises'])->findOrFail($id);
-            $this->authorize('view', $gymClass);
-            return new GymClassResource($gymClass);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Gym class not found'], 404);
-        }
+        // try {
+        //     $gymClass = GymClass::with(['equipments', 'exercises'])->findOrFail($id);
+        //     $this->authorize('view', $gymClass);
+        //     return new GymClassResource($gymClass);
+        // } catch (ModelNotFoundException $e) {
+        //     return response()->json(['message' => 'Gym class not found'], 404);
+        // }
     }
      /**
      * Update the specified resource in storage.
@@ -105,6 +105,24 @@ class GymClassController extends Controller
                 'status' => 'required|boolean',
                 'total_no_of_session' => 'required|integer|min:1',
                 'max_trainee' => 'required|integer|min:1',
+                'trainer_id' => [
+                    'required',
+                    'exists:trainers,id',  
+                    function ($attribute, $value, $fail) {
+                        $trainer = \App\Models\Trainer::find($value);  
+                        if (!$trainer) {
+                            return $fail('The selected trainer does not exist.');
+                        }
+                
+                    
+                        $userId = $trainer->user_id;
+                
+                        if (!\App\Models\User::where('id', $userId)->exists()) {
+                            return $fail('The user associated with the selected trainer does not exist.');
+                        }
+                    },
+                ],
+
             ]);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
