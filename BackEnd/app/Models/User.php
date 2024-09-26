@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\CustomResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Subscription;
 use App\Models\Vouchers;
-class User extends Authenticatable
+use App\Notifications\EmailVerification;
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -28,9 +29,15 @@ class User extends Authenticatable
         'age',
         'image',
         'gender',
-        'role'
+        'role',
+        'token',
+        'timer'
     ];
 
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new EmailVerification);
+    }
 
     public function UserSubscription()
     {

@@ -49,7 +49,7 @@ class AuthController extends Controller
 
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:users,email'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'], // confirmed
             'phone' => ['nullable', 'string', 'max:11'],
             'address' => ['nullable', 'string'],
@@ -84,7 +84,7 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
         // dd($this->checkEmailValidity($request->email));
-        if(!$this->checkEmailValidity($request->email)){
+        if (!$this->checkEmailValidity($request->email)) {
             return response()->json(['message' => 'This email not real']);
         }
 
@@ -95,10 +95,10 @@ class AuthController extends Controller
         }
         $user = User::where('email', $request->email)->first();
         $user1 = User::where('phone', $request->phone)->first();
-        if($user){
+        if ($user) {
             return response()->json(['message' => 'this email are used']);
         }
-        if($user1){
+        if ($user1) {
             return response()->json(['message' => 'this phone are used']);
         }
 
@@ -113,8 +113,8 @@ class AuthController extends Controller
             'image' => $imagePath,
             'gender' => $request->gender,
             'role' => $request->role,
-            'token'=>Str::random(60),
-            'timer'=>now(),
+            'token' => Str::random(60),
+            'timer' => now(),
         ]);
         // return response()->json($request);
 
@@ -139,14 +139,13 @@ class AuthController extends Controller
             ]);
 
         }
-        if($request->role === 'trainee'){
+        if ($request->role === 'trainee') {
             return response()->json([
                 'message' => 'User registered successfully check your mail to verifiy',
                 'user' => new UserResource($user),
                 'traineeData' => new TraineeResource($trainee),
             ], 201);
-        }
-        else if($request->role === 'trainer'){
+        } else if ($request->role === 'trainer') {
             return response()->json([
                 'message' => 'User registered successfully check your mail to verifiy',
                 'user' => new UserResource($user),
@@ -155,7 +154,8 @@ class AuthController extends Controller
         }
 
     }
-    public function verifyEmail(Request $request) {
+    public function verifyEmail(Request $request)
+    {
         $user = User::where('token', $request->token)->first();
 
         if (!$user) {
@@ -175,7 +175,7 @@ class AuthController extends Controller
         // If the token is still valid, verify the user's email
         $user->email_verified_at = now();
         $user->token = null; // Clear the token
-        $user-> timer= null; // Clear the timestamp
+        $user->timer = null; // Clear the timestamp
         $user->save();
 
         return response()->json([
@@ -199,7 +199,7 @@ class AuthController extends Controller
                 $user->timer = now();
                 $user->save();
 
-            // Resend the email
+                // Resend the email
                 Mail::to($user->email)->send(new VerifyEmail($user));
                 return response()->json([
                     'email' => ['Verification token has expired. A new verification email has been sent.'],
@@ -219,24 +219,24 @@ class AuthController extends Controller
 
     // Logout
     public function logout(Request $request)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    if ($user) {
-        $currentToken = $user->currentAccessToken();
-        if ($currentToken) {
-            $currentToken->delete();
+        if ($user) {
+            $currentToken = $user->currentAccessToken();
+            if ($currentToken) {
+                $currentToken->delete();
+            }
+
+            return response()->json([
+                "message" => "Logged out successfully"
+            ]);
         }
 
         return response()->json([
-            "message" => "Logged out successfully"
-        ]);
+            "message" => "User not authenticated"
+        ], 401);
     }
-
-    return response()->json([
-        "message" => "User not authenticated"
-    ], 401);
-}
 
 
     public function sendResetLinkEmail(Request $request)
@@ -248,7 +248,7 @@ class AuthController extends Controller
         if (!$user) {
             // Return an error response if the email is not found
             return response()->json([
-                "message"=>"Email does not exist in our records."
+                "message" => "Email does not exist in our records."
             ]);
         }
         // Send password reset link
@@ -260,18 +260,18 @@ class AuthController extends Controller
         if ($status === Password::RESET_LINK_SENT) {
             // return $this->sendResponse([], 'Password reset link sent!');
             return response()->json([
-                "message"=>"Password reset link sent!"
+                "message" => "Password reset link sent!"
             ]);
 
         } elseif ($status === Password::RESET_THROTTLED) {
             // return $this->sendResponse([], 'Password reset link sent!');
             return response()->json([
-                "message"=>"Password reset link sent!"
+                "message" => "Password reset link sent!"
             ]);
         } else {
             // return $this->sendError('Unable to send reset link to the provided email.', [], 400);
             return response()->json([
-                "message"=>"Unable to send reset link to the provided email."
+                "message" => "Unable to send reset link to the provided email."
             ]);
 
         }
@@ -287,8 +287,8 @@ class AuthController extends Controller
             'password' => 'required|min:8',
         ]);
 
-        $resetPassword = DB::table('password_reset_tokens')->where('email',$request->email)->first();
-        if (Hash::check($request->token,$resetPassword->token )&& $resetPassword) {
+        $resetPassword = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+        if (Hash::check($request->token, $resetPassword->token) && $resetPassword) {
             $status = Password::reset(
                 $request->only('email', 'password', 'password_confirmation', 'token'),
                 function ($user, $password) {
@@ -306,12 +306,12 @@ class AuthController extends Controller
         if ($status === Password::PASSWORD_RESET) {
             // return $this->sendResponse([], 'Password reset successful!');
             return response()->json([
-                "message"=>"Password reset successful!"
+                "message" => "Password reset successful!"
             ]);
         } else {
             // return $this->sendError('Invalid token or email.', [], 400);
             return response()->json([
-                "message"=>"Invalid token or email."
+                "message" => "Invalid token or email."
             ]);
         }
     }
@@ -342,49 +342,49 @@ class AuthController extends Controller
     private function checkEmailValidity($email)
     {
 
-    $client = new Client();
-    $apiKey = 'ef414821037d462eb82234bfa2797332';  // Use the API key provided by the service you're using
-    try {
-        $response = $client->request('GET', 'https://emailvalidation.abstractapi.com/v1/', [
-            'query' => [
-                'api_key' => $apiKey,
-                'email' => $email,
+        $client = new Client();
+        $apiKey = 'ef414821037d462eb82234bfa2797332';  // Use the API key provided by the service you're using
+        try {
+            $response = $client->request('GET', 'https://emailvalidation.abstractapi.com/v1/', [
+                'query' => [
+                    'api_key' => $apiKey,
+                    'email' => $email,
                 ]
             ]);
 
             $data = json_decode($response->getBody(), true);
 
-        // Check if the response indicates success or failure
-        if (isset($data['error'])) {
-            if ($data['error']['message'] == "Invalid API key") {
-                // Handle invalid API key case
-                \Log::error('Invalid Abstract API key.');
-                return response()->json(['error' => 'Invalid API key. Please contact the admin.'], 400);
+            // Check if the response indicates success or failure
+            if (isset($data['error'])) {
+                if ($data['error']['message'] == "Invalid API key") {
+                    // Handle invalid API key case
+                    \Log::error('Invalid Abstract API key.');
+                    return response()->json(['error' => 'Invalid API key. Please contact the admin.'], 400);
+                }
+
+                if ($data['error']['message'] == "Account ran out of credits") {
+                    // Handle no credits case
+                    \Log::error('Abstract API account has run out of credits.');
+                    return response()->json(['error' => 'Abstract API account ran out of credits.'], 400);
+                }
             }
 
-            if ($data['error']['message'] == "Account ran out of credits") {
-                // Handle no credits case
-                \Log::error('Abstract API account has run out of credits.');
-                return response()->json(['error' => 'Abstract API account ran out of credits.'], 400);
+            // Check if the email is valid based on the Abstract API response
+            if (isset($data['quality_score'])) {
+                // dd(1111);
+                $qualityScore = $data['quality_score'];
+                // Define a threshold for what you consider a valid email
+                $validThreshold = 0.7; // Adjust this threshold as needed
+                return $qualityScore >= $validThreshold;
             }
+
+            // If no quality score is found, return false
+            return false;
+
+        } catch (\Exception $e) {
+            // Log and handle any other errors
+            \Log::error('Abstract API request failed: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to validate email. Please try again later.'], 500);
         }
-
-        // Check if the email is valid based on the Abstract API response
-        if (isset($data['quality_score'])) {
-            // dd(1111);
-            $qualityScore = $data['quality_score'];
-            // Define a threshold for what you consider a valid email
-            $validThreshold = 0.7; // Adjust this threshold as needed
-            return $qualityScore >= $validThreshold;
-        }
-
-        // If no quality score is found, return false
-        return false;
-
-    } catch (\Exception $e) {
-        // Log and handle any other errors
-        \Log::error('Abstract API request failed: ' . $e->getMessage());
-        return response()->json(['error' => 'Failed to validate email. Please try again later.'], 500);
     }
-}
 }
