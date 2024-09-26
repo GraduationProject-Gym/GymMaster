@@ -1,0 +1,43 @@
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 80px 0;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.card h2 {
+  font-size: 24px;
+  color: #ff6207;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* تصميم الأزرار */
+/* .card button {
+  background-color: #ff6207;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 0 10px;
+} */
+
+/* .card button:hover {
+  background-color: #e55500;
+} */
+
+/* .card button + button {
+  margin-left: 10px;
+} */

@@ -1,0 +1,56 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+  <div class="main">
+    <div class="profile d-flex flex-column">
+      <div class="d-flex ml-5">
+        <div>
+          <h1>{{ trainee[0].name }}</h1>
+          <!-- <div class="col-md-6"> -->
+            <p><strong>Age:</strong> {{ trainee[0].age }}</p>
+            <p><strong>Email:</strong> {{ trainee[0].email }}</p>
+            <p><strong>Phone:</strong> {{ trainee[0].phone }}</p>
+            <p><strong>Gender:</strong> {{ trainee[0].gender }}</p>
+          <!-- </div>
+          <div class="col-md-6"> -->
+            <p><strong>Address:</strong> {{ trainee[0].address }}</p>
+            <p><strong>Membership Type:</strong> {{ trainee[0].membership }}</p>
+            <p><strong>Subscription:</strong> {{ trainee[0].subscription }}</p>
+          <!-- </div> -->
+        </div>
+        <img src="/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif" alt="Trainee Profile Picture" class="profile-img ms-auto">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Goals Section -->
+      <!-- <section id="goal">
+        <h2>Goals</h2>
+        <p>Your goal: {{ goal }}</p>
+        <button (click)="editGoal()">Edit Goal</button>
+      </section> -->
+
+      <!-- Membership Section -->
+      <!-- <section id="membership">
+        <h2>Membership</h2>
+        <p>Membership Type: {{ membershipType }}</p>
+        <p>Expiration Date: {{ expirationDate }}</p>
+        <button (click)="renewMembership()">Renew Membership</button>
+      </section> -->
+
+      <!-- Subscription & Payment Section -->
+      <!-- <section id="subscription">
+        <h2>Subscription & Payment</h2>
+        <p>Current Subscription: {{ subscriptionCost }} EGP</p>
+        <button (click)="addPaymentMethod()">Add Payment Method</button>
+        <h3>Payment History:</h3>
+        <ul>
+          <li *ngFor="let payment of paymentHistory">{{ payment.date }}: {{ payment.amount }} EGP</li>
+        </ul>
+      </section> -->
+
+
+
+
+
