@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\GymClass;
 use App\Http\Resources\Api\GymClassResource;
-
+use App\Models\Trainer; 
+use App\Models\User; 
 class GymClassController extends Controller
 {
     /**
@@ -22,41 +23,57 @@ class GymClassController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $this->authorize('create', GymClass::class);
+    
 
-    try {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|boolean',
-            'total_no_of_session' => 'required|integer|min:1',
-            'max_trainee' => 'required|integer|min:1',
-        ]);
-    } catch (ValidationException $e) {
-        $errors = $e->validator->errors();
-        $customMessages = [];
-
-        foreach ($errors->all() as $error) {
-            $customMessages[] = $error;  
+     public function store(Request $request)
+     {
+         $this->authorize('create', GymClass::class);
+     
+         try {
+             $validatedData = $request->validate([
+                 'name' => 'required|string|max:255',
+                 'description' => 'nullable|string',
+                 'status' => 'required|boolean',
+                 'total_no_of_session' => 'required|integer|min:1',
+                 'max_trainee' => 'required|integer|min:1',
+                'trainer_id' => [
+    'required',
+    'exists:trainers,id',  
+    function ($attribute, $value, $fail) {
+        $trainer = \App\Models\Trainer::find($value);  
+        if (!$trainer) {
+            return $fail('The selected trainer does not exist.');
         }
 
-        return response()->json([
-            'message' => 'Validation failed',
-            'errors' => $customMessages,
-        ], 422);
-    }
+    
+        $userId = $trainer->user_id;
 
-    $gymClass = GymClass::create($validatedData);
-
-    return new GymClassResource($gymClass);
-        // $this->authorize('create', GymClass::class);
-
-        // $gymClass = GymClass::create($request->all());
-
-        // return new GymClassResource($gymClass);
-    }
+        if (!\App\Models\User::where('id', $userId)->exists()) {
+            return $fail('The user associated with the selected trainer does not exist.');
+        }
+    },
+],
+             ]);
+         } catch (ValidationException $e) {
+             $errors = $e->validator->errors();
+             $customMessages = [];
+     
+             foreach ($errors->all() as $error) {
+                 $customMessages[] = $error;  
+             }
+     
+             return response()->json([
+                 'message' => 'Validation failed',
+                 'errors' => $customMessages,
+             ], 422);
+         }
+     
+         
+         $gymClass = GymClass::create($validatedData);
+     
+         return new GymClassResource($gymClass);
+     }
+     
        /**
      * Display the specified resource.
      */

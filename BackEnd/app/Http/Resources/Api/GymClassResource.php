@@ -24,14 +24,15 @@ class GymClassResource extends JsonResource
             'max_trainee' => $this->max_trainee,
             'equipments' => $this->equipments,
             'exercises' => $this->exercises,
-            'trainer' => [
+            'trainer' => $this->trainer ? [
                 'id' => $this->trainer->id, 
-                'name' => $this->trainer->user->name, 
-                'email' => $this->trainer->user->email, 
-                'phone' => $this->trainer->user->phone, 
-                'address' => $this->trainer->user->address, 
-                'age' => $this->trainer->user->age,  
-            ],
+                'name' => $this->trainer->user->name ?? 'N/A', 
+                'email' => $this->trainer->user->email ?? 'N/A', 
+                'phone' => $this->trainer->user->phone ?? 'N/A', 
+                'address' => $this->trainer->user->address ?? 'N/A', 
+                'age' => $this->trainer->user->age ?? 'N/A',  
+            ] : null,
+
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
