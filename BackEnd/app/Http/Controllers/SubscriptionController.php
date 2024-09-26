@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscription;
+use App\Models\Memberships;
 use Illuminate\Http\Request;
 use App\Models\Trainee;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Stripe;
-use Stripe\PaymentIntent;
+use Stripe\Checkout\Session;
+use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class SubscriptionController extends Controller
@@ -74,92 +76,95 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
         //payment
+
         try {
 
             $this->authorize('create', Subscription::class);
             Stripe::setApiKey(config('stripe.stripe_sk'));
 
-            try {
-                // Create a new payment intent
-                $paymentIntent = PaymentIntent::create([
-                    'amount' => $request->amount,  // Amount in cents (e.g., 1000 for $10.00)
-                    'currency' => 'usd',
-                    // 'payment_method' => $request->payment_method,  // Use the payment method from the request
-                    // 'confirmation_method' => 'manual',  // Optional: set to 'manual' if you want to confirm later
-                    // 'confirm' => true,  // Automatically confirm the payment intent
-                ]);
-                // return response()->json([
-                //     'client_secret' => $paymentIntent->client_secret,
-                //     'payment_intent_id' => $paymentIntent->id,
-                // ]);
-                //trainee can subscribe to payment
-                $user_id = Auth::user()->id;
-                $trainee = Trainee::where('user_id', $user_id)->first();
-                if(!$trainee){
-                    return response()->json(['message' => 'Please Do Registe First'], 404);
-                }
-                // $user_id = Auth::user()->id;
-                $trainee = Trainee::where('user_id', $user_id)->first();
-                $trainee_ = Subscription::create([
-                    // TraineeMembership
-                    'user_id'=> $user_id,// $user_id
-                    'payment_method'=> $request->payment_method,
-                    'amount' => $trainee->TraineeMembership->amount,
-                ]);
-                $NO_days = 0;
-                if($trainee->TraineeMembership->subscribe_type == 'weekly'){
-                    $NO_days = 7;
-                }
-                else if($trainee->TraineeMembership->subscribe_type == 'Monthly'){
-                    $NO_days = 30;
-                }
-                else if($trainee->TraineeMembership->subscribe_type == 'Yearly'){
-                    $NO_days = 365;
+            $membership = Memberships::find($request->id);
+            if($membership){
+                $amount = $membership->amount; // Stripe requires the amount in cents
+            }
+            else{
+                return response()->json(['success' => false, 'error' => 'Membership not found'], 403);
+            }
 
-                }
-                $trainee->expiration_date = Carbon::now()->addDays($NO_days);
-                $trainee->save();
-                return response()->json([
-                    'message' => $trainee_],
-                     404);
-            } catch (\Exception $e) {
+            $member = $membership->name;
+            $session = Session::create([
+                'line_items' => [
+                    [
+                        'price_data' => [
+                            'currency' => 'USD',
+                            'product_data' => [
+                                'name' => $member,
+                            ],
+                            'unit_amount' => $amount,  // Price is already in cents
+                        ],
+                        'quantity' => 1,
+                    ],
+                ],
+                'mode' => 'payment',
+                'success_url' => route('success'),
+                'cancel_url' => route('cancel'),
+            ]);
+            return response()->json(['url' => $session->url]);
+
+        } catch (Exception $e) {
+            // Handle any errors that occur during payment processing
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ], 403);
+        }
+
+    }
+    public function success($payment_method){
+        try{
+            $user_id = Auth::user()->id;
+            $trainee = Trainee::where('user_id', $user_id)->first();
+            if(!$trainee){
+                return response()->json(['message' => 'Please Do Registe First'], 404);
+            }
+            // $user_id = Auth::user()->id;
+            $trainee = Trainee::where('user_id', $user_id)->first();
+            // $trainee = Trainee::where('user_id', $user_id)->first();
+
+            $trainee_ = Subscription::create([
+                // TraineeMembership
+                'user_id'=> $user_id,// $user_id
+                'payment_method'=> $payment_method,
+                'amount' => $trainee->TraineeMembership->amount,
+            ]);
+            $NO_days = 0;
+            if($trainee->TraineeMembership->subscribe_type == 'weekly'){
+                $NO_days = 7;
+            }
+            else if($trainee->TraineeMembership->subscribe_type == 'Monthly'){
+                $NO_days = 30;
+            }
+            else if($trainee->TraineeMembership->subscribe_type == 'Yearly'){
+                $NO_days = 365;
+
+            }
+            $trainee->expiration_date = Carbon::now()->addDays($NO_days);
+            $trainee->save();
+            return response()->json([
+                'message' => $trainee_],
+                    403);
+            }
+            catch (Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 500);
             }
 
-
-        } catch (AuthorizationException $e) {
-
-            return response()->json([
-                'message' => "You are not trainee"
-            ], 403);  // Forbidden status
-
-        }
-
-
-
     }
-    public function confirmPayment(Request $request)
-    {
-    Stripe::setApiKey(config('stripe.stripe_sk'));
 
-    try {
-        // Retrieve the payment intent
-            $paymentIntent = PaymentIntent::retrieve($request->payment_intent_id);
-
-            // Confirm the payment intent with a payment method
-            $paymentIntent->confirm([
-                'payment_method' => $request->payment_method,  // Expecting a payment method ID
-            ]);
-
-            return response()->json([
-                'status' => $paymentIntent->status,
-                'payment_intent' => $paymentIntent,
-            ]);
-        }
-        catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-        }
+    public function cancel(){
+        return response()->json([
+            'message' => "Fail Payment"
+        ], 403);
     }
+
     /**
      * Display the specified resource.
      */
@@ -233,3 +238,5 @@ class SubscriptionController extends Controller
         //
     }
 }
+
+

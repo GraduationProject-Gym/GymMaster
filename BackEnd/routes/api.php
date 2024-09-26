@@ -22,20 +22,6 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/verify-email', [AuthController::class, 'verifyEmail']);
 
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();  // Mark the email as verified
-//     return response()->json(['message' => 'Email verified successfully.']);
-// })->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
-
-// // Route to send the email verification notification again
-// Route::post('/email/verification-notification', function (Request $request) {
-//     if ($request->user()->hasVerifiedEmail()) {
-//         return response()->json(['message' => 'Email already verified.']);
-//     }
-//     $request->user()->sendEmailVerificationNotification();
-//     return response()->json(['message' => 'Verification email sent.']);
-// })->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
-
 
 
 
@@ -67,5 +53,6 @@ Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('p
 
 
 // api
-Route::post('/create-payment-intent', [SubscriptionController::class, 'store']);
-Route::post('/confirm-payment', [SubscriptionController::class, 'confirmPayment']);
+Route::post('/create-payment', [SubscriptionController::class, 'store']);
+Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
+Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');

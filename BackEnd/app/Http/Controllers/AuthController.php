@@ -21,6 +21,8 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\DB;
+
 
 class AuthController extends Controller
 {
@@ -123,7 +125,7 @@ class AuthController extends Controller
         }
 
         Mail::to($user->email)->send(new VerifyEmail($user));
-        
+
         if ($request->role === 'trainer') {
             $cvPath = null;
 
@@ -253,6 +255,7 @@ class AuthController extends Controller
         $status = Password::sendResetLink(
             $request->only(keys: 'email')
         );
+
         // Return appropriate response based on the status
         if ($status === Password::RESET_LINK_SENT) {
             // return $this->sendResponse([], 'Password reset link sent!');
@@ -277,21 +280,27 @@ class AuthController extends Controller
     {
         // Validate the request data
         // dd(111);
+        // Attempt to reset the password
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
 
-        // Attempt to reset the password
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                // Update user's password
-                $user->password = Hash::make($password);
-                $user->save();
-            }
-        );
+        $resetPassword = DB::table('password_reset_tokens')->where('email',$request->email)->first();
+        if (Hash::check($request->token,$resetPassword->token )&& $resetPassword) {
+            $status = Password::reset(
+                $request->only('email', 'password', 'password_confirmation', 'token'),
+                function ($user, $password) {
+                    // Update user's password
+                    $user->password = Hash::make($password);
+                    $user->save();
+                }
+            );
+        } else {
+            return response()->json(['message' => 'Invalid token.'], 401);
+        }
+
 
         // Return appropriate response based on the status
         if ($status === Password::PASSWORD_RESET) {
