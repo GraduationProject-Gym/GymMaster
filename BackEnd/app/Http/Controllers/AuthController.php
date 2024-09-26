@@ -180,7 +180,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Your email has been verified.',
-        ], 403);
+            'redirect' => url('/login')
+        ], 200);
 
     }
 
@@ -202,11 +203,11 @@ class AuthController extends Controller
                 // Resend the email
                 Mail::to($user->email)->send(new VerifyEmail($user));
                 return response()->json([
-                    'email' => ['Verification token has expired. A new verification email has been sent.'],
+                    'message' => ['Verification token has expired. A new verification email has been sent.'],
                 ], 403);
             }
             return response()->json([
-                'email' => ['Please verify your email before logging in.'],
+                'message' => ['verify email.'],
             ], 403);
 
         }

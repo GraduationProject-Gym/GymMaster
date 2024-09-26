@@ -142,7 +142,7 @@ export class RegistrationComponent {
         next: (response) => {
           console.log(response);
           const registeredEmail = this.registrationForm.get('email')?.value;
-          this.router.navigate(['/email-verification'], { queryParams: { email: registeredEmail } });
+          this.router.navigate(['/login']);
         },
 
         error: (error) => {

@@ -94,6 +94,7 @@ export class LoginComponent {
           // console.log(error);
           if (error.status === 403) { // Check for the status code directly
             this.errorMessage = error.error?.message;
+            // if (this.errorMessage === 'verify email'){}
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
