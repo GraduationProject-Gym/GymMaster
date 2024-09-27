@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Exercise;
-use App\Http\Resources\ExerciseResource;
+use App\Http\Resources\Api\ExerciseResource;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -52,8 +52,8 @@ class ExerciseController extends Controller
             ], 422);
         }
 
-        $equipment = Exercise::create($validatedData);
-        return new ExerciseResource($equipment);
+        $exercise = Exercise::create($validatedData);
+        return new ExerciseResource($exercise);
     }
 
     /**
