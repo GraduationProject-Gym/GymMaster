@@ -8,6 +8,10 @@ use App\Http\Controllers\SubscriptionController ;
 use App\Http\Controllers\Api\GymClassController;
 use App\Http\Controllers\Api\EquipmentsController;
 use App\Http\Controllers\Api\ExerciseController;
+use App\Http\Controllers\Api\ScheduleController;
+
+Route::resource('schedules', ScheduleController::class);
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -62,4 +66,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/exercises/{id}', [ExerciseController::class, 'update'])->name('exercises.update');
     Route::delete('/exercises/{id}', [ExerciseController::class, 'destroy'])->name('exercises.destroy');
     Route::patch('/exercises/restore/{id}', [ExerciseController::class, 'restore'])->name('exercises.restore');
+});
+
+
+//schedules
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
+    Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
+    Route::get('/schedules/{id}', [ScheduleController::class, 'show'])->name('schedules.show');
+    Route::put('/schedules/{id}', [ScheduleController::class, 'update'])->name('schedules.update');
+    Route::delete('/schedules/{id}', [ScheduleController::class, 'destroy'])->name('schedules.destroy');
+    Route::patch('/schedules/restore/{id}', [ScheduleController::class, 'restore'])->name('schedules.restore');
 });

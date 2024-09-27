@@ -121,6 +121,26 @@ class ExerciseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+      
+        $exercise = Exercise::find($id);
+        if (!$exercise) {
+            return response()->json(['message' => 'Exercise not found'], 404);
+        }
+    $this->authorize('delete', $exercise);
+    $exercise->delete();
+
+    return response()->json(['message' => 'Exercise deleted successfully']);
+    }
+    public function restore(string $id)
+    {
+        $exercise = Exercise::withTrashed()->find($id); 
+    
+        if (!$exercise) {
+            return response()->json(['message' => 'Exercise not found'], 404);
+        }
+    
+        $exercise->restore(); 
+    
+        return response()->json(['message' => 'Exercise restored successfully']);
     }
 }
