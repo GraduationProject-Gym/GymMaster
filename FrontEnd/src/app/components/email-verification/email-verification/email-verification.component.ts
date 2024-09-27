@@ -8,9 +8,9 @@ import { EmailVerificationService } from '../../../services/authentication/email
   styleUrl: './email-verification.component.css'
 })
 export class EmailVerificationComponent implements OnInit {
-  email: string | null = null; // Store the email
+  token: string | null = null; // Store the email
   errorMessage: string | null = null;
-  successMessage: string | null = null; 
+  successMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,13 +19,13 @@ export class EmailVerificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.email = params['email']; // Retrieve email from query parameters
+      this.token = params['token']; // Retrieve email from query parameters
     });
   }
 
   sendVerificationEmail() {
-    if (this.email) {
-      this.emailVerificationService.sendVerificationEmail({ email: this.email }).subscribe({
+    if (this.token) {
+      this.emailVerificationService.sendVerificationEmail({ token: this.token }).subscribe({
         next: (response) => {
           this.successMessage = 'Verification email sent successfully!';
         },

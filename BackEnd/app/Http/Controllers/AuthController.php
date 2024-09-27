@@ -48,7 +48,7 @@ class AuthController extends Controller
 
 
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255','min:5'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'], // confirmed
             'phone' => ['nullable', 'string', 'max:11'],
@@ -81,12 +81,12 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json(["message"=>$validator->errors()], 403);
         }
         // dd($this->checkEmailValidity($request->email));
-        if (!$this->checkEmailValidity($request->email)) {
-            return response()->json(['message' => 'This email not real']);
-        }
+        // if (!$this->checkEmailValidity($request->email)) {
+        //     return response()->json(['message' => 'This email not real'],403);
+        // }
 
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -96,10 +96,10 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         $user1 = User::where('phone', $request->phone)->first();
         if ($user) {
-            return response()->json(['message' => 'this email are used']);
+            return response()->json(['message' => 'this email are used'],403);
         }
         if ($user1) {
-            return response()->json(['message' => 'this phone are used']);
+            return response()->json(['message' => 'this phone are used'],403);
         }
 
         // Create a new user

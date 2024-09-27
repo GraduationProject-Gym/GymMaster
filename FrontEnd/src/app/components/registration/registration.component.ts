@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { RegistrationService } from '../../services/authentication/registration/registration.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ArrayType } from '@angular/compiler';
 
 @Component({
   selector: 'app-registration',
@@ -118,7 +119,7 @@ export class RegistrationComponent {
   errorMessage: string | null = null;
 
   Registeration() {
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
     if (this.registrationForm.valid) {
       const formData = new FormData();
       Object.keys(this.registrationForm.value).forEach(key => {
@@ -144,11 +145,11 @@ export class RegistrationComponent {
           const registeredEmail = this.registrationForm.get('email')?.value;
           this.router.navigate(['/login']);
         },
-
         error: (error) => {
           if (error.status === 403) { // Check for the status code directly
-            this.errorMessage = error.error?.message.age || "Access Denied";
-            console.log(error.error?.message);
+            const keyValueArray = Object.values(error.error?.message);
+            let val=keyValueArray.join('\n');
+            this.errorMessage = val.trim();
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
