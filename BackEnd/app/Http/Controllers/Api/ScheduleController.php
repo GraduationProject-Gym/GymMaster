@@ -81,7 +81,42 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+
+            $schedule = Schedule::findOrFail($id);
+            if (!$schedule) {
+                return response()->json(['message' => 'schedule not found'], 404);
+            }
+            \Log::info('User role: ' . auth()->user()->role);
+            \Log::info('User variable:', ['user' => $user]);
+
+            $this->authorize('update', $schedule);
+ 
+            $validatedData= $request->validate([
+                'class_id' => 'required|exists:gymclass,id', 
+                'session_start' => 'required|date_format:H:i', 
+                'session_end' => 'required|date_format:H:i|after:session_start', 
+                'session_duration' => 'required|numeric|min:0', 
+                'nameDay' => 'required|string|max:255', 
+            ]);
+        } catch (ValidationException $e) {
+        
+            $errors = $e->validator->errors();
+            $customMessages = [];
+
+            foreach ($errors->all() as $error) {
+                $customMessages[] = $error;
+            }
+
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $customMessages,
+            ], 422);
+        }
+
+        $schedule->update($validatedData);
+
+        return new ScheduleResource($schedule);
     }
 
     /**

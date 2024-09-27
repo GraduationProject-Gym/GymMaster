@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
         Schedule::class => SchedulePolicy::class,
         \App\Models\GymClass::class => \App\Policies\GymClassPolicy::class,
         Exercise::class => ExercisePolicy::class,
+        Schedule::class => SchedulePolicy::class,
     ];
     /**
      * Register any application services.
