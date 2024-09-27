@@ -6,9 +6,10 @@ html, body {
 .sidebar {
   background: #343a40;
   padding: 20px;
-  width: 100%;
+  width: 20%;
   min-height: 100vh; /* Ensure the sidebar takes up the full height of the screen */
   flex-shrink: 0;
+  position: fixed;
   display: flex;
   flex-direction: column;
   padding-top: 100px;
@@ -44,4 +45,12 @@ ul {
 
 ul li {
   margin: 5px 0;
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 30%;
+  }
+
+
 }
