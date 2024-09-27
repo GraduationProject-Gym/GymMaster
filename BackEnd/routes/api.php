@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/gym-classes', [GymClassController::class, 'store']);
     Route::put('/gym-classes/{gymClass}', [GymClassController::class, 'update']);
     Route::delete('/gym-classes/{gymClass}', [GymClassController::class, 'destroy']);
+    Route::patch('/gym-classes/restore/{gymClass}', [GymClassController::class, 'restore'])->name('equipments.restore');
+
 });
 
 
@@ -43,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/equipments', [EquipmentController::class, 'index'])->name('equipments.index');
     Route::post('/equipments', [EquipmentController::class, 'store'])->name('equipments.store');
-    Route::get('/equipments/{id}', [EquipmentController::class, 'show'])->name('equipments.show');
+    // Route::get('/equipments/{id}', [EquipmentController::class, 'show'])->name('equipments.show');
     Route::put('/equipments/{id}', [EquipmentController::class, 'update'])->name('equipments.update');
     Route::delete('/equipments/{id}', [EquipmentController::class, 'destroy'])->name('equipments.destroy');
-});
+    });

@@ -78,15 +78,26 @@ class GymClassController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        // try {
-        //     $gymClass = GymClass::with(['equipments', 'exercises'])->findOrFail($id);
-        //     $this->authorize('view', $gymClass);
-        //     return new GymClassResource($gymClass);
-        // } catch (ModelNotFoundException $e) {
-        //     return response()->json(['message' => 'Gym class not found'], 404);
-        // }
+{
+    try {
+        // $gymClass = GymClass::with(['equipments', 'exercises'])->findOrFail($id);
+         $gymClass = GymClass::with(['equipments', 'exercises'])
+                            ->withTrashed()
+                            ->findOrFail($id);
+        if ($gymClass->trashed()) {
+            return response()->json(['message' => 'Gym class not found or has been deleted'], 404);
+        }
+        $this->authorize('view', $gymClass);
+        return new GymClassResource($gymClass);
+    } catch (AuthorizationException $e) {
+        return response()->json(['message' => 'Unauthorized'], 403);
+    } catch (ModelNotFoundException $e) {
+        return response()->json(['message' => 'Gym class not found'], 404);
+    } catch (Exception $e) {
+        return response()->json(['message' => 'An error occurred'], 500);
     }
+}
+
      /**
      * Update the specified resource in storage.
      */
@@ -149,6 +160,7 @@ class GymClassController extends Controller
     {
         $gymClass = GymClass::find($id);
         $this->authorize('delete', $gymClass);
+    
         if (!$gymClass) {
             return response()->json(['message' => 'Gym class not found'], 404);
         }
@@ -157,4 +169,17 @@ class GymClassController extends Controller
     
         return response()->json(['message' => 'Gym class deleted successfully']);
     }
+    public function restore(string $id)
+{
+    $gymClass = GymClass::withTrashed()->find($id); 
+
+    if (!$gymClass) {
+        return response()->json(['message' => 'Gym class not found'], 404);
+    }
+
+    $gymClass->restore(); 
+
+    return response()->json(['message' => 'Gym class restored successfully']);
+}
+
 }
