@@ -80,10 +80,13 @@ class EquipmentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Equipment $equipment)
+    public function update(Request $request, string $id)
     {
         try {
             $equipment = Equipment::findOrFail($id);
+            if (!$equipment) {
+                return response()->json(['message' => 'Equipment not found'], 404);
+            }
             $this->authorize('update', $equipment);
  
             $validatedData = $request->validate([
