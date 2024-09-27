@@ -117,17 +117,29 @@ class EquipmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Equipment $equipment)
+    public function destroy(string $id)
     {
+      
+        // $equipment = Equipment::find($id);
         $equipment = Equipment::find($id);
+        if (!$equipment) {
+            return response()->json(['message' => 'Equipment not found'], 404);
+        }
     $this->authorize('delete', $equipment);
-
-    if (!$equipment) {
-        return response()->json(['message' => 'Equipment not found'], 404);
-    }
-
     $equipment->delete();
 
     return response()->json(['message' => 'Equipment deleted successfully']);
+    }
+    public function restore(string $id)
+    {
+        $equipment = Equipment::withTrashed()->find($id); 
+    
+        if (!$equipment) {
+            return response()->json(['message' => 'Equipment not found'], 404);
+        }
+    
+        $equipment->restore(); 
+    
+        return response()->json(['message' => 'Equipment restored successfully']);
     }
 }

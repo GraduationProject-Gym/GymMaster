@@ -48,4 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/equipments/{id}', [EquipmentsController::class, 'show'])->name('equipments.show');
     Route::put('/equipments/{id}', [EquipmentsController::class, 'update'])->name('equipments.update');
     Route::delete('/equipments/{id}', [EquipmentsController::class, 'destroy'])->name('equipments.destroy');
-    });
+    Route::patch('/equipments/restore/{id}', [EquipmentsController::class, 'restore'])->name('equipments.restore');
+
+});

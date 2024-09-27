@@ -87,6 +87,9 @@ class GymClassController extends Controller
         if ($gymClass->trashed()) {
             return response()->json(['message' => 'Gym class not found or has been deleted'], 404);
         }
+        if (!$gymClass) {
+            return response()->json(['message' => 'Gym class not found'], 404);
+        }
         $this->authorize('view', $gymClass);
         return new GymClassResource($gymClass);
     } catch (AuthorizationException $e) {
@@ -159,12 +162,10 @@ class GymClassController extends Controller
     public function destroy(string $id)
     {
         $gymClass = GymClass::find($id);
-        $this->authorize('delete', $gymClass);
-    
         if (!$gymClass) {
             return response()->json(['message' => 'Gym class not found'], 404);
         }
-    
+        $this->authorize('delete', $gymClass);
         $gymClass->delete();
     
         return response()->json(['message' => 'Gym class deleted successfully']);
