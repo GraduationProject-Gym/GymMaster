@@ -7,6 +7,7 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\SubscriptionController ;
 use App\Http\Controllers\Api\GymClassController;
 use App\Http\Controllers\Api\EquipmentsController;
+use App\Http\Controllers\Api\ExerciseController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -50,4 +51,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/equipments/{id}', [EquipmentsController::class, 'destroy'])->name('equipments.destroy');
     Route::patch('/equipments/restore/{id}', [EquipmentsController::class, 'restore'])->name('equipments.restore');
 
+});
+
+
+// Exercises Routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/exercises', [ExerciseController::class, 'index'])->name('exercises.index');
+    Route::post('/exercises', [ExerciseController::class, 'store'])->name('exercises.store');
+    Route::get('/exercises/{id}', [ExerciseController::class, 'show'])->name('exercises.show');
+    Route::put('/exercises/{id}', [ExerciseController::class, 'update'])->name('exercises.update');
+    Route::delete('/exercises/{id}', [ExerciseController::class, 'destroy'])->name('exercises.destroy');
+    Route::patch('/exercises/restore/{id}', [ExerciseController::class, 'restore'])->name('exercises.restore');
 });
