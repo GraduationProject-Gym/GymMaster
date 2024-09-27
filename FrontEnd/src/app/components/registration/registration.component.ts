@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { RegistrationService } from '../../services/authentication/registration/registration.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ArrayType } from '@angular/compiler';
 
 @Component({
   selector: 'app-registration',
@@ -102,13 +103,9 @@ export class RegistrationComponent {
           const registeredEmail = this.registrationForm.get('email')?.value;
           this.router.navigate(['/login']);
         },
-
         error: (error) => {
           console.log(error);
           if (error.status === 422) { // Validation error
-            // const keyValueArray = Object.values(error.error);
-            // console.log(keyValueArray);
-
             const validationErrors = error.error;
             console.log(validationErrors);
             Object.keys(validationErrors).forEach(field => {
@@ -124,6 +121,10 @@ export class RegistrationComponent {
             });
           } else if (error.status === 403) {
             this.errorMessage = 'Access Denied: You are not authorized to perform this action.';
+            // if (error.status === 403) { // Check for the status code directly
+            //   const keyValueArray = Object.values(error.error?.message);
+            //   let val=keyValueArray.join('\n');
+            //   this.errorMessage = val.trim();
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }

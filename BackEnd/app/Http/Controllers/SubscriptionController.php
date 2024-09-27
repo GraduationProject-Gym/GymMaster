@@ -22,10 +22,10 @@ class SubscriptionController extends Controller
     public function index()
     {
         //only admin can show all subscribe
-        $subscription = Subscription::all();
-        return response()->json([
-            'message' => $subscription],
-             404);
+        // $subscription = Subscription::all();
+        // return response()->json([
+        //     'message' => $subscription],
+        //      404);
         try {
             $this->authorize('viewAny', Subscription::class);
             $subscription = Subscription::all();
@@ -33,9 +33,7 @@ class SubscriptionController extends Controller
                 'message' => $subscription],
                 403);
 
-
         } catch (AuthorizationException $e) {
-
             return response()->json([
                 'message' => "You are not admin"
             ], 403);  // Forbidden status
@@ -55,10 +53,10 @@ class SubscriptionController extends Controller
     public function subscribe_User($user_id)
     {
         // admin can show all subscribtion for one user w
-        $subscription = Subscription::where('user_id', $user_id)->get();
-        return response()->json([
-            'message' => $subscription],
-             404);
+        // $subscription = Subscription::where('user_id', $user_id)->get();
+        // return response()->json([
+        //     'message' => $subscription],
+        //      404);
         // admin can show all subscribtion for one user
         // admin can show this
 

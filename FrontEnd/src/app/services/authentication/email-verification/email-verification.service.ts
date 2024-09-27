@@ -10,7 +10,7 @@ export class EmailVerificationService {
   constructor(private readonly http:HttpClient) { }
   private readonly emailVerificationUrl = `${environment.domain}/email-verification`;
 
-  sendVerificationEmail(data: {email: string}) {
+  sendVerificationEmail(data: {token: string}) {
     return this.http.post(this.emailVerificationUrl, data);
   };
 }
