@@ -83,7 +83,37 @@ class ExerciseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+            try {
+                $exercise = Exercise::findOrFail($id);
+                if (!$exercise) {
+                    return response()->json(['message' => 'Exercise not found'], 404);
+                }
+                $this->authorize('update', $exercise);
+     
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:255',
+                    'category' => 'required|in:Strength,Cardio,Flexibility and Mobility,Recovery and Rehabilitation',
+                    'no_of_times' => 'required|integer|min:1',
+                ]);
+            } catch (ValidationException $e) {
+            
+                $errors = $e->validator->errors();
+                $customMessages = [];
+    
+                foreach ($errors->all() as $error) {
+                    $customMessages[] = $error;
+                }
+    
+                return response()->json([
+                    'message' => 'Validation failed',
+                    'errors' => $customMessages,
+                ], 422);
+            }
+    
+            $exercise->update($validatedData);
+    
+            return new ExerciseResource($exercise);
+        
     }
 
     /**
