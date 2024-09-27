@@ -61,7 +61,13 @@ class ExerciseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $exercise = Exercise::findOrFail($id);
+            $this->authorize('view', $exercise);
+            return new ExerciseResource($exercise);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Exercise not found'], 404);   
+        }
     }
 
     /**
