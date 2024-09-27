@@ -22,7 +22,8 @@ class ScheduleResource extends JsonResource
             'nameDay' => $this->nameDay,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'class' => new GymClassResource($this->class), 
+            'class' => new GymClassResource($this->gymClass), 
+            // 'class' => new GymClassResource($this->whenLoaded('gymClass')),
         ];
     }
 }

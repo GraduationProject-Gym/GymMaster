@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\Api\ScheduleResource;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ScheduleController extends Controller
 {
     /**
@@ -34,11 +36,11 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Exercise::class);
+        $this->authorize('create', Schedule::class);
 
         try {
-            $request->validate([
-                'class_id' => 'required|exists:gymclasses,id', 
+            $validatedData= $request->validate([
+                'class_id' => 'required|exists:gymclass,id', 
                 'session_start' => 'required|date_format:H:i', 
                 'session_end' => 'required|date_format:H:i|after:session_start', 
                 'session_duration' => 'required|numeric|min:0', 
@@ -54,8 +56,8 @@ class ScheduleController extends Controller
             ], 422);
         }
 
-        $exercise = Exercise::create($validatedData);
-        return new ExerciseResource($exercise);
+        $schedule  = Schedule::create($validatedData);
+        return new ScheduleResource($schedule );
     }
 
     /**
