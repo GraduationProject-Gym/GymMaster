@@ -14,8 +14,11 @@ class ScheduleController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Schedule::class);
-        $schedules = Schedule::all();
+        $schedules = Schedule::with('gymclass')->get(); 
         return response()->json($schedules, 200);
+        // $schedules = Schedule::all();
+        // return response()->json($schedules, 200);
+        // return ScheduleResource::collection($schedules);
     }
 
     /**
@@ -31,7 +34,28 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Exercise::class);
+
+        try {
+            $request->validate([
+                'class_id' => 'required|exists:gymclasses,id', 
+                'session_start' => 'required|date_format:H:i', 
+                'session_end' => 'required|date_format:H:i|after:session_start', 
+                'session_duration' => 'required|numeric|min:0', 
+                'nameDay' => 'required|string|max:255', 
+            ]);
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            $customMessages = $errors->all();
+
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $customMessages,
+            ], 422);
+        }
+
+        $exercise = Exercise::create($validatedData);
+        return new ExerciseResource($exercise);
     }
 
     /**
