@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
-
+namespace App\Http\Resources\Api;
+use App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EquipmentResource extends JsonResource
+class EquipmentsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

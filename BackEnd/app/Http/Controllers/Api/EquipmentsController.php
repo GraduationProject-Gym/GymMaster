@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 use App\Models\Equipment;
 use Illuminate\Http\Request;
+use App\Http\Resources\Api\EquipmentsResource;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class EquipmentController extends Controller
+class EquipmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,42 +36,37 @@ class EquipmentController extends Controller
         $this->authorize('create', Equipment::class);
 
         try {
-           
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'used_weight' => 'nullable|numeric|min:0',
                 'number_of_equipments' => 'required|integer|min:1',
             ]);
         } catch (ValidationException $e) {
-            
             $errors = $e->validator->errors();
-            $customMessages = [];
-
-            foreach ($errors->all() as $error) {
-                $customMessages[] = $error;
-            }
+            $customMessages = $errors->all();
 
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $customMessages,
             ], 422);
         }
-        $equipment = Equipment::create($validatedData);
 
-        return new EquipmentResource($equipment);
+        $equipment = Equipment::create($validatedData);
+        return new EquipmentsResource($equipment);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Equipment $equipment)
+    public function show(string $id)
     {
         try {
             $equipment = Equipment::findOrFail($id);
             $this->authorize('view', $equipment);
-            return new EquipmentResource($equipment);
+            return new EquipmentsResource($equipment);
         } catch (ModelNotFoundException $e) {
-            return response()->json(['message' => 'Equipment not found'], 404);        }
+            return response()->json(['message' => 'Equipment not found'], 404);   
+        }
     }
 
     /**
@@ -110,7 +108,7 @@ class EquipmentController extends Controller
 
         $equipment->update($validatedData);
 
-        return new EquipmentResource($equipment);
+        return new EquipmentsResource($equipment);
     }
 
     /**

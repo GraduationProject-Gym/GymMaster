@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; 
 
 class Equipment extends Model
 {
     use HasFactory;
+    use SoftDeletes; 
     protected $table = 'equipments'; 
     protected $fillable = [
         'name',
-        'used_weight'
+        'used_weight',
+        'number_of_equipments'
     ];
 
     public function user()
