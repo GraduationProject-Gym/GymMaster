@@ -30,6 +30,6 @@ export class ClassService {
   getSelectedClass(){
     return this.selectedClass;
   }
-  
+
 }
 

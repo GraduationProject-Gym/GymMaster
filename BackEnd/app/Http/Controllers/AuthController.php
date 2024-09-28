@@ -321,12 +321,12 @@ class AuthController extends Controller
     public function show(Request $request)
     {
         //
-        // return ['message'=>$request->id];
 
         $class = GymClass::where("id", $request->id)->first();
+        // return ['message'=>$request->id];
         if($class){
             return response()->json([
-                "message" => $class,
+                "message" => $class
             ]);
         }
         else{

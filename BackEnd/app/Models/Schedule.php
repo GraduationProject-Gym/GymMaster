@@ -11,10 +11,13 @@ class Schedule extends Model
     protected $fillable = [
         'session_start',
         'session_end',
+        'session_duration',
+        'nameDay',
         'class_id'
     ];
     public function gymClass()
     {
-        return $this->belongsTo(GymClass::class);
+        return $this->belongsTo(GymClass::class, 'class_id');
     }
+
 }

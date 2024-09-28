@@ -8,15 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class ClassExercie extends Model
 {
     use HasFactory;
+    
+    // Correct table name as per your database
+    protected $table = 'class_exerciess';
+
+    // Define fillable attributes
     protected $fillable = ['class_id', 'exercies_id'];
 
-    public function GymClass()
+    // Define relationship to GymClass
+    public function gymClass()
     {
         return $this->belongsTo(GymClass::class, 'class_id');
     }
 
-    public function exercies()
+    // Define relationship to Exercise
+    public function exercise()
     {
-        return $this->belongsTo(Exercise::class, 'exercies_id');
+        return $this->belongsTo(Exercise::class, 'exercise_id');
     }
 }

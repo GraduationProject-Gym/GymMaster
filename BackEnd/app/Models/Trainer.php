@@ -12,13 +12,19 @@ class Trainer extends Model
 
     use HasFactory;
     protected $fillable = ['cv', 'user_id'];
-    public function TraineeUser(){
-        return $this->belongsTo(User::class, 'id','id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function ReviewTrainer()
+    public function gymClass()
     {
-        return $this->hasMany(Review::class,'id','id');
+        return $this->hasMany(GymClass::class, 'trainer_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     public function ClassTrainer()

@@ -83,6 +83,7 @@ export class ClassesComponent {
       // console.log(this.id);
       this.classService.getShowClass(this.id).subscribe({
         next: (response) => {
+          console.log(111);
           this.classService.setSelectedclass(response.message);
           this.router.navigate(['/trainer/show-class']);
         },

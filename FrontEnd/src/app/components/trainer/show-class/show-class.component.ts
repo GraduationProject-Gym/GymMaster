@@ -38,6 +38,7 @@ export class ShowClassComponent implements OnInit{
       return;
     }
     this.status = this.class.status === 1 ? 'Active' : 'Inactive';
+    console.log(this.class);
   }
 
   edit() {

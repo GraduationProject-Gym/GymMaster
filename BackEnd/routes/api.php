@@ -6,6 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\SubscriptionController ;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\TraineeClassController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\EquipmentController;
 
 
 
@@ -30,7 +33,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
 Route::post('register', [AuthController::class, 'store']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
+Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
 // for test
@@ -38,15 +41,17 @@ Route::post('showClass', [AuthController::class, 'show']);
 
 
 // membership
-Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::apiResource('trainee-class',TraineeClassController::class);
+Route::apiResource('schedule',ScheduleController::class);
+Route::apiResource('equipment',EquipmentController::class);
+Route::post('equipment/workon',[EquipmentController::class, 'workOn']);
 
 // subscription
 Route::apiResource('subscribe',SubscriptionController::class);
 Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
 Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
 
-// api
+// api payment
 Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
