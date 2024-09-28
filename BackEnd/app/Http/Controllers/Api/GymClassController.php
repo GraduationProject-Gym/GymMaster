@@ -8,6 +8,7 @@ use App\Models\GymClass;
 use App\Http\Resources\Api\GymClassResource;
 use App\Models\Trainer; 
 use App\Models\User; 
+use App\Models\ClassEquipment;
 class GymClassController extends Controller
 {
     /**
@@ -53,6 +54,10 @@ class GymClassController extends Controller
         }
     },
 ],
+'equipment_ids' => 'nullable|array',  
+'equipment_ids.*' => 'exists:equipments,id',
+'exercise_ids' => 'nullable|array',  
+'exercise_ids.*' => 'exists:exercises,id',
              ]);
          } catch (ValidationException $e) {
              $errors = $e->validator->errors();
@@ -70,7 +75,13 @@ class GymClassController extends Controller
      
          
          $gymClass = GymClass::create($validatedData);
-     
+if ($request->has('equipment_ids')) {
+    $gymClass->equipments()->sync($request->input('equipment_ids'));
+}
+
+if ($request->has('exercise_ids')) {
+    $gymClass->exercises()->sync($request->input('exercise_ids'));
+}
          return new GymClassResource($gymClass);
      }
      
