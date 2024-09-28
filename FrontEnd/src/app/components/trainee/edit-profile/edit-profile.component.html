@@ -1,7 +1,8 @@
 <div class="d-flex">
   <app-sidebar></app-sidebar>
   <div class="main">
-      <div class="edit-profile-form form form-background">
+    <!-- form form-background -->
+    <div class="edit-profile-form ">
       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
 
       <h2>Edit Profile For {{ editProfileForm.get('name')?.value }}</h2>
@@ -16,9 +17,10 @@
 
       <label for="address">Address:</label>
       <input type="text" id="address" name="address" formControlName="address" required>
-
-      <button type="submit" class="btn" [disabled]="editProfileForm.invalid">Save Changes</button>
+        <div class="text-center">
+                <button type="submit" class="btn" [disabled]="editProfileForm.invalid">Save Changes</button>
+        </div>
       </form>
-      </div>
+    </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 .main {
   min-height: 100vh;
   width: 100%;
-  background: url("/form4.jpg") no-repeat;
+  background: url("/background5.jpg") no-repeat;
   background-size: cover;
   padding: 100px 50px 50px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -16,27 +16,23 @@ h2 {
   text-align: center;
 }
 
-.form {
+.edit-profile-form {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  margin-top: 300px;
-  margin-left:500px;
-  border: 1px #ff6207 solid;
 }
 
-.form-background {
-  padding: 20px;
-  border-radius: 10px; /* زيادة الزاوية الدائرية */
+input {
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.9);
-}
-
-input,
-textarea {
-  margin-left: 10px;
+  margin-left: 0;
+  margin-bottom: 15px;
   background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid #ccc
 }
 
 .form label {
@@ -51,30 +47,27 @@ textarea {
 }
 
 /* Responsive Styles */
-@media (min-width: 768px) {
-  .form {
+
+/* @media (min-width: 768px) {
+  .edit-profile-form  {
     width: 70%;
-    margin-left: 220px; /* ضبط الهوامش لتكون متساوية */
+    margin-left: 220px;
   }
 }
-
+*/
 @media (max-width: 576px) {
-  .form {
-    width: 87%; /* زيادة العرض ليكون أكثر اتساعًا */
-    margin: 20px 97px; /* ضبط الهوامش لتكون متساوية */
-  }
-
-  .form-background {
-    padding: 15px; /* تقليل padding */
+  .edit-profile-form  {
+    width: 87%;
+    margin: 20px 97px;
   }
 
   input,
   textarea {
-    margin-left: 0; /* إزالة الهامش الجانبي */
+    margin-left: 0;
   }
 
   h2 {
-    font-size: 20px; /* ضبط حجم الخط */
+    font-size: 20px;
   }
 
   .btn {
