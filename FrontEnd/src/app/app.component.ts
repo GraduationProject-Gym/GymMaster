@@ -13,6 +13,7 @@ import { TraineesComponent } from './components/trainer/trainees/trainees.compon
 import { ReportComponent } from './components/trainer/report/report.component';
 import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
+import { TraineeClassesComponent } from './components/trainee/trainee-classes/trainee-classes.component';
 
 @Component({
   selector: 'app-root',
@@ -31,8 +32,9 @@ import { EditProfileComponent } from './components/trainee/edit-profile/edit-pro
     TraineesComponent,
     ReportComponent,
     TraineeComponent,
-    EditProfileComponent
-    ],
+    EditProfileComponent,
+    TraineeClassesComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
