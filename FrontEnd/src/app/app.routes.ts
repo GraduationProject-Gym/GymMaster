@@ -37,7 +37,6 @@ export const routes: Routes = [
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
     { path: 'trainee-profile/edit', component:EditProfileComponent},
-
     { path: "**", component: ErrorComponent }
 ];
 
