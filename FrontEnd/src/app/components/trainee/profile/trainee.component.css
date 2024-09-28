@@ -20,28 +20,32 @@ body {
 .main {
   min-height: 100vh;
   width: 100%;
-  background: url("/form4.jpg") no-repeat ;
+  background: url("/form4.jpg") no-repeat center center;
   background-size: cover;
   padding: 100px 50px 50px;
   margin: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* border-radius: 10px; */
 }
-
 
 /* Profile Image */
 .profile-img {
   width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  height: auto; /* جعل الصورة مرنة */
+  border-radius: 5%;
   object-fit: cover;
   margin-left: auto;
 }
+
 .profile {
   background-color: rgba(255, 255, 255, .8);
+  width: 70%;
+  margin-left: auto;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 /* text */
@@ -60,13 +64,49 @@ p strong {
   color: #333;
 }
 
-/* button {
-  background: #ff6207;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
-} */
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .profile-img {
+    width: 120px;
+    margin-left: 0;
+  }
+
+  .profile {
+    width: 85%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-img {
+    width: 100px;
+  }
+
+  .profile {
+    width: 90%;
+    margin-left: 90px;
+    padding: 15px;
+
+  }
+}
+
+@media (max-width: 375px) {
+  .profile-img {
+    width: 80px;
+    height: 80px;
+    margin-right: 0 ;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .profile {
+    width: 95%;
+    padding: 10px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
