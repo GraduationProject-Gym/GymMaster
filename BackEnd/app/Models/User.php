@@ -85,4 +85,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new CustomResetPasswordNotification($token));
     }
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; 
+    }
+    public function trainer()
+    {
+        return $this->hasOne(Trainer::class, 'user_id');
+    }
 }

@@ -25,31 +25,20 @@ export class RegistrationComponent {
     private router: Router,
     private sanitizer: DomSanitizer) { }
 
-  // Extract image name from its path
-  imageName: string | null = null;
-
   onFileChange(event: any): void {
-    // const input = event.target as HTMLInputElement;
-    // if (input.files && input.files.length > 0) {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
       this.registrationForm.patchValue({ image: file.name });
     }
-    // }
   }
 
-
-  // error(error: any) {
-  // }
-
   registrationForm = new FormGroup({
-    // name: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
     email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
     age: new FormControl(null, [Validators.required, Validators.min(10)]),
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),
-    address: new FormControl(null, Validators.required),
+    address: new FormControl(null, [Validators.pattern(/^(?=.*[A-Za-z])[A-Za-z0-9'.\-\s,]+$/)]),
     password: new FormControl(null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}')]),
     confirmPassword: new FormControl(null, [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}')]),
     gender: new FormControl(null, Validators.required),
@@ -59,36 +48,8 @@ export class RegistrationComponent {
 
 
   selectedFile: File | null = null;
-
-  get userNameValid() {
-    return this.registrationForm.controls['name'].valid;
-  }
-  get AgeValid() {
-    return this.registrationForm.controls['age'].valid;
-  }
-  get EmailValid() {
-    return this.registrationForm.controls['email'].valid;
-  }
-
-  get PhoneValid() {
-    return this.registrationForm.controls['phone'].valid;
-  }
-  get AddressValid() {
-    return this.registrationForm.controls['address'].valid;
-  }
-  get PasswordValid() {
-    return this.registrationForm.controls['password'].valid;
-  }
-  get GenderValid() {
-    return this.registrationForm.controls['gender'].valid;
-  }
-
-  get ImageValid() {
-    return this.registrationForm.controls['image'].valid;
-  }
-
-  showSuccessAlert = false;
-  showErrorAlert = false;
+  // showSuccessAlert = false;
+  // showErrorAlert = false;
 
   passwordMatcher() {
     const password = this.registrationForm.controls['password'].value;
@@ -119,26 +80,23 @@ export class RegistrationComponent {
   errorMessage: string | null = null;
 
   Registeration() {
-    this.errorMessage = null; // Reset the error message
+    this.errorMessage = null; // Reset the error message 
+    this.registrationForm.markAllAsTouched();
     if (this.registrationForm.valid) {
       const formData = new FormData();
       Object.keys(this.registrationForm.value).forEach(key => {
         if (key === 'image') {
           const file = this.selectedFile;
           if (file) {
-            // console.log(file);
             formData.append('image', file);
           }
         } else {
-          // const sanitizedValue = this.sanitizeInput(this.registrationForm.get(key)?.value);
-          // console.log(sanitizedValue);
-          // formData.append(key, sanitizedValue);
-          formData.append(key, this.registrationForm.get(key)?.value);
+          const sanitizedValue = this.sanitizeInput(this.registrationForm.get(key)?.value);
+          formData.append(key, sanitizedValue);
         }
       });
 
       // Call Registration  service and handle response
-      // console.log(formData);
       this.registrationService.register(formData).subscribe({
         next: (response) => {
           console.log(response);
@@ -146,25 +104,42 @@ export class RegistrationComponent {
           this.router.navigate(['/login']);
         },
         error: (error) => {
-          if (error.status === 403) { // Check for the status code directly
-            const keyValueArray = Object.values(error.error?.message);
-            let val=keyValueArray.join('\n');
-            this.errorMessage = val.trim();
+          console.log(error);
+          if (error.status === 422) { // Validation error
+            const validationErrors = error.error;
+            console.log(validationErrors);
+            Object.keys(validationErrors).forEach(field => {
+              const control = this.registrationForm.get(field);
+              if (control) {
+                control.setErrors(null); // Clear previous errors
+                // Create a new error object with all the error messages for the control
+                const errorMessageArray = validationErrors[field];
+                control.setErrors({
+                  backendError: errorMessageArray.join(', ')
+                });
+              }
+            });
+          } else if (error.status === 403) {
+            this.errorMessage = 'Access Denied: You are not authorized to perform this action.';
+            // if (error.status === 403) { // Check for the status code directly
+            //   const keyValueArray = Object.values(error.error?.message);
+            //   let val=keyValueArray.join('\n');
+            //   this.errorMessage = val.trim();
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
         }
       });
     } else {
-      console.log('Form is invalid');
+      this.errorMessage = 'Please correct the errors in the form.';
     }
 
-    if (this.registrationForm.valid) {
-      this.showErrorAlert = false;
-    } else {
-      this.registrationForm.markAllAsTouched();
-      this.showErrorAlert = true;
-    }
+    // if (this.registrationForm.valid) {
+    //   this.showErrorAlert = false;
+    // } else {
+    //   this.registrationForm.markAllAsTouched();
+    //   this.showErrorAlert = true;
+    // }
   }
 
   /* show & hide password*/
@@ -183,7 +158,4 @@ export class RegistrationComponent {
       eyeIcon.classList.toggle('fa-eye');
     }
   }
-
-
 }
-

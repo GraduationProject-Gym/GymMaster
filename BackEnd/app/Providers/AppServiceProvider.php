@@ -13,20 +13,23 @@ use App\Policies\GymClassPolicy;
 use App\Policies\EquipmentPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\SchedulePolicy;
+use App\Policies\TraineeClassPolicy;
 use App\Policies\MembershipPolicy;
 
 use App\Models\Memberships;
 
-use App\Policies\TraineeClassPolicy;
 class AppServiceProvider extends ServiceProvider
 {
     protected $policies = [
         GymClass::class => GymClassPolicy::class,
         Equipment::class => EquipmentPolicy::class,
+        \App\Models\Equipment::class => \App\Policies\EquipmentPolicy::class,
         Payment::class => PaymentPolicy::class,
         Schedule::class => SchedulePolicy::class,
         Memberships::class => MembershipPolicy::class,
         UserClass::class => TraineeClassPolicy::class,
+        Exercise::class => ExercisePolicy::class,
+
     ];
 
     /**

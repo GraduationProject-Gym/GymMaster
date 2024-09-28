@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; 
 
 class Equipment extends Model
 {
     use HasFactory;
-    protected $table = 'equipments';
+    use SoftDeletes; 
+    protected $table = 'equipments'; 
     protected $fillable = [
         'name',
-        'used_weight'
+        'used_weight',
+        'number_of_equipments'
     ];
 
     public function user()
@@ -22,5 +25,9 @@ class Equipment extends Model
     public function gymClass()
     {
        return $this->belongsToMany(GymClass::class, 'class_equipments', 'equipment_id', 'class_id');
+    }
+    public function gymClasses()
+    {
+        return $this->belongsToMany(GymClass::class, 'class_equipments', 'equipment_id', 'class_id');
     }
 }

@@ -74,3 +74,4 @@ class GymClassPolicy
         return false;
     }
 }
+
