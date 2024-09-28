@@ -13,7 +13,7 @@ export class RegistrationService {
     // data.forEach((value, key) => {
     //   console.log(`${key}: ${value}`);
     // }); // Test sent payload
-    console.log('111');
+    // console.log('111');
     return this.http.post(this.registrationUrl, data);
   }
 }

@@ -48,5 +48,4 @@ class GymClass extends Model
     {
         return $this->belongsToMany(Exercise::class, 'class_exerciess', 'class_id', 'exercise_id');
     }
-
 }
