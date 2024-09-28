@@ -20,18 +20,14 @@ import { ArrayType } from '@angular/compiler';
   ]
 })
 export class RegistrationComponent {
+
+  errorMessage: string | null = null;
+  selectedFile: File | null = null;
+
   constructor(
     private registrationService: RegistrationService,
     private router: Router,
     private sanitizer: DomSanitizer) { }
-
-  onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-      this.registrationForm.patchValue({ image: file.name });
-    }
-  }
 
   registrationForm = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9_-]{3,15}$')]),
@@ -46,10 +42,13 @@ export class RegistrationComponent {
     role: new FormControl("trainee"),
   });
 
-
-  selectedFile: File | null = null;
-  // showSuccessAlert = false;
-  // showErrorAlert = false;
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.registrationForm.patchValue({ image: file.name });
+    }
+  }
 
   passwordMatcher() {
     const password = this.registrationForm.controls['password'].value;
@@ -63,10 +62,12 @@ export class RegistrationComponent {
       return true; // Return true if passwords match
     }
   }
+
   get ConfirmPasswordRequired() {
     return this.registrationForm.controls['confirmPassword'].errors?.['required'] &&
       this.registrationForm.controls['confirmPassword'].touched;
   }
+
   get ConfirmPasswordValid() {
     return !this.registrationForm.controls['confirmPassword'].errors;
     // Return false if passwords do not match
@@ -76,8 +77,6 @@ export class RegistrationComponent {
   sanitizeInput(input: string): string {
     return this.sanitizer.sanitize(1, input) || '';
   }
-
-  errorMessage: string | null = null;
 
   Registeration() {
     this.errorMessage = null; // Reset the error message 
@@ -100,7 +99,6 @@ export class RegistrationComponent {
       this.registrationService.register(formData).subscribe({
         next: (response) => {
           console.log(response);
-          const registeredEmail = this.registrationForm.get('email')?.value;
           this.router.navigate(['/login']);
         },
         error: (error) => {
@@ -121,10 +119,6 @@ export class RegistrationComponent {
             });
           } else if (error.status === 403) {
             this.errorMessage = 'Access Denied: You are not authorized to perform this action.';
-            // if (error.status === 403) { // Check for the status code directly
-            //   const keyValueArray = Object.values(error.error?.message);
-            //   let val=keyValueArray.join('\n');
-            //   this.errorMessage = val.trim();
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
@@ -133,13 +127,6 @@ export class RegistrationComponent {
     } else {
       this.errorMessage = 'Please correct the errors in the form.';
     }
-
-    // if (this.registrationForm.valid) {
-    //   this.showErrorAlert = false;
-    // } else {
-    //   this.registrationForm.markAllAsTouched();
-    //   this.showErrorAlert = true;
-    // }
   }
 
   /* show & hide password*/

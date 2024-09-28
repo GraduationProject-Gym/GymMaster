@@ -26,6 +26,9 @@ export class LoginComponent {
     private sanitizer: DomSanitizer
   ) { }
 
+  formSubmitted = false; // Track if the form has been submitted
+  errorMessage: string | null = null;
+
   // Create form elements and set up their basic validation rules
   loginForm = new FormGroup({
     email: new FormControl(null, [
@@ -66,9 +69,6 @@ export class LoginComponent {
   }
 
   // Check user authentication and authorization
-  formSubmitted = false; // Track if the form has been submitted
-  errorMessage: string | null = null;
-
   loginAction() {
     this.formSubmitted = true; // Mark form as submitted
     this.errorMessage = null; // Reset the error message 
@@ -78,10 +78,6 @@ export class LoginComponent {
         email: this.sanitizeInput(this.loginForm.value.email || ''),
         password: this.sanitizeInput(this.loginForm.value.password || ''),
         device_name: this.getDeviceName() // Get device name
-      
-        // email: this.loginForm.value.email || '',
-        // password: this.loginForm.value.password || '',
-        // device_name: this.getDeviceName() // Get device name
       };
 
       // Call login service and handle response
@@ -91,7 +87,7 @@ export class LoginComponent {
           this.router.navigate(['/trainee']);
         },
         error: (error) => {
-          // console.log(error);
+          console.log(error);
           if (error.status === 403) { // Check for the status code directly
             this.errorMessage = error.error?.message;
             // if (this.errorMessage === 'verify email'){}
@@ -101,6 +97,7 @@ export class LoginComponent {
         }
       });
     } else {
+      this.errorMessage = 'Please correct the errors in the form.';
       console.log('Form is invalid'); // Log if form is invalid
     }
   }
@@ -109,7 +106,6 @@ export class LoginComponent {
   private getDeviceName(): string {
     return navigator.userAgent;
   }
-
 
   // show & hide password
   showPassword() {
