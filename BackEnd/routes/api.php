@@ -33,6 +33,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::apiResource('users', AuthController::class);
+Route::post('users/{id}', [AuthController::class, 'update']);
+// Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
 // membership
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
