@@ -12,6 +12,7 @@ import { ShowClassComponent } from './components/trainer/show-class/show-class.c
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
+import { EmailVerificationComponent } from './components/email-verification/email-verification/email-verification.component';
 
 
 export const routes: Routes = [
