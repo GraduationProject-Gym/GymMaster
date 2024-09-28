@@ -11,6 +11,7 @@ import { ShowClassComponent } from './components/trainer/show-class/show-class.c
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
+import { ClassService } from './services/trainer/class/class.service';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,9 @@ import { ReportComponent } from './components/trainer/report/report.component';
     AddClassComponent,
     TraineesComponent,
     ReportComponent
+    ],
+    providers: [
+      ClassService
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

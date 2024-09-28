@@ -1,7 +1,7 @@
 <img src="/form4.jpg" alt="Background Image" class="bg-image">
 
 <div class="container mt-5">
-  <h2 class="text-center mt-5">{{ className }}</h2>
+  <h2 class="text-center mt-5"> {{ class.name }}</h2>
   <div class="card mb-4">
     <div class="card-body">
       <h4 class="card-title"><strong>Class Details</strong> </h4>
@@ -12,7 +12,7 @@
         </div> -->
 
         <div class="col-md-6">
-          <p><strong>Number of Sessions:</strong> <span class="badge">{{ sessions }}</span></p>
+          <p><strong>Number of Sessions:</strong> <span class="badge">{{ class.total_no_of_session }}</span></p>
           <p><strong>Status:</strong> <span class="badge " [ngClass]="{'bg-success': status === 'active', 'bg-danger': status === 'inactive'}">{{ status }}</span></p>
         </div>
 
@@ -24,7 +24,7 @@
 
       <div class="mb-3 border p-3 rounded bg-light shadow-sm">
         <h6 ><strong>Description:</strong></h6>
-        <p> <span class="badge">{{ description }}</span></p>
+        <p> <span class="badge">{{ class.description }}</span></p>
 
       </div>
       <h6 class="mt-4">
