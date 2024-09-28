@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\GymClassController;
 use App\Http\Controllers\Api\EquipmentsController;
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\TraineeClassController;
+use App\Http\Controllers\SchedulesController;
+use App\Http\Controllers\EquipmentController;
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -27,6 +30,11 @@ Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('p
 // membership
 
 Route::apiResource('membership',MembershipController::class);
+Route::apiResource('trainee-class',TraineeClassController::class);
+Route::apiResource('schedule',SchedulesController::class);
+Route::apiResource('equipment',EquipmentController::class);
+Route::post('equipment/workon',[EquipmentController::class, 'workOn']);
+Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->middleware('guest');
 
 // subscription
 Route::apiResource('subscribe',SubscriptionController::class);

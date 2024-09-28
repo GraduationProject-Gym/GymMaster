@@ -65,14 +65,14 @@ class User extends Authenticatable
     }
 
     // Relationship with Equipments
-    public function useEquipment()
+    public function equipment()
     {
-       return $this->belongsToMany(User::class, 'user_equipment', 'user_id', 'equipment_id');
+       return $this->belongsToMany(User::class, 'user_equipments', 'user_id', 'equipment_id');
     }
 
     public function gymClass()
     {
-       return $this->belongsToMany(GymClass::class, 'user_class', 'user_id', 'class_id');
+       return $this->belongsToMany(GymClass::class, 'user_classes', 'user_id', 'class_id','user_classes');
     }
     public function sendPasswordResetNotification($token)
     {

@@ -12,6 +12,7 @@ class GymClass extends Model
 
     protected $dates = ['deleted_at']; 
     protected $table = 'gymclass';
+    // protected $table = 'gym_classes';
     protected $fillable = [
         'name',
         'description',
@@ -20,25 +21,31 @@ class GymClass extends Model
         'max_trainee',
         'trainer_id'
     ];
+    // public function useEquipment()
+    // {
+    //    return $this->belongsToMany(GymClass::class, 'class_equipments', 'class_id', 'equipment_id');
+    // }
 
-    public function useEquipment()
-    {
-       return $this->belongsToMany(GymClass::class, 'class_equipment', 'class_id', 'equipment_id');
-    }
+    public function equipment()
+{
+    return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
+}
+
+
 
     public function schedule()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class, 'class_id');
+    }
+
+    public function trainer()
+    {
+        return $this->belongsTo(Trainer::class, 'trainer_id');
     }
 
     public function user()
     {
-       return $this->belongsToMany(User::class, 'user_class', 'class_id', 'user_id');
-    }
-
-    public function exercies()
-    {
-       return $this->belongsToMany(User::class, 'class_exercies', 'class_id', 'exercies_id');
+       return $this->belongsToMany(User::class, 'user_classes', 'class_id', 'user_id');
     }
     public function equipments()
     {
@@ -49,9 +56,6 @@ class GymClass extends Model
     {
         return $this->belongsToMany(Exercise::class, 'class_exerciess', 'class_id', 'exercise_id');
     }
-    public function trainer()
-    {
-        return $this->belongsTo(Trainer::class, 'trainer_id');
-    }
+    
     
 }
