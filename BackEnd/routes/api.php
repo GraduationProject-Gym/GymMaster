@@ -16,12 +16,10 @@ Route::get('/user', function (Request $request) {
 // verification email
 Route::post('email-verification', [AuthController::class, 'verifyEmail']);
 
-
 // authorization
 Route::middleware(['auth:sanctum'])->group( function () {
     // membership
     Route::apiResource('membership',MembershipController::class);
-
     // subscription
     Route::apiResource('subscribe',SubscriptionController::class);
     Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
@@ -34,8 +32,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
-
-
 
 // for test
 Route::post('showClass', [AuthController::class, 'show']);
