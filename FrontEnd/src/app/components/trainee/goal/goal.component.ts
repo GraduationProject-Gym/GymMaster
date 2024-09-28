@@ -16,22 +16,22 @@ export class GoalComponent {
   isEditing: boolean = false;
   newGoal: string = '';
 
-  constructor() {}
+  constructor() { }
 
-    // Edit the current goal
+  // Edit the current goal
   editGoal(): void {
     this.showForm = true;
     this.isEditing = true;
     this.newGoal = this.goal!;
   }
 
-    // Add the new goal
+  // Add the new goal
   addGoal(): void {
     this.goal = this.newGoal;
     this.showForm = false;
   }
 
-   // Save changes or add the goal
+  // Save changes or add the goal
   saveGoal(): void {
     if (this.isEditing) {
       this.goal = this.newGoal;
@@ -42,7 +42,7 @@ export class GoalComponent {
     this.newGoal = '';
   }
 
-    // Cancel the edit or addition
+  // Cancel the edit or addition
   cancel(): void {
     this.showForm = false;
     this.newGoal = '';

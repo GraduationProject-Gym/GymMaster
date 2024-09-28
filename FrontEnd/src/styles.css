@@ -61,6 +61,7 @@ html,body {
 
 .btn:hover {
   color: #ff6207;
+  cursor: pointer; 
 }
 
 /* form login& registration*/

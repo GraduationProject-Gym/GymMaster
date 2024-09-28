@@ -14,6 +14,9 @@ use App\Policies\EquipmentPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\SchedulePolicy;
 use App\Policies\TraineeClassPolicy;
+use App\Policies\MembershipPolicy;
+use App\Models\Memberships;
+
 class AppServiceProvider extends ServiceProvider
 {
     protected $policies = [
@@ -22,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
         Payment::class => PaymentPolicy::class,
         Schedule::class => SchedulePolicy::class,
         UserClass::class => TraineeClassPolicy::class,
+        Memberships::class => MembershipPolicy::class,
+
     ];
     
     /**
@@ -35,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    
+
     public function boot(): void
     {
         //
@@ -45,5 +50,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Schedule::class, SchedulePolicy::class);
         Gate::policy(UserClass::class, TraineeClassPolicy::class);
 
+        Gate::policy(Memberships::class, MembershipPolicy::class);
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ForgotPasswordService } from '../../services/authentication/forgot-password/forgot-password.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forgot-password',
@@ -15,6 +16,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './forgot-password.component.css'
 })
 export class ForgotPasswordComponent {
+  // Create request to use forgot-password service
+  constructor(private forgotPasswordService: ForgotPasswordService, private sanitizer: DomSanitizer) { }
+
   // Create form elements and set up their basic validation rules
   forgotPasswordForm = new FormGroup({
     email: new FormControl(null, [
@@ -33,12 +37,15 @@ export class ForgotPasswordComponent {
       this.forgotPasswordForm.controls['email'].touched;
   }
 
+  // Sanitize email input
+  sanitizeInput(input: string): string {
+    return this.sanitizer.sanitize(1, input) || ''; 
+  }
+
   formSubmitted = false; // Track if the form has been submitted
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  // Create request to use forgot-password and reset-password services
-  constructor(private forgotPasswordService: ForgotPasswordService) { }
 
   // Send email to reset password 
   sendEmail() {
@@ -46,9 +53,8 @@ export class ForgotPasswordComponent {
     this.errorMessage = null; // Reset the error message 
 
     if (this.forgotPasswordForm.valid) {
-      const data = {
-        email: this.forgotPasswordForm.value.email || ''
-      };
+      const sanitizedEmail = this.sanitizeInput(this.forgotPasswordForm.value.email || '');
+      const data = { email: sanitizedEmail };
 
       // Call forgot-password service and handle response
       this.forgotPasswordService.sendEmail(data).subscribe({
