@@ -32,7 +32,6 @@ export const routes: Routes = [
     { path: 'trainer/trainees', component: TraineesComponent },
     { path: 'trainer/trainees/create-report', component:ReportComponent},
     { path: 'trainee-profile', component:TraineeComponent},
-    { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
 

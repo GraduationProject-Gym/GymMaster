@@ -21,7 +21,6 @@ Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->n
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
 // membership
-
 Route::apiResource('membership',MembershipController::class);
 Route::apiResource('trainee-class',TraineeClassController::class);
 Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->middleware('guest');
