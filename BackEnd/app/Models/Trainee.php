@@ -17,13 +17,13 @@ class Trainee extends Model
     ];
     // admin will add no_vouchers
     // expiration_date will update automatic when update membership
-    protected $fillable = ['goals','membership_id', 'user_id'];
+    protected $fillable = ['goals','no_vouchers', 'membership_id', 'user_id'];
     public function TraineeMembership(){
         return $this->belongsTo(Memberships::class, 'membership_id','id');
     }
     public function TraineeUser()
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function ReviewTrainee()

@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\TraineeClassController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
+use App\Http\Controllers\VouchersController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::resource('schedules', ScheduleController::class);
@@ -107,3 +108,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
+
+
+//vouchers
+Route::apiResource('vouchers', VouchersController::class);
+Route::post('vouchers/update-no-vouchers', [VouchersController::class, 'updateNoVouchers']);

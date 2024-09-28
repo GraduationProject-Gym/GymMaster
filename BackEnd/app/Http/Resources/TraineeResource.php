@@ -17,7 +17,11 @@ class TraineeResource extends JsonResource
         // return parent::toArray($request);
         return [
             'user_id'=>$this->id,
-            'name'=>$this->name,
+            'goals'=>$this->goals,
+            'no_vouchers'=>$this->no_vouchers,
+            'expiration_date'=>$this->expiration_date,
+            'membershipData'=>new MembershipResource($this->TraineeMembership),
+            'moreTraineeData' => new UserResource($this->TraineeUser)
         ];
         
     }
