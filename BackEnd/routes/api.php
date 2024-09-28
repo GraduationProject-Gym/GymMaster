@@ -47,3 +47,4 @@ Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User
 Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
+
