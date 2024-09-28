@@ -14,6 +14,7 @@ import { TraineesComponent } from './components/trainer/trainees/trainees.compon
 import { ReportComponent } from './components/trainer/report/report.component';
 import { GoalComponent } from './components/trainee/goal/goal.component';
 import { MembershipComponent } from './components/trainee/membership/membership.component';
+import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
 
 
 export const routes: Routes = [
@@ -25,16 +26,16 @@ export const routes: Routes = [
     { path: 'reset-password', component: ResetPasswordComponent },
     { path: "trainee", component: TraineeComponent },
     { path: "trainer/classes", component: ClassesComponent },
-    // { path: "trainer/Trainees", component: TraineesComponent },
     { path: 'trainer/update-class', component: UpdateClassComponent },
     { path: 'trainer/show-class', component: ShowClassComponent },
     { path: 'trainer/add-class', component: AddClassComponent },
     { path: 'trainer/trainees', component: TraineesComponent },
     { path: 'trainer/trainees/create-report', component:ReportComponent},
     { path: 'trainee-profile', component:TraineeComponent},
-    { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
+    { path: 'trainee-profile/edit', component:EditProfileComponent
+    },
 
     { path: "**", component: ErrorComponent }
 ];
