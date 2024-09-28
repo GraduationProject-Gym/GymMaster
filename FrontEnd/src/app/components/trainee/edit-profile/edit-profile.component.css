@@ -1,0 +1,84 @@
+.main {
+  min-height: 100vh;
+  width: 100%;
+  background: url("/form4.jpg") no-repeat;
+  background-size: cover;
+  padding: 100px 50px 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.d-flex {
+  display: flex;
+}
+
+h2 {
+  color: #ff6207;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 300px;
+  margin-left:500px;
+  border: 1px #ff6207 solid;
+}
+
+.form-background {
+  padding: 20px;
+  border-radius: 10px; /* زيادة الزاوية الدائرية */
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+input,
+textarea {
+  margin-left: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.form label {
+  margin-bottom: 5px;
+}
+
+.form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .form {
+    width: 70%;
+    margin-left: 220px; /* ضبط الهوامش لتكون متساوية */
+  }
+}
+
+@media (max-width: 576px) {
+  .form {
+    width: 87%; /* زيادة العرض ليكون أكثر اتساعًا */
+    margin: 20px 97px; /* ضبط الهوامش لتكون متساوية */
+  }
+
+  .form-background {
+    padding: 15px; /* تقليل padding */
+  }
+
+  input,
+  textarea {
+    margin-left: 0; /* إزالة الهامش الجانبي */
+  }
+
+  h2 {
+    font-size: 20px; /* ضبط حجم الخط */
+  }
+
+  .btn {
+    text-align: center;
+    width: 100%;
+  }
+}
