@@ -13,6 +13,7 @@ import { TraineesComponent } from './components/trainer/trainees/trainees.compon
 import { ReportComponent } from './components/trainer/report/report.component';
 import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
+import { MembershipService } from './services/trainee/membership/membership.service';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,7 @@ import { EditProfileComponent } from './components/trainee/edit-profile/edit-pro
     TraineeComponent,
     EditProfileComponent
     ],
+    providers:[MembershipService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
