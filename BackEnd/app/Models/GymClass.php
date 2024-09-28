@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes; 
+use App\Models\Trainer;
+
 class GymClass extends Model
 {
     use HasFactory,SoftDeletes;
@@ -56,6 +58,8 @@ class GymClass extends Model
     {
         return $this->belongsToMany(Exercise::class, 'class_exerciess', 'class_id', 'exercise_id');
     }
-    
-    
+
+    public function classTrainer(){
+        return $this->belongsTo(Trainer::class, 'id','trainer_id');
+    }
 }

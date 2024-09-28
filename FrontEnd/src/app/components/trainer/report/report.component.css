@@ -1,0 +1,87 @@
+
+/* Basic styles for the report container */
+.report-container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  color: #343a40;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Styling the star rating */
+.star-rating {
+  display: flex;
+  gap: 5px;
+}
+
+.fa-star {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.fas {
+  color: #ffc107;
+}
+
+.far {
+  color: #ced4da;
+}
+
+/* Button styling */
+.btn {
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.mt-3 {
+  margin-top: 15px;
+}

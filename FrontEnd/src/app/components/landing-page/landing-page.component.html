@@ -1,0 +1,85 @@
+
+<div class="containerQoute">
+  <img src="/No Gym, No Problem.jfif" alt="Background Image">
+  <div class="overlayQoute"></div>
+  <div class="contentQoute">
+    <h1>GYM MASTER</h1>
+    <h3>WORK HARDER, GET STRONGER</h3>
+    <a class="btn mt-5" routerLink="/registration" routerLinkActive="active">BECOME A MEMBER</a>
+
+  </div>
+</div>
+
+
+                            <!-- categories -->
+<div  id="categories" class="m-5">
+  <h2 class="d-flex justify-content-center m-5" style="color:#ff6207;">Personalized Fitness Programs</h2>
+  <div class="container">
+    <div class="row">
+      @for (category of categories; track category.name){
+      <div class="col-md-6 mb-4">
+        <div class="card" style="width: 100%;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="/features-first-icon.png" class="img-fluid rounded-start" alt="Strength Training" width="200px" height="200px">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{category.name}}</h5>
+                <p class="card-text">
+                  {{category.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>}
+    </div>
+  </div>
+</div>
+
+                        <!-- img with qoute -->
+<div class="containerQoute">
+  <img src="/d1efdba923702381cf8229aae885c579.jpg" alt="Background Image">
+  <div class="overlayQoute"></div>
+  <div class="contentQoute">
+    <h1>EVERY CHALLENGE IS AN OPPORTUNITY.</h1>
+  </div>
+</div>
+
+                        <!-- schedual -->
+<div class="container" id="Schedules">
+  <h2 class="text-center m-5" style="color:#ff6207;">Gym Schedule</h2>
+    <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th>Day</th>
+              <th colspan="3">Classes</th>
+          </tr>
+        </thead>
+        <tbody>
+      <!-- change names & add day in backend-->
+      @for ( classGroup of classes; track classGroup.day) {
+        <tr>
+          <td>{{ classGroup.day }}</td>
+<!-- change name to id -->
+          @for ( class  of classGroup.classes; track class.name) {
+          <td>
+            <p>{{class.name}}</p>
+            <p>{{class.trainer}}</p>
+            <p>{{class.time}}</p>
+          </td>
+        }
+        </tr>
+      }
+    </tbody>
+    </table>
+</div>
+
+                        <!-- img with qoute -->
+<div class="containerQoute">
+  <img src="/76c76a7a19d36104ad013fe959f5f8ef.jpg" alt="Background Image">
+  <div class="overlayQoute"></div>
+  <div class="contentQoute">
+    <h1>YOU’RE STRONGER THAN YOU THINK.</h1>
+  </div>
+</div>

@@ -9,5 +9,4 @@ class Memberships extends Model
 {
     use HasFactory;
     protected $fillable = ['type','subscribe_type','amount','status'];
-
 }

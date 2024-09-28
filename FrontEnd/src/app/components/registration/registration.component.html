@@ -1,0 +1,173 @@
+<img src="/form4.jpg" alt="Background Image">
+
+<form [formGroup]="registrationForm" class="form   form-background">
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="registration">Create Your Account</h1>
+  </div>
+
+  <!-- Name Field -->
+  <div class="mb-3">
+    <label for="name" class="form-label">User Name</label>
+    <input formControlName="name" type="text" class="form-control" id="name" name="name" autocomplete="off">
+    <div *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched"
+      class="error-msg">
+      <div *ngIf="registrationForm.controls['name'].errors?.['required']">User name is required</div>
+      <div *ngIf="registrationForm.controls['name'].errors?.['pattern']">
+        User name must be 3 to 15 characters long and can contain letters, numbers, underscores, or hyphens
+      </div>
+      <div *ngIf="registrationForm.controls['name'].errors?.['backendError']">
+        {{ registrationForm.controls['name'].errors?.['backendError'] }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Field -->
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input formControlName="email" type="email" name="email" class="form-control" id="email" autocomplete="off">
+    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched"
+      class="error-msg">
+      <div *ngIf="registrationForm.controls['email'].errors?. ['required']">Email is required</div>
+      <div *ngIf="registrationForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>
+      <div *ngIf="registrationForm.controls['email'].errors?.['backendError']">
+        {{ registrationForm.controls['email'].errors?.['backendError'] }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Age Field -->
+  <div class="mb-3">
+    <label for="age" class="form-label">Age</label>
+    <input formControlName="age" type="number" name="age" class="form-control" id="age" autocomplete="off">
+    <div *ngIf="registrationForm.controls['age'].invalid && registrationForm.controls['age'].touched" class="error-msg">
+      <div *ngIf="registrationForm.controls['age'].errors?. ['required']">Age is required</div>
+      <div *ngIf="registrationForm.controls['age'].errors?.['min']">Age must be at least 10 years old to register</div>
+      <div *ngIf="registrationForm.controls['age'].errors?.['backendError']">
+        {{ registrationForm.controls['age'].errors?.['backendError'] }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone Field -->
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone</label>
+    <input formControlName="phone" type="text" class="form-control" id="phone" name="phone" autocomplete="off">
+    <div *ngIf="registrationForm.controls['phone'].invalid && registrationForm.controls['phone'].touched"
+      class="error-msg">
+      <div *ngIf="registrationForm.controls['phone'].errors?. ['required']">Phone number is required</div>
+      <div *ngIf="registrationForm.controls['phone'].errors?.['pattern']">Enter a valid phone number (e.g., 01234567890)
+        <div *ngIf="registrationForm.controls['phone'].errors?.['backendError']">
+          {{ registrationForm.controls['phone'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Address Field -->
+  <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <input formControlName="address" type="text" class="form-control" name="address" id="address" autocomplete="off">
+    <div *ngIf="registrationForm.controls['address'].invalid && registrationForm.controls['address'].touched"
+      class="error-msg">
+      <div *ngIf="registrationForm.controls['address'].errors?. ['required']">Address is required</div>
+      <div *ngIf="registrationForm.controls['address'].errors?.['pattern']">Address is not valid </div>
+      <div *ngIf="registrationForm.controls['address'].errors?.['backendError']">
+        {{ registrationForm.controls['address'].errors?.['backendError'] }}
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <div class="input-group">
+      <input formControlName="password" type="password" class="form-control" name="password" id="password">
+      <div class="input-group-append">
+        <span class="input-group-text" id="togglePassword" style="cursor:pointer;" (click)="showPassword('password')">
+          <i class="far fa-eye" id="eyeIcon"></i>
+        </span>
+      </div>
+    </div>
+    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched"
+      class="error-msg">
+      <div *ngIf="registrationForm.controls['password'].errors?.['required']">Password is required</div>
+      <div *ngIf="registrationForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters
+        long, include uppercase and lowercase letters, a number, and a special character</div>
+      <div *ngIf="registrationForm.controls['password'].errors?.['backendError']">
+        {{ registrationForm.controls['password'].errors?.['backendError'] }}
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="confirmPassword" class="form-label">Confirm Password</label>
+    <div class="input-group">
+      <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword"
+        id="confirmPassword">
+      <div class="input-group-append">
+        <span class="input-group-text" id="toggleConfirmPassword" style="cursor:pointer;"
+          (click)="showPassword('confirmPassword')">
+          <i class="far fa-eye" id="confirmEyeIcon"></i>
+        </span>
+      </div>
+    </div>
+
+    <ng-container *ngIf="ConfirmPasswordRequired; else passwordMismatch">
+      <div class="error-msg">
+        Confirm password is required
+      </div>
+    </ng-container>
+    <ng-template #passwordMismatch>
+      <div *ngIf="!ConfirmPasswordValid && registrationForm.controls['confirmPassword'].touched" class="error-msg"
+        #passwordMismatch>
+        <div class="error-msg">
+          Passwords do not match
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Gender Field -->
+  <label>Gender</label>
+  <div class="form-check mt-3">
+    <input formControlName="gender" class="form-check-input " type="radio" name="gender" id="male" value="male">
+    <label class="form-check-label" for="male">Male</label>
+  </div>
+  <div class="form-check">
+    <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="female" value="female">
+    <label class="form-check-label" for="female">Female</label>
+  </div>
+  <div *ngIf="registrationForm.controls['gender'].invalid && registrationForm.controls['gender'].touched"
+    class="error-msg">
+    <div *ngIf="registrationForm.controls['gender'].errors?. ['required']">Gender is required</div>
+    <div *ngIf="registrationForm.controls['gender'].errors?.['backendError']">
+      {{ registrationForm.controls['gender'].errors?.['backendError'] }}
+    </div>
+  </div>
+
+  <!-- Role Field -->
+  <div class="form-check">
+    <input formControlName="role" class="form-check-input" type="radio" name="role" id="admin" value="trainee" hidden>
+  </div>
+
+  <!-- Image Field -->
+  <div class="mb-3">
+    <label for="image" class="form-label">Upload Image</label>
+    <input formControlName="image" type="file" class="form-control" id="image" name="image"
+      (change)="onFileChange($event)">
+    <div *ngIf="registrationForm.controls['gender'].invalid && registrationForm.controls['gender'].touched"
+      class="error-msg">
+      <div *ngIf="registrationForm.controls['image'].errors?.['backendError']">
+        {{ registrationForm.controls['image'].errors?.['backendError'] }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="d-flex justify-content-center ">
+    <button type="button" class="btn" (click)="Registeration()">Register</button>
+  </div>
+</form>

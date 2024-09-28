@@ -1,0 +1,45 @@
+<div class="container report-container">
+  <h3>Report for: {{ trainees[0].name }}</h3>
+  <p><strong>Trainer:</strong> {{ trainees[0].trainerName }}</p>
+  <p><strong>Class:</strong> {{ trainees[0].className }}</p>
+  <p><strong>Sessions Attended:</strong> {{ trainees[0].sessionsAttended }}</p>
+  <p><strong>Membership Type:</strong> {{ trainees[0].membership }}</p>
+  <p><strong>Subscription:</strong> {{ trainees[0].subscription }}</p>
+
+  <div class="form-group">
+    <label for="performance">Performance:</label>
+    <input type="number" id="performance" [(ngModel)]="traineeReport.performance" class="form-control" placeholder="Rate out of 10">
+  </div>
+
+  <div class="form-group">
+    <label for="attendance">Attendance:</label>
+    <input type="number" id="attendance" [(ngModel)]="traineeReport.attendance" class="form-control" placeholder="Rate out of 10">
+  </div>
+
+  <div class="form-group">
+    <label for="engagement">Engagement:</label>
+    <input type="number" id="engagement" [(ngModel)]="traineeReport.engagement" class="form-control" placeholder="Rate out of 10">
+  </div>
+
+  <div class="form-group">
+    <label for="coachComments">Coach Comments:</label>
+    <textarea id="coachComments" [(ngModel)]="traineeReport.coachComments" class="form-control" rows="4" placeholder="Enter your comments here"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="recommendations">Future Recommendations:</label>
+    <textarea id="recommendations" [(ngModel)]="traineeReport.recommendations" class="form-control" rows="3" placeholder="Add recommendations"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="overallRating">Overall Rating:</label>
+    <div class="star-rating">
+      <i *ngFor="let star of [1, 2, 3, 4, 5]; let j = index"
+        class="fa fa-star"
+        [ngClass]="j < traineeReport.overallRating ? 'fas' : 'far'"
+        (click)="traineeReport.overallRating = j + 1"></i>
+    </div>
+  </div>
+
+  <button class="btn btn-success mt-3" (click)="submitReport()">Submit Report</button>
+</div>
