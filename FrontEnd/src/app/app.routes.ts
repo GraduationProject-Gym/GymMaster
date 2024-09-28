@@ -12,8 +12,6 @@ import { ShowClassComponent } from './components/trainer/show-class/show-class.c
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
-import { GoalComponent } from './components/trainee/goal/goal.component';
-import { MembershipComponent } from './components/trainee/membership/membership.component';
 
 
 export const routes: Routes = [
@@ -23,6 +21,7 @@ export const routes: Routes = [
     { path: "login", component: LoginComponent },
     { path: "forgotPassword", component: ForgotPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
+    { path: 'email-verification', component: EmailVerificationComponent },
     { path: "trainee", component: TraineeComponent },
     { path: "trainer/classes", component: ClassesComponent },
     // { path: "trainer/Trainees", component: TraineesComponent },
@@ -30,10 +29,8 @@ export const routes: Routes = [
     { path: 'trainer/show-class', component: ShowClassComponent },
     { path: 'trainer/add-class', component: AddClassComponent },
     { path: 'trainer/trainees', component: TraineesComponent },
-    { path: 'trainer/trainees/create-report', component:ReportComponent},
-    { path: 'trainee-profile', component:TraineeComponent},
-    { path: 'trainee-goal', component:GoalComponent},
-    { path: 'trainee-membership', component:MembershipComponent},
+    { path: 'trainer/trainees/report', component:ReportComponent},
+
 
     { path: "**", component: ErrorComponent }
 ];

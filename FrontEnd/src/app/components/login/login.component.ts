@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/authentication/login/login.service';
 import { Router, RouterModule } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,14 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class LoginComponent {
   // Create request to use login service
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) { }
+
+  formSubmitted = false; // Track if the form has been submitted
+  errorMessage: string | null = null;
 
   // Create form elements and set up their basic validation rules
   loginForm = new FormGroup({
@@ -55,18 +63,20 @@ export class LoginComponent {
       this.loginForm.controls['password'].touched;
   }
 
-  // Check user authentication and authorization
-  formSubmitted = false; // Track if the form has been submitted
-  errorMessage: string | null = null;
+  // Sanitize input
+  sanitizeInput(input: string): string {
+    return this.sanitizer.sanitize(1, input) || ''; 
+  }
 
+  // Check user authentication and authorization
   loginAction() {
     this.formSubmitted = true; // Mark form as submitted
     this.errorMessage = null; // Reset the error message 
 
     if (this.loginForm.valid) {
       const data = {
-        email: this.loginForm.value.email || '',
-        password: this.loginForm.value.password || '',
+        email: this.sanitizeInput(this.loginForm.value.email || ''),
+        password: this.sanitizeInput(this.loginForm.value.password || ''),
         device_name: this.getDeviceName() // Get device name
       };
 
@@ -77,15 +87,17 @@ export class LoginComponent {
           this.router.navigate(['/trainee']);
         },
         error: (error) => {
-          // console.log(error);
+          console.log(error);
           if (error.status === 403) { // Check for the status code directly
-            this.errorMessage = error.error?.message || 'Access denied. Please check your credentials.';
+            this.errorMessage = error.error?.message;
+            // if (this.errorMessage === 'verify email'){}
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
         }
       });
     } else {
+      this.errorMessage = 'Please correct the errors in the form.';
       console.log('Form is invalid'); // Log if form is invalid
     }
   }
@@ -95,9 +107,7 @@ export class LoginComponent {
     return navigator.userAgent;
   }
 
-
   // show & hide password
-
   showPassword() {
     const togglePassword = document.getElementById('togglePassword') as HTMLElement;
     const passwordInput = document.getElementById('password') as HTMLInputElement;
