@@ -36,4 +36,9 @@
   width: 30%;
 }
 
-
+@media (max-width: 576px) {
+  .card {
+    width: 80%;
+    margin-left: 109px;
+  }
+  }
