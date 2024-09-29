@@ -16,6 +16,7 @@ import { GoalComponent } from './components/trainee/goal/goal.component';
 import { MembershipComponent } from './components/trainee/membership/membership.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification/email-verification.component';
+import { TraineeClassesComponent } from './components/trainee/trainee-classes/trainee-classes.component';
 
 
 export const routes: Routes = [
@@ -37,6 +38,8 @@ export const routes: Routes = [
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
     { path: 'trainee-profile/edit', component:EditProfileComponent},
+    { path: 'trainee-allClasses', component:TraineeClassesComponent},
+
     { path: "**", component: ErrorComponent }
 ];
 
