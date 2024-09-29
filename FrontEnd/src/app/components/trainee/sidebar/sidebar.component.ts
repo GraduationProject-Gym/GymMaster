@@ -10,5 +10,16 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+  // showDropdown(){
+  //   document.querySelector('.dropdown-toggle').addEventListener('click', function() {
+  //     const dropdown = this.nextElementSibling;
+  //     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  //   });
+  // }
 
+  dropdownOpen = false;
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
 }

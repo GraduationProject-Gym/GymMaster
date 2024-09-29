@@ -38,8 +38,8 @@ export const routes: Routes = [
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
     { path: 'trainee-profile/edit', component:EditProfileComponent},
-    { path: 'trainee-classes', component:TraineeClassesComponent},
-    
+    { path: 'trainee-allClasses', component:TraineeClassesComponent},
+
     { path: "**", component: ErrorComponent }
 ];
 
