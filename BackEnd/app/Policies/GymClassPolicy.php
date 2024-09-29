@@ -61,7 +61,7 @@ class GymClassPolicy
      */
     public function restore(User $user, GymClass $gymClass): bool
     {
-        
+
         return false;
     }
 
@@ -70,7 +70,8 @@ class GymClassPolicy
      */
     public function forceDelete(User $user, GymClass $gymClass): bool
     {
-        
+
         return false;
     }
 }
+

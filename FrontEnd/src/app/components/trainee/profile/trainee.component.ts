@@ -11,7 +11,6 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
     RouterModule,
     SidebarComponent,
     EditProfileComponent,
-
   ],
   templateUrl: './trainee.component.html',
   styleUrl: './trainee.component.css'

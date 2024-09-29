@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\GymClass;
 
 class AuthController extends Controller
 {
@@ -119,13 +119,11 @@ class AuthController extends Controller
         // return response()->json($request);
 
         if ($request->role === 'trainee') {
+            Mail::to($user->email)->send(new VerifyEmail($user));
             $trainee = Trainee::create([
                 'user_id' => $user->id,
             ]);
         }
-
-        Mail::to($user->email)->send(new VerifyEmail($user));
-
         if ($request->role === 'trainer') {
             $cvPath = null;
 
@@ -213,7 +211,8 @@ class AuthController extends Controller
         }
 
         return response()->json([
-            'token' => $user->createToken($request->device_name)->plainTextToken
+            'token' => $user->createToken($request->device_name)->plainTextToken,
+            'role' => $user->role
         ]);
     }
 
@@ -319,7 +318,7 @@ class AuthController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
         //
     }
