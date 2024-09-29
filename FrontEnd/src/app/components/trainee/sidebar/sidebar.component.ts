@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { MembershipService } from '../../../services/trainee/membership/membership.service';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 
 @Component({
@@ -14,12 +13,7 @@ import { SidebarService } from '../../../services/trainee/sidebar/sidebar.servic
 })
 export class SidebarComponent {
   constructor(private sidebarService: SidebarService, private router: Router) { }
-  // showDropdown(){
-  //   document.querySelector('.dropdown-toggle').addEventListener('click', function() {
-  //     const dropdown = this.nextElementSibling;
-  //     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-  //   });
-  // }
+ 
   memberships: any[] = [];
   errorMessage: string | null = null;
 
@@ -45,7 +39,6 @@ export class SidebarComponent {
       }
     });
   }
-
 
   dropdownOpen = false;
 
