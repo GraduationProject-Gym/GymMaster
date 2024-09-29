@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\GymClass;
 use App\Models\Equipment;
+use App\Models\Memberships;
 use App\Models\Payment;
 use App\Models\Schedule;
 use App\Models\UserClass;
@@ -16,20 +17,17 @@ use App\Policies\SchedulePolicy;
 use App\Policies\TraineeClassPolicy;
 use App\Policies\MembershipPolicy;
 
-use App\Models\Memberships;
 
 class AppServiceProvider extends ServiceProvider
 {
     protected $policies = [
         GymClass::class => GymClassPolicy::class,
         Equipment::class => EquipmentPolicy::class,
-        Equipment::class => EquipmentPolicy::class,
         Payment::class => PaymentPolicy::class,
         Schedule::class => SchedulePolicy::class,
         Memberships::class => MembershipPolicy::class,
         UserClass::class => TraineeClassPolicy::class,
         Exercise::class => ExercisePolicy::class,
-
     ];
 
     /**
@@ -46,7 +44,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
         Gate::policy(Memberships::class, MembershipPolicy::class);
         Gate::policy(GymClass::class, GymClassPolicy::class);
         Gate::policy(Equipment::class, EquipmentPolicy::class);

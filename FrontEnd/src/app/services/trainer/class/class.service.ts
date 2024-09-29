@@ -12,6 +12,8 @@ export class ClassService {
 
   private apiUrl = '';
   private showClass = `${environment.domain}/gym-classes`;
+  private showTrainee = `${environment.domain}/trainees`;
+
   private selectedClass:any;
 
   constructor(private http: HttpClient, private readonly authToken:AuthTokenService) {}
@@ -19,6 +21,7 @@ export class ClassService {
     const token = this.authToken.getToken();
     console.log(token)
     return new HttpHeaders({
+      // 'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
 
@@ -38,11 +41,15 @@ export class ClassService {
     return this.http.get(`${this.showClass}/${id}`, {headers});
 
   }
-  setSelectedclass(classe:any){
+  setSelectedclass(classe:[]){
     this.selectedClass = classe;
   }
   getSelectedClass(){
     return this.selectedClass;
+  }
+  geTraineeOnClass(id:number):Observable <any>{
+    const headers =this.getHeaders() ;
+    return this.http.post(`${this.showTrainee}`,{'id':id},{headers});
   }
 
 }

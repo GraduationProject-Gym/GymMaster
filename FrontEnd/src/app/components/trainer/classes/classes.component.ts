@@ -102,4 +102,30 @@ export class ClassesComponent {
       });
     }
   }
+
+  viewTrainees(){
+    if (this.id) {
+      // console.log(this.id);
+      this.classService.geTraineeOnClass(this.id).subscribe({
+        next: (response) => {
+          const traineesArray = response.data;
+          // console.log(traineesArray.length);
+          this.classService.setSelectedclass(traineesArray);
+          this.router.navigate(['/trainer/trainees']);
+        },
+        //6|TUEzIo5nQg9QMaaQxkZUVhC9EuEcqA9t1KSn4S7Xc1b8a391
+        error: (error) => {
+          if (error.status === 403) {
+            this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+          }else if (error.status === 401) {
+            console.log("not Auth");
+            this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    }
+  }
 }
