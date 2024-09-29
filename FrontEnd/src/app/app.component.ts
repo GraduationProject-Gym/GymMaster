@@ -14,6 +14,7 @@ import { ReportComponent } from './components/trainer/report/report.component';
 import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
 import { MembershipService } from './services/trainee/membership/membership.service';
+import { ClassService } from './services/trainer/class/class.service';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,10 @@ import { MembershipService } from './services/trainee/membership/membership.serv
     TraineeComponent,
     EditProfileComponent
     ],
-    providers:[MembershipService],
+    providers:[
+      MembershipService,
+      ClassService
+    ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

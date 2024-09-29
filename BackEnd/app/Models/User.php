@@ -72,9 +72,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // Relationship with Equipments
-    public function useEquipment()
+    public function equipment()
     {
-       return $this->belongsToMany(User::class, 'user_equipment', 'user_id', 'equipment_id');
+       return $this->belongsToMany(User::class, 'user_equipments', 'user_id', 'equipment_id');
     }
 
     public function gymClass()
@@ -85,5 +85,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new CustomResetPasswordNotification($token));
     }
-   
+    public function isAdmin()
+    {
+        return $this->role === 'admin'; 
+    }
+    public function trainer()
+    {
+        return $this->hasOne(Trainer::class, 'user_id');
+    }
 }

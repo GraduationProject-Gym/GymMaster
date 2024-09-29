@@ -22,13 +22,16 @@ class AppServiceProvider extends ServiceProvider
     protected $policies = [
         GymClass::class => GymClassPolicy::class,
         Equipment::class => EquipmentPolicy::class,
+        Equipment::class => EquipmentPolicy::class,
         Payment::class => PaymentPolicy::class,
         Schedule::class => SchedulePolicy::class,
         UserClass::class => TraineeClassPolicy::class,
         Memberships::class => MembershipPolicy::class,
+        UserClass::class => TraineeClassPolicy::class,
+        Exercise::class => ExercisePolicy::class,
 
     ];
-    
+
     /**
      * Register any application services.
      */
@@ -44,12 +47,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Gate::policy(Memberships::class, MembershipPolicy::class);
         Gate::policy(GymClass::class, GymClassPolicy::class);
         Gate::policy(Equipment::class, EquipmentPolicy::class);
         Gate::policy(Payment::class, PaymentPolicy::class);
         Gate::policy(Schedule::class, SchedulePolicy::class);
         Gate::policy(UserClass::class, TraineeClassPolicy::class);
 
-        Gate::policy(Memberships::class, MembershipPolicy::class);
     }
 }

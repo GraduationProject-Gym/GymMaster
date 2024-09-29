@@ -1,81 +1,48 @@
-// import { Component, OnInit } from '@angular/core';
-// import { Router, ActivatedRoute } from '@angular/router';
-// // import { ClassService } from './class.service';
-
-// @Component({
-//   selector: 'app-show-class',
-//   templateUrl: './show-class.component.html',
-//   styleUrls: ['./show-class.component.css']
-// })
-// export class ShowClassComponent {
-//   className: string = '';
-//   sessions: number = 0;
-//   status: string = '';
-//   equipment: string = '';
-//   description: string = '';
-//   groups = [];
-
-//   constructor(private router: Router, private route: ActivatedRoute, private classService: ClassService) {}
-
-//   ngOnInit() {
-//     const classId = this.route.snapshot.paramMap.get('id');
-//     if (classId) {
-//       this.classService.getClassById(classId).subscribe(data => {
-//         this.className = data.className;
-//         this.sessions = data.sessions;
-//         this.status = data.status;
-//         this.groups = data.groups;
-//         this.equipment = data.equipment;
-//         this.description = data.description;
-//       });
-//     }
-//   }
-
-//   edit() {
-//     const classId = this.route.snapshot.paramMap.get('id');
-//     this.router.navigate(['/trainer/update-class', classId]);
-//   }
-
-//   cancel() {
-//     this.router.navigate(['/trainer/classes']);
-//   }
-// }
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ClassService } from '../../../services/trainer/class/class.service';
 
 @Component({
   selector: 'app-show-class',
   standalone: true,
-  imports:[ ReactiveFormsModule,
+  imports: [
+    ReactiveFormsModule,
     CommonModule,
   ],
-
   templateUrl: './show-class.component.html',
   styleUrls: ['./show-class.component.css']
 })
-export class ShowClassComponent {
-  className: string = 'Yoga Class';
-  sessions: number = 5;
-  status: string = 'Active';
-  equipment: string = 'Yoga Mats';
-  description: string = 'A yoga class focused on flexibility and balance.';
-  // days:string= 'Tuesday, Thursday';
-  // hours:string= '6:00 PM - 7:30 PM';
+export class ShowClassComponent implements OnInit{
+
+  id: string = '2';
+  sessions: number = 0;
+  status: string = '';
+  equipment: string = '';
+  class:any;
+
   groups = [
     { days: 'Monday', hours: '10:00 AM - 11:30 AM' },
     { days: 'Thursday', hours: '6:00 PM - 7:30 PM' }
   ];
 
+  errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router ,private classService:ClassService) {}
 
-  ngOnInit() {
+  ngOnInit(){
+    this.class = this.classService.getSelectedClass();
+    if(!this.class){
+      this.router.navigate(['/trainer/classes']);
+      return;
+    }
+    this.status = this.class.status === 1 ? 'Active' : 'Inactive';
+    console.log(this.class);
   }
 
   edit() {
-    this.router.navigate(['/trainer/update-class']);
+    this.router.navigate(['/trainer/update-class', this.id]);
   }
 
   cancel() {

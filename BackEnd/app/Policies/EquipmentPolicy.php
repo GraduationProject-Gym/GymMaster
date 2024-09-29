@@ -8,16 +8,13 @@ use Illuminate\Auth\Access\Response;
 
 class EquipmentPolicy
 {
-    public function manage(User $user): bool
-    {
-        return $user->role === 'admin';
-    }
+   
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin' || $user->role === 'trainer';
+        return $user->role === 'admin';
     }
 
 
@@ -58,7 +55,7 @@ class EquipmentPolicy
      */
     public function restore(User $user, Equipment $equipment): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -66,6 +63,6 @@ class EquipmentPolicy
      */
     public function forceDelete(User $user, Equipment $equipment): bool
     {
-        //
+        return $user->role === 'admin';
     }
 }
