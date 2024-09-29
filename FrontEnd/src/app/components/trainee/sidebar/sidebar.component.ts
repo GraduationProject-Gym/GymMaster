@@ -13,17 +13,11 @@ import { MembershipService } from '../../../services/trainee/membership/membersh
 })
 export class SidebarComponent {
   constructor(private membershipService:MembershipService, private router:Router){}
-  // showDropdown(){
-  //   document.querySelector('.dropdown-toggle').addEventListener('click', function() {
-  //     const dropdown = this.nextElementSibling;
-  //     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-  //   });
-  // }
   memberships: any[] = [];
   errorMessage: string | null = null;
 
   membership() {
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
 
     this.membershipService.indexMemberships().subscribe({
       next: (response: any) => {
@@ -48,9 +42,13 @@ export class SidebarComponent {
   }
 
 
-  dropdownOpen = false;
+  dropdownOpenClass = false;
+  dropdownOpenReview= false;
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  toggleDropdownClass() {
+    this.dropdownOpenClass = !this.dropdownOpenClass;
+  }
+  toggleDropdownReview() {
+    this.dropdownOpenReview = !this.dropdownOpenReview;
   }
 }

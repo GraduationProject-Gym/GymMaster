@@ -15,6 +15,7 @@ import { EditProfileComponent } from './components/trainee/edit-profile/edit-pro
 import { MembershipService } from './services/trainee/membership/membership.service';
 import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
 import { ClassService } from './services/trainer/class/class.service';
+import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,8 @@ import { ClassService } from './services/trainer/class/class.service';
     TraineeComponent,
     EditProfileComponent,
     // TraineeClassesComponent,
-    TraineeAllClassesComponent
+    TraineeAllClassesComponent,
+    DoReviewComponent
   ],
 
     providers:[

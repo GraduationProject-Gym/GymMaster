@@ -5,10 +5,17 @@
       <li><a routerLink="/trainee-goal">Goals</a></li>
       <li><a routerLink="/trainee-membership" (click)="membership()">Membership</a></li>
       <li class="dropdown">
-        <a href="javascript:void(0)" (click)="toggleDropdown()">Classes</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpen">
+        <a href="javascript:void(0)" (click)="toggleDropdownClass()">Classes</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenClass">
           <li><a routerLink="/trainee-allClasses">All Classes</a></li>
           <li><a routerLink="/trainee-myClasses">My Class</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="javascript:void(0)" (click)="toggleDropdownReview()">Reviews</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenReview">
+          <li><a routerLink="/trainee-doReview">Do Review</a></li>
+          <li><a routerLink="/trainee-showReviews">Show Reviews</a></li>
         </ul>
       </li>
 
@@ -16,7 +23,6 @@
       <li><a routerLink="/attendance">Attendance</a></li>
       <li><a routerLink="/reports">Reports</a></li>
       <li><a routerLink="/vouchers">Vouchers</a></li>
-      <li><a routerLink="/reviews">Reviews</a></li>
     </ul>
   </nav>
 </div>

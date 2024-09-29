@@ -8,7 +8,6 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { ClassesComponent } from './components/trainer/classes/classes.component';
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
-import { ShowClassComponent } from './components/trainer/show-class/show-class.component';
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
@@ -18,6 +17,7 @@ import { EditProfileComponent } from './components/trainee/edit-profile/edit-pro
 import { EmailVerificationComponent } from './components/email-verification/email-verification/email-verification.component';
 import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
 import { TraineeMyClassesComponent } from './components/trainee/trainee-my-classes/trainee-my-classes.component';
+import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
 
 
 export const routes: Routes = [
@@ -30,7 +30,6 @@ export const routes: Routes = [
     { path: 'email-verification', component: EmailVerificationComponent },
     { path: "trainer/classes", component: ClassesComponent },
     { path: 'trainer/update-class', component: UpdateClassComponent },
-    { path: 'trainer/show-class', component: ShowClassComponent },
     { path: 'trainer/add-class', component: AddClassComponent },
     { path: 'trainer/trainees', component: TraineesComponent },
     { path: 'trainer/trainees/create-report', component:ReportComponent},
@@ -41,7 +40,7 @@ export const routes: Routes = [
     { path: 'trainee-profile/edit', component:EditProfileComponent},
     { path: 'trainee-myClasses', component:TraineeMyClassesComponent},
     { path: 'trainee-allClasses', component:TraineeAllClassesComponent},
-
+    { path: 'trainee-doReview', component:DoReviewComponent},
 
     { path: "**", component: ErrorComponent }
 ];
