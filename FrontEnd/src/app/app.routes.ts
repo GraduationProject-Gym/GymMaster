@@ -18,6 +18,7 @@ import { EmailVerificationComponent } from './components/email-verification/emai
 import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
 import { TraineeMyClassesComponent } from './components/trainee/trainee-my-classes/trainee-my-classes.component';
 import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
+import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 
 
 export const routes: Routes = [
@@ -41,6 +42,8 @@ export const routes: Routes = [
     { path: 'trainee-myClasses', component:TraineeMyClassesComponent},
     { path: 'trainee-allClasses', component:TraineeAllClassesComponent},
     { path: 'trainee-doReview', component:DoReviewComponent},
+    { path: 'trainee-showReviews', component:ShowReviewComponent},
+
 
     { path: "**", component: ErrorComponent }
 ];

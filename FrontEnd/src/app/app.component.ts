@@ -17,6 +17,8 @@ import { ClassService } from './services/trainer/class/class.service';
 import { SidebarService } from './services/trainee/sidebar/sidebar.service';
 import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
 import { MembershipService } from './services/trainee/membership/membership.service';
+import { TraineeMyClassesComponent } from './components/trainee/trainee-my-classes/trainee-my-classes.component';
+import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 
 @Component({
   selector: 'app-root',
@@ -35,8 +37,10 @@ import { MembershipService } from './services/trainee/membership/membership.serv
     ReportComponent,
     TraineeComponent,
     EditProfileComponent,
+    TraineeMyClassesComponent,
     TraineeAllClassesComponent,
-    DoReviewComponent
+    DoReviewComponent,
+    ShowReviewComponent
   ],
 
   providers: [

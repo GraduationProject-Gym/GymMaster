@@ -1,10 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 @Component({
   selector: 'app-do-review',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,SidebarComponent],
   templateUrl: './do-review.component.html',
   styleUrl: './do-review.component.css'
 })
@@ -59,7 +60,7 @@ export class DoReviewComponent {
     }
 
     groupTrainers() {
-      const groupSize = 3;
+      const groupSize = 2;
       for (let i = 0; i < this.trainers.length; i += groupSize) {
         this.groupedTrainers.push(this.trainers.slice(i, i + groupSize));
       }
