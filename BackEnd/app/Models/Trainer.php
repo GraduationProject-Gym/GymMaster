@@ -30,7 +30,7 @@ class Trainer extends Model
     {
         return $this->hasMany(GymClass::class, 'trainer_id');
     }
-    public function user()
+    public function user_()
     {
         return $this->belongsTo(User::class,'user_id');
     }
