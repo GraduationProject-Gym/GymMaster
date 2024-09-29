@@ -16,6 +16,7 @@ import { TraineeAllClassesComponent } from './components/trainee/trainee-all-cla
 import { ClassService } from './services/trainer/class/class.service';
 import { SidebarService } from './services/trainee/sidebar/sidebar.service';
 import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
+import { MembershipService } from './services/trainee/membership/membership.service';
 
 @Component({
   selector: 'app-root',
@@ -38,14 +39,15 @@ import { DoReviewComponent } from './components/trainee/do-review/do-review.comp
     DoReviewComponent
   ],
 
-    providers:[
-      ClassService,
-      SidebarService
-    ],
+  providers: [
+    ClassService,
+    SidebarService,
+    MembershipService
+  ],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'FrontEnd';
-
 }

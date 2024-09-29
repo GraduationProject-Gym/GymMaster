@@ -96,16 +96,25 @@ class SubscriptionController extends Controller
                 return response()->json(['success' => false, 'error' => 'Membership not found'], 403);
             }
 
-            $member = $membership->name;
+            // $member = $membership->name;
+            $productData = [
+                'name' => $membership->subscribe_type,
+                // Additional product data can be added here if needed
+            ];
+    
+            // Create the product in Stripe
+            $product = \Stripe\Product::create($productData);
+
             $session = Session::create([
                 'line_items' => [
                     [
                         'price_data' => [
                             'currency' => 'USD',
-                            'product_data' => [
-                                'name' => $member,
-                            ],
-                            'unit_amount' => $amount,  // Price is already in cents
+                            // 'product_data' => [
+                            //     'name' => $member,
+                            // ],
+                            'product' => $product->id, // Use the created product ID
+                            'unit_amount' => intval($amount),  // Price is already in cents
                         ],
                         'quantity' => 1,
                     ],
@@ -125,7 +134,7 @@ class SubscriptionController extends Controller
         }
 
     }
-    public function success($payment_method){
+    public function success(){
         try{
             $user_id = Auth::user()->id;
             $trainee = Trainee::where('user_id', $user_id)->first();
@@ -139,7 +148,7 @@ class SubscriptionController extends Controller
             $trainee_ = Subscription::create([
                 // TraineeMembership
                 'user_id'=> $user_id,// $user_id
-                'payment_method'=> $payment_method,
+                // 'payment_method'=> $payment_method,
                 'amount' => $trainee->TraineeMembership->amount,
             ]);
             $NO_days = 0;
