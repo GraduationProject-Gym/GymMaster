@@ -83,14 +83,19 @@ export class ClassesComponent {
       // console.log(this.id);
       this.classService.getShowClass(this.id).subscribe({
         next: (response) => {
-          console.log(111);
-          this.classService.setSelectedclass(response.message);
+          console.log(response);
+          this.classService.setSelectedclass(response.data);
           this.router.navigate(['/trainer/show-class']);
         },
+        //6|TUEzIo5nQg9QMaaQxkZUVhC9EuEcqA9t1KSn4S7Xc1b8a391
         error: (error) => {
           if (error.status === 403) {
             this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
-          } else {
+          }else if (error.status === 401) {
+            console.log("not Auth");
+          this.router.navigate(['login']);
+          }
+          else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
         }
