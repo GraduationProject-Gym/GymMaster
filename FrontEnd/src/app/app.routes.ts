@@ -16,7 +16,6 @@ import { GoalComponent } from './components/trainee/goal/goal.component';
 import { MembershipComponent } from './components/trainee/membership/membership.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification/email-verification.component';
-import { TraineeClassesComponent } from './components/trainee/trainee-Classes/trainee-allClasses.component';
 import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
 import { TraineeMyClassesComponent } from './components/trainee/trainee-my-classes/trainee-my-classes.component';
 

@@ -13,7 +13,7 @@ import { TraineesComponent } from './components/trainer/trainees/trainees.compon
 import { ReportComponent } from './components/trainer/report/report.component';
 import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
-import { TraineeClassesComponent } from './components/trainee/trainee-Classes/trainee-allClasses.component';
+// import { TraineeClassesComponent } from './components/trainee/trainee-Classes/trainee-allClasses.component';
 import { MembershipService } from './services/trainee/membership/membership.service';
 import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
 
