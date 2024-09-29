@@ -16,7 +16,9 @@ import { GoalComponent } from './components/trainee/goal/goal.component';
 import { MembershipComponent } from './components/trainee/membership/membership.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
 import { EmailVerificationComponent } from './components/email-verification/email-verification/email-verification.component';
-import { TraineeClassesComponent } from './components/trainee/trainee-classes/trainee-classes.component';
+import { TraineeClassesComponent } from './components/trainee/trainee-Classes/trainee-allClasses.component';
+import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
+import { TraineeMyClassesComponent } from './components/trainee/trainee-my-classes/trainee-my-classes.component';
 
 
 export const routes: Routes = [
@@ -38,7 +40,9 @@ export const routes: Routes = [
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
     { path: 'trainee-profile/edit', component:EditProfileComponent},
-    { path: 'trainee-allClasses', component:TraineeClassesComponent},
+    { path: 'trainee-myClasses', component:TraineeMyClassesComponent},
+    { path: 'trainee-allClasses', component:TraineeAllClassesComponent},
+
 
     { path: "**", component: ErrorComponent }
 ];

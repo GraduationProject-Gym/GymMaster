@@ -16,16 +16,25 @@
           <p><strong>Status:</strong> <span class="badge " [ngClass]="{'bg-success': status === 'active', 'bg-danger': status === 'inactive'}">{{ status }}</span></p>
         </div>
 
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <p><strong>Equipment:</strong> <span class="badge">{{ equipment }}</span></p>
-          <!-- <p><strong>Description:</strong> <span class="badge bg-info text-warning">{{ description }}</span></p> -->
+        </div>
+      </div> -->
+
+      <h6 class="mt-4">
+        <strong>Equipments:</strong>
+      </h6>
+      <div class="mb-3 border p-3 rounded bg-light shadow-sm">
+        <div *ngFor="let equipment of equipments; let i = index" >
+          <h6 class="text-secondary">Equipment {{ i + 1 }}:
+          <span class="badge">{{ equipment.name }}</span></h6>
         </div>
       </div>
+
 
       <div class="mb-3 border p-3 rounded bg-light shadow-sm">
         <h6 ><strong>Description:</strong></h6>
         <p> <span class="badge">{{ description }}</span></p>
-
       </div>
       <h6 class="mt-4">
         <strong>Session Information</strong>

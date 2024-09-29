@@ -30,9 +30,17 @@ export class ClassesComponent {
   image: string = '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif';
   description: string = 'Strength training focuses on increasing muscle strength and mass through weight lifting and resistance exercises.';
   totalNoOfSession:number=8;
-  exercise: string = 'Downward Dog, Warrior Pose, Tree Pose';
-  equipment: string = 'Yoga Mat, Resistance Bands';
   activeClassId: number | undefined;
+  status: string = 'Active';
+  equipments =[
+    {name:"Yoga Mat"},
+    {name:"Resistance Bands"},
+  ];
+  exercises =[
+    {name:"Downward Dog"},
+    {name:"Warrior Pose"},
+    {name:"Tree Pose"},
+  ];
 
   // List of available classes
   Classes = [

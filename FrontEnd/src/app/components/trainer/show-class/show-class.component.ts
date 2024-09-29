@@ -60,6 +60,11 @@ export class ShowClassComponent {
   sessions: number = 5;
   status: string = 'Active';
   equipment: string = 'Yoga Mats';
+  equipments =[
+    {name:"sandy"},
+    {name:"andy"},
+    {name:"nandy"},
+  ];
   description: string = 'A yoga class focused on flexibility and balance.';
   // days:string= 'Tuesday, Thursday';
   // hours:string= '6:00 PM - 7:30 PM';
