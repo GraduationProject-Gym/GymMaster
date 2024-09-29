@@ -1,20 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import { AuthTokenService } from '../../auth-token.service';
+import { environment } from '../../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MembershipService {
-
-  constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { 
-    
-  }
-//   private token = this.authTokenService.getToken();
-//   private headers = new HttpHeaders({
-//    'Authorization': `Bearer ${token}`
-//  });
+export class SidebarService {
+  constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
+  private selectedData:any;
 
   private getHeaders(): HttpHeaders {
     const token = this.authTokenService.getToken();
@@ -22,9 +17,6 @@ export class MembershipService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     console.log(headers);
     return headers;
-    /*return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });*/
   }
   
   showMembership(membership:string) { 
@@ -32,9 +24,17 @@ export class MembershipService {
     return this.http.get(showMembershipUrl, { headers: this.getHeaders() });
   }
 
-  indexMemberships() {
+  indexMemberships():Observable <any> {
     console.log("inside service");
     const indexMembershipsUrl = `${environment.domain}/membership`;
     return this.http.get(indexMembershipsUrl, { headers: this.getHeaders() });
+  }
+  
+  setSelectedData(data:any){
+    this.selectedData = data;
+  }
+
+  getSelectedData(){
+    return this.selectedData;
   }
 }

@@ -12,9 +12,9 @@ import { TraineesComponent } from './components/trainer/trainees/trainees.compon
 import { ReportComponent } from './components/trainer/report/report.component';
 import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
-import { MembershipService } from './services/trainee/membership/membership.service';
 import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
 import { ClassService } from './services/trainer/class/class.service';
+import { SidebarService } from './services/trainee/sidebar/sidebar.service';
 import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
 import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 import { TraineeMyClassesComponent } from './components/trainee/trainee-my-classes/trainee-my-classes.component';
@@ -36,15 +36,18 @@ import { TraineeMyClassesComponent } from './components/trainee/trainee-my-class
     ReportComponent,
     TraineeComponent,
     EditProfileComponent,
+<<<<<<< HEAD
     TraineeMyClassesComponent,
+=======
+>>>>>>> 2e6a955e4ced8dc262414af42267573e078cffdb
     TraineeAllClassesComponent,
     DoReviewComponent,
     ShowReviewComponent
   ],
 
     providers:[
-      MembershipService,
-      ClassService
+      ClassService,
+      SidebarService
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
