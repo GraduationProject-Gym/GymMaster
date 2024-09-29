@@ -8,8 +8,6 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\TraineeClassController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-
-
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
