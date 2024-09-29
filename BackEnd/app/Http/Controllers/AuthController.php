@@ -321,19 +321,6 @@ class AuthController extends Controller
     public function show(Request $request)
     {
         //
-
-        $class = GymClass::where("id", $request->id)->first();
-        // return ['message'=>$request->id];
-        if($class){
-            return response()->json([
-                "message" => $class
-            ]);
-        }
-        else{
-            return response()->json([
-                "message" => "This class not found.",
-            ],403);
-        }
     }
 
     /**

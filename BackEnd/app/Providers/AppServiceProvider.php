@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     protected $policies = [
         GymClass::class => GymClassPolicy::class,
         Equipment::class => EquipmentPolicy::class,
-        \App\Models\Equipment::class => \App\Policies\EquipmentPolicy::class,
+        Equipment::class => EquipmentPolicy::class,
         Payment::class => PaymentPolicy::class,
         Schedule::class => SchedulePolicy::class,
         Memberships::class => MembershipPolicy::class,

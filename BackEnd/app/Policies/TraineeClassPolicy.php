@@ -27,9 +27,9 @@ use App\Models\Trainee;
      * Determine whether the user can create trainee es.
      */
     public function create(User $user)
-{
-    return $user->role === 'trainee';
-}
+    {
+        return $user->role === 'trainee';
+    }
 
 
     /**

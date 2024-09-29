@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Trainee;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Exception;

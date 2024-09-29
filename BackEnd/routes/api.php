@@ -33,6 +33,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::apiResource('subscribe',SubscriptionController::class);
     Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
     Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
+
+    // trainee Membership
+    Route::post('create-membership', [TraineeClassController::class, 'updateMemperTrainee']);
+    Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
+
 });
 
 // Auth User
@@ -53,16 +58,12 @@ Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->midd
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
-// subscription
-Route::apiResource('subscribe',SubscriptionController::class);
-Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
-Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
 
 
 // gymclass
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/gym-classes', [GymClassController::class, 'index']);
-    Route::get('/gym-classes/{gymClass}', [GymClassController::class, 'show']);
+    Route::get('/gym-classes/{id}', [GymClassController::class, 'show']);
     Route::post('/gym-classes', [GymClassController::class, 'store']);
     Route::put('/gym-classes/{gymClass}', [GymClassController::class, 'update']);
     Route::delete('/gym-classes/{gymClass}', [GymClassController::class, 'destroy']);
