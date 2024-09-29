@@ -49,7 +49,6 @@ Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('p
 
 // membership
 
-Route::apiResource('membership',MembershipController::class);
 Route::apiResource('trainee-class',TraineeClassController::class);
 Route::apiResource('schedule',SchedulesController::class);
 Route::apiResource('equipment',EquipmentController::class);

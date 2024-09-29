@@ -84,7 +84,11 @@ export class LoginComponent {
       this.loginService.login(data).subscribe({
         next: (response) => {
           console.log(response);
-          this.router.navigate(['/trainee']);
+          if (response.role === 'trainee'){
+            this.router.navigate(['/trainee']);
+          } else if (response.role === 'trainer'){
+            this.router.navigate(['/trainer/classes']);
+          }
         },
         error: (error) => {
           console.log(error);
