@@ -18,7 +18,7 @@ export class SidebarComponent {
   errorMessage: string | null = null;
 
   membership() {
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
 
     this.sidebarService.indexMemberships().subscribe({
       next: (response: any) => {
@@ -40,9 +40,14 @@ export class SidebarComponent {
     });
   }
 
-  dropdownOpen = false;
 
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
+  dropdownOpenClass = false;
+  dropdownOpenReview= false;
+
+  toggleDropdownClass() {
+    this.dropdownOpenClass = !this.dropdownOpenClass;
+  }
+  toggleDropdownReview() {
+    this.dropdownOpenReview = !this.dropdownOpenReview;
   }
 }

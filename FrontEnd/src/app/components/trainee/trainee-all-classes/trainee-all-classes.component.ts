@@ -1,19 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-trainee-classes',
-  standalone:true,
+  selector: 'app-trainee-all-classes',
+  standalone: true,
   imports: [CommonModule,
-      SidebarComponent,
-      RouterModule
-      ],
-  templateUrl: './trainee-classes.component.html',
-  styleUrl: './trainee-classes.component.css'
+    SidebarComponent,
+    RouterModule
+    ],
+    templateUrl: './trainee-all-classes.component.html',
+  styleUrl: './trainee-all-classes.component.css'
 })
-export class TraineeClassesComponent {
+export class TraineeAllClassesComponent {
     classes = [
       {
         className: 'Yoga Class',

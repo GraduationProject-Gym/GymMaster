@@ -7,16 +7,15 @@ import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ClassesComponent } from './components/trainer/classes/classes.component';
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
-import { ShowClassComponent } from './components/trainer/show-class/show-class.component';
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
 import { TraineeComponent } from './components/trainee/profile/trainee.component';
 import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
-import { TraineeClassesComponent } from './components/trainee/trainee-classes/trainee-classes.component';
-import { MembershipService } from './services/trainee/membership/membership.service';
+import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
 import { ClassService } from './services/trainer/class/class.service';
 import { SidebarService } from './services/trainee/sidebar/sidebar.service';
+import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
 
 @Component({
   selector: 'app-root',
@@ -30,15 +29,16 @@ import { SidebarService } from './services/trainee/sidebar/sidebar.service';
     FooterComponent,
     ClassesComponent,
     UpdateClassComponent,
-    ShowClassComponent,
     AddClassComponent,
     TraineesComponent,
     ReportComponent,
     TraineeComponent,
-    EditProfileComponent
-    ],
+    EditProfileComponent,
+    TraineeAllClassesComponent,
+    DoReviewComponent
+  ],
+
     providers:[
-      MembershipService,
       ClassService,
       SidebarService
     ],
