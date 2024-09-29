@@ -33,12 +33,10 @@ class GymClass extends Model
     //    return $this->belongsToMany(GymClass::class, 'class_equipments', 'class_id', 'equipment_id');
     // }
 
-//     public function equipment()
-// {
-//     return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
-// }
-
-
+    public function equipment()
+    {
+        return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
+    }
 
     public function schedule()
     {
@@ -55,7 +53,7 @@ class GymClass extends Model
 
     public function user()
     {
-       return $this->belongsToMany(User::class, 'user_classes', 'class_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_classes', 'class_id', 'user_id');
     }
 
     public function equipments()

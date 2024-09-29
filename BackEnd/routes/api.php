@@ -46,7 +46,7 @@ Route::post('trainees', [TraineeClassController::class, 'trainees']);
 Route::post('register', [AuthController::class, 'store']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
+Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
 // membership
@@ -109,3 +109,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
+

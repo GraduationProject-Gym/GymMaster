@@ -1,0 +1,32 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+  <div class="main">
+    <div class="card">
+      <h2>Goal</h2>
+
+      <!-- If no goal is entered, display a button to add a goal -->
+      <div class="text-center" *ngIf="!goal && !showForm">
+        <button class="btn m-2" (click)="showForm = true">Add Goal</button>
+      </div>
+
+      <!-- Form for entering or editing the goal -->
+      <div *ngIf="showForm" class="goal-form">
+        <input [(ngModel)]="newGoal" placeholder="Enter your goal" class="form-control m-2" />
+        <div class="text-center">
+          <button class="btn m-2" (click)="saveGoal()">
+            {{ isEditing ? 'Save Changes' : 'Add Goal' }}
+          </button>
+          <button class="btn m-2" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- If a goal is entered, display it with an edit button -->
+      <div *ngIf="goal && !showForm">
+        <p class="text-center">Current Goal: {{ goal }}</p>
+        <div class="text-center">
+          <button class="btn m-2" (click)="editGoal()">Edit Goal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

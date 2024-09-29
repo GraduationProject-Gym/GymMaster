@@ -17,7 +17,6 @@ use App\Policies\SchedulePolicy;
 use App\Policies\TraineeClassPolicy;
 use App\Policies\MembershipPolicy;
 
-
 class AppServiceProvider extends ServiceProvider
 {
     protected $policies = [
@@ -25,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         Equipment::class => EquipmentPolicy::class,
         Payment::class => PaymentPolicy::class,
         Schedule::class => SchedulePolicy::class,
+        UserClass::class => TraineeClassPolicy::class,
         Memberships::class => MembershipPolicy::class,
         UserClass::class => TraineeClassPolicy::class,
         Exercise::class => ExercisePolicy::class,

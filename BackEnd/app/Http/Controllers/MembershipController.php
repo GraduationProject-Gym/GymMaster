@@ -28,6 +28,7 @@ class MembershipController extends Controller
         //all user will show all memberships
         //only admin can update and delete and create memberships
         // dd(111);
+        // return ["message"=>'done'];
         try {
             $this->authorize('viewAny', Memberships::class);
             $memberships = Memberships::all();
@@ -39,10 +40,7 @@ class MembershipController extends Controller
             return response()->json([
                 'message' => "You are not user to show this"
             ], 403);  // Forbidden status
-
         }
-
-
     }
 
     /**

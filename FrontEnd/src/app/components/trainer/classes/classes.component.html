@@ -1,82 +1,103 @@
-<!-- <div class="className">
-  <h1>{{ className }} Class</h1>
-</div>
-<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-  <div class="d-flex m-5" style="width: 100%; max-width: 1200px;">
-    <div style="flex: 1;" class="m-5">
-      <div >
-        <div>
-          <p>Total Number of Sessions:{{totalNoOfSession}}</p>
-          <p>Exercise done in class:{{exercise}}</p>
-          <p>Equipment used in class:{{equipment}}</p>
-        </div>
-        <div *ngFor="let class of Classes" style="width: 100%; max-width: 600px; text-align: center;">
-          <div class="card mb-3" (click)="toggleDetails(class.id)">
-            <h5 class="card-title">{{ class.session }}</h5>
-          </div>
-          <div *ngIf="activeClassId === class.id" class="details p-3 border rounded" style="width: 100%; max-width: 600px;">
-            <p class="details-title"><strong>Details:</strong></p>
-            <p>Days: <span class="details-info">{{ class.days }}</span></p>
-            <p>Hours: <span class="details-info">{{ class.hours }}</span></p>
-          </div>
-        </div>
-        <div class="buttons mt-3">
-          <a routerLink="/trainer/Trainees" routerLinkActive="active" class="btn ">View Trainees</a>
-          <button class="btn " (click)="addClass()">Add</button>
-           <button class="btn btn-danger" (click)="deleteClass(classes.id)">Delete</button>
-          <button class="btn " (click)="goToUpdatePage()">Update</button>
-          <button class="btn " (click)="goToShowPage()">Show</button>
-        </div>
-      </div>
-    </div>
-    <div class="content" style="flex: 1;">
-      <img [src]="image" alt="Group Image" class="img-fluid" style="max-width: 600px;">
-      <div class="description mt-3" style="width: 100%; max-width: 600px;">{{ description }}</div>
-    </div>
-  </div>
-</div> -->
-
+<!-- Title Section -->
 <div class="className text-center mb-4">
   <h1>{{ className }} Class</h1>
 </div>
 
+<!-- Main Content Wrapper -->
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+  <!-- Content Container: Contains both the Class Info and Image sections -->
   <div class="d-flex m-5" style="width: 100%; max-width: 1200px;">
+
+    <!-- Left Section: Class Details and Actions -->
     <div style="flex: 1;" class="m-5">
+
+      <!-- Card: Class Overview -->
       <div class="card mb-4">
         <div class="card-body">
           <h5 class="card-title">Class Overview</h5>
-          <div class="text-start">
-            <p><strong>Total Number of Sessions:</strong>{{ totalNoOfSession }}</p>
-            <p> <strong>Exercise done in class: </strong>{{ exercise }}</p>
-            <p><strong>Equipment used in class: </strong>{{ equipment }}</p>
+
+          <!-- Class Information -->
+          <div class="d-flex text-start">
+            <p><strong>Total Number of Sessions:</strong> {{ totalNoOfSession }}</p>
+            <p><strong>Status:</strong> {{ status }}</p>
           </div>
+
+          <!-- Equipments and Exercises Cards -->
+          <div class="d-flex justify-content-between">
+
+            <!-- Equipments Card -->
+            <div class="card">
+              <div class="card-body text-start">
+                <h6 class="mt-4"><strong>Equipments:</strong></h6>
+                <div>
+                  <ul>
+                    <!-- Loop through equipments array -->
+                    <div *ngFor="let equipment of equipments;">
+                      <li>
+                        <h6 class="text-secondary"><span>{{ equipment.name }}</span></h6>
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Exercises Card -->
+            <div class="card">
+              <div class="card-body text-start">
+                <h6 class="mt-4"><strong>Exercises:</strong></h6>
+                <div>
+                  <ul>
+                    <!-- Loop through exercises array -->
+                    <div *ngFor="let exercise of exercises;">
+                      <li>
+                        <h6 class="text-secondary"><span>{{ exercise.name }}</span></h6>
+                      </li>
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
 
+      <!-- Loop through Classes Array -->
       <div *ngFor="let class of Classes" style="width: 100%; max-width: 600px; text-align: center;">
+
+        <!-- Class Card -->
         <div class="card mb-3" (click)="toggleDetails(class.id)">
           <h5 class="card-title">{{ class.session }}</h5>
         </div>
+
+        <!-- Class Details: Displayed when clicked -->
         <div *ngIf="activeClassId === class.id" class="details p-3 border rounded text-start" style="width: 100%; max-width: 600px;">
           <p class="details-title"><strong>Details:</strong></p>
-          <p><strong>Days:</strong>  <span class="details-info">{{ class.days }}</span></p>
+          <p><strong>Days:</strong> <span class="details-info">{{ class.days }}</span></p>
           <p><strong>Hours:</strong>: <span class="details-info">{{ class.hours }}</span></p>
         </div>
+
       </div>
 
+      <!-- Action Buttons -->
       <div class="buttons mt-3 text-center">
         <a routerLink="/trainer/trainees" (click)="viewTrainees()" routerLinkActive="active" class="btn ">View Trainees</a>
         <button class="btn " (click)="addClass()">Add</button>
         <button class="btn " (click)="goToUpdatePage()">Update</button>
         <button class="btn " (click)="goToShowPage()">Show</button>
       </div>
+
     </div>
 
-    <div class="content" style="flex: 1;" >
+    <!-- Right Section: Image and Description -->
+    <div class="content" style="flex: 1;">
       <img [src]="image" alt="Group Image" class="img-fluid" style="max-width: 600px;">
       <div class="description mt-3" style="width: 100%; max-width: 600px;">{{ description }}</div>
     </div>
-  </div>
-</div>
 
+  </div>
+
+</div>

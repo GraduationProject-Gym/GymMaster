@@ -21,6 +21,7 @@ class TraineeClassesResource extends JsonResource
         return[
             'user_id'=>$this->id,
             'name'=>$this->name,
+            'image' => $this->image ? asset('images/users/' . $this->image) : null,
             'membership'=>$member->type,
         ];
     }
