@@ -1,48 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { MembershipService } from '../../../services/trainee/membership/membership.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-membership',
   standalone: true,
   imports: [SidebarComponent, CommonModule, RouterModule],
-  // providers: [MembershipService],
   templateUrl: './membership.component.html',
   styleUrl: './membership.component.css'
 })
-export class MembershipComponent{// implements OnInit {
+export class MembershipComponent implements OnInit {
 
-  constructor(private membershipService: MembershipService, private router: Router) { }
+  constructor(private sidebarService: SidebarService, private router: Router) { }
 
-  // memberships: any[] = [];
-  // errorMessage: string | null = null;
+  data: any;
+  memberships: any[] = [];
 
-  // ngOnInit(): void {
-  //   this.errorMessage = null; // Reset the error message 
+  ngOnInit() {
+    this.data = this.sidebarService.getSelectedData();
+    console.log(this.data);
+    if (!this.data) {
+      this.router.navigate(['/trainee']);
+      return;
+    }
 
-  //   this.membershipService.indexMemberships().subscribe({
-  //     next: (response: any) => {
-  //       response.Memberships.forEach((membership: any) => {
-  //         const type = membership.type;
-  //         if (!this.memberships[type]) {
-  //           this.memberships[type] = [];
-  //         }
-  //         this.memberships[type].push(membership);
-  //       });
-  //     },
-  //     error: (error) => {
-  //       if (error.status === 401) {
-  //         // this.errorMessage = error.error?.message;
-  //         this.router.navigate(['/login']);
-  //         console.log(error);
-  //       } else {
-  //         this.errorMessage = 'An unexpected error occurred. Please try again later.';
-  //       }
-  //     }
-  //   });
-  // }
+    this.data.forEach((membership: any) => {
+      const type = membership.type;
+      if (!this.memberships[type]) {
+        this.memberships[type] = [];
+      }
+      this.memberships[type].push(membership);
+    });
+  }
+
 
   capitalizeFirstLetter(string: string): string {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();

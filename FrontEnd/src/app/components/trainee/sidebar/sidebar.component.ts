@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MembershipService } from '../../../services/trainee/membership/membership.service';
+import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [RouterModule,
   ],
-  providers:[MembershipService],
+  // providers: [MembershipService],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  constructor(private membershipService:MembershipService, private router:Router){}
+  constructor(private sidebarService: SidebarService, private router: Router) { }
   // showDropdown(){
   //   document.querySelector('.dropdown-toggle').addEventListener('click', function() {
   //     const dropdown = this.nextElementSibling;
@@ -25,19 +26,17 @@ export class SidebarComponent {
   membership() {
     this.errorMessage = null; // Reset the error message 
 
-    this.membershipService.indexMemberships().subscribe({
+    this.sidebarService.indexMemberships().subscribe({
       next: (response: any) => {
-        response.Memberships.forEach((membership: any) => {
-          const type = membership.type;
-          if (!this.memberships[type]) {
-            this.memberships[type] = [];
-          }
-          this.memberships[type].push(membership);
-        });
+        // response.Memberships.forEach((membership: any) => {
+          this.sidebarService.setSelectedData(response.Memberships);
+          console.log(response.Memberships);
+          this.router.navigate(['/trainee-membership']);
+        // });
       },
       error: (error) => {
         if (error.status === 401) {
-          // this.errorMessage = error.error?.message;
+          this.errorMessage = error.error?.message;
           this.router.navigate(['/login']);
           console.log(error);
         } else {
