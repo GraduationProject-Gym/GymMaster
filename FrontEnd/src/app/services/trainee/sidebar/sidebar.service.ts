@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class SidebarService {
   constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
-  private selectedData:any;
+  private selectedData: any;
 
   // Get token to send it with each request
   private getHeaders(): HttpHeaders {
@@ -17,24 +17,35 @@ export class SidebarService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return headers;
   }
-  
+
   // Membership services
   // showMembership(membership:string) { 
   //   const showMembershipUrl = `${environment.domain}/membership/${membership}`;
   //   return this.http.get(showMembershipUrl, { headers: this.getHeaders() });
   // }
 
-  indexMemberships():Observable <any> {
+  indexMemberships(): Observable<any> {
     const indexMembershipsUrl = `${environment.domain}/membership`;
     return this.http.get(indexMembershipsUrl, { headers: this.getHeaders() });
   }
-  
+
+  // Classes services
+  // showMyClasses(id:number) { 
+  //   const showClassUrl = `${environment.domain}/gym-classes/{id}`;
+  //   return this.http.get(showClassUrl, { headers: this.getHeaders() });
+  // }
+
+  indexClasses(): Observable<any> {
+    const indexClassesUrl = `${environment.domain}/gym-classes`;
+    return this.http.get(indexClassesUrl, { headers: this.getHeaders() });
+  }
+
   // Setter and getter to move data between components
-  setSelectedData(data:any){
+  setSelectedData(data: any) {
     this.selectedData = data;
   }
 
-  getSelectedData(){
+  getSelectedData() {
     return this.selectedData;
   }
 }
