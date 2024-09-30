@@ -28,7 +28,6 @@ Route::post('email-verification', [AuthController::class, 'verifyEmail']);
 Route::middleware(['auth:sanctum'])->group( function () {
     // membership
     Route::apiResource('membership',MembershipController::class);
-
     // subscription
     Route::apiResource('subscribe',SubscriptionController::class);
     Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
@@ -39,6 +38,9 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
 
 });
+
+
+Route::post('trainees', [TraineeClassController::class, 'trainees']);
 
 // Auth User
 Route::post('register', [AuthController::class, 'store']);

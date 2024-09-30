@@ -7,6 +7,7 @@ use App\Http\Resources\TraineeResource;
 use App\Http\Resources\TraineeScheduleResource;
 use App\Http\Resources\TraineeExerciseResource;
 use App\Http\Resources\TraineeEquipmentResource;
+use App\Http\Resources\TraineeClassesResource;
 use App\Models\GymClass;
 use App\Models\UserClass;
 use App\Models\Trainee;
@@ -29,8 +30,15 @@ class TraineeClassController extends Controller
      */
     public function index()
     {
-        //
     }
+    public function trainees(Request $request){
+        // return $request->id;
+        $trainee = GymClass::where('id', $request->id)->first();
+        $trainee = $trainee->user;
+
+        return TraineeClassesResource::collection($trainee);
+    }
+
     public function updateMemperTrainee(Request $request){
 
 

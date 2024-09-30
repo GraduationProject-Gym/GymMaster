@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UpdateClassComponent } from '../update-class/update-class.component';
 import { CommonModule } from '@angular/common';
-import { Init } from 'v8';
-
+import { ClassService } from '../../../services/trainer/class/class.service';
 @Component({
   selector: 'app-classes',
   standalone: true,
@@ -22,27 +21,19 @@ import { Init } from 'v8';
 })
 export class ClassesComponent {
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private route: ActivatedRoute, private classService: ClassService){}
 
   // Trainer and class information
+  id:number=2;
   name: string = 'Sandy Samir';
   className: string = 'Yoga';
   image: string = '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif';
   description: string = 'Strength training focuses on increasing muscle strength and mass through weight lifting and resistance exercises.';
   totalNoOfSession:number=8;
-  // exercise: string = 'Downward Dog, Warrior Pose, Tree Pose';
-  // equipment: string = 'Yoga Mat, Resistance Bands';
+  exercise: string = 'Downward Dog, Warrior Pose, Tree Pose';
+  equipment: string = 'Yoga Mat, Resistance Bands';
   activeClassId: number | undefined;
-  status: string = 'Active';
-  equipments =[
-    {name:"Yoga Mat"},
-    {name:"Resistance Bands"},
-  ];
-  exercises =[
-    {name:"Downward Dog"},
-    {name:"Warrior Pose"},
-    {name:"Tree Pose"},
-  ];
+  errorMessage: string='';
 
   // List of available classes
   Classes = [
@@ -60,14 +51,6 @@ export class ClassesComponent {
     }
   ];
 
-
-
-
-
-
-
-
-
   // Toggle class details view
   toggleDetails(classId: number) {
     this.activeClassId = this.activeClassId === classId ? undefined : classId;
@@ -79,9 +62,7 @@ export class ClassesComponent {
   }
 
   // Navigate to the show class page
-  goToShowPage(){
-    this.router.navigate(['/trainer/show-class']);
-  }
+
 
   // Navigate to the add new class page
   addClass(){
@@ -94,6 +75,57 @@ export class ClassesComponent {
     if (confirmDelete) {
       this.Classes = this.Classes.filter(classItem => classItem.id !== classId);
       alert('Class deleted successfully!');
+    }
+  }
+  goToShowPage(){
+    // this.id = this.route.snapshot.paramMap.get('id') || '';
+    if (this.id) {
+      // console.log(this.id);
+      this.classService.getShowClass(this.id).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.classService.setSelectedclass(response.data);
+          this.router.navigate(['/trainer/show-class']);
+        },
+        //6|TUEzIo5nQg9QMaaQxkZUVhC9EuEcqA9t1KSn4S7Xc1b8a391
+        error: (error) => {
+          if (error.status === 403) {
+            this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+          }else if (error.status === 401) {
+            console.log("not Auth");
+          this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    }
+  }
+
+  viewTrainees(){
+    if (this.id) {
+      // console.log(this.id);
+      this.classService.geTraineeOnClass(this.id).subscribe({
+        next: (response) => {
+          const traineesArray = response.data;
+          // console.log(traineesArray.length);
+          this.classService.setSelectedclass(traineesArray);
+          this.router.navigate(['/trainer/trainees']);
+        },
+        //6|TUEzIo5nQg9QMaaQxkZUVhC9EuEcqA9t1KSn4S7Xc1b8a391
+        error: (error) => {
+          if (error.status === 403) {
+            this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+          }else if (error.status === 401) {
+            console.log("not Auth");
+            this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
     }
   }
 }
