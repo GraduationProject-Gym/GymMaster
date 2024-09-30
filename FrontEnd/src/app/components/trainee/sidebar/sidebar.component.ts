@@ -39,6 +39,28 @@ export class SidebarComponent {
     });
   }
 
+  // Show my classes
+  myClassses(id:number){
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.showMyClasses(id).subscribe({
+      next: (response: any) => {
+        this.sidebarService.setSelectedData(response);
+        console.log(response);
+        this.router.navigate(['/trainee-myClasses']);
+      },
+      error: (error) => {
+        if (error.status === 401) {
+          this.errorMessage = error.error?.message;
+          this.router.navigate(['/login']);
+          console.log(error);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
   // Index classes
   classes(){
     this.errorMessage = null; // Reset the error message
@@ -46,7 +68,7 @@ export class SidebarComponent {
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
         this.sidebarService.setSelectedData(response);
-        console.log(response);
+        // console.log(response);
         this.router.navigate(['/trainee-allClasses']);
       },
       error: (error) => {

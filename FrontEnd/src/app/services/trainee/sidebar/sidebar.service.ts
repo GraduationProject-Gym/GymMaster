@@ -30,10 +30,10 @@ export class SidebarService {
   }
 
   // Classes services
-  // showMyClasses(id:number) { 
-  //   const showClassUrl = `${environment.domain}/gym-classes/{id}`;
-  //   return this.http.get(showClassUrl, { headers: this.getHeaders() });
-  // }
+  showMyClasses(id:number) { 
+    const showMyClassesUrl = `${environment.domain}/gym-classes/{id}`;
+    return this.http.get(showMyClassesUrl, { headers: this.getHeaders() });
+  }
 
   indexClasses(): Observable<any> {
     const indexClassesUrl = `${environment.domain}/gym-classes`;
