@@ -13,6 +13,7 @@ use App\Http\Controllers\TraineeClassController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\ReviewController;
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -36,7 +37,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
     // trainee Membership
     Route::post('create-membership', [TraineeClassController::class, 'updateMemperTrainee']);
     Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
-
+    // Review
+    Route::apiResource('review',ReviewController::class);
 });
 
 

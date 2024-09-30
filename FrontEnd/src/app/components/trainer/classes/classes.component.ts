@@ -34,6 +34,7 @@ export class ClassesComponent {
   equipment: string = 'Yoga Mat, Resistance Bands';
   activeClassId: number | undefined;
   errorMessage: string='';
+  status:string='';
 
   // List of available classes
   Classes = [

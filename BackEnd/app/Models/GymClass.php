@@ -37,6 +37,9 @@ class GymClass extends Model
     {
         return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
     }
+    public function review(){
+        return $this->hasMany(Review::class,'class_id','id');
+    }
 
     public function schedule()
     {
@@ -44,6 +47,10 @@ class GymClass extends Model
             Carbon::today(), // Current date
             Carbon::today()->addDays(7) // 7 days from today
         ]);
+    }
+
+    public function report(){
+        return $this->hasMany(Report::class,'class_id','id');
     }
 
     public function trainer()
