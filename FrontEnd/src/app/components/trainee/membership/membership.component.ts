@@ -54,18 +54,17 @@ export class MembershipComponent implements OnInit {
     this.membershipService.subscribeMemberShip(membershipId).subscribe({
       next: (response: any) => {
         this.membershipService.setSelectedData(response);
-        console.log(response);
-        // this.router.navigate(response.url);
+        // console.log(response);
         window.location.href = response.url;
       },
       error: (error) => {
         if (error.status === 401) {
-          this.errorMessage = error.error?.message;
           this.router.navigate(['/login']);
-          console.log(error);
+          this.errorMessage = error.error?.message;
+          // console.log(error);
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;
-          console.log(error);
+          // console.log(error);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
