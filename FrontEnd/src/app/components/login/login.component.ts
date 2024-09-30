@@ -92,9 +92,12 @@ export class LoginComponent {
         },
         error: (error) => {
           console.log(error);
-          if (error.status === 403) { // Check for the status code directly
+          if (error.status === 403 && error.error?.email) {
+            // Error in credentials
+            this.errorMessage = error.error?.email;
+          } else if (error.status === 403 && error.error?.message){
+            // error in email verification
             this.errorMessage = error.error?.message;
-            // if (this.errorMessage === 'verify email'){}
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
