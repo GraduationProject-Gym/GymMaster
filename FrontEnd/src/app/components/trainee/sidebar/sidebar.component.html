@@ -7,7 +7,7 @@
       <li class="dropdown">
         <a routerLink="/trainee-myClasses" (click)="toggleDropdownClass()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClass">
-          <li><a routerLink="/trainee-allClasses">All Classes</a></li>
+          <li><a routerLink="/trainee-allClasses" (click)="classes()">All Classes</a></li>
           <li><a routerLink="/trainee-myClasses">My Class</a></li>
         </ul>
       </li>
