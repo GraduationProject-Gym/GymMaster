@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GymClass;
 use App\Models\Review;
 use App\Models\Trainee;
 use App\Models\Trainer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Access\AuthorizationException;
+use App\Models\Schedule;
 
 class ReviewController extends Controller
 {
@@ -79,14 +82,40 @@ class ReviewController extends Controller
                 'trainee_id' => $trainee,
                 'trainer_id' => $trainer
             ]);
-            return response()->json(["message"=>$review]);
+            return response()->json(["message"=>"done"]);
         }catch(AuthorizationException $e){
             return response()->json([
                 'message' => "You are not user to show this"
             ], 403);
         }
     }
+    public function report(Request $request){
 
+        $user = Auth::user();// trainer
+        $class = GymClass::where('id',$request->class_id)->first();
+        $trainee = User::where("id",$request->trainee_id)->first();
+
+        $reviews = Review::where("trainee_id", $request->trainee_id)
+                 ->where("class_id", 2)
+                 ->get();
+        $schedule = $class->scheduleReport;
+        $equipment = $class->equipment;
+        $exercies= $class->exercises;
+        // $schdual = Schedule::where('class_id', $request->class_id)->get();
+        // $schdual = Schedule::where('class_id', $request->class_id)->get();
+
+        return response()->json([
+            'message' => 'done',
+            'user' => $user,//new UserResource($user),
+            'trainee'=>$trainee,
+            // 'class'=>$class,
+            'review'=> $reviews,
+            'schedule'=>$schedule,
+            'equipment'=>$equipment,
+            'exercies'=>$exercies
+            // 'traineeData' => new TraineeResource($trainee),
+        ], 201);
+    }
     /**
      * Display the specified resource.
      */

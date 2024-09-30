@@ -169,7 +169,6 @@ class AuthController extends Controller
                 'message' => 'Verification token has expired. must be login to resend Verification ',
             ], 403);
         }
-
         // If the token is still valid, verify the user's email
         $user->email_verified_at = now();
         $user->token = null; // Clear the token

@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
     // Review
     Route::apiResource('review',ReviewController::class);
+    Route::post('report', [ReviewController::class, 'report']);
 });
 
 

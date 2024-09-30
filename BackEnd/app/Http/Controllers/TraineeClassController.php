@@ -73,7 +73,8 @@ class TraineeClassController extends Controller
     public function addAndUpdateGoals(Request $request){
         $this->authorize('create', UserClass::class);
         try{
-            $trainee = Trainee::find($request->user_id);
+            $user = Auth::user()->id;
+            $trainee = Trainee::find($user);
             $trainee->goals = $request->goals;
             $trainee->save();
         }catch(AuthorizationException $e){

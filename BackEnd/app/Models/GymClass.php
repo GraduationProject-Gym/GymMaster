@@ -48,6 +48,10 @@ class GymClass extends Model
             Carbon::today()->addDays(7) // 7 days from today
         ]);
     }
+    public function scheduleReport()
+    {
+        return $this->hasMany(Schedule::class, 'class_id','id');
+    }
 
     public function report(){
         return $this->hasMany(Report::class,'class_id','id');
