@@ -23,7 +23,7 @@ use Illuminate\Support\Str;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\DB;
 use App\Models\GymClass;
-
+use Carbon\Carbon;
 class AuthController extends Controller
 {
     public function __construct()
@@ -134,6 +134,7 @@ class AuthController extends Controller
             $trainer = Trainer::create([
                 'cv' => $cvPath,
                 'user_id' => $user->id,
+                'email_verified_at'=>now()
             ]);
 
         }
