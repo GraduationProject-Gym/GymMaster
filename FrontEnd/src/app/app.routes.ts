@@ -20,6 +20,7 @@ import { TraineeMyClassesComponent } from './components/trainee/trainee-my-class
 import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
 import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 import { AttendanceComponent } from './components/trainee/attendance/attendance.component';
+import { ShowReportComponent } from './components/trainee/show-report/show-report.component';
 
 
 export const routes: Routes = [
@@ -45,7 +46,7 @@ export const routes: Routes = [
     { path: 'trainee-doReview', component:DoReviewComponent},
     { path: 'trainee-showReviews', component:ShowReviewComponent},
     { path: 'trainee-attendance', component:AttendanceComponent},
-
+    { path: 'trainee-showReport', component:ShowReportComponent},
 
     { path: "**", component: ErrorComponent }
 ];

@@ -1,0 +1,86 @@
+<div class="d-flex"></div>
+  <app-sidebar></app-sidebar>
+  <div class="main">
+    <div class="container report-container">
+      <!-- Main title of the report -->
+      <h1>Report for: {{ trainees[0].name }}</h1>
+
+      <!-- Section for Trainee Details -->
+      <h5 class="card-title">Trainee Details</h5>
+      <div class="row text-start">
+        <div class="col-md-6">
+          <p><strong>Age:</strong> {{ trainees[0].age }}</p>
+          <p><strong>Email:</strong> {{ trainees[0].email }}</p>
+          <p><strong>Phone:</strong> {{ trainees[0].phone }}</p>
+          <p><strong>Gender:</strong> {{ trainees[0].gender }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Address:</strong> {{ trainees[0].address }}</p>
+          <p><strong>Membership Type:</strong> {{ trainees[0].membership }}</p>
+          <p><strong>Subscription:</strong> {{ trainees[0].subscription }}</p>
+        </div>
+      </div>
+
+      <!-- Section for Class Overview -->
+      <h5 class="card-title">Class Overview</h5>
+      <div class="row text-start">
+        <div class="col-md-6">
+          <p><strong>Trainer:</strong> {{ trainees[0].trainerName }}</p>
+          <p><strong>Equipment used in class:</strong> {{ trainees[0].equipment }}</p>
+          <p><strong>Exercise done in class:</strong> {{ trainees[0].exercise }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Class:</strong> {{ trainees[0].className }}</p>
+          <p><strong>Total Number of Sessions:</strong> {{ trainees[0].totalNoOfSession }}</p>
+        </div>
+      </div>
+
+      <!-- Section for Coach Feedback -->
+      <h5 class="card-title">Coach feedback</h5>
+      <div class="row text-start">
+        <div class="col-md-6">
+          <div *ngFor="let feedback of trainees[0].comments; let i = index">
+            <p><strong>Comment {{ i + 1 }}:</strong> {{ feedback.comment }}</p>
+            <p><strong>Rating:</strong>
+              <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
+                <i class="fa" [ngClass]="j < feedback.rate ? 'fas fa-star' : 'far fa-star'"></i>
+              </span>
+              ({{ feedback.rate }} out of 5)
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div>chart</div>
+          <!-- Section for Overall Rating -->
+          <div class="overall-rating">
+            <p><strong>Overall Rating:</strong></p>
+            <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
+              <i class="fa" [ngClass]="j < traineeReport.overallRating ? 'fas fa-star' : 'far fa-star'"></i>
+            </span>
+            <p>{{ traineeReport.overallRating | number:'1.1-1' }} out of 5</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section for Coach Comments and Recommendations -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="coachComments">Overall Coach Comment:</label>
+            <textarea id="coachComments" [(ngModel)]="traineeReport.coachComments" class="form-control" rows="4" placeholder="Enter your comments here"></textarea>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="recommendations">Future Recommendations:</label>
+            <textarea id="recommendations" [(ngModel)]="traineeReport.recommendations" class="form-control" rows="3" placeholder="Add recommendations"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit button for the report -->
+      <div class="mt-3 text-center">
+        <button class="btn" (click)="submitReport()">Submit Report</button>
+      </div>
+    </div>
+</div>
