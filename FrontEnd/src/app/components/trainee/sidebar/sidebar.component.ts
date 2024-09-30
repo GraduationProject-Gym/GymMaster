@@ -68,7 +68,7 @@ export class SidebarComponent {
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
         this.sidebarService.setSelectedData(response);
-        // console.log(response);
+        console.log(response);
         this.router.navigate(['/trainee-allClasses']);
       },
       error: (error) => {
