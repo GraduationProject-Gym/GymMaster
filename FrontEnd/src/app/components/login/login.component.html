@@ -13,10 +13,6 @@
         <div class="error-msg">
             Enter a valid email
         </div>
-        } @else if (emailErrorMessage){
-        <div class="alert alert-danger  mt-3">
-            {{ emailErrorMessage }}
-        </div>
         }
         <label for="password" class="mt-3">Password</label>
         <div class="input-group">
@@ -36,10 +32,6 @@
         } @else if (passwordFormatInvalid){
         <div class="error-msg">
             Enter a valid password
-        </div>
-        } @else if (passwordErrorMessage){
-        <div class="alert alert-danger  mt-3">
-            {{ passwordErrorMessage }}
         </div>
         }
 
