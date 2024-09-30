@@ -131,10 +131,11 @@ class AuthController extends Controller
                 $cv = $request->file('cv');
                 $cvPath = $cv->store('cvs', 'user_cvs');
             }
+            $user->email_verified_at = now();
+            $user->save();
             $trainer = Trainer::create([
                 'cv' => $cvPath,
                 'user_id' => $user->id,
-                'email_verified_at'=>now()
             ]);
 
         }
