@@ -16,7 +16,7 @@ class ScheduleController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Schedule::class);
-        $schedules = Schedule::with('gymclass')->get(); 
+        $schedules = Schedule::with('gymclass')->get();
         return response()->json($schedules, 200);
         // $schedules = Schedule::all();
         // return response()->json($schedules, 200);
@@ -40,11 +40,11 @@ class ScheduleController extends Controller
 
         try {
             $validatedData= $request->validate([
-                'class_id' => 'required|exists:gymclass,id', 
-                'session_start' => 'required|date_format:H:i', 
-                'session_end' => 'required|date_format:H:i|after:session_start', 
-                'session_duration' => 'required|numeric|min:0', 
-                'nameDay' => 'required|string|max:255', 
+                'class_id' => 'required|exists:gymclass,id',
+                'session_start' => 'required|date_format:H:i',
+                'session_end' => 'required|date_format:H:i|after:session_start',
+                'session_duration' => 'required|numeric|min:0',
+                'nameDay' => 'required|string|max:255',
             ]);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -88,19 +88,19 @@ class ScheduleController extends Controller
                 return response()->json(['message' => 'schedule not found'], 404);
             }
             \Log::info('User role: ' . auth()->user()->role);
-            \Log::info('User variable:', ['user' => $user]);
+            // \Log::info('User variable:', ['user' => $user]);
 
             $this->authorize('update', $schedule);
- 
+
             $validatedData= $request->validate([
-                'class_id' => 'required|exists:gymclass,id', 
-                'session_start' => 'required|date_format:H:i', 
-                'session_end' => 'required|date_format:H:i|after:session_start', 
-                'session_duration' => 'required|numeric|min:0', 
-                'nameDay' => 'required|string|max:255', 
+                'class_id' => 'required|exists:gymclass,id',
+                'session_start' => 'required|date_format:H:i',
+                'session_end' => 'required|date_format:H:i|after:session_start',
+                'session_duration' => 'required|numeric|min:0',
+                'nameDay' => 'required|string|max:255',
             ]);
         } catch (ValidationException $e) {
-        
+
             $errors = $e->validator->errors();
             $customMessages = [];
 

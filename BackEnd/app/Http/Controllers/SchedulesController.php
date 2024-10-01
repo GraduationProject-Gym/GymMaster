@@ -6,7 +6,7 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Http\Resources\TraineeScheduleResource;
 
-class ScheduleController extends Controller
+class SchedulesController extends Controller
 {
     /**
      * Display a listing of the resource.

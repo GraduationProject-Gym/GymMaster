@@ -29,7 +29,7 @@ class PaymentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'trainee';
+        return $user->role === 'admin';
     }
 
     /**
@@ -51,16 +51,16 @@ class PaymentPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Payment $payment): bool
-    {
-        //
-    }
+    // public function restore(User $user, Payment $payment): bool
+    // {
+    //     //
+    // }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Payment $payment): bool
-    {
-        //
-    }
+    // /**
+    //  * Determine whether the user can permanently delete the model.
+    //  */
+    // public function forceDelete(User $user, Payment $payment): bool
+    // {
+    //     //
+    // }
 }

@@ -7,9 +7,13 @@ use App\Http\Resources\TraineeResource;
 use App\Http\Resources\TraineeScheduleResource;
 use App\Http\Resources\TraineeExerciseResource;
 use App\Http\Resources\TraineeEquipmentResource;
+use App\Http\Resources\TraineeClassesResource;
 use App\Models\GymClass;
 use App\Models\UserClass;
 use App\Models\Trainee;
+use App\Models\Memberships;
+use App\Models\Subscription;
+use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +30,59 @@ class TraineeClassController extends Controller
      */
     public function index()
     {
-        //
+    }
+    public function trainees(Request $request){
+        // return $request->id;
+        $trainee = GymClass::where('id', $request->id)->first();
+        $trainee = $trainee->user;
+
+        return TraineeClassesResource::collection($trainee);
     }
 
+    public function updateMemperTrainee(Request $request){
+
+
+        // only reainee can create membership
+        $this->authorize('create', UserClass::class);
+        try{
+            $trainee = Trainee::find($request->user_id);
+            $membership = Memberships::find($request->id);
+            if($membership){
+                $subscription = Subscription::find($trainee->user_id);
+                if(!$subscription){
+                    return response()->json([
+                        'message'=>"First Payment",
+                    ],402);
+                }
+                $trainee->membership_id = $request->id;
+                $trainee->save();
+            }else{
+                return response()->json([
+                    'message'=>"membership not exist.",
+                ],403);
+            }
+
+        }catch(AuthorizationException $e){
+            return response()->json([
+                'message' => 'You are not authorized'
+            ], 403);
+        }
+
+    }
+
+    public function addAndUpdateGoals(Request $request){
+        $this->authorize('create', UserClass::class);
+        try{
+            $user = Auth::user()->id;
+            $trainee = Trainee::find($user);
+            $trainee->goals = $request->goals;
+            $trainee->save();
+        }catch(AuthorizationException $e){
+            return response()->json([
+                'message' => 'You are not authorized'
+            ], 403);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -44,7 +98,7 @@ class TraineeClassController extends Controller
         // $this->authorize('create', $trainee);
         try {
             $this->authorize('create', UserClass::class);
-        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+        } catch (AuthorizationException $e) {
             return response()->json([
                 'message' => 'You are not authorized to join the class'
             ], 403);

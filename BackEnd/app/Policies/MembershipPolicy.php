@@ -24,6 +24,7 @@ class MembershipPolicy
      */
     public function view(User $user, Memberships $memberships): bool
     {
+        // dd(1111);
         return $user !== null;
     }
 

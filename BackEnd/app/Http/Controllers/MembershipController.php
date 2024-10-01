@@ -27,6 +27,8 @@ class MembershipController extends Controller
     {
         //all user will show all memberships
         //only admin can update and delete and create memberships
+        // dd(111);
+        // return ["message"=>'done'];
         try {
             $this->authorize('viewAny', Memberships::class);
             $memberships = Memberships::all();
@@ -35,14 +37,10 @@ class MembershipController extends Controller
             ]);
 
         } catch (AuthorizationException $e) {
-
             return response()->json([
                 'message' => "You are not user to show this"
             ], 403);  // Forbidden status
-
         }
-
-
     }
 
     /**
@@ -113,7 +111,7 @@ class MembershipController extends Controller
         }
 
         try {
-            $this->authorize('view', [Memberships::class,$membership]);
+            $this->authorize('view', [Memberships::class, $membership]);
             return response()->json([
                 'Membership' => new MembershipResource($membership),
             ]);
@@ -193,7 +191,7 @@ class MembershipController extends Controller
         //
 
         try {
-            
+
             $this->authorize('delete', [Memberships::class,$memberships]);
             $membership_ = Memberships::find($memberships);
             if($membership_){
