@@ -43,7 +43,7 @@ export class AllTrainersComponent {
       cv: '',
     },
     {
-      name: 'John Doe1',
+      name: 'John Doe3',
       id: 5,
       srcImg: '/male.jfif',
       age: 23,
@@ -80,7 +80,7 @@ export class AllTrainersComponent {
 
   // Group trainers into sets of 3 for carousel slides
   groupTrainers() {
-    const groupSize = 3; // Number of trainers per slide
+    const groupSize = 2; // Number of trainers per slide
     for (let i = 0; i < this.trainers.length; i += groupSize) {
       this.groupedTrainers.push(this.trainers.slice(i, i + groupSize));
     }

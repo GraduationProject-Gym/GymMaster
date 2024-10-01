@@ -19,11 +19,11 @@ export class AddTrainerComponent {
   errorMessage: string | null = null;
 
   addTrainerForm = new FormGroup({
-    name: new FormControl(null, [Validators.required, Validators.min(3)]),
+    name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [Validators.required, Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]),
     age: new FormControl(null, [Validators.required, Validators.min(18)]),
     phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{11}$/)]),
-    address: new FormControl(null, [Validators.pattern(/^(?=.*[A-Za-z])[A-Za-z0-9'.\-\s,]+$/)]),
+    address: new FormControl(null, [Validators.required,Validators.pattern(/^(?=.*[A-Za-z])[A-Za-z0-9'.\-\s,]+$/)]),
     gender: new FormControl(null, Validators.required),
     image: new FormControl(null),
     role: new FormControl("trainer"),

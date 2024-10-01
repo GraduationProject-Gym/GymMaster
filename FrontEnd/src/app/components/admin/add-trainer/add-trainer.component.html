@@ -14,9 +14,9 @@
       <div *ngIf="addTrainerForm.controls['name'].invalid && addTrainerForm.controls['name'].touched"
         class="error-msg">
         <div *ngIf="addTrainerForm.controls['name'].errors?.['required']">Trainer name is required</div>
-        <div *ngIf="addTrainerForm.controls['name'].errors?.['pattern']">
+          <div *ngIf="addTrainerForm.controls['name'].errors?.['minlength']">
           Trainer name must be at minimum 3 character
-        </div>
+          </div>
         <div *ngIf="addTrainerForm.controls['name'].errors?.['backendError']">
           {{ addTrainerForm.controls['name'].errors?.['backendError'] }}
         </div>
@@ -43,7 +43,7 @@
       <input formControlName="age" type="number" name="age" class="form-control" id="age" autocomplete="off">
       <div *ngIf="addTrainerForm.controls['age'].invalid && addTrainerForm.controls['age'].touched" class="error-msg">
         <div *ngIf="addTrainerForm.controls['age'].errors?. ['required']">Age is required</div>
-        <div *ngIf="addTrainerForm.controls['age'].errors?.['min']">Age must be at least 10 years old to register</div>
+        <div *ngIf="addTrainerForm.controls['age'].errors?.['min']">Age must be at least 18 years old to register</div>
         <div *ngIf="addTrainerForm.controls['age'].errors?.['backendError']">
           {{ addTrainerForm.controls['age'].errors?.['backendError'] }}
         </div>
