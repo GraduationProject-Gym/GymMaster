@@ -1,0 +1,78 @@
+.d-flex {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main {
+  min-height: 100vh;
+  width: 100%;
+  background: url("/background5.jpg") no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 100%;
+  margin: auto;
+}
+
+
+h2{
+  color: #ff6207;
+  font-weight: bold;
+  margin: 5% 0  2% 22%;
+}
+
+.custom-table {
+  width: 80%;
+  margin: 0 auto;
+  width: 70%;
+  margin-left: 25%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.custom-table th, .custom-table td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.custom-table th {
+  background-color: #ff6207;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.custom-table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #ff6207;
+  color: #fff;
+}
+
+.custom-table tbody tr:hover td {
+  color: #ff6207;
+}
+
+
+
+@media (max-width: 576px) {
+
+table{
+  width: 70%;
+  margin-right: 0px;
+}
+h2{
+  margin-top: 50px;
+}
+.container{
+  margin-left: 40px;
+}
+}

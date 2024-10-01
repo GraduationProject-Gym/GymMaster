@@ -1,22 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, registerables, Filler } from 'chart.js';
-
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, Filler } from 'chart.js';
 @Component({
-  selector: 'app-report',
+  selector: 'app-show-report',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  imports: [CommonModule,
+    FormsModule,
+    SidebarComponent,
+
+  ],
+  templateUrl: './show-report.component.html',
+  styleUrl: './show-report.component.css'
 })
-export class ReportComponent {
+export class ShowReportComponent {
   constructor() {
     this.reportId = 3;
   }
   reportId: number | undefined;
-
-    // Array of trainee objects to hold trainee details
   trainees = [
     {
       name: 'John Doe',
@@ -33,7 +35,9 @@ export class ReportComponent {
       totalNoOfSession:8,
       exercise: 'Downward Dog, Warrior Pose, Tree Pose',
       equipment: 'Yoga Mat, Resistance Bands',
-      showComments: false,
+      futureRecommendations:"Continue training on flexibility and improve fitness.",
+      overallComment:"Excellent performance. Keep up the hard work!",
+
             // Array of feedback comments with ratings
       comments: [
         { comment: 'This is the first comment', rate: 4 , day:"22/08/2024"},
@@ -41,14 +45,15 @@ export class ReportComponent {
         { comment: 'Thanks for sharing!', rate: 5,  day:"28/08/2024" },
         { comment: 'Really insightful post.', rate: 2,  day:"30/08/2024" },
         { comment: 'Thanks for sharing!', rate: 5,  day:"28/08/2024" },
+        // { comment: 'Really insightful post.', rate: 2,  day:"30/08/2024" },
+        // { comment: 'Really insightful post.', rate: 2,  day:"30/08/2024" },
+        // { comment: 'Fantastic work!', rate: 5,  day:"2/09/2024"}
       ]
     },
   ];
 
     // Object to hold the trainee report details
   traineeReport = {
-    coachComments: '',
-    recommendations: '',
     overallRating:0,
   };
 
@@ -64,42 +69,48 @@ export class ReportComponent {
     // Lifecycle hook that runs after component initialization
   ngOnInit(): void {
     this.calculateOverallRating();
-    this.createChart();
+      this.createChart();
 
-  }
-  createChart(): void {
-    const labels = this.trainees[0].comments.map(comment => comment.day);
-    const data = this.trainees[0].comments.map(comment => comment.rate);
-    Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, Filler);
-
-    new Chart('ratingChart', {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Rate',
-          data: data,
-          borderColor: '#ff6207',
-          backgroundColor: 'rgba(255, 98, 7, 0.5)',
-          fill: true,
-          tension: 0.3
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 5
-          }
-        }
-      }
-    });
   }
 
     // Method to handle report submission
-  submitReport(): void {
-    console.log('Report Submitted:', this.traineeReport);
+    downloadReport(): void {
+    console.log('Report Downloaded:', this.traineeReport);
   }
+
+//
+
+
+//create chart
+createChart(): void {
+  const labels = this.trainees[0].comments.map(comment => comment.day);
+  const data = this.trainees[0].comments.map(comment => comment.rate);
+  Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale,Filler);
+
+  new Chart('ratingChart', {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Rate',
+        data: data,
+        borderColor: '#ff6207',
+        backgroundColor: 'rgba(255, 98, 7, 0.5)',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 5
+        }
+      }
+    }
+  });
 }
+}
+
 
