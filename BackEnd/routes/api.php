@@ -40,10 +40,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
     // Review
     Route::apiResource('review',ReviewController::class);
     Route::post('report', [ReviewController::class, 'report']);
+    // trainees on one class
+    Route::post('trainees', [TraineeClassController::class, 'trainees']);
 });
 
 
-Route::post('trainees', [TraineeClassController::class, 'trainees']);
 
 // Auth User
 Route::post('register', [AuthController::class, 'store']);

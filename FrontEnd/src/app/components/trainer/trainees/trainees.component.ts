@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ElementRef, ViewChild } from '@angular/core';
 import { ClassService } from '../../../services/trainer/class/class.service';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-trainees',
@@ -17,11 +17,14 @@ import { Router, RouterModule } from '@angular/router';
 export class TraineesComponent implements  OnInit{
   @ViewChild('carousel', { static: true }) carousel!: ElementRef;
   traineees:any[]=[];
-  constructor(private router: Router ,private classService:ClassService) {
+  constructor(private router: Router ,private classService:ClassService , private route: ActivatedRoute) {
   }
+
   groupedTrainees: any[] = [];
   currentSlide: number = 0;
-  ngOnInit(){
+  errorMessages: { [userId: number]: string } = {};
+  vailedMessages: { [userId: number]: string } = {};
+    ngOnInit(){
     this.traineees = this.classService.getSelectedClass();
     // console.log(this.traineees.length);
     if(!this.traineees){
@@ -32,10 +35,94 @@ export class TraineesComponent implements  OnInit{
     const traineesArray = this.traineees;
     // console.log(traineesArray.length);
     for (let i = 0; i < traineesArray.length; i += groupSize) {
+      this.traineees[i].showReview = false;
       this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
     }
     console.log(this.groupedTrainees);
   }
+
+  toggleReview(trainee: any) {
+    trainee.showReview = !trainee.showReview;
+  }
+
+
+  // createReport(){}
+
+  prevSlide() {
+    if (this.currentSlide > 0) {
+      this.currentSlide--;
+      this.updateCarousel();
+    }
+  }
+
+  nextSlide() {
+    if (this.currentSlide < this.groupedTrainees.length - 1) {
+      this.currentSlide++;
+      this.updateCarousel();
+    }
+  }
+  updateCarousel() {
+    const carouselItems = this.carousel.nativeElement.querySelectorAll('.carousel-item');
+    carouselItems.forEach((item: { classList: { remove: (arg0: string) => void; add: (arg0: string) => void; }; }, index: number) => {
+      item.classList.remove('active');
+      if (index === this.currentSlide) {
+        item.classList.add('active');
+      }
+    });
+  }
+
+  addReview(userId:string | null, comment:string|null , rate:string| null){
+    let user_id: number = userId? Number(userId):0;
+    let rating: number = rate? Number(rate):0;
+
+      const newReview = {
+        'user_id':user_id,
+        'comments':comment,
+       'rating': rating,
+      };
+
+    if (user_id) {
+      this.classService.setReview(newReview).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.classService.setSelectedclass(response.data);
+          this.vailedMessages[user_id]= "done";
+          setTimeout(() => {
+           delete this.errorMessages[user_id];
+         }, 5000);
+        },
+        error: (error) => {
+          console.log(error);
+
+          if (error.status === 403) {
+              if (error.error?.message) {
+                Object.keys(error.error.message).forEach(key => {
+                  this.errorMessages[user_id]= error.error.message[key];
+                   setTimeout(() => {
+                    delete this.errorMessages[user_id];
+                  }, 5000);
+                });
+
+          }}else if (error.status === 401) {
+            // console.log("not Auth");
+          this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessages[user_id] = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    }
+
+  }
+
+}
+// function ngOnInit() {
+//   throw new Error('Function not implemented.');
+// }
+
+
+
   // trainees: any[] = [
   //   {
   //     name: 'SANDY SAMIR1',
@@ -111,54 +198,3 @@ export class TraineesComponent implements  OnInit{
   //     tempReview: { comment: '', rate: 1 }
   //   },
   // ];
-
-
-
-
-  toggleReview(trainee: any) {
-    trainee.showReview = !trainee.showReview;
-  }
-
-  addReview(trainee: any) {
-  const newReview = {
-    date: new Date().toISOString().split('T')[0],
-    attendens: 'Present',
-    comment: trainee.tempReview.comment,
-    rate: trainee.tempReview.rate
-  };
-  trainee.Reviews.push(newReview);
-  trainee.tempReview = { comment: '', rate: 1 };
-  }
-
-  // createReport(){}
-
-  prevSlide() {
-    if (this.currentSlide > 0) {
-      this.currentSlide--;
-      this.updateCarousel();
-    }
-  }
-
-  nextSlide() {
-    if (this.currentSlide < this.groupedTrainees.length - 1) {
-      this.currentSlide++;
-      this.updateCarousel();
-    }
-  }
-
-
-  updateCarousel() {
-    const carouselItems = this.carousel.nativeElement.querySelectorAll('.carousel-item');
-    carouselItems.forEach((item: { classList: { remove: (arg0: string) => void; add: (arg0: string) => void; }; }, index: number) => {
-      item.classList.remove('active');
-      if (index === this.currentSlide) {
-        item.classList.add('active');
-      }
-    });
-  }
-
-}
-// function ngOnInit() {
-//   throw new Error('Function not implemented.');
-// }
-

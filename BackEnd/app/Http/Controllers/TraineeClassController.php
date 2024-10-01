@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
+use App\Models\Review;
 
 class TraineeClassController extends Controller
 {
@@ -34,13 +35,24 @@ class TraineeClassController extends Controller
     public function index()
     {
     }
-    public function trainees(Request $request)
-    {
-        // return $request->id;
-        $trainee = GymClass::where('id', $request->id)->first();
-        $trainee = $trainee->user;
+    public function trainees(Request $request){
+        try{
+            $this->authorize('view', UserClass::class);
+            $class = GymClass::where('id', $request->id)->first();
+            if(!$class){
+                return response()->json([
+                    'message' => 'this class not exit'
+                ], 403);
+            }
+            $trainee = $class->user;
+            return TraineeClassesResource::collection($trainee);
+        }
+        catch(AuthorizationException $e){
+            return response()->json([
+                'message' => 'You are not authorized'
+            ], 403);
+        }
 
-        return TraineeClassesResource::collection($trainee);
     }
 
     public function updateMemperTrainee(Request $request)
