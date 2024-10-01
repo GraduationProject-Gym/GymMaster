@@ -25,8 +25,8 @@ class GymClassController extends Controller
     {
         // return["message"=>"at backend"];
         $this->authorize('viewAny', GymClass::class);
-        // $gymClasses = GymClass::with(['equipments', 'exercises','trainer.user'])->get();
-        $gymClasses = GymClass::all();
+        $gymClasses = GymClass::with(['equipments', 'exercises','trainer.user', 'schedule'])->get();
+        // $gymClasses = GymClass::all();
         return response()->json($gymClasses, 200);
     }
 

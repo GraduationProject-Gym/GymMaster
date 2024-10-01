@@ -139,6 +139,10 @@ export class TraineeAllClassesComponent {
     }
   }
 
+  formatTime(time: string): string {
+    return time.substring(0, 5);
+  }
+
   trackByClassId(index: number, classObj: any) {
     return classObj.classId;
   }
