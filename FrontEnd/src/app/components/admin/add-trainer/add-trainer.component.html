@@ -1,0 +1,137 @@
+
+<app-admin-sidebar></app-admin-sidebar>
+<!-- <img src="/form4.jpg" alt="Background Image"> -->
+<div class="main">
+  <form [formGroup]="addTrainerForm" class="form form-background">
+    <div class="d-flex flex-column align-items-center">
+      <h1 >Add New Trainer</h1>
+    </div>
+
+    <!-- Name Field -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Trainer Name</label>
+      <input formControlName="name" type="text" class="form-control" id="name" name="name" autocomplete="off">
+      <div *ngIf="addTrainerForm.controls['name'].invalid && addTrainerForm.controls['name'].touched"
+        class="error-msg">
+        <div *ngIf="addTrainerForm.controls['name'].errors?.['required']">Trainer name is required</div>
+        <div *ngIf="addTrainerForm.controls['name'].errors?.['pattern']">
+          Trainer name must be at minimum 3 character
+        </div>
+        <div *ngIf="addTrainerForm.controls['name'].errors?.['backendError']">
+          {{ addTrainerForm.controls['name'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input formControlName="email" type="email" name="email" class="form-control" id="email" autocomplete="off">
+      <div *ngIf="addTrainerForm.controls['email'].invalid && addTrainerForm.controls['email'].touched"
+        class="error-msg">
+        <div *ngIf="addTrainerForm.controls['email'].errors?. ['required']">Email is required</div>
+        <div *ngIf="addTrainerForm.controls['email'].errors?. ['pattern']">Enter a valid email address</div>
+        <div *ngIf="addTrainerForm.controls['email'].errors?.['backendError']">
+          {{ addTrainerForm.controls['email'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Age Field -->
+    <div class="mb-3">
+      <label for="age" class="form-label">Age</label>
+      <input formControlName="age" type="number" name="age" class="form-control" id="age" autocomplete="off">
+      <div *ngIf="addTrainerForm.controls['age'].invalid && addTrainerForm.controls['age'].touched" class="error-msg">
+        <div *ngIf="addTrainerForm.controls['age'].errors?. ['required']">Age is required</div>
+        <div *ngIf="addTrainerForm.controls['age'].errors?.['min']">Age must be at least 10 years old to register</div>
+        <div *ngIf="addTrainerForm.controls['age'].errors?.['backendError']">
+          {{ addTrainerForm.controls['age'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Field -->
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input formControlName="phone" type="text" class="form-control" id="phone" name="phone" autocomplete="off">
+      <div *ngIf="addTrainerForm.controls['phone'].invalid && addTrainerForm.controls['phone'].touched"
+        class="error-msg">
+        <div *ngIf="addTrainerForm.controls['phone'].errors?. ['required']">Phone number is required</div>
+        <div *ngIf="addTrainerForm.controls['phone'].errors?.['pattern']">Enter a valid phone number (e.g., 01234567890)
+          <div *ngIf="addTrainerForm.controls['phone'].errors?.['backendError']">
+            {{ addTrainerForm.controls['phone'].errors?.['backendError'] }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Field -->
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <input formControlName="address" type="text" class="form-control" name="address" id="address" autocomplete="off">
+      <div *ngIf="addTrainerForm.controls['address'].invalid && addTrainerForm.controls['address'].touched"
+        class="error-msg">
+        <div *ngIf="addTrainerForm.controls['address'].errors?. ['required']">Address is required</div>
+        <div *ngIf="addTrainerForm.controls['address'].errors?.['pattern']">Address is not valid </div>
+        <div *ngIf="addTrainerForm.controls['address'].errors?.['backendError']">
+          {{ addTrainerForm.controls['address'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Gender Field -->
+    <label>Gender</label>
+    <div class="form-check mt-3">
+      <input formControlName="gender" class="form-check-input " type="radio" name="gender" id="male" value="male">
+      <label class="form-check-label" for="male">Male</label>
+    </div>
+    <div class="form-check">
+      <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="female" value="female">
+      <label class="form-check-label" for="female">Female</label>
+    </div>
+    <div *ngIf="addTrainerForm.controls['gender'].invalid && addTrainerForm.controls['gender'].touched"
+      class="error-msg">
+      <div *ngIf="addTrainerForm.controls['gender'].errors?. ['required']">Gender is required</div>
+      <div *ngIf="addTrainerForm.controls['gender'].errors?.['backendError']">
+        {{ addTrainerForm.controls['gender'].errors?.['backendError'] }}
+      </div>
+    </div>
+
+    <!-- Role Field -->
+    <div class="form-check">
+      <input formControlName="role" class="form-check-input" type="radio" name="role" value="trainer" hidden>
+    </div>
+    <!-- Image Field -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Upload Image</label>
+      <input formControlName="image" type="file" class="form-control" id="image" name="image"
+        (change)="onFileChange($event)">
+      <div *ngIf="addTrainerForm.controls['gender'].invalid && addTrainerForm.controls['gender'].touched"
+        class="error-msg">
+        <div *ngIf="addTrainerForm.controls['image'].errors?.['backendError']">
+          {{ addTrainerForm.controls['image'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+
+    <!-- CV Field -->
+    <div class="mb-3">
+      <label for="cv" class="form-label">Upload CV</label>
+      <input formControlName="cv" type="file" class="form-control" id="cv" name="cv" (change)="onFileChange($event)" />
+      <div *ngIf="addTrainerForm.controls['cv'].invalid && addTrainerForm.controls['cv'].touched" class="error-msg">
+        <div *ngIf="addTrainerForm.controls['cv'].errors?.['backendError']">
+          {{ addTrainerForm.controls['cv'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+    <!-- Alerts -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div class="d-flex justify-content-center ">
+      <button type="button" class="btn" >ADD</button>
+    </div>
+  </form>
+</div>
+

@@ -36,7 +36,6 @@ export class TraineeComponent {
       },
     ];
 
-
     setProfileImage() {
       const trainee = this.trainee[0];
       if (!trainee.srcImg) {

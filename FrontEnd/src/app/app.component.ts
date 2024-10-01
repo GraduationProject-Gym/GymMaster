@@ -21,6 +21,7 @@ import { TraineeMyClassesComponent } from './components/trainee/trainee-my-class
 import { AttendanceComponent } from './components/trainee/attendance/attendance.component';
 import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 import { ShowReportComponent } from './components/trainee/show-report/show-report.component';
+import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,8 @@ import { ShowReportComponent } from './components/trainee/show-report/show-repor
     DoReviewComponent,
     ShowReviewComponent,
     AttendanceComponent,
-    ShowReportComponent
+    ShowReportComponent,
+    AddTrainerComponent
   ],
 
   providers: [
