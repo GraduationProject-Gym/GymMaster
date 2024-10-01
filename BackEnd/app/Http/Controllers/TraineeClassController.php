@@ -121,7 +121,7 @@ class TraineeClassController extends Controller
                 ]);
             }
             else{
-                return response()->json(['message'=>'You joined to this class','no_trainees'=>$no_trainees,]);
+                return response()->json(['message'=>'You joined to this class']);
             }
         }
         else{
@@ -129,7 +129,6 @@ class TraineeClassController extends Controller
         }
         return response()->json([
             'message' => 'You joined to class successfully',
-            'no_trainees'=>$no_trainees,
             'trainee_class' => new TraineeClassResource($trainee_class),
             // 'traineeData' => new TraineeResource($trainee),
         ], 201);
