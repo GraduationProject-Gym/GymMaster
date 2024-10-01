@@ -23,6 +23,7 @@ use Illuminate\Support\Str;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\DB;
 use App\Models\GymClass;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -326,18 +327,524 @@ class AuthController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
-    {
-        //
+    // public function update(Request $request, $id)
+    // {
+    //     //
+    //     $rules = [
+    //         'name' => ['string', 'max:255','min:5'],
+    //         'email' => [ 'string', 'email', 'max:255', 'unique:users,email'],
+    //         'password' => [ 'string', 'min:8'], // confirmed
+    //         'phone' => ['nullable', 'string', 'max:11'],
+    //         'address' => ['nullable', 'string'],
+    //         'age' => ['nullable', 'integer', 'min:15'],
+    //         'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+    //         // 'gender' => 'required',
+    //         // 'role' => 'required',
+    //         'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10000'],
+    //     ];
+
+    //     $messages = [
+    //         'name.required' => 'Name is required.',
+    //         'email.required' => 'Email is required.',
+    //         'email.email' => 'Email must be a valid email address.',
+    //         'email.unique' => 'The email has already been taken.',
+    //         'password.required' => 'Password is required.',
+    //         'password.min' => 'Password must be at least 8 characters.',
+    //         'password.confirmed' => 'Passwords do not match.',
+    //         'phone.max' => 'Phone number may not be greater than 11 characters.',
+    //         'age.min' => 'Age must be at least 15.',
+    //         'image.image' => 'The file must be an image.',
+    //         'image.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+    //         'image.max' => 'The image may not be greater than 2048 kilobytes.',
+    //         'gender.required' => 'Gender is required.',
+    //         'role.required' => 'Role is required.',
+    //     ];
+
+    //     // Validate the request
+    //     $validator = Validator::make($request->all(), $rules, $messages);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(["message"=>$validator->errors()], 403);
+    //     }
+    //     // dd($this->checkEmailValidity($request->email));
+    //     // if (!$this->checkEmailValidity($request->email)) {
+    //     //     return response()->json(['message' => 'This email not real'],403);
+    //     // }
+    //     $currentUser = User::findOrFail($id);
+
+    //     $imagePath = $currentUser->image;
+    //     $data = request()->all();
+    //     if(request()->hasFile("image")){
+    //         $image = request()->file("image");
+    //         $imagePath = $image->store('images', 'user_images');
+
+    //     }
+    //     $data['image'] = $imagePath;
+    //     $user = User::where('email', $request->email)->first();
+    //     $user1 = User::where('phone', $request->phone)->first();
+    //     if ($user) {
+    //         return response()->json(['message' => 'this email are used'],403);
+    //     }
+    //     if ($user1) {
+    //         return response()->json(['message' => 'this phone are used'],403);
+    //     }
+
+    //     // Create a new user
+    //     $currentUser->update($data);
+
+    //     // return response()->json($request);
+
+    //     if ($request->role === 'trainee') {
+    //         $trainee = Trainee::where('user_id', Auth::id());
+    //         $trainee->update([
+    //             'user_id' => $user->id,
+    //         ]);
+    //     }
+
+    //     Mail::to($user->email)->send(new VerifyEmail($user));
+
+    //     if ($request->role === 'trainer') {
+    //         $trainer = Trainer::where('user_id', Auth::id());
+    //         $cvPath = $request->cv;
+
+    //         if ($request->hasFile('cv')) {
+    //             $cv = $request->file('cv');
+    //             $cvPath = $cv->store('cvs', 'user_cvs');
+    //         }
+    //         $trainer->update([
+    //             'cv' => $cvPath,
+    //             'user_id' => $user->id,
+    //         ]);
+
+    //     }
+    //     if ($request->role === 'trainee') {
+    //         return response()->json([
+    //             'message' => 'User registered successfully check your mail to verifiy',
+    //             'user' => new UserResource($user),
+    //             'traineeData' => new TraineeResource($trainee),
+    //         ], 201);
+    //     } else if ($request->role === 'trainer') {
+    //         return response()->json([
+    //             'message' => 'User registered successfully check your mail to verifiy',
+    //             'user' => new UserResource($user),
+    //             'trainerData' => new TrainerResource($trainer),
+    //         ], 201);
+    //     }
+
+    // }
+    // public function update(Request $request, $id)
+    // {
+    //     // Validation rules
+    //     $rules = [
+    //         'name' => ['nullable', 'string', 'max:255', 'min:5'],  // 'name' is optional
+    //         'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
+    //         'password' => ['sometimes', 'string', 'min:8'],
+    //         'phone' => ['nullable', 'string', 'max:11'],
+    //         'address' => ['nullable', 'string'],
+    //         'age' => ['nullable', 'integer', 'min:15'],
+    //         'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+    //         'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10000'],
+    //         'gender' => ['nullable', 'string'],
+    //         'role' => ['nullable', 'string'],
+    //     ];
+
+    //     // Custom validation messages
+    //     $messages = [
+    //         'email.email' => 'Email must be a valid email address.',
+    //         'email.unique' => 'The email has already been taken.',
+    //         'password.min' => 'Password must be at least 8 characters.',
+    //         'phone.max' => 'Phone number may not be greater than 11 characters.',
+    //         'age.min' => 'Age must be at least 15.',
+    //         'image.image' => 'The file must be an image.',
+    //         'image.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+    //         'image.max' => 'The image may not be greater than 2048 kilobytes.',
+    //     ];
+
+    //     // Validate the request
+    //     $validator = Validator::make($request->all(), $rules, $messages);
+    //     if ($validator->fails()) {
+    //         return response()->json(["message" => $validator->errors()], 403);
+    //     }
+
+    //     // Find the current user or fail
+    //     $currentUser = User::findOrFail($id);
+
+    //     // Ensure email and phone are unique, excluding the current user
+    //     $userWithEmail = User::where('email', $request->email)->where('id', '!=', $id)->first();
+    //     $userWithPhone = User::where('phone', $request->phone)->where('id', '!=', $id)->first();
+
+    //     if ($userWithEmail) {
+    //         return response()->json(['message' => 'This email is already used by another user'], 403);
+    //     }
+
+    //     if ($userWithPhone) {
+    //         return response()->json(['message' => 'This phone number is already used by another user'], 403);
+    //     }
+
+    //     // Handle image upload
+    //     $imagePath = $currentUser->image;
+    //     if ($request->hasFile('image')) {
+    //         $image = $request->file('image');
+    //         $imagePath = $image->store('images', 'user_images');
+    //     }
+
+    //     // Prepare data for update
+    //     // $data = $request->only([
+    //     //     'name', 'email', 'phone', 'address', 'age', 'gender', 'role'
+    //     // ]);
+    //     $data = request()->all();
+
+    //     // Set image path
+    //     $data['image'] = $imagePath;
+
+    //     // Hash the password if it's being updated
+    //     if ($request->filled('password')) {
+    //         $data['password'] = Hash::make($request->password);
+    //     }
+
+    //     // Update the current user's information
+    //     $currentUser->update([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //         'phone' => $request->phone,
+    //         'address' => $request->address,
+    //         'age' => $request->age,
+    //         'image' => $imagePath,
+    //         'gender' => $request->gender,
+    //         'role' => $request->role,
+    //         'token' => Str::random(60),
+    //         'timer' => now(),
+    //     ]);
+
+    //     // Handle trainee role update
+    //     if ($request->role === 'trainee') {
+    //         $trainee = Trainee::where('user_id', $currentUser->id)->first();
+    //         if ($trainee) {
+    //             $trainee->update([
+    //                 'user_id' => $currentUser->id,
+    //             ]);
+    //         }
+    //     }
+
+    //     // Handle trainer role update
+    //     if ($request->role === 'trainer') {
+    //         $trainer = Trainer::where('user_id', $currentUser->id)->first();
+    //         $cvPath = $request->cv;
+
+    //         if ($request->hasFile('cv')) {
+    //             $cv = $request->file('cv');
+    //             $cvPath = $cv->store('cvs', 'user_cvs');
+    //         }
+
+    //         if ($trainer) {
+    //             $trainer->update([
+    //                 'cv' => $cvPath,
+    //                 'user_id' => $currentUser->id,
+    //             ]);
+    //         }
+    //     }
+
+    //     // Send email verification if the email has changed
+    //     // if ($currentUser->email) {
+    //     //     Mail::to($currentUser->email)->send(new VerifyEmail($currentUser));
+    //     // }
+
+    //     // Return response based on the role
+    //     if ($request->role === 'trainee') {
+    //         return response()->json([
+    //             'message' => 'User updated successfully, check your mail to verify',
+    //             'user' => new UserResource($currentUser),
+    //             'traineeData' => new TraineeResource($trainee ?? null),
+    //         ], 201);
+    //     } else if ($request->role === 'trainer') {
+    //         return response()->json([
+    //             'message' => 'User updated successfully, check your mail to verify',
+    //             'user' => new UserResource($currentUser),
+    //             'trainerData' => new TrainerResource($trainer ?? null),
+    //         ], 201);
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'User updated successfully',
+    //         'user' => new UserResource($currentUser),
+    //     ], 201);
+    // }
+
+//     public function update(Request $request, $id)
+// {
+//     // Validation rules
+//     $rules = [
+//         'name' => ['required', 'string', 'max:255', 'min:5'], // Make 'name' required
+//         'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
+//         'password' => ['nullable', 'string', 'min:8'], // Use 'nullable' here to allow it to be optional
+//         'phone' => ['nullable', 'string', 'max:11'],
+//         'address' => ['nullable', 'string'],
+//         'age' => ['nullable', 'integer', 'min:15'],
+//         'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+//         'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10000'],
+//         'gender' => ['nullable', 'string'],
+//         'role' => ['nullable', 'string'],
+//     ];
+
+//     // Custom validation messages
+//     $messages = [
+//         'name.required' => 'Name is required.', // Custom message for name
+//         'email.email' => 'Email must be a valid email address.',
+//         'email.unique' => 'The email has already been taken.',
+//         'password.min' => 'Password must be at least 8 characters.',
+//         'phone.max' => 'Phone number may not be greater than 11 characters.',
+//         'age.min' => 'Age must be at least 15.',
+//         'image.image' => 'The file must be an image.',
+//         'image.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+//         'image.max' => 'The image may not be greater than 2048 kilobytes.',
+//     ];
+
+//     // Validate the request
+//     $validator = Validator::make($request->all(), $rules, $messages);
+//     if ($validator->fails()) {
+//         return response()->json(["message" => $validator->errors()], 403);
+//     }
+
+//     // Find the current user or fail
+//     $currentUser = User::findOrFail($id);
+
+//     // Ensure email and phone are unique, excluding the current user
+//     $userWithEmail = User::where('email', $request->email)->where('id', '!=', $id)->first();
+//     $userWithPhone = User::where('phone', $request->phone)->where('id', '!=', $id)->first();
+
+//     if ($userWithEmail) {
+//         return response()->json(['message' => 'This email is already used by another user'], 403);
+//     }
+
+//     if ($userWithPhone) {
+//         return response()->json(['message' => 'This phone number is already used by another user'], 403);
+//     }
+
+//     // Handle image upload
+//     $imagePath = $currentUser->image;
+//     if ($request->hasFile('image')) {
+//         $image = $request->file('image');
+//         $imagePath = $image->store('images', 'user_images');
+//     }
+
+//     // Prepare data for update
+//     $data = [
+//         'name' => $request->name, // Ensure name is always included
+//         'email' => $request->email,
+//         'phone' => $request->phone,
+//         'address' => $request->address,
+//         'age' => $request->age,
+//         'gender' => $request->gender,
+//         'role' => $request->role,
+//         'image' => $request->hasFile('image') ? $imagePath : $currentUser->image, // Set image path if image was uploaded
+//     ];
+
+//     // Hash the password if it's being updated
+//     if ($request->filled('password')) {
+//         $data['password'] = Hash::make($request->password);
+//     }
+
+//     // Update the current user's information
+//     $currentUser->update($data);
+
+//     // Handle trainee role update
+//     if ($request->role === 'trainee') {
+//         $trainee = Trainee::where('user_id', $currentUser->id)->first();
+//         if ($trainee) {
+//             $trainee->update([
+//                 'user_id' => $currentUser->id,
+//             ]);
+//         }
+//     }
+
+//     // Handle trainer role update
+//     if ($request->role === 'trainer') {
+//         $trainer = Trainer::where('user_id', $currentUser->id)->first();
+//         $cvPath = $request->cv;
+
+//         if ($request->hasFile('cv')) {
+//             $cv = $request->file('cv');
+//             $cvPath = $cv->store('cvs', 'user_cvs');
+//         }
+
+//         if ($trainer) {
+//             $trainer->update([
+//                 'cv' => $cvPath,
+//                 'user_id' => $currentUser->id,
+//             ]);
+//         }
+//     }
+
+//     // Return response based on the role
+//     if ($request->role === 'trainee') {
+//         return response()->json([
+//             'message' => 'User updated successfully, check your mail to verify',
+//             'user' => new UserResource($currentUser),
+//             'traineeData' => new TraineeResource($trainee ?? null),
+//         ], 201);
+//     } else if ($request->role === 'trainer') {
+//         return response()->json([
+//             'message' => 'User updated successfully, check your mail to verify',
+//             'user' => new UserResource($currentUser),
+//             'trainerData' => new TrainerResource($trainer ?? null),
+//         ], 201);
+//     }
+
+//     return response()->json([
+//         'message' => 'User updated successfully',
+//         'user' => new UserResource($currentUser),
+//     ], 201);
+// }
+
+
+public function update(Request $request, $id)
+{
+    // Log incoming request data for debugging
+    Log::info('Incoming request data:', $request->all());
+
+    // Validation rules
+    $rules = [
+        'name' => 'string|max:255|min:5',
+        'email' => 'string|email|max:255|unique:users,email,' . $id,
+        'phone' => 'nullable|string|max:11, unique:users,phone,'. $id,
+        'address' => 'nullable|string',
+        'age' => 'nullable|integer|min:15',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'gender' => 'nullable|string',
+        'role' => 'nullable|string',
+        'password' => 'nullable|string|min:8',
+    ];
+
+    // Custom validation messages
+    $messages = [
+        'email.email' => 'Email must be a valid email address.',
+        'email.unique' => 'The email has already been taken.',
+        'phone.unique'=>'The phone has already been taken.',
+        'phone.max' => 'Phone number may not be greater than 11 characters.',
+        'age.min' => 'Age must be at least 15.',
+        'image.image' => 'The file must be an image.',
+        'image.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+        'image.max' => 'The image may not be greater than 2048 kilobytes.',
+        'password.min' => 'Password must be at least 8 characters.',
+    ];
+
+    // Validate the request
+    $validator = Validator::make($request->all(), $rules, $messages);
+    if ($validator->fails()) {
+        Log::error('Validation errors:', $validator->errors()->toArray());
+        return response()->json(["message" => $validator->errors()], 403);
     }
+
+    // Find the current user or fail
+    $currentUser = User::findOrFail($id);
+
+    // Handle image upload
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('images', 'user_images');
+        $data['image'] = $imagePath;
+    }
+
+    // Hash the password if it's being updated
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($request->password);
+    }
+
+    $currentUser->update($request->all());
+    // $currentUser->fill($request->all());
+    // $currentUser->save();
+
+    // return response()->json($request->all());
+    return response()->json([
+        'message' => 'User updated successfully',
+        'user' => new UserResource($currentUser),
+    ], 200);
+
+    // Handle trainee role update
+    if ($currentUser->role === 'trainee') {
+        $trainee = Trainee::where('user_id', $currentUser->id)->first();
+        if ($trainee) {
+            $trainee->update([
+                'user_id' => $currentUser->id,
+            ]);
+        }
+    }
+
+    // Handle trainer role update
+    if ($currentUser->role === 'trainer') {
+        $trainer = Trainer::where('user_id', $currentUser->id)->first();
+        $cvPath = $request->cv;
+
+        if ($request->hasFile('cv')) {
+            $cv = $request->file('cv');
+            $cvPath = $cv->store('cvs', 'user_cvs');
+        }
+
+        if ($trainer) {
+            $trainer->update([
+                'cv' => $cvPath,
+                'user_id' => $currentUser->id,
+            ]);
+        }
+    }
+
+    // Return response based on the role
+    if ($request->role === 'trainee') {
+        return response()->json([
+            'message' => 'User updated successfully, check your mail to verify',
+            'user' => new UserResource($currentUser),
+            'traineeData' => new TraineeResource($trainee ?? null),
+        ], 201);
+    } else if ($request->role === 'trainer') {
+        return response()->json([
+            'message' => 'User updated successfully, check your mail to verify',
+            'user' => new UserResource($currentUser),
+            'trainerData' => new TrainerResource($trainer ?? null),
+        ], 201);
+    }
+}
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
-    {
-        //
+    // admin delete train
+    // public function destroy($id)
+    // {
+    //     //
+    //     $user = User::findOrFail($id);
+    //     $currentUser = User::findOrFail(Auth::id());
+    //     if(!$user->role == 'admin')
+    //     {
+    //         $user->delete();
+    //         return response()->json(['message'=>'deleted']);
+    //     }else{
+    //         return response()->json(['message'=>'you can not delete']);
+
+    //     }
+    // }
+
+    public function destroy($id)
+{
+    // Find the user to delete or fail
+    $userToDelete = User::findOrFail($id);
+    $currentUser = Auth::user(); // Get the currently authenticated user
+
+    // Check if the current user is an admin
+    if ($currentUser->role === 'admin') {
+        // Check if the user to delete is not an admin
+        if ($userToDelete->role !== 'admin') {
+            $userToDelete->delete();
+            return response()->json(['message' => 'User deleted successfully.']);
+        } else {
+            return response()->json(['message' => 'You cannot delete an admin.'], 403); // Forbidden
+        }
+    } else {
+        return response()->json(['message' => 'You do not have permission to delete users.'], 403); // Forbidden
     }
+}
+
     private function checkEmailValidity($email)
     {
 
