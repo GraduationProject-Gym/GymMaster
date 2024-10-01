@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Memberships;
 use App\Models\User;
 use App\Models\Review;
+use App\Models\Trainer;
+
 use App\Policies\TraineeClassPolicy;
 
 class Trainee extends Model
@@ -26,8 +28,12 @@ class Trainee extends Model
         return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
-    public function ReviewTrainee()
+    public function ReviewTrainees()
     {
         return $this->hasMany(Review::class, 'id', 'id');
     }
+    public function ReviewTrainee()
+    {
+        return $this->belongsToMany(Trainer::class, 'reviews', 'trainee_id', 'trainer_id');
+    }// trainer_id','trainee_id
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Review;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\GymClass;
@@ -10,12 +11,15 @@ use App\Models\Memberships;
 use App\Models\Payment;
 use App\Models\Schedule;
 use App\Models\UserClass;
+use App\Models\Exercise;
 use App\Policies\GymClassPolicy;
 use App\Policies\EquipmentPolicy;
 use App\Policies\PaymentPolicy;
 use App\Policies\SchedulePolicy;
+use App\Policies\ExercisePolicy;
 use App\Policies\TraineeClassPolicy;
 use App\Policies\MembershipPolicy;
+use App\Policies\ReviewPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         Memberships::class => MembershipPolicy::class,
         UserClass::class => TraineeClassPolicy::class,
         Exercise::class => ExercisePolicy::class,
+        Review::class => ReviewPolicy::class,
     ];
 
     /**
@@ -50,6 +55,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Payment::class, PaymentPolicy::class);
         Gate::policy(Schedule::class, SchedulePolicy::class);
         Gate::policy(UserClass::class, TraineeClassPolicy::class);
+        Gate::policy(Review::class, ReviewPolicy::class);
+
 
     }
 }

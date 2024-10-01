@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Api\GymClassResource;
 use App\Http\Resources\TraineeClassResource;
 use App\Http\Resources\TraineeResource;
 use App\Http\Resources\TraineeScheduleResource;
@@ -17,6 +18,8 @@ use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class TraineeClassController extends Controller
 {
@@ -152,6 +155,37 @@ class TraineeClassController extends Controller
             // 'traineeData' => new TraineeResource($trainee),
         ], 201);
 
+    }
+
+    // Train show his joined classes
+
+    public function showJoinedClasses(Request $request)
+    {
+        try {
+            $this->authorize('viewAny', UserClass::class);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to join the class'
+            ], 403);
+        }
+        $user = User::findOrFail(Auth::id());
+        if($user->role == 'trainee')
+        {
+            $joinedClasses = $user->gymClass()
+            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
+            ->get();
+        }
+        else if($user->role == 'admin')
+        {
+            $trainee = User::findOrFail($request->trainee_id);
+            $joinedClasses = $trainee->gymClass()
+            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
+            ->get();
+        }
+        return response()->json([
+            // 'traineeData' => $user,
+            'joinedClasses' => TraineeClassResource::collection($joinedClasses),
+        ]);
     }
 
     /**
