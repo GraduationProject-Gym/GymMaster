@@ -1,23 +1,23 @@
 <div class="sidebar w-20" >
   <nav>
     <ul>
-      <li><a routerLink="/admin-trainers">Trainers</a></li>
+      <!-- <li><a routerLink="/admin-trainers">Trainers</a></li> -->
       <li class="dropdown">
         <a routerLink="/admin-trainers" (click)="toggleDropdownTrainers()">Trainers</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpenClass">
-          <li><a routerLink="/trainee-allClasses" (click)="classes()">All Classes</a></li>
-          <li><a routerLink="/trainee-myClasses">My Class</a></li>
+        <ul class="dropdown-content" [class.show]="dropdownOpenTrainers">
+          <li><a routerLink="/admin-trainers">All Trainers</a></li>
+          <li><a routerLink="/admin-addTrainer">Add Trainer</a></li>
         </ul>
       </li>
       <li><a routerLink="/trainee-goal">Goals</a></li>
-      <li><a routerLink="/trainee-membership" (click)="membership()">Membership</a></li>
-      <li class="dropdown">
+      <li><a routerLink="/trainee-membership">Membership</a></li>
+      <!-- <li class="dropdown">
         <a routerLink="/trainee-myClasses" (click)="toggleDropdownClass()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClass">
           <li><a routerLink="/trainee-allClasses" (click)="classes()">All Classes</a></li>
           <li><a routerLink="/trainee-myClasses">My Class</a></li>
         </ul>
-      </li>
+      </li> -->
       <li class="dropdown">
         <a routerLink="/trainee-showReviews" (click)="toggleDropdownReview()">Reviews</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenReview">

@@ -15,10 +15,11 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   isLoggedIn: boolean = false;
 
+  role="trainee";
   constructor(private authTokenService: AuthTokenService, private logoutService: LogoutService) {
     this.checkLoginStatus();
   }
-  
+
   checkLoginStatus(): void {
       this.isLoggedIn = !!this.authTokenService.getToken();
   }
@@ -39,4 +40,9 @@ export class HeaderComponent {
     this.logoutService.logout();
     this.isLoggedIn = false;
   }
+
+  roleCheck(): boolean {
+    return this.isLoggedIn && this.role === "trainee";
+  }
+
 }

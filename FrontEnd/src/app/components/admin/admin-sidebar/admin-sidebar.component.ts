@@ -8,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './admin-sidebar.component.css'
 })
 export class AdminSidebarComponent {
+//dropdown
+  dropdownOpenTrainers = false;
+  dropdownOpenReview = false;
 
+  toggleDropdownTrainers() {
+    this.dropdownOpenTrainers = !this.dropdownOpenTrainers;
+  }
+  toggleDropdownReview() {
+    this.dropdownOpenReview = !this.dropdownOpenReview;
+  }
 }

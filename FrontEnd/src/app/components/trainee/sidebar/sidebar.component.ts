@@ -83,6 +83,8 @@ export class SidebarComponent {
     });
   }
 
+  // dropdown classes & reviews
+  
   dropdownOpenClass = false;
   dropdownOpenReview = false;
 
