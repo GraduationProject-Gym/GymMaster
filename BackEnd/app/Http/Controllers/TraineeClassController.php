@@ -108,21 +108,28 @@ class TraineeClassController extends Controller
         }
 
         $trainee_class = GymClass::findOrFail($class_id);
+        $no_trainees = UserClass::where('class_id', $request->class_id)->count();
         $exists = UserClass::where('user_id', auth::id())
             ->where('class_id', $class_id)
             ->exists();
 
-        if (!$exists) {
-            $user_class = UserClass::create([
-                'user_id' => auth::id(),
-                'class_id' => $request->class_id
-            ]);
+        if($trainee_class->max_trainee > $no_trainees){
+            if (!$exists) {
+                $user_class = UserClass::create([
+                    'user_id' => auth::id(),
+                    'class_id' => $request->class_id
+                ]);
+            }
+            else{
+                return response()->json(['message'=>'You joined to this class','no_trainees'=>$no_trainees,]);
+            }
         }
         else{
-            return response()->json(['message'=>'You joined to this class']);
+            return response()->json(['message'=>'You cannot join to this class, max number of trainees is exceeded']);
         }
         return response()->json([
             'message' => 'You joined to class successfully',
+            'no_trainees'=>$no_trainees,
             'trainee_class' => new TraineeClassResource($trainee_class),
             // 'traineeData' => new TraineeResource($trainee),
         ], 201);
