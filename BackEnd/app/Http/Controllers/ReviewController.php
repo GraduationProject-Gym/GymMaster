@@ -40,31 +40,34 @@ class ReviewController extends Controller
     {
         //
         $rules = [
-            'rating'=>['required','min:0','max:5'],
+            'rating'=>['required','min:1','max:5','numeric'],
             'comments'=> ['required','string'],
         ];
 
         $messages = [
-            'rating.required' => 'rating mest be in range (0,5)',
+            'rating.required' => 'rating mest be in range (1,5)',
             'comments.required' => 'comment is required',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
-        // dd($validator->errors());
         if ($validator->fails()) {
             return response()->json(["message"=>$validator->errors()], 403);
         }
         if(Auth::user()->role=="trainee"){
             $trainee = Auth::user()->id;
-            $trainer = Trainer::where('user_id',$request->trainer_id)->first();
+            $trainer = Trainer::where('user_id',$request->user_id)->first();
             $trainer = $trainer->user_id;
+            $class = GymClass::where('trainer_id',$trainer)->first();
 
         }else{
             $trainer = Auth::user()->id;
-            $trainee = Trainee::where('user_id',$request->trainee_id)->first();
+            $trainee = Trainee::where('user_id',$request->user_id)->first();
             $trainee = $trainee->user_id;
+            // return ["message"=>$trainee];
+            $class = GymClass::where('trainer_id',$trainer)->first();
         }
 
+        // return ["message"=>$trainer->class_id];
         if (!$trainee) {
             return response()->json(["message"=>"this trainee not found"], 403);
         }
@@ -78,7 +81,7 @@ class ReviewController extends Controller
             $review = Review::create([
                 'rating' => $request->rating,
                 'comments' => $request->comments,
-                'class_id' => $request->class_id,
+                'class_id' => $class->id,
                 'trainee_id' => $trainee,
                 'trainer_id' => $trainer
             ]);

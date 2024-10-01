@@ -13,6 +13,8 @@ export class ClassService {
   private apiUrl = '';
   private showClass = `${environment.domain}/gym-classes`;
   private showTrainee = `${environment.domain}/trainees`;
+  private createReview = `${environment.domain}/review`;
+
 
   private selectedClass:any;
 
@@ -34,6 +36,12 @@ export class ClassService {
   updateClass(classId: string, classData: any) {
     return this.http.put(`${this.apiUrl}/${classId}`, classData);
   }
+  setSelectedclass(classe:[]){
+    this.selectedClass = classe;
+  }
+  getSelectedClass(){
+    return this.selectedClass;
+  }
   getShowClass(id:number):Observable <any>{
     // this.getHeaders()
     const headers =this.getHeaders() ;
@@ -41,15 +49,14 @@ export class ClassService {
     return this.http.get(`${this.showClass}/${id}`, {headers});
 
   }
-  setSelectedclass(classe:[]){
-    this.selectedClass = classe;
-  }
-  getSelectedClass(){
-    return this.selectedClass;
-  }
   geTraineeOnClass(id:number):Observable <any>{
     const headers =this.getHeaders() ;
     return this.http.post(`${this.showTrainee}`,{'id':id},{headers});
+  }
+  setReview(data:any):Observable <any>{
+    // console.log(234234);
+    const headers =this.getHeaders() ;
+    return this.http.post(`${this.createReview}`,{...data},{headers});
   }
 
 }

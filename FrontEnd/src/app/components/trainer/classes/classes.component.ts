@@ -24,7 +24,7 @@ export class ClassesComponent {
   constructor(private router: Router, private route: ActivatedRoute, private classService: ClassService){}
 
   // Trainer and class information
-  id:number=2;
+  id:number=8;
   name: string = 'Sandy Samir';
   className: string = 'Yoga';
   image: string = '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif';
@@ -110,7 +110,7 @@ export class ClassesComponent {
       this.classService.geTraineeOnClass(this.id).subscribe({
         next: (response) => {
           const traineesArray = response.data;
-          // console.log(traineesArray.length);
+          console.log(traineesArray);
           this.classService.setSelectedclass(traineesArray);
           this.router.navigate(['/trainer/trainees']);
         },
