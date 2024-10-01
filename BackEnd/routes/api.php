@@ -9,11 +9,13 @@ use App\Http\Controllers\Api\GymClassController;
 use App\Http\Controllers\Api\EquipmentsController;
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TraineeClassController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ReviewController;
+use App\Models\Attendance;
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -119,3 +121,7 @@ Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
+// Attendance
+Route::get('attendance', [AttendanceController::class, 'index']);
+Route::post('attendance/checkin', [AttendanceController::class, 'checkin']);
+Route::post('attendance/checkout', [AttendanceController::class, 'checkout']);
