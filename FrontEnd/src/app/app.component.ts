@@ -7,10 +7,20 @@ import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ClassesComponent } from './components/trainer/classes/classes.component';
 import { UpdateClassComponent } from './components/trainer/update-class/update-class.component';
-import { ShowClassComponent } from './components/trainer/show-class/show-class.component';
 import { AddClassComponent } from './components/trainer/add-class/add-class.component';
 import { TraineesComponent } from './components/trainer/trainees/trainees.component';
 import { ReportComponent } from './components/trainer/report/report.component';
+import { TraineeComponent } from './components/trainee/profile/trainee.component';
+import { EditProfileComponent } from './components/trainee/edit-profile/edit-profile.component';
+import { TraineeAllClassesComponent } from './components/trainee/trainee-all-classes/trainee-all-classes.component';
+import { ClassService } from './services/trainer/class/class.service';
+import { SidebarService } from './services/trainee/sidebar/sidebar.service';
+import { DoReviewComponent } from './components/trainee/do-review/do-review.component';
+import { MembershipService } from './services/trainee/membership/membership.service';
+import { TraineeMyClassesComponent } from './components/trainee/trainee-my-classes/trainee-my-classes.component';
+import { AttendanceComponent } from './components/trainee/attendance/attendance.component';
+import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
+import { ShowReportComponent } from './components/trainee/show-report/show-report.component';
 
 @Component({
   selector: 'app-root',
@@ -24,15 +34,28 @@ import { ReportComponent } from './components/trainer/report/report.component';
     FooterComponent,
     ClassesComponent,
     UpdateClassComponent,
-    ShowClassComponent,
     AddClassComponent,
     TraineesComponent,
-    ReportComponent
-    ],
+    ReportComponent,
+    TraineeComponent,
+    EditProfileComponent,
+    TraineeMyClassesComponent,
+    TraineeAllClassesComponent,
+    DoReviewComponent,
+    ShowReviewComponent,
+    AttendanceComponent,
+    ShowReportComponent
+  ],
+
+  providers: [
+    ClassService,
+    SidebarService,
+    MembershipService
+  ],
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'FrontEnd';
-
 }

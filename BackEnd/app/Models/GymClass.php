@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes; 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Trainer;
+use App\Models\Equipment;
+use Carbon\Carbon;
+
 
 class GymClass extends Model
 {
@@ -29,15 +32,27 @@ class GymClass extends Model
     // }
 
     public function equipment()
-{
-    return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
-}
-
-
+    {
+        return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
+    }
+    public function review(){
+        return $this->hasMany(Review::class,'class_id','id');
+    }
 
     public function schedule()
     {
-        return $this->hasMany(Schedule::class, 'class_id');
+        return $this->hasMany(Schedule::class, 'class_id')->whereBetween('date_day', [
+            Carbon::today(), // Current date
+            Carbon::today()->addDays(7) // 7 days from today
+        ]);
+    }
+    public function scheduleReport()
+    {
+        return $this->hasMany(Schedule::class, 'class_id','id');
+    }
+
+    public function report(){
+        return $this->hasMany(Report::class,'class_id','id');
     }
 
     public function trainer()
@@ -47,8 +62,9 @@ class GymClass extends Model
 
     public function user()
     {
-       return $this->belongsToMany(User::class, 'user_classes', 'class_id', 'user_id');
+        return $this->belongsToMany(User::class, 'user_classes', 'class_id', 'user_id');
     }
+
     public function equipments()
     {
         return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
@@ -62,4 +78,7 @@ class GymClass extends Model
     public function classTrainer(){
         return $this->belongsTo(Trainer::class, 'id','trainer_id');
     }
+
+
+
 }

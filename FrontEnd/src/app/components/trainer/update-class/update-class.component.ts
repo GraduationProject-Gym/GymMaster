@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClassService } from '../../../services/trainer/class/class.service';
+// import { ClassService } from '../../../services/trainer/class/class.service';
 
 @Component({
   selector: 'app-update-class',
@@ -16,7 +16,7 @@ import { ClassService } from '../../../services/trainer/class/class.service';
     CommonModule,
     FormsModule,
   ],
-  providers: [ClassService] ,
+  // providers: [ClassService] ,
   templateUrl: './update-class.component.html',
   styleUrl: './update-class.component.css'
 })
@@ -41,7 +41,9 @@ import { ClassService } from '../../../services/trainer/class/class.service';
       { days: 'Tuesday, Thursday', hours: '6:00 PM - 7:30 PM' }
     ];
 
-    constructor(private classService: ClassService,private router: Router) {}
+    // constructor(private classService: ClassService,private router: Router) {}
+    constructor(private router: Router) {}
+
 //API
 
 // const classId = this.route.snapshot.paramMap.get('id');

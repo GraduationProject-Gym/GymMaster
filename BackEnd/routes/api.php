@@ -13,6 +13,7 @@ use App\Http\Controllers\TraineeClassController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\ReviewController;
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -28,19 +29,31 @@ Route::post('email-verification', [AuthController::class, 'verifyEmail']);
 Route::middleware(['auth:sanctum'])->group( function () {
     // membership
     Route::apiResource('membership',MembershipController::class);
-
     // subscription
     Route::apiResource('subscribe',SubscriptionController::class);
     Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
     Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
+
+    // trainee Membership
+    Route::post('create-membership', [TraineeClassController::class, 'updateMemperTrainee']);
+    Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
+    // Review
+    Route::apiResource('review',ReviewController::class);
+    Route::post('report', [ReviewController::class, 'report']);
 });
+
+
+Route::post('trainees', [TraineeClassController::class, 'trainees']);
 
 // Auth User
 Route::post('register', [AuthController::class, 'store']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
+Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::apiResource('users', AuthController::class);
+Route::post('users/{id}', [AuthController::class, 'update']);
+// Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
 // membership
 
@@ -55,16 +68,12 @@ Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->midd
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 
-// subscription
-Route::apiResource('subscribe',SubscriptionController::class);
-Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
-Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
 
 
 // gymclass
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/gym-classes', [GymClassController::class, 'index']);
-    Route::get('/gym-classes/{gymClass}', [GymClassController::class, 'show']);
+    Route::get('/gym-classes/{id}', [GymClassController::class, 'show']);
     Route::post('/gym-classes', [GymClassController::class, 'store']);
     Route::put('/gym-classes/{gymClass}', [GymClassController::class, 'update']);
     Route::delete('/gym-classes/{gymClass}', [GymClassController::class, 'destroy']);
@@ -73,7 +82,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-//equipments 
+//equipments
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/equipments', [EquipmentsController::class, 'index'])->name('equipments.index');
     Route::post('/equipments', [EquipmentsController::class, 'store'])->name('equipments.store');
@@ -109,3 +118,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
+

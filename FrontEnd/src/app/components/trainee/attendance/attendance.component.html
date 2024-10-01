@@ -1,0 +1,28 @@
+<div class="d-flex">
+  <div class="sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="main">
+    <div class="container mt-5">
+      <h2 class="text-center ">Your Attendance Records</h2>
+      <div class="table-responsive">
+        <table class="table  custom-table text-center">
+          <thead class="thead">
+            <tr>
+              <th>Date</th>
+              <th>Check-In Time</th>
+              <th>Check-Out Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of attendanceRecords">
+              <td>{{ record.date }}</td>
+              <td>{{ record.checkIn }}</td>
+              <td>{{ record.checkOut }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

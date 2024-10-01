@@ -37,7 +37,7 @@ class GymClassPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'trainer' || $user->role === 'admin' ;
+        return $user->role === 'trainee' || $user->role === 'admin' ;
     }
 
     /**
@@ -61,7 +61,7 @@ class GymClassPolicy
      */
     public function restore(User $user, GymClass $gymClass): bool
     {
-        
+
         return false;
     }
 
@@ -70,7 +70,7 @@ class GymClassPolicy
      */
     public function forceDelete(User $user, GymClass $gymClass): bool
     {
-        
+
         return false;
     }
 }

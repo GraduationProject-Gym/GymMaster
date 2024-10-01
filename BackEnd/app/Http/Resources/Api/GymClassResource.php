@@ -5,6 +5,8 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\EquipmentResource;
+use App\Http\Resources\Api\ScheduleResource;
 
 class GymClassResource extends JsonResource
 {
@@ -15,6 +17,7 @@ class GymClassResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $equipment =$this->equipments;
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -22,17 +25,8 @@ class GymClassResource extends JsonResource
             'status' => $this->status,
             'total_no_of_sessions' => $this->total_no_of_session,
             'max_trainee' => $this->max_trainee,
-            'equipments' => $this->equipments,
-            'exercises' => $this->exercises,
-            'trainer' => $this->trainer ? [
-                'id' => $this->trainer->id, 
-                'name' => $this->trainer->user->name ?? 'N/A', 
-                'email' => $this->trainer->user->email ?? 'N/A', 
-                'phone' => $this->trainer->user->phone ?? 'N/A', 
-                'address' => $this->trainer->user->address ?? 'N/A', 
-                'age' => $this->trainer->user->age ?? 'N/A',  
-            ] : null,
-
+            'equipments' => EquipmentResource::collection($equipment),
+            'scheduals' => ScheduleResource::collection($this->schedule),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
