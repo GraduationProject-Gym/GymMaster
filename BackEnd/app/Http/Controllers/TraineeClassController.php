@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Api\GymClassResource;
 use App\Http\Resources\TraineeClassResource;
 use App\Http\Resources\TraineeResource;
 use App\Http\Resources\TraineeScheduleResource;
@@ -17,6 +18,8 @@ use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class TraineeClassController extends Controller
 {
@@ -130,11 +133,23 @@ class TraineeClassController extends Controller
 
     public function showJoinedClasses()
     {
-        $trainee = User::findOrFail(Auth::id());
+        try {
+            $this->authorize('create', UserClass::class);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to join the class'
+            ], 403);
+        }
+        $user = User::findOrFail(Auth::id());
+        $joinedClasses = $user->gymClass()
+        ->with(['schedule', 'equipments', 'exercises', 'trainer'])
+        ->get();
         return response()->json([
-            'traineeData' => $trainee
+            'traineeData' => $user,
+            'joinedClasses' => TraineeClassResource::collection($joinedClasses),
         ]);
     }
+
     /**
      * Display the specified resource.
      */

@@ -160,6 +160,7 @@ class AuthController extends Controller
     {
         $user = User::where('token', $request->token)->first();
 
+        // return 'done';
         if (!$user) {
             return response()->json([
                 'message' => 'Invalid verification token',

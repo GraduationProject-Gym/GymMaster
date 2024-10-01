@@ -79,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function gymClass()
     {
-       return $this->belongsToMany(GymClass::class, 'user_classes', 'user_id', 'class_id','user_classes');
+       return $this->belongsToMany(GymClass::class, 'user_classes', 'user_id', 'class_id');
     }
     public function sendPasswordResetNotification($token)
     {
