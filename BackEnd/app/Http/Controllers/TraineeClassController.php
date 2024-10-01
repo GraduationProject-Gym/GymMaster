@@ -131,21 +131,31 @@ class TraineeClassController extends Controller
 
     // Train show his joined classes
 
-    public function showJoinedClasses()
+    public function showJoinedClasses(Request $request)
     {
         try {
-            $this->authorize('create', UserClass::class);
+            $this->authorize('viewAny', UserClass::class);
         } catch (AuthorizationException $e) {
             return response()->json([
                 'message' => 'You are not authorized to join the class'
             ], 403);
         }
         $user = User::findOrFail(Auth::id());
-        $joinedClasses = $user->gymClass()
-        ->with(['schedule', 'equipments', 'exercises', 'trainer'])
-        ->get();
+        if($user->role == 'trainee')
+        {
+            $joinedClasses = $user->gymClass()
+            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
+            ->get();
+        }
+        else if($user->role == 'admin')
+        {
+            $trainee = User::findOrFail($request->trainee_id);
+            $joinedClasses = $trainee->gymClass()
+            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
+            ->get();
+        }
         return response()->json([
-            'traineeData' => $user,
+            // 'traineeData' => $user,
             'joinedClasses' => TraineeClassResource::collection($joinedClasses),
         ]);
     }

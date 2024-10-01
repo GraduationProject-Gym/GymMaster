@@ -58,7 +58,7 @@ Route::post('users/{id}', [AuthController::class, 'update']);
 // membership
 
 Route::apiResource('membership',MembershipController::class);
-Route::get('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
+Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::apiResource('trainee-class',TraineeClassController::class);
 
 Route::apiResource('schedule',SchedulesController::class);
