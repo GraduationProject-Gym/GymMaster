@@ -30,10 +30,6 @@ class Trainer extends Model
     {
         return $this->hasMany(GymClass::class, 'trainer_id');
     }
-    public function user()
-    {
-        return $this->belongsTo(User::class,'user_id');
-    }
 
     public function ClassTrainer()
     {

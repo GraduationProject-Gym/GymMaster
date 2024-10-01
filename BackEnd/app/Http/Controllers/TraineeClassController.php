@@ -72,6 +72,15 @@ class TraineeClassController extends Controller
 
     }
 
+    // Train show his joined classes
+
+    public function showJoinedClasses()
+    {
+        $trainee = User::findOrFail(Auth::id());
+        return response()->json([
+            'traineeData' => $trainee
+        ]);
+    }
     /**
      * Display the specified resource.
      */
