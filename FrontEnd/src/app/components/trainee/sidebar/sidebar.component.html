@@ -1,9 +1,8 @@
-<div class="sidebar w-20" >
+<div class="sidebar w-20">
   <nav>
     <ul>
       <li><a routerLink="/trainee-profile">Profile</a></li>
       <li><a routerLink="/trainee-goal">Goals</a></li>
-      <li><a routerLink="/trainee-membership" (click)="membership()">Membership</a></li>
       <li class="dropdown">
         <a routerLink="/trainee-myClasses" (click)="toggleDropdownClass()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClass">
@@ -19,10 +18,10 @@
         </ul>
       </li>
 
-      <li><a routerLink="/equipment">Equipment</a></li>
+      <!-- <li><a routerLink="/equipment">Equipment</a></li> -->
       <li><a routerLink="/trainee-attendance">Attendance</a></li>
       <li><a routerLink="/trainee-showReport">Reports</a></li>
-      <li><a routerLink="/vouchers">Vouchers</a></li>
+      <!-- <li><a routerLink="/vouchers">Vouchers</a></li> -->
     </ul>
   </nav>
 </div>

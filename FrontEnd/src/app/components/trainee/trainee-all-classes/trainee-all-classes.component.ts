@@ -116,56 +116,42 @@ export class TraineeAllClassesComponent {
     private router: Router
   ) { }
 
-  data: any;
-  // memberships: any[] = [];
+  classes: any[] = [];
+  groupedClasses: any[] = [];
+  currentSlide: number = 0;
   errorMessage: string | null = null;
 
   // Index classes
   ngOnInit() {
-    this.data = this.sidebarService.getSelectedData();
-    console.log(this.data);
-    if (!this.data) {
+    this.classes = this.sidebarService.getSelectedData();
+    console.log(this.classes);
+    if (!this.classes) {
       this.router.navigate(['/trainee']);
       return;
     }
+    this.groupClasses(this.classes);
+  }
 
-    // Group memberships by membership type to show them in a user friendly way
-    // this.data.forEach((membership: any) => {
-    //   const type = membership.type;
-    //   if (!this.memberships[type]) {
-    //     this.memberships[type] = [];
-    //   }
-    //   this.memberships[type].push(membership);
-    // });
+  groupClasses(classes: any[] = []) {
+    const groupSize = 1;
+    for (let i = 0; i < classes.length; i += groupSize) {
+      this.groupedClasses.push(classes.slice(i, i + groupSize));
+    }
   }
 
   trackByClassId(index: number, classObj: any) {
     return classObj.classId;
   }
 
-  groupedClasses: any[] = [];
-  currentSlide: number = 0;
+  prevSlide() {
+    if (this.currentSlide > 0) {
+      this.currentSlide--;
+    }
+  }
 
-  // constructor() {
-  //   this.groupClasses();
-  // }
-
-  // groupClasses() {
-  //   const groupSize = 1;
-  //   for (let i = 0; i < this.classes.length; i += groupSize) {
-  //     this.groupedClasses.push(this.classes.slice(i, i + groupSize));
-  //   }
-  // }
-
-  // prevSlide() {
-  //   if (this.currentSlide > 0) {
-  //     this.currentSlide--;
-  //   }
-  // }
-
-  // nextSlide() {
-  //   if (this.currentSlide < this.groupedClasses.length - 1) {
-  //     this.currentSlide++;
-  //   }
-  // }
+  nextSlide() {
+    if (this.currentSlide < this.groupedClasses.length - 1) {
+      this.currentSlide++;
+    }
+  }
 }

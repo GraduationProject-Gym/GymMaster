@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 
@@ -51,7 +51,6 @@ export class SidebarComponent {
       },
       error: (error) => {
         if (error.status === 401) {
-          this.errorMessage = error.error?.message;
           this.router.navigate(['/login']);
           console.log(error);
         } else {
@@ -89,6 +88,7 @@ export class SidebarComponent {
   toggleDropdownClass() {
     this.dropdownOpenClass = !this.dropdownOpenClass;
   }
+  
   toggleDropdownReview() {
     this.dropdownOpenReview = !this.dropdownOpenReview;
   }
