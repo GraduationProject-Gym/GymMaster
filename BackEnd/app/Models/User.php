@@ -93,4 +93,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Trainer::class, 'user_id');
     }
+
+    public function trainee()
+    {
+        return $this->hasOne(Trainer::class, 'user_id');
+    }
 }

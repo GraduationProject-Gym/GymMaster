@@ -1,18 +1,22 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use App\Http\Resources\TraineeClassesResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\GymClass;
 use App\Http\Resources\Api\GymClassResource;
+use App\Http\Resources\MembershipResource;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\Trainer;
+use App\Models\Trainee;
 use App\Models\User;
 use App\Models\Equipment;
 use App\Models\ClassEquipment;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 
@@ -25,7 +29,17 @@ class GymClassController extends Controller
     {
         // return["message"=>"at backend"];
         $this->authorize('viewAny', GymClass::class);
-        $gymClasses = GymClass::with(['equipments', 'exercises','scheduleReport','trainer.user'])->get();
+        $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer.user'])->get();
+        $user1 = User::findOrFail(Auth::id());
+        $user = Auth::user()->id;
+        $trainee = Trainee::find($user);
+        if($user1->role === 'trainee')
+        {
+            return response()->json([
+                'membershipData'=> new MembershipResource($trainee->TraineeMembership),
+                'gymclassData'=>$gymClasses
+            ], 200);
+        }
         return response()->json($gymClasses, 200);
     }
 
