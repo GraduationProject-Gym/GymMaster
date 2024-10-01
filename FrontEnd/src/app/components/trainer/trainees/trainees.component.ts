@@ -4,11 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ElementRef, ViewChild } from '@angular/core';
 import { ClassService } from '../../../services/trainer/class/class.service';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-trainees',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,
+    RouterModule
+  ],
   templateUrl: './trainees.component.html',
   styleUrls: ['./trainees.component.css']
 })
@@ -117,16 +120,18 @@ export class TraineesComponent implements  OnInit{
     trainee.showReview = !trainee.showReview;
   }
 
-    addReview(trainee: any) {
-    const newReview = {
-      date: new Date().toISOString().split('T')[0],
-      attendens: 'Present',
-      comment: trainee.tempReview.comment,
-      rate: trainee.tempReview.rate
-    };
-    trainee.Reviews.push(newReview);
-    trainee.tempReview = { comment: '', rate: 1 };
+  addReview(trainee: any) {
+  const newReview = {
+    date: new Date().toISOString().split('T')[0],
+    attendens: 'Present',
+    comment: trainee.tempReview.comment,
+    rate: trainee.tempReview.rate
+  };
+  trainee.Reviews.push(newReview);
+  trainee.tempReview = { comment: '', rate: 1 };
   }
+
+  // createReport(){}
 
   prevSlide() {
     if (this.currentSlide > 0) {

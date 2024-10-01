@@ -190,7 +190,7 @@ class AuthController extends Controller
         // return ["message"=>$user];
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => ['The provided email or password is incorrect.'],
             ], 403);
         }
         if (is_null($user->email_verified_at)) {
