@@ -14,8 +14,8 @@
                   <h5 class="card-title mb-3">{{ traineee.name }}</h5>
                   <p class="card-text"><strong>Membership:</strong> {{ traineee.membership }}</p>
                   <!-- <a href="javascript:void(0)" class="mt-3" (click)="toggleReview(trainee)">
-                    {{ trainee.showReview ? 'Hide Review' : 'Show Review' }}
-                  </a> -->
+                    {{ trainee.showReview ? 'Hide Review' : 'Show Review' }} -->
+
                   <!-- <div *ngIf="trainee.showReview && trainee.Reviews.length > 0" class="mt-3">
                     <ul>
                       <li *ngFor="let review of trainee.Reviews">
@@ -51,10 +51,9 @@
                     </div>
                     <button class="btn btn-primary mt-3" (click)="addReview(trainee)">Submit Review</button>
                   </div> -->
-                    <button class="btn  mt-3" (click)="addReview(trainee)">Submit Review</button>
-                    <button class="btn  mt-3" routerLink="/trainer/trainees/create-report">Create Report</button>
+                  <button class="btn  mt-3" (click)="addReview(traineee)">Submit Review</button>
+                  <button class="btn  mt-3" routerLink="/trainer/trainees/create-report">Create Report</button>
 
-                  </div>
                 </div>
               </div>
             </ng-container>
@@ -63,14 +62,15 @@
       </div>
     </ng-container>
   </div>
+  <!-- </div> -->
   <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
-    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+    <span class="carousel-control-prev-icon" aria-hidden="true"
+      style="background-color:#ff6207; width: 50px; height: 50px;"></span>
     <span class="visually-hidden">Previous</span>
   </button>
   <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
-    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+    <span class="carousel-control-next-icon" aria-hidden="true"
+      style="background-color:#ff6207; width: 50px; height: 50px;"></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-
-

@@ -93,11 +93,18 @@ class TraineeClassController extends Controller
     public function showGoal()
     {
         try {
-            $trainee = User::findOrFail(auth::id());
-            $goals = $trainee->goals;
-            return response()->json([
-                'goals' => $goals,
-            ], 201);
+            // $trainee = User::findOrFail(auth::id());
+            $trainee = User::find(Auth::user()->id);
+              if(!$trainee){
+                response()->json([
+                    'message' => 'Trainee not found'
+                ], 403);
+            } else {
+                $goals = $trainee->goals;
+                return response()->json([
+                    'goals' => $goals,
+                ], 201);
+            }
         } catch (AuthorizationException $e) {
             return response()->json([
                 'message' => 'You are not authorized'
