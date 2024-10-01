@@ -56,8 +56,6 @@ Route::post('users/{id}', [AuthController::class, 'update']);
 // Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
 // membership
-
-Route::apiResource('membership',MembershipController::class);
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::apiResource('trainee-class',TraineeClassController::class);
 

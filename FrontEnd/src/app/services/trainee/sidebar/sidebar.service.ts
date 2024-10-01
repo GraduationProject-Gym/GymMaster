@@ -30,9 +30,9 @@ export class SidebarService {
   }
 
   // Classes services
-  showMyClasses(id:number) { 
-    const showMyClassesUrl = `${environment.domain}/gym-classes/{id}`;
-    return this.http.get(showMyClassesUrl, { headers: this.getHeaders() });
+  indexMyClasses(): Observable<any> { 
+    const showMyClassesUrl = `${environment.domain}/trainee-class/joined-classes`;
+    return this.http.post(showMyClassesUrl, {}, { headers: this.getHeaders() });
   }
 
   indexClasses(): Observable<any> {
@@ -43,6 +43,7 @@ export class SidebarService {
   // Setter and getter to move data between components
   setSelectedData(data: any) {
     this.selectedData = data;
+    // console.log(this.selectedData);
   }
 
   getSelectedData() {

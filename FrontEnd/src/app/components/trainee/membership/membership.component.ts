@@ -60,7 +60,7 @@ export class MembershipComponent implements OnInit {
       error: (error) => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
-          this.errorMessage = error.error?.message;
+          // this.errorMessage = error.error?.message;
           // console.log(error);
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;

@@ -3,11 +3,12 @@
     <ul>
       <li><a routerLink="/trainee-profile">Profile</a></li>
       <li><a routerLink="/trainee-goal">Goals</a></li>
+      <li><a routerLink="/trainee-membership" (click)="membership()">Membership</a></li>
       <li class="dropdown">
-        <a routerLink="/trainee-myClasses" (click)="toggleDropdownClass()">Classes</a>
+        <a (click)="toggleDropdownClass()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClass">
-          <li><a routerLink="/trainee-allClasses" (click)="classes()">All Classes</a></li>
-          <li><a routerLink="/trainee-myClasses">My Class</a></li>
+          <li><a (click)="classes()">All Classes</a></li>
+          <li><a (click)="myClasses()">My Class</a></li>
         </ul>
       </li>
       <li class="dropdown">

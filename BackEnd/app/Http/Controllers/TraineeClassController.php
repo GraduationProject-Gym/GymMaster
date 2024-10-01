@@ -159,7 +159,7 @@ class TraineeClassController extends Controller
 
     // Train show his joined classes
 
-    public function showJoinedClasses(Request $request)
+    public function showJoinedClasses(Request $request) //Request $request
     {
         try {
             $this->authorize('viewAny', UserClass::class);
@@ -168,12 +168,15 @@ class TraineeClassController extends Controller
                 'message' => 'You are not authorized to join the class'
             ], 403);
         }
+   
         $user = User::findOrFail(Auth::id());
+
         if($user->role == 'trainee')
         {
             $joinedClasses = $user->gymClass()
             ->with(['schedule', 'equipments', 'exercises', 'trainer'])
             ->get();
+
         }
         else if($user->role == 'admin')
         {
