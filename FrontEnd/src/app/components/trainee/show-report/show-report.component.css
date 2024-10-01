@@ -1,7 +1,8 @@
 .main {
   min-height: 100vh;
   width: 100%;
-  margin-left: 20%;
+  margin: auto;
+  /* margin-left: 20%; */
   background: url("/background5.jpg") no-repeat;
   background-size: cover;
   padding: 100px 50px 50px;
@@ -10,4 +11,120 @@
 
 .d-flex {
   display: flex;
+}
+/* Basic styles for the report container */
+.report-container {
+  max-width: 800px;
+  margin-top: 50px;
+  margin-left: 35%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'Arial', sans-serif;
+}
+/* Styles for the main title of the report */
+
+h1 {
+  color: #ff6207;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 28px;
+}
+/* Styles for paragraphs within the report */
+
+p {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #333;
+}
+/* Styles for subheadings in the report */
+
+h5 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #ff6207;
+}
+
+/* Styling the form group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  color: #343a40;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Styling the star rating */
+.star-rating {
+  display: flex;
+  gap: 5px;
+}
+
+.fa-star {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.fas {
+  color: #ff6207;
+}
+
+.far {
+  color: #ced4da;
+}
+
+/* Overall Rating Styling */
+.overall-rating {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #495057;
+}
+
+.overall-rating span {
+  margin-right: 5px;
+}
+
+/* Button styling */
+.btn {
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+
+.mt-3 {
+  margin-top: 20px;
+}
+
+@media (max-width: 576px) {
+  .report-container{
+    width: 75%;
+  }
+  @media (min-width: 768px) {
+    .report-container{
+      width: 50%;
+      margin: 0px;
+    }
+  }
 }
