@@ -118,7 +118,7 @@ export class AllTrainersComponent {
     this.trainers.forEach(trainer => {
       if (!trainer.srcImg) {
         // If no image is provided, use default based on gender
-        trainer.srcImg = trainer.gender === 'female' ? "/female.jfif" : "/male.jfif";
+        trainer.srcImg = trainer.gender === 'female' ? "/female.png" : "/male.png";
       }
     });
   }

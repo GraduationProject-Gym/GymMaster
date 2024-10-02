@@ -35,12 +35,11 @@ export class TraineeComponent {
 
       },
     ];
-
+    
     setProfileImage() {
       const trainee = this.trainee[0];
       if (!trainee.srcImg) {
-        trainee.srcImg = trainee.gender === 'female' ? "/female.jfif" : "/male.jfif";
+        trainee.srcImg = trainee.gender === 'female' ? "/female.png" : "/male.png";
       }
     }
-
   }
