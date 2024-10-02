@@ -33,6 +33,22 @@ class GymClassController extends Controller
      * Store a newly created resource in storage.
      */
 
+     public function getClassTrainer(){
+         try {
+            $this->authorize('wiewClass', GymClass::class);
+            $user = auth()->user();
+            $class = GymClass::where('trainer_id', $user->id)->first();
+            return response()->json([
+                'class' => new GymClassResource($class),
+            ], 200);
+
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => "You are not trainer to show this"
+            ], 403);  // Forbidden status
+        }
+
+     }
 
      public function store(Request $request)
      {

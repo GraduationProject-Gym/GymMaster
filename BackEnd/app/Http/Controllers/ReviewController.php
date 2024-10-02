@@ -63,7 +63,6 @@ class ReviewController extends Controller
             $trainer = Auth::user()->id;
             $trainee = Trainee::where('user_id',$request->user_id)->first();
             $trainee = $trainee->user_id;
-            // return ["message"=>$trainee];
             $class = GymClass::where('trainer_id',$trainer)->first();
         }
 

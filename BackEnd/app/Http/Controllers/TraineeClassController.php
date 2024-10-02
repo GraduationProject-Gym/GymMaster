@@ -32,10 +32,11 @@ class TraineeClassController extends Controller
     public function index()
     {
     }
-    public function trainees(Request $request){
+    public function trainees(){
         try{
             $this->authorize('view', UserClass::class);
-            $class = GymClass::where('id', $request->id)->first();
+            $user = Auth::user();
+            $class = GymClass::where('trainer_id', $user->id)->first();
             if(!$class){
                 return response()->json([
                     'message' => 'this class not exit'
