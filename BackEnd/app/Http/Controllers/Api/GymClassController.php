@@ -11,10 +11,7 @@ use App\Models\Trainer;
 use App\Models\User; 
 use App\Models\ClassEquipment;
 use Illuminate\Auth\Access\AuthorizationException;
-use App\Models\Trainer;
-use App\Models\User;
 use App\Models\Equipment;
-use App\Models\ClassEquipment;
 use Illuminate\Validation\ValidationException;
 use Exception;
 

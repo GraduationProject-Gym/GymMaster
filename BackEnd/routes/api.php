@@ -117,3 +117,6 @@ Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
+
+//show user data based on his role 
+Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
