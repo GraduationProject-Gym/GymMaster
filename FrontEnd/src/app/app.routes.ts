@@ -24,6 +24,7 @@ import { ShowReportComponent } from './components/trainee/show-report/show-repor
 import { AllTrainersComponent } from './components/admin/all-trainers/all-trainers.component';
 import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
 import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
+import { TrainerComponent } from './components/trainer/profile/trainer.component';
 
 
 export const routes: Routes = [
@@ -34,6 +35,7 @@ export const routes: Routes = [
     { path: "forgotPassword", component: ForgotPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'email-verification', component: EmailVerificationComponent },
+    { path: "trainer-profile", component: TrainerComponent },
     { path: "trainer/classes", component: ClassesComponent },
     { path: 'trainer/update-class', component: UpdateClassComponent },
     { path: 'trainer/add-class', component: AddClassComponent },

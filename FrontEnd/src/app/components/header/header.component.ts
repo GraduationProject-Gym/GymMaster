@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LandingPageComponent } from '../landing-page/landing-page.component';
 import { AuthTokenService } from '../../services/auth-token.service';
@@ -14,14 +14,17 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
   isLoggedIn: boolean = false;
+  role = "";
 
-  role="trainee";
-  constructor(private authTokenService: AuthTokenService, private logoutService: LogoutService) {
+  constructor(
+    private authTokenService: AuthTokenService,
+    private logoutService: LogoutService
+  ) {
     this.checkLoginStatus();
   }
 
   checkLoginStatus(): void {
-      this.isLoggedIn = !!this.authTokenService.getToken();
+    this.isLoggedIn = !!this.authTokenService.getToken();
   }
 
   toggleMenu(): void {
@@ -42,7 +45,7 @@ export class HeaderComponent {
   }
 
   roleCheck(): boolean {
+    // Role shall be updated based on BE
     return this.isLoggedIn && this.role === "trainee";
   }
-
 }

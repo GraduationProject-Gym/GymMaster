@@ -85,9 +85,9 @@ export class LoginComponent {
         next: (response) => {
           console.log(response);
           if (response.role === 'trainee'){
-            this.router.navigate(['/trainee']);
+            this.router.navigate(['/trainee-profile']);
           } else if (response.role === 'trainer'){
-            this.router.navigate(['/trainer/classes']);
+            this.router.navigate(['/trainer-profile']);
           }
         },
         error: (error) => {

@@ -9,6 +9,8 @@ import { environment } from '../../../../environments/environment';
 export class LoginService {
 
   constructor(private readonly http: HttpClient) { }
+  private selectedData: any;
+
   private readonly loginUrl = `${environment.domain}/login`;
 
   login(data: { email: string, password: string, device_name: string }) {

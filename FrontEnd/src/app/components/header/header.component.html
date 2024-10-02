@@ -14,12 +14,10 @@
         <ul class="navbar-nav ms-auto">
           <li class="nav-item mx-3 d-flex">
             <ng-container *ngIf="roleCheck() && isLoggedIn">
-              <!-- Trainee Profile -->
               <a class="nav-link" routerLink="/trainee-profile" (click)="closeMenu()">Profile</a>
             </ng-container>
 
             <ng-container *ngIf="!roleCheck() && isLoggedIn">
-              <!-- Trainer Profile -->
               <a class="nav-link" routerLink="/trainer-profile" (click)="closeMenu()">Profile</a>
             </ng-container>
           </li>
@@ -41,23 +39,6 @@
           <li class="nav-item mx-3 d-flex" *ngIf="isLoggedIn">
             <button class="btn" (click)="logout()">Logout</button>
           </li>
-
-          <!-- add profile & logout button -->
-          <!-- <ng-container *ngIf="roleCheck() && isLoggedIn">
-            <a class="nav-link" routerLink="/trainee-profile" (click)="closeMenu()">Profile</a>
-          </ng-container>
-          
-          <ng-container *ngIf="!roleCheck() && isLoggedIn">
-            <a class="nav-link" routerLink="/trainer-profile" (click)="closeMenu()">Profile</a>
-          </ng-container> -->
-
-          <!-- <li class="nav-item mx-3 d-flex">
-            <ng-container *ngIf="isLoggedIn">
-              <button class="btn" (click)="logout()">Logout</button>
-            </ng-container>
-          </li> -->
-
-
         </ul>
       </div>
     </div>

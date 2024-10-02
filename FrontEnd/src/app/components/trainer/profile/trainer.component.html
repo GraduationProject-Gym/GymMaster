@@ -1,0 +1,24 @@
+<div class="d-flex">
+    <div class="main">
+      <div class="profile d-flex flex-column">
+        <div class="d-flex ml-5">
+          <div>
+            <h1>
+              {{ trainee[0].name }}
+              <a href="trainee-profile/edit" class="edit-icon">
+                <i class="fas fa-edit"></i>
+              </a>
+            </h1>
+  
+            <p><strong>Age:</strong> {{ trainee[0].age }}</p>
+            <p><strong>Email:</strong> {{ trainee[0].email }}</p>
+            <p><strong>Phone:</strong> {{ trainee[0].phone }}</p>
+            <p><strong>Gender:</strong> {{ trainee[0].gender }}</p>
+            <p><strong>Address:</strong> {{ trainee[0].address }}</p>
+          </div>
+  
+          <img [src]="trainee[0].srcImg" alt="Trainee Profile Picture" class="profile-img ms-auto">
+        </div>
+      </div>
+    </div>
+  </div>
