@@ -33,6 +33,33 @@ class AuthController extends Controller
         // Apply the auth middleware only to methods logout
         $this->middleware('auth:sanctum')->only(['logout']);
     }
+    public function showuserdata()
+    {
+        $user = auth()->user();
+
+        if ($user->role === 'trainee') {
+            
+            $trainee = $user->trainee; 
+    
+                return response()->json([
+                    'role'=>$user->role,
+                    'age' => $user->age,
+                    'image' => $user->image,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'gender' => $user->gender,
+                    'address' => $user->address,
+                    'membership_type' => $trainee->TraineeMembership->type,
+                    'subscription' => $trainee->TraineeMembership->subscribe_type,
+                ], 200); 
+            } else {
+                return response()->json([
+                    'error' => 'Trainee data or membership not found.'
+                ], 404);
+            }
+        
+    }
+ 
     /**
      * Display a listing of the resource.
      */
@@ -140,6 +167,11 @@ class AuthController extends Controller
                 'user_id' => $user->id,
             ]);
 
+        }
+        if($user->role === 'admin'){
+            $user->email_verified_at = now();
+            $user->save();
+            return ["message"=>"done"];
         }
         if ($request->role === 'trainee') {
             return response()->json([
