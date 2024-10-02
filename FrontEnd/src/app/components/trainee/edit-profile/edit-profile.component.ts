@@ -32,7 +32,8 @@ export class EditProfileComponent implements OnInit {
       age: ['', [Validators.required, Validators.min(1)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      address: ['', Validators.required]
+      address: ['', Validators.required],
+      image:['',Validators.required]
     });
   }
 
@@ -58,7 +59,7 @@ export class EditProfileComponent implements OnInit {
     if (this.editProfileForm.valid) {
       console.log('Profile updated:', this.editProfileForm.value);
       // Navigate to the profile page after successful form submission
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/trainee-profile']);
     } else {
       console.log('Form is invalid');
     }

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { MembershipComponent } from '../membership/membership.component';
 
 @Component({
   selector: 'app-trainee',
@@ -11,6 +12,7 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
     RouterModule,
     SidebarComponent,
     EditProfileComponent,
+    MembershipComponent
   ],
   templateUrl: './trainee.component.html',
   styleUrl: './trainee.component.css'
@@ -33,13 +35,11 @@ export class TraineeComponent {
 
       },
     ];
-
-
+    
     setProfileImage() {
       const trainee = this.trainee[0];
       if (!trainee.srcImg) {
-        trainee.srcImg = trainee.gender === 'female' ? "/female.jfif" : "/male.jfif";
+        trainee.srcImg = trainee.gender === 'female' ? "/female.png" : "/male.png";
       }
     }
-
   }
