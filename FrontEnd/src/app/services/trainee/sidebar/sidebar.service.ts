@@ -40,21 +40,21 @@ export class SidebarService {
     return this.http.get(indexClassesUrl, { headers: this.getHeaders() });
   }
 
+  // Trainer service
+  indexMyTrainers(): Observable<any> {
+    const indexMyTrainersUrl = `${environment.domain}/`;
+    return this.http.get(indexMyTrainersUrl, { headers: this.getHeaders() });
+  }
+
   // Review services
-  indexMyReviews(): Observable<any> {
-    const reviewTrainerUrl = `${environment.domain}/review`;
-    return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
-  }
-  
-  reviewTrainer(data:any): Observable<any> {
-    const reviewTrainerUrl = `${environment.domain}/review`;
-    return this.http.post(reviewTrainerUrl, {...data}, { headers: this.getHeaders() });
-  }
+  // indexMyReviews(): Observable<any> {
+  //   const reviewTrainerUrl = `${environment.domain}/review`;
+  //   return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
+  // }
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
     this.selectedData = data;
-    // console.log(this.selectedData);
   }
 
   getSelectedData() {

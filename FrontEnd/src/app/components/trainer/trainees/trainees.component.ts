@@ -14,20 +14,20 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   templateUrl: './trainees.component.html',
   styleUrls: ['./trainees.component.css']
 })
-export class TraineesComponent implements  OnInit{
+export class TraineesComponent implements OnInit {
   @ViewChild('carousel', { static: true }) carousel!: ElementRef;
-  traineees:any[]=[];
-  constructor(private router: Router ,private classService:ClassService , private route: ActivatedRoute) {
+  traineees: any[] = [];
+  constructor(private router: Router, private classService: ClassService, private route: ActivatedRoute) {
   }
 
   groupedTrainees: any[] = [];
   currentSlide: number = 0;
   errorMessages: { [userId: number]: string } = {};
   vailedMessages: { [userId: number]: string } = {};
-    ngOnInit(){
+  ngOnInit() {
     this.traineees = this.classService.getSelectedClass();
     // console.log(this.traineees.length);
-    if(!this.traineees){
+    if (!this.traineees) {
       this.router.navigate(['/trainer/classes']);
       return;
     }
@@ -71,41 +71,42 @@ export class TraineesComponent implements  OnInit{
     });
   }
 
-  addReview(userId:string | null, comment:string|null , rate:string| null){
-    let user_id: number = userId? Number(userId):0;
-    let rating: number = rate? Number(rate):0;
+  addReview(userId: string | null, comment: string | null, rate: string | null) {
+    let user_id: number = userId ? Number(userId) : 0;
+    let rating: number = rate ? Number(rate) : 0;
 
-      const newReview = {
-        'user_id':user_id,
-        'comments':comment,
-       'rating': rating,
-      };
+    const newReview = {
+      'user_id': user_id,
+      'comments': comment,
+      'rating': rating,
+    };
 
     if (user_id) {
       this.classService.setReview(newReview).subscribe({
         next: (response) => {
           console.log(response);
           this.classService.setSelectedclass(response.data);
-          this.vailedMessages[user_id]= "done";
+          this.vailedMessages[user_id] = "done";
           setTimeout(() => {
-           delete this.errorMessages[user_id];
-         }, 5000);
+            delete this.errorMessages[user_id];
+          }, 5000);
         },
         error: (error) => {
           console.log(error);
 
           if (error.status === 403) {
-              if (error.error?.message) {
-                Object.keys(error.error.message).forEach(key => {
-                  this.errorMessages[user_id]= error.error.message[key];
-                   setTimeout(() => {
-                    delete this.errorMessages[user_id];
-                  }, 5000);
-                });
+            if (error.error?.message) {
+              Object.keys(error.error.message).forEach(key => {
+                this.errorMessages[user_id] = error.error.message[key];
+                setTimeout(() => {
+                  delete this.errorMessages[user_id];
+                }, 5000);
+              });
 
-          }}else if (error.status === 401) {
+            }
+          } else if (error.status === 401) {
             // console.log("not Auth");
-          this.router.navigate(['login']);
+            this.router.navigate(['login']);
           }
           else {
             this.errorMessages[user_id] = 'An unexpected error occurred. Please try again later.';
@@ -123,78 +124,78 @@ export class TraineesComponent implements  OnInit{
 
 
 
-  // trainees: any[] = [
-  //   {
-  //     name: 'SANDY SAMIR1',
-  //     sessionsAttended: 4,
-  //     membership: 'VIP',
-  //     subscription: 'Month',
-  //     image: '/assets/Woman athlete exercising with kettlebell.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIR2',
-  //     sessionsAttended: 4,
-  //     membership: 'VIP',
-  //     subscription: 'Month',
-  //     image: '/assets/Woman athlete exercising with kettlebell.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIRnm3',
-  //     sessionsAttended: 4,
-  //     membership: 'VIP',
-  //     subscription: 'Month',
-  //     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIRww4',
-  //     sessionsAttended: 4,
-  //     membership: 'VIP',
-  //     subscription: 'Month',
-  //     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIRmm5',
-  //     sessionsAttended: 4,
-  //     membership: 'VIP',
-  //     subscription: 'Month',
-  //     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIRyyy6',
-  //     sessionsAttended: 4,
-  //     membership: 'VIP',
-  //     subscription: 'Month',
-  //     image: '/assets/Woman athlete exercising with kettlebell.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },
-  // ];
+// trainees: any[] = [
+//   {
+//     name: 'SANDY SAMIR1',
+//     sessionsAttended: 4,
+//     membership: 'VIP',
+//     subscription: 'Month',
+//     image: '/assets/Woman athlete exercising with kettlebell.jfif',
+//     showReview: false,
+//     Reviews: [
+//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+//     ],
+//     tempReview: { comment: '', rate: 1 }
+//   },  {
+//     name: 'SANDY SAMIR2',
+//     sessionsAttended: 4,
+//     membership: 'VIP',
+//     subscription: 'Month',
+//     image: '/assets/Woman athlete exercising with kettlebell.jfif',
+//     showReview: false,
+//     Reviews: [
+//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+//     ],
+//     tempReview: { comment: '', rate: 1 }
+//   },  {
+//     name: 'SANDY SAMIRnm3',
+//     sessionsAttended: 4,
+//     membership: 'VIP',
+//     subscription: 'Month',
+//     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
+//     showReview: false,
+//     Reviews: [
+//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+//     ],
+//     tempReview: { comment: '', rate: 1 }
+//   },  {
+//     name: 'SANDY SAMIRww4',
+//     sessionsAttended: 4,
+//     membership: 'VIP',
+//     subscription: 'Month',
+//     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
+//     showReview: false,
+//     Reviews: [
+//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+//     ],
+//     tempReview: { comment: '', rate: 1 }
+//   },  {
+//     name: 'SANDY SAMIRmm5',
+//     sessionsAttended: 4,
+//     membership: 'VIP',
+//     subscription: 'Month',
+//     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
+//     showReview: false,
+//     Reviews: [
+//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+//     ],
+//     tempReview: { comment: '', rate: 1 }
+//   },  {
+//     name: 'SANDY SAMIRyyy6',
+//     sessionsAttended: 4,
+//     membership: 'VIP',
+//     subscription: 'Month',
+//     image: '/assets/Woman athlete exercising with kettlebell.jfif',
+//     showReview: false,
+//     Reviews: [
+//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
+//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
+//     ],
+//     tempReview: { comment: '', rate: 1 }
+//   },
+// ];

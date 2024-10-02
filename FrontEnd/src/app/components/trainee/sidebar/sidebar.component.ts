@@ -39,7 +39,7 @@ export class SidebarComponent {
   }
 
   // Show my classes
-  myClasses(){
+  myClasses() {
     this.errorMessage = null; // Reset the error message
 
     this.sidebarService.indexMyClasses().subscribe({
@@ -60,7 +60,7 @@ export class SidebarComponent {
   }
 
   // Index classes
-  classes(){
+  classes() {
     this.errorMessage = null; // Reset the error message
 
     this.sidebarService.indexClasses().subscribe({
@@ -70,10 +70,30 @@ export class SidebarComponent {
         this.router.navigate(['/trainee-allClasses']);
       },
       error: (error) => {
+        // console.log(error);
         if (error.status === 401) {
           this.router.navigate(['/login']);
-          // this.errorMessage = error.error?.message;
-          console.log(error);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  // Index my trainers
+  trainers() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMyTrainers().subscribe({
+      next: (response: any) => {
+        this.sidebarService.setSelectedData(response);
+        console.log(response);
+        this.router.navigate(['/trainee-doReview']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
@@ -87,7 +107,7 @@ export class SidebarComponent {
   toggleDropdownClass() {
     this.dropdownOpenClass = !this.dropdownOpenClass;
   }
-  
+
   toggleDropdownReview() {
     this.dropdownOpenReview = !this.dropdownOpenReview;
   }
