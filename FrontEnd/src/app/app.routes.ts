@@ -24,6 +24,7 @@ import { ShowReportComponent } from './components/trainee/show-report/show-repor
 import { AllTrainersComponent } from './components/admin/all-trainers/all-trainers.component';
 import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
 import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
+import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
 
 
 export const routes: Routes = [
@@ -53,6 +54,9 @@ export const routes: Routes = [
     { path: 'admin-trainers', component:AllTrainersComponent},
     { path: 'admin-addTrainer', component:AddTrainerComponent},
     { path: 'admin-trainees', component:AllTraineesComponent},
+    // { path: 'admin/trainee-moreDetials', component:MoreDetailsTraineeComponent},
+    { path: 'trainee/:id', component: MoreDetailsTraineeComponent },
+
 
     { path: "**", component: ErrorComponent }
 ];

@@ -1,0 +1,34 @@
+<div class="d-flex">
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <div class="main">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="card d-flex flex-row">
+          <div class="card-body">
+            <h5 class="card-title">{{ trainee.name }}</h5>
+            <p class="card-text"><strong>ID:</strong> {{ trainee.id }}</p>
+            <p class="card-text"><strong>Age:</strong> {{ trainee.age }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ trainee.email }}</p>
+            <p class="card-text"><strong>Phone:</strong> {{ trainee.phone }}</p>
+            <p class="card-text"><strong>Address:</strong> {{ trainee.address }}</p>
+            <p class="card-text"><strong>Gender:</strong> {{ trainee.gender }}</p>
+            <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
+            <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
+            <p class="card-text"><strong>Joined Classes:</strong> </p>
+            <ul *ngIf="trainee.classes?.length > 0; else noClasses">
+              <li *ngFor="let classItem of trainee.classes">
+                {{ classItem }}
+              </li>
+            </ul>
+            <ng-template #noClasses>
+              <p>No classes joined.</p>
+            </ng-template>
+          </div>
+          <img [src]="trainee.srcImg" class="card-img-top" alt="Profile Image">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

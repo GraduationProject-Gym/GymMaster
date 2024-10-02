@@ -3,12 +3,11 @@ import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-all-trainees',
   standalone: true,
-  imports: [AdminSidebarComponent, CommonModule, FormsModule, RouterModule],
+  imports: [AdminSidebarComponent, CommonModule, RouterModule],
   templateUrl: './all-trainees.component.html',
   styleUrl: './all-trainees.component.css'
 })

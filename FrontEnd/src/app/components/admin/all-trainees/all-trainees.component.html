@@ -35,21 +35,21 @@
                       <p class="card-text"><strong>Joined Class:</strong> </p>
                       <ul>
                         <li *ngFor="let classItem of trainee.classes">
-                          <p class="card-text"> {{ classItem }}</p>
+                          {{ classItem }}
                         </li>
                       </ul>
                       <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
                       <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
-                      <!-- <p class="card-text"><strong>Age:</strong> {{ trainee.age }}</p>
-                      <p class="card-text"><strong>Phone:</strong> {{ trainee.phone }}</p>
-                      <p class="card-text"><strong>Email:</strong> {{ trainee.email }}</p>
-                      <p class="card-text"><strong>Gender:</strong> {{ trainee.gender }}</p>
-                      <p class="card-text"><strong>Address:</strong> {{ trainee.address }}</p> -->
 
                       <!-- Action buttons for show trainee details-->
+                      <!-- <div class="text-center">
+                        <button class="btn" routerLink="/admin/trainee-moreDetials" >Read More</button>
+                      </div> -->
                       <div class="text-center">
-                        <button class="btn" routerLink="/admin/trainee-moreDetials">Read More</button>
+                        <button class="btn" [routerLink]="['/trainee', trainee.id]">Read More</button>
                       </div>
+                   
+
                     </div>
                   </div>
                 </ng-container>
