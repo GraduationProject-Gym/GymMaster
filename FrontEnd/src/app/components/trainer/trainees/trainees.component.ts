@@ -26,20 +26,41 @@ export class TraineesComponent implements  OnInit{
   errorMessages: { [userId: number]: string } = {};
   vailedMessages: { [userId: number]: string } = {};
     ngOnInit(){
-    this.traineees = this.classService.getSelectedClass();
-    // console.log(this.traineees.length);
+    this.traineees = this.classService.getTrainee();
     if(!this.traineees){
-      this.router.navigate(['/trainer/classes']);
-      return;
+      this.classService.geTraineeOnClass().subscribe({
+        next: (response) => {
+          let traineesArrays = response.data;
+          console.log(traineesArrays);
+          this.classService.setTrainee(traineesArrays);
+          this.traineees = this.classService.getTrainee();
+          const groupSize = 3;
+          const traineesArray = this.traineees;
+          for (let i = 0; i < traineesArray.length; i += groupSize) {
+            this.traineees[i].showReview = false;
+            this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
+          }
+          },
+        error: (error) => {
+          if (error.status === 403) {
+            // this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+          }else if (error.status === 401) {
+            console.log("not Auth");
+            this.router.navigate(['login']);
+          }
+          else {
+            // this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    }else{
+      const groupSize = 3;
+      const traineesArray = this.traineees;
+      for (let i = 0; i < traineesArray.length; i += groupSize) {
+        this.traineees[i].showReview = false;
+        this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
+      }
     }
-    const groupSize = 3;
-    const traineesArray = this.traineees;
-    // console.log(traineesArray.length);
-    for (let i = 0; i < traineesArray.length; i += groupSize) {
-      this.traineees[i].showReview = false;
-      this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
-    }
-    console.log(this.groupedTrainees);
   }
 
   toggleReview(trainee: any) {

@@ -21,6 +21,7 @@ import { TraineeMyClassesComponent } from './components/trainee/trainee-my-class
 import { AttendanceComponent } from './components/trainee/attendance/attendance.component';
 import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 import { ShowReportComponent } from './components/trainee/show-report/show-report.component';
+import { LoginService } from './services/authentication/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +51,8 @@ import { ShowReportComponent } from './components/trainee/show-report/show-repor
   providers: [
     ClassService,
     SidebarService,
-    MembershipService
+    MembershipService,
+    LoginService
   ],
 
   templateUrl: './app.component.html',
