@@ -24,7 +24,13 @@
                   </p>
                 </div>
                 <div class="col-md-6">
-                  <p><strong>Status:</strong> <span class="badge">{{ classObj.status }}</span></p>
+                  <p>
+                    <strong>Status:</strong>
+                    <span class="badge">
+                      @if(classObj.status === 1){Active}
+                      @else if (classObj.status === 0){Inactive}
+                    </span>
+                  </p>
                   <p>
                     <strong>Exercise:</strong>
                     <span class="badge me-1" *ngFor="let exercise of classObj.exerciseData;">

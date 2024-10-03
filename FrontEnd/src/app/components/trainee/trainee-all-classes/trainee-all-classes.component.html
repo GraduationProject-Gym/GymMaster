@@ -27,11 +27,8 @@
                   <p>
                     <strong>Status:</strong>
                     <span class="badge">
-                      @if(classObj.status === 1){
-                      classObj.status = Active
-                      } @else if (classObj.status === 0){
-                      classObj.status = Active
-                      }
+                      @if(classObj.status === 1){Active}
+                      @else if (classObj.status === 0){Inactive}
                     </span>
                   </p>
                   <p>
