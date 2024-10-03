@@ -12,9 +12,13 @@ export class AdminSidebarComponent {
 //dropdown
   dropdownOpenTrainers = false;
   dropdownOpenReview = false;
+  dropdownOpenClasses = false;
 
   toggleDropdownTrainers() {
     this.dropdownOpenTrainers = !this.dropdownOpenTrainers;
+  }
+  toggleDropdownClasses() {
+    this.dropdownOpenClasses = !this.dropdownOpenClasses;
   }
   toggleDropdownReview() {
     this.dropdownOpenReview = !this.dropdownOpenReview;
