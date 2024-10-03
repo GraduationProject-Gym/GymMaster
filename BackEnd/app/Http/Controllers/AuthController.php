@@ -165,6 +165,55 @@ class AuthController extends Controller
 
     }
 
+//////////////////////
+
+public function indexalltrainer() {
+    try {
+        $user = auth()->user();
+
+        
+        if ($user->role !== 'admin') {
+            return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainers.'], 403);
+        }
+
+       
+        $trainers = User::where('role', 'trainer')
+                        ->with('trainer') 
+                        ->get();
+
+        if ($trainers->isEmpty()) {
+            return response()->json(['message' => 'No trainers found.'], 404);
+        }
+
+        $trainerData = [];
+
+        foreach ($trainers as $trainer) {
+           
+            $trainerData[] = [
+                'name' => $trainer->name,
+                'role' => $trainer->role,
+                'age' => $trainer->age,
+                'image' => $trainer->image,
+                'email' => $trainer->email,
+                'phone' => $trainer->phone,
+                'gender' => $trainer->gender,
+                'address' => $trainer->address,
+                'cv' => $trainer->trainer->cv ?? 'N/A', 
+            ];
+        }
+
+        return response()->json($trainerData, 200);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'An unexpected error occurred. Please try again later.',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+
+/////////////////////
  
     /**
      * Display a listing of the resource.

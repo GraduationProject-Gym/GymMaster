@@ -124,3 +124,7 @@ Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 
 
 // show all trainee data
 Route::middleware('auth:sanctum')->get('/alltrainees', [AuthController::class, 'indexalltrainee'])->name('alltrainees.show');
+
+
+//show all trainer data
+Route::middleware('auth:sanctum')->get('/alltrainers', [AuthController::class, 'indexalltrainer'])->name('alltrainers.show');
