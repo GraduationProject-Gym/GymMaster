@@ -1,39 +1,38 @@
   <img src="/form4.jpg" alt="Background Image">
   <div class="report-container">
-    
+
         <!-- Hidden input to store the report ID -->
     <input type="hidden" [(ngModel)]="reportId" />
 
     <!-- Main title of the report -->
-    <h1>Report for: {{ trainees[0].name }}</h1>
+    <h1>Report for: {{ report.trainee.name }}</h1>
 
     <!-- Section for Trainee Details -->
     <h5 class="card-title">Trainee Details</h5>
     <div class="row text-start">
       <div class="col-md-6">
-        <p><strong>Age:</strong> {{ trainees[0].age }}</p>
-        <p><strong>Email:</strong> {{ trainees[0].email }}</p>
-        <p><strong>Phone:</strong> {{ trainees[0].phone }}</p>
-        <p><strong>Gender:</strong> {{ trainees[0].gender }}</p>
+        <p><strong>Age:</strong> {{ report.trainee.age }}</p>
+        <p><strong>Email:</strong> {{ report.trainee.email }}</p>
+        <p><strong>Phone:</strong> {{ report.trainee.phone }}</p>
+        <p><strong>Gender:</strong> {{ report.trainee.gender }}</p>
       </div>
       <div class="col-md-6">
-        <p><strong>Address:</strong> {{ trainees[0].address }}</p>
-        <p><strong>Membership Type:</strong> {{ trainees[0].membership }}</p>
-        <p><strong>Subscription:</strong> {{ trainees[0].subscription }}</p>
+        <p><strong>Address:</strong> {{ report.trainee.address }}</p>
+        <p><strong>Membership Type:</strong> {{ report.trainee.membership.type }}</p>
+        <p><strong>Subscription:</strong> {{ report.trainee.membership.subscribe_type }}</p>
       </div>
-    </div>
 
     <!-- Section for Class Overview -->
     <h5 class="card-title">Class Overview</h5>
     <div class="row text-start">
       <div class="col-md-6">
-        <p><strong>Trainer:</strong> {{ trainees[0].trainerName }}</p>
-        <p><strong>Equipment used in class:</strong> {{ trainees[0].equipment }}</p>
-        <p><strong>Exercise done in class:</strong> {{ trainees[0].exercise }}</p>
+        <p><strong>Trainer:</strong> {{ report.class.trainer.name }}</p>
+        <p><strong>Equipment used in class:</strong> {{ equipments }}</p>
+        <p><strong>Exercise done in class:</strong> {{ exercises }}</p>
       </div>
       <div class="col-md-6">
-        <p><strong>Class:</strong> {{ trainees[0].className }}</p>
-        <p><strong>Total Number of Sessions:</strong> {{ trainees[0].totalNoOfSession }}</p>
+        <p><strong>Class:</strong> {{ report.class.class.name }}</p>
+        <p><strong>Total Number of Sessions:</strong> {{ report.class.class.total_no_of_session }}</p>
       </div>
     </div>
 
@@ -41,13 +40,13 @@
     <h5 class="card-title">Coach feedback</h5>
     <div class="row text-start">
       <div class="col-md-6">
-        <div *ngFor="let feedback of trainees[0].comments; let i = index">
-          <p><strong>Comment {{ i + 1 }}:</strong> {{ feedback.comment }}</p>
+        <div *ngFor="let feedback of report.review; let i = index">
+          <p><strong>Comment {{ i + 1 }}:</strong> {{ feedback.comments }}</p>
           <p><strong>Rating:</strong>
             <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
-              <i class="fa" [ngClass]="j < feedback.rate ? 'fas fa-star' : 'far fa-star'"></i>
+              <i class="fa" [ngClass]="j < feedback.rating ? 'fas fa-star' : 'far fa-star'"></i>
             </span>
-            ({{ feedback.rate }} out of 5)
+            ({{ feedback.rating }} out of 5)
           </p>
         </div>
       </div>

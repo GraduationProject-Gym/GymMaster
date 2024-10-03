@@ -25,6 +25,7 @@ import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.
 import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
+import { LoginService } from './services/authentication/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -59,12 +60,13 @@ import { AdminAddClassComponent } from './components/admin/admin-add-class/admin
   providers: [
     ClassService,
     SidebarService,
-    MembershipService
+    MembershipService,
+    LoginService
   ],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'FrontEnd';
+
 }

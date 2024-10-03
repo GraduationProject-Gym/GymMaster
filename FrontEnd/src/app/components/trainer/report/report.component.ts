@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, registerables, Filler } from 'chart.js';
+import { ClassService } from '../../../services/trainer/class/class.service';
 
 @Component({
   selector: 'app-report',
@@ -10,12 +11,56 @@ import { Chart, LineController, LineElement, PointElement, LinearScale, Title, C
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css']
 })
-export class ReportComponent {
-  constructor() {
-    this.reportId = 3;
-  }
+export class ReportComponent implements OnInit{
   reportId: number | undefined;
+  report:any;
+  equipments:string='';
+  exercises:string='';
 
+  constructor(private classService:ClassService) {
+    // this.reportId = 3;
+  }
+
+  ngOnInit(){
+    this.report = this.classService.getReport();
+    if(this.report){
+      this.equipments = this.report.class.equipments.map((el:any) => el.name).join(', ');
+      this.exercises = this.report.class.exercises.map((el:any) => el.name).join(', ');
+      console.log(this.report);
+      this.calculateOverallRating();
+      this.createChart();
+
+    }
+    if(!this.report){
+      return ;
+      // this.classService.geTraineeOnClass().subscribe({
+      //   next: (response) => {
+      //     let traineesArrays = response.data;
+      //     console.log(traineesArrays);
+      //     this.classService.setTrainee(traineesArrays);
+      //     this.traineees = this.classService.getTrainee();
+      //     const groupSize = 3;
+      //     const traineesArray = this.traineees;
+      //     for (let i = 0; i < traineesArray.length; i += groupSize) {
+      //       this.traineees[i].showReview = false;
+      //       this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
+      //     }
+      //     },
+      //   error: (error) => {
+      //     if (error.status === 403) {
+      //       // this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+      //     }else if (error.status === 401) {
+      //       console.log("not Auth");
+      //       this.router.navigate(['login']);
+      //     }
+      //     else {
+      //       // this.errorMessage = 'An unexpected error occurred. Please try again later.';
+      //     }
+      //   }
+      // });
+    }
+  }
+  // setSelectedclass
     // Array of trainee objects to hold trainee details
   trainees = [
     {
@@ -31,7 +76,7 @@ export class ReportComponent {
       address:"Asyut",
       gender:"female",
       totalNoOfSession:8,
-      exercise: 'Downward Dog, Warrior Pose, Tree Pose',
+      // exercise: 'Downward Dog, Warrior Pose, Tree Pose',
       equipment: 'Yoga Mat, Resistance Bands',
       showComments: false,
             // Array of feedback comments with ratings
@@ -53,23 +98,22 @@ export class ReportComponent {
   };
 
     // Method to calculate the overall rating based on comments
-  calculateOverallRating(): void {
-    const comments = this.trainees[0].comments;
-    const totalRating = comments.reduce((sum, comment) => sum + comment.rate, 0);
+  calculateOverallRating() {
+    const comments = this.report.review;
+    console.log(comments);
+    const totalRating = comments.reduce((sum:number, comment:any) => sum + comment.rating, 0);
     const numberOfRatings = comments.length;
-
     this.traineeReport.overallRating = totalRating / numberOfRatings;
   }
 
     // Lifecycle hook that runs after component initialization
-  ngOnInit(): void {
-    this.calculateOverallRating();
-    this.createChart();
+  // ngOnInit(): void {
 
-  }
-  createChart(): void {
-    const labels = this.trainees[0].comments.map(comment => comment.day);
-    const data = this.trainees[0].comments.map(comment => comment.rate);
+
+  // }
+  createChart() {
+    const labels = this.report.review.map((comment: any) => comment.created_at);
+    const data = this.report.review.map((comment:  any) => comment.rating);
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, Filler);
 
     new Chart('ratingChart', {

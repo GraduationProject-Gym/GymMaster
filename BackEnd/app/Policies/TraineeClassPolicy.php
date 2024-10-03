@@ -12,15 +12,16 @@ use App\Models\Trainee;
      */
     public function viewAny(User $user)
     {
-        return $user->role === 'trainee' || $user->role === 'trainer';
+        return $user->role === 'trainee' || $user->role === 'admin';
     }
 
     /**
      * Determine whether the user can view the trainee .
      */
-    public function view(User $user, Trainee $trainee)
+    public function view(User $user)
     {
-        // return $user->role === 'trainee' ;//|| $user->role === 'trainer';
+        // return $user->role === 'trainee' || $user->role === 'admin';
+        return $user->role === 'trainer';
     }
 
     /**

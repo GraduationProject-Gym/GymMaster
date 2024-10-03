@@ -1,55 +1,77 @@
 <app-sidebar></app-sidebar>
-        <div class="main">
-          <img src="/background5.jpg" alt="Background Image">
+<div class="main">
+  <img src="/background5.jpg" alt="Background Image">
 
-          <ng-container *ngFor="let group of groupedClasses; let i = index">
-          <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
-          <div class="container mt-5">
-            <div *ngFor="let classObj of group; let i = index; trackBy: trackByClassId">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <h2 class="text-center"><strong>{{ classObj.className }}</strong></h2>
-                  <h4 class="card-title"><strong>Class Details</strong></h4>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <p><strong>Trainer Name:</strong> <span class="badge">{{ classObj.trainerName }}</span></p>
+  <ng-container *ngFor="let group of groupedClasses; let i = index">
+    <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
+      <div class="container mt-5">
+        <div *ngFor="let classObj of group; let i = index; trackBy: trackByClassId">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h2 class="text-center"><strong>{{ classObj.name }}</strong></h2>
+              <h4 class="card-title"><strong>Class Details</strong></h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <p><strong>Trainer Name:</strong> <span class="badge">{{ classObj.trainer.user.name }}</span></p>
 
-                      <p><strong>Number of Sessions:</strong> <span class="badge">{{ classObj.sessions }}</span></p>
-                      <p><strong>Equipment:</strong> <span class="badge">{{ classObj.equipment }}</span></p>
-                    </div>
-                    <div class="col-md-6">
-                      <p><strong>Status:</strong> <span class="badge">{{ classObj.status }}</span></p>
-                      <p><strong>Exercise:</strong> <span class="badge">{{ classObj.exercise }}</span></p>
-
-                    </div>
-                    <div class="col-md-6">
-                      <p><strong>Description:</strong> <span class="badge">{{ classObj.description }}</span></p>
-                    </div>
-                  </div>
-                  <h6 class="mt-4"><strong>Weekly Session Information</strong></h6>
-                  <div *ngFor="let session of classObj.sessionsInfo; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
-                    <h6 class="text-secondary">Session {{ i + 1 }}</h6>
-                    <p><strong>Day:</strong> <span class="badge">{{ session.days || 'No day available' }}</span></p>
-                    <p><strong>Hours:</strong> <span class="badge">{{ session.hours || 'No hours available' }}</span></p>
-                  </div>
-                  <div class="text-center">
-                    <button class="btn">Subscribe</button>
-                  </div>
-                  <div class="buttons">
-                    <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
-                      <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
-                      <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
-                      <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
-                      <span class="visually-hidden">Next</span>
-                    </button>
-                  </div>
+                  <p><strong>Number of Sessions:</strong> <span class="badge">{{ classObj.total_no_of_session }}</span>
+                  </p>
+                  <p>
+                    <strong>Equipment:</strong>
+                    <span class="badge me-1" *ngFor="let equipment of classObj.equipments;">
+                      {{ equipment.name }}
+                    </span>
+                  </p>
                 </div>
+                <div class="col-md-6">
+                  <p>
+                    <strong>Status:</strong>
+                    <span class="badge">
+                      @if(classObj.status === 1){Active}
+                      @else if (classObj.status === 0){Inactive}
+                    </span>
+                  </p>
+                  <p>
+                    <strong>Exercise:</strong>
+                    <span class="badge me-1" *ngFor="let exercise of classObj.exercises;">
+                      {{ exercise.name }}
+                    </span>
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <p><strong>Description:</strong> <span class="badge">{{ classObj.description }}</span></p>
+                </div>
+              </div>
+              <h6 class="mt-4"><strong>Session Information</strong></h6>
+              <div *ngFor="let session of classObj.schedule; let i = index"
+                class="mb-3 border p-3 rounded bg-light shadow-sm">
+                <h6 class="text-secondary">Session {{ i + 1 }}</h6>
+                <p><strong>Day:</strong> <span class="badge">{{ session.nameDay || 'No day available' }}</span></p>
+                <p>
+                  <strong>Hours:</strong>
+                  <span class="badge">{{ formatTime(session.session_start)}} - {{formatTime(session.session_end)}}
+                  </span>
+                </p>
+              </div>
+              <div class="text-center">
+                <button class="btn">Join</button>
+              </div>
+              <div class="buttons">
+                <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"
+                    style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
+                  <span class="carousel-control-next-icon" aria-hidden="true"
+                    style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
               </div>
             </div>
           </div>
-          </div>
-          </ng-container>
         </div>
-
+      </div>
+    </div>
+  </ng-container>
+</div>

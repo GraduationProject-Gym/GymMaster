@@ -1,56 +1,43 @@
 <div style="position: relative;">
-  <nav class="navbar navbar-expand-lg navbar-custom bg-dark" style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 2;">
-      <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/home" routerLinkActive="active" >
-          <img src="/logo2.png" width="150" alt="Logo" class="d-inline-block align-text-top" >
-        </a>
-          <!-- <a class="navbar-brand" routerLink="/home"  routerLinkActive="active" style="color:#ff6207; font-weight: bolder;">GymMaster</a> -->
-          <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleMenu()">
-            <span class="navbar-toggler-icon" ></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-3">
-                  <a class="nav-link" href="/home" (click)="closeMenu()">Home</a>
-                </li>
-                  <li class="nav-item mx-3">
-                      <a class="nav-link" href="#categories" routerLinkActive="active" (click)="closeMenu()">Categories</a>
-                  </li>
-                  <!-- <li class="nav-item mx-3">
+  <nav class="navbar navbar-expand-lg navbar-custom bg-dark"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 80px; z-index: 2;">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
+        <img src="/logo2.png" width="150" alt="Logo" class="d-inline-block align-text-top">
+      </a>
+      <!-- <a class="navbar-brand" routerLink="/home"  routerLinkActive="active" style="color:#ff6207; font-weight: bolder;">GymMaster</a> -->
+      <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false"
+        aria-label="Toggle navigation" (click)="toggleMenu()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item mx-3 d-flex">
+            <a *ngIf="isLoggedIn" class="nav-link" (click)="class()">Class</a>
+          </li>
+          <li class="nav-item mx-3 d-flex">
+            <a *ngIf="isLoggedIn" class="nav-link" (click)="profile()">Profile</a>
+          </li>
+          <li class="nav-item mx-3">
+            <a class="nav-link" href="/home" (click)="closeMenu()">Home</a>
+          </li>
+          <li class="nav-item mx-3">
+            <a class="nav-link" href="#categories" routerLinkActive="active" (click)="closeMenu()">Categories</a>
+          </li>
+          <!-- <li class="nav-item mx-3">
                       <a class="nav-link" href="#Contact" routerLinkActive="active" (click)="closeMenu()">Contact</a>
                   </li> -->
-                  <li class="nav-item mx-3">
-                      <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
-                  </li>
-                  <li class="nav-item mx-3 d-flex" *ngIf="!isLoggedIn">
-                    <button class="btn" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</button>
-                  </li>
-                  <!-- <li class="nav-item mx-3 d-flex" *ngIf="isLoggedIn" >
-                    <button class="btn" (click)="logout()">Logout</button>
-                  </li> -->
-
-                  <!-- add profile & logout button -->
-                  <li class="nav-item mx-3 d-flex">
-                    <ng-container *ngIf="roleCheck()">
-                      <!-- Trainee Profile -->
-                      <a class="nav-link" routerLink="/trainee-profile" (click)="closeMenu()">Profile</a>
-                    </ng-container>
-
-                    <ng-container *ngIf="!roleCheck() && isLoggedIn">
-                      <!-- Trainer Profile -->
-                      <a class="nav-link" routerLink="/trainer-profile" (click)="closeMenu()">Profile</a>
-                    </ng-container>
-
-                    <ng-container *ngIf="isLoggedIn">
-                      <!-- Logout Button -->
-                      <button class="btn" (click)="logout()">Logout</button>
-                    </ng-container>
-                  </li>
-
-
-            </ul>
-          </div>
+          <li class="nav-item mx-3">
+            <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
+          </li>
+          <li class="nav-item mx-3 d-flex" *ngIf="!isLoggedIn">
+            <button class="btn" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</button>
+          </li>
+          <li class="nav-item mx-3 d-flex" *ngIf="isLoggedIn">
+            <button class="btn" (click)="logout()">Logout</button>
+          </li>
+        </ul>
       </div>
+    </div>
   </nav>
 </div>
-

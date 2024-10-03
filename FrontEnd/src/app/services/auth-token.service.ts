@@ -7,7 +7,7 @@ export class AuthTokenService {
 
   constructor() { }
 
-  getToken(): string | null {
+  getToken(): any {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('authToken');
     }
@@ -17,6 +17,7 @@ export class AuthTokenService {
   removeToken(): void {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('authToken');
+      sessionStorage.removeItem('role');
     }
   }
 

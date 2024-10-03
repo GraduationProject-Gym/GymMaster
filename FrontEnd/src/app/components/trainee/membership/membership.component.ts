@@ -29,10 +29,32 @@ export class MembershipComponent implements OnInit {
     this.data = this.sidebarService.getSelectedData();
     console.log(this.data);
     if (!this.data) {
-      this.router.navigate(['/trainee']);
+      this.membership();
       return;
     }
+    this.toArray(this.data);
+  }
 
+  // Handle reload case
+  membership() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMemberships().subscribe({
+      next: (response) => {
+        this.data = response.Memberships;
+        this.toArray(this.data);        
+      },
+      error: (error) => {
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  toArray(data: any) {
     // Group memberships by membership type to show them in a user friendly way
     this.data.forEach((membership: any) => {
       const type = membership.type;
@@ -60,7 +82,7 @@ export class MembershipComponent implements OnInit {
       error: (error) => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
-          this.errorMessage = error.error?.message;
+          // this.errorMessage = error.error?.message;
           // console.log(error);
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;

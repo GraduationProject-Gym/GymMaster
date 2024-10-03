@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -8,16 +8,26 @@ import { environment } from '../../../../environments/environment';
 })
 export class LoginService {
 
+  private selectedClass:any;
+
   constructor(private readonly http: HttpClient) { }
+
   private readonly loginUrl = `${environment.domain}/login`;
 
-  login(data: { email: string, password: string, device_name: string }) {
+  login(data: { email: string, password: string, device_name: string }):Observable <any> {
     // console.log(data); // Test sent payload
     return this.http.post(this.loginUrl, data).pipe(tap((response: any) => {
       if (response && response.token) {
         localStorage.setItem('authToken', response.token);
+        sessionStorage.setItem('role',response.role);
       }
     }));
+  }
+  setSelectedclass(classe:any){
+    this.selectedClass = classe;
+  }
+  getSelectedClass(){
+    return this.selectedClass;
   }
 }
 

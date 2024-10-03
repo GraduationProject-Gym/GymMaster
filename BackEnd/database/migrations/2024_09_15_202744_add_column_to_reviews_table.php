@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('reviews', function (Blueprint $table) {
             //
-            $table->foreignId('trainee_id')->constrained('trainees','id')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('trainer_id')->constrained('trainers','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('trainee_id')->constrained('trainees','user_id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('trainer_id')->constrained('trainers','user_id')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

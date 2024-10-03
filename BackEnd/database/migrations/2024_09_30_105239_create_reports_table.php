@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('equipments', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('reports', function (Blueprint $table) {
+            $table->id();
+            $table->text('recommend');
+            $table->text('over_all_comment');
+            $table->foreignId('class_id')->constrained('gymclass','id')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('equipments', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('reports');
     }
 };

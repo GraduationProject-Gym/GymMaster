@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
 import { FooterComponent } from '../../footer/footer.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UpdateClassComponent } from '../update-class/update-class.component';
 import { CommonModule } from '@angular/common';
-import { Init } from 'v8';
-
+import { ClassService } from '../../../services/trainer/class/class.service';
+import { LoginService } from '../../../services/authentication/login/login.service';
 @Component({
   selector: 'app-classes',
   standalone: true,
@@ -20,53 +20,52 @@ import { Init } from 'v8';
   templateUrl: './classes.component.html',
   styleUrls: ['./classes.component.css']
 })
-export class ClassesComponent {
+export class ClassesComponent implements OnInit{
 
-  constructor(private router: Router){}
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+     private classService: ClassService,
+     private loginService: LoginService,
+    ){}
 
   // Trainer and class information
-  name: string = 'Sandy Samir';
-  className: string = 'Yoga';
+  data:any;
+  id:number=8;
+  i: number = 1;
   image: string = '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif';
-  description: string = 'Strength training focuses on increasing muscle strength and mass through weight lifting and resistance exercises.';
-  totalNoOfSession:number=8;
-  // exercise: string = 'Downward Dog, Warrior Pose, Tree Pose';
-  // equipment: string = 'Yoga Mat, Resistance Bands';
   activeClassId: number | undefined;
-  status: string = 'Active';
-  equipments =[
-    {name:"Yoga Mat"},
-    {name:"Resistance Bands"},
-  ];
-  exercises =[
-    {name:"Downward Dog"},
-    {name:"Warrior Pose"},
-    {name:"Tree Pose"},
-  ];
+  errorMessage: string='';
 
   // List of available classes
-  Classes = [
-    {
-      id: 1,
-      session: 'Session 1',
-      days: 'Monday',
-      hours: '10:00 AM - 4:00 PM',
-    },
-    {
-      id: 2,
-      session: 'Session 2',
-      days: 'Saturday ',
-      hours: '11:00 AM - 5:00 PM',
+
+  ngOnInit(){
+    this.data = this.loginService.getSelectedClass();
+    if(!this.data){
+      this.classService.getClass().subscribe({
+        next: (response) => {
+          console.log(response);
+            let traineesArray = response;
+            this.classService.setSelectedclass(traineesArray);
+            this.data = this.classService.getSelectedClass();
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status === 401) {
+            // Error in credentials
+            this.router.navigate(['/login']);
+          } else if (error.status === 403){
+            // error in email verification
+            // must redirect to another page
+            this.errorMessage = error.error?.message;
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+      return;
     }
-  ];
 
-
-
-
-
-
-
-
+  }
 
   // Toggle class details view
   toggleDetails(classId: number) {
@@ -79,9 +78,7 @@ export class ClassesComponent {
   }
 
   // Navigate to the show class page
-  goToShowPage(){
-    this.router.navigate(['/trainer/show-class']);
-  }
+
 
   // Navigate to the add new class page
   addClass(){
@@ -90,10 +87,61 @@ export class ClassesComponent {
 
   // Delete a class
   deleteClass(classId: number) {
-    const confirmDelete = confirm('Are you sure you want to delete this class?');
-    if (confirmDelete) {
-      this.Classes = this.Classes.filter(classItem => classItem.id !== classId);
-      alert('Class deleted successfully!');
+    // const confirmDelete = confirm('Are you sure you want to delete this class?');
+    // if (confirmDelete) {
+    //   this.Classes = this.Classes.filter(classItem => classItem.id !== classId);
+    //   alert('Class deleted successfully!');
+    // }
+  }
+  goToShowPage(){
+    // this.id = this.route.snapshot.paramMap.get('id') || '';
+    if (this.id) {
+      // console.log(this.id);
+      this.classService.getShowClass(this.id).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.classService.setTrainee(response.data);
+          this.router.navigate(['/trainer/show-class']);
+        },
+        //6|TUEzIo5nQg9QMaaQxkZUVhC9EuEcqA9t1KSn4S7Xc1b8a391
+        error: (error) => {
+          if (error.status === 403) {
+            this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+          }else if (error.status === 401) {
+            console.log("not Auth");
+          this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    }
+  }
+
+  viewTrainees(){
+    if (this.id) {
+      console.log(this.id);
+      this.classService.geTraineeOnClass().subscribe({
+        next: (response) => {
+          const traineesArray = response.data;
+          console.log(traineesArray);
+          this.classService.setTrainee(traineesArray);
+          this.router.navigate(['/trainer/trainees']);
+        },
+        //6|TUEzIo5nQg9QMaaQxkZUVhC9EuEcqA9t1KSn4S7Xc1b8a391
+        error: (error) => {
+          if (error.status === 403) {
+            this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+          }else if (error.status === 401) {
+            console.log("not Auth");
+            this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
     }
   }
 }

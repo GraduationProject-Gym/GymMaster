@@ -28,6 +28,7 @@ import { MoreDetailsTraineeComponent } from './components/admin/more-details-tra
 import { AdminAllClassesComponent } from './components/admin/admin-all-classes/admin-all-classes.component';
 import { AdminEditClassComponent } from './components/admin/admin-edit-class/admin-edit-class.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
+import { TrainerComponent } from './components/trainer/profile/trainer.component';
 
 
 export const routes: Routes = [
@@ -38,12 +39,12 @@ export const routes: Routes = [
     { path: "forgotPassword", component: ForgotPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'email-verification', component: EmailVerificationComponent },
+    { path: "trainer-profile", component: TrainerComponent },
     { path: "trainer/classes", component: ClassesComponent },
     { path: 'trainer/update-class', component: UpdateClassComponent },
     { path: 'trainer/add-class', component: AddClassComponent },
     { path: 'trainer/trainees', component: TraineesComponent },
     { path: 'trainer/trainees/create-report', component:ReportComponent},
-    { path: "trainee", component: TraineeComponent },
     { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},

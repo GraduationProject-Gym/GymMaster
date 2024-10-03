@@ -12,13 +12,11 @@ use Carbon\Carbon;
 
 class GymClass extends Model
 {
-    use HasFactory;
-    // protected $table = 'gymclass';
-    protected $table = 'gymclass';
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory,SoftDeletes;
+    use SoftDeletes; 
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at']; 
+    protected $table = 'gymclass';
     // protected $table = 'gym_classes';
     protected $fillable = [
         'name',
@@ -37,6 +35,9 @@ class GymClass extends Model
     {
         return $this->belongsToMany(Equipment::class, 'class_equipments', 'class_id', 'equipment_id');
     }
+    public function review(){
+        return $this->hasMany(Review::class,'class_id','id');
+    }
 
     public function schedule()
     {
@@ -45,10 +46,18 @@ class GymClass extends Model
             Carbon::today()->addDays(7) // 7 days from today
         ]);
     }
+    public function scheduleReport()
+    {
+        return $this->hasMany(Schedule::class, 'class_id','id');
+    }
+
+    public function report(){
+        return $this->hasMany(Report::class,'class_id','id');
+    }
 
     public function trainer()
     {
-        return $this->belongsTo(Trainer::class, 'trainer_id');
+        return $this->belongsTo(Trainer::class, 'trainer_id','id');
     }
 
     public function user()
@@ -67,7 +76,7 @@ class GymClass extends Model
     }
 
     public function classTrainer(){
-        return $this->belongsTo(Trainer::class, 'id','trainer_id');
+        return $this->belongsTo(Trainer::class, 'trainer_id','id');
     }
 
 

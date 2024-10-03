@@ -18,6 +18,11 @@ export class SidebarService {
     return headers;
   }
 
+  getProfileData():Observable <any>{
+    const profileUrl = `${environment.domain}/showuserdata`;
+    return this.http.get(profileUrl, { headers: this.getHeaders() });
+  }
+
   // Membership services
   // showMembership(membership:string) { 
   //   const showMembershipUrl = `${environment.domain}/membership/${membership}`;
@@ -30,9 +35,9 @@ export class SidebarService {
   }
 
   // Classes services
-  showMyClasses(id:number) { 
-    const showMyClassesUrl = `${environment.domain}/gym-classes/{id}`;
-    return this.http.get(showMyClassesUrl, { headers: this.getHeaders() });
+  indexMyClasses(): Observable<any> {
+    const showMyClassesUrl = `${environment.domain}/trainee-class/joined-classes`;
+    return this.http.post(showMyClassesUrl, {}, { headers: this.getHeaders() });
   }
 
   indexClasses(): Observable<any> {
@@ -40,11 +45,23 @@ export class SidebarService {
     return this.http.get(indexClassesUrl, { headers: this.getHeaders() });
   }
 
+  // Trainer service
+  indexMyTrainers(): Observable<any> {
+    const indexMyTrainersUrl = `${environment.domain}/`;
+    return this.http.get(indexMyTrainersUrl, { headers: this.getHeaders() });
+  }
+
+  // Review services
+  // indexMyReviews(): Observable<any> {
+  //   const reviewTrainerUrl = `${environment.domain}/review`;
+  //   return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
+  // }
+
   // Setter and getter to move data between components
   setSelectedData(data: any) {
     this.selectedData = data;
   }
-
+  
   getSelectedData() {
     return this.selectedData;
   }

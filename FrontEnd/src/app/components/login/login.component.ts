@@ -14,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [LoginService],
+  // providers: [],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -65,13 +65,13 @@ export class LoginComponent {
 
   // Sanitize input
   sanitizeInput(input: string): string {
-    return this.sanitizer.sanitize(1, input) || ''; 
+    return this.sanitizer.sanitize(1, input) || '';
   }
 
   // Check user authentication and authorization
   loginAction() {
     this.formSubmitted = true; // Mark form as submitted
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
 
     if (this.loginForm.valid) {
       const data = {
@@ -85,8 +85,10 @@ export class LoginComponent {
         next: (response) => {
           console.log(response);
           if (response.role === 'trainee'){
-            this.router.navigate(['/trainee']);
+            this.router.navigate(['/trainee-profile']);
           } else if (response.role === 'trainer'){
+            let traineesArray = response;
+            this.loginService.setSelectedclass(traineesArray);
             this.router.navigate(['/trainer/classes']);
           }
         },
