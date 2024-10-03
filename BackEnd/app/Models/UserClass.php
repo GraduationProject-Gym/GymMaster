@@ -15,7 +15,6 @@ class UserClass extends Model
     {
         return $this->belongsTo(GymClass::class, 'class_id');
     }
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -21,6 +21,14 @@ import { DoReviewComponent } from './components/trainee/do-review/do-review.comp
 import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 import { AttendanceComponent } from './components/trainee/attendance/attendance.component';
 import { ShowReportComponent } from './components/trainee/show-report/show-report.component';
+import { AllTrainersComponent } from './components/admin/all-trainers/all-trainers.component';
+import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
+import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
+import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
+import { AdminAllClassesComponent } from './components/admin/admin-all-classes/admin-all-classes.component';
+import { AdminEditClassComponent } from './components/admin/admin-edit-class/admin-edit-class.component';
+import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
+import { TrainerComponent } from './components/trainer/profile/trainer.component';
 
 
 export const routes: Routes = [
@@ -31,6 +39,7 @@ export const routes: Routes = [
     { path: "forgotPassword", component: ForgotPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
     { path: 'email-verification', component: EmailVerificationComponent },
+    { path: "trainer-profile", component: TrainerComponent },
     { path: "trainer/classes", component: ClassesComponent },
     { path: 'trainer/update-class', component: UpdateClassComponent },
     { path: 'trainer/add-class', component: AddClassComponent },
@@ -47,6 +56,15 @@ export const routes: Routes = [
     { path: 'trainee-showReviews', component:ShowReviewComponent},
     { path: 'trainee-attendance', component:AttendanceComponent},
     { path: 'trainee-showReport', component:ShowReportComponent},
+    { path: 'admin-trainers', component:AllTrainersComponent},
+    { path: 'admin-addTrainer', component:AddTrainerComponent},
+    { path: 'admin-trainees', component:AllTraineesComponent},
+    // { path: 'admin/trainee-moreDetials', component:MoreDetailsTraineeComponent},
+    { path: 'admin-trainee/:id', component: MoreDetailsTraineeComponent },
+    { path: 'admin-allClasses', component: AdminAllClassesComponent },
+    { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
+    { path: 'admin-addClass', component: AdminAddClassComponent },
+
 
     { path: "**", component: ErrorComponent }
 ];

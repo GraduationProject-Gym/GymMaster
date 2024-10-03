@@ -85,11 +85,13 @@ export class LoginComponent {
         next: (response) => {
           console.log(response);
           if (response.role === 'trainee'){
-            this.router.navigate(['/trainee']);
+            this.router.navigate(['/trainee-profile']);
           } else if (response.role === 'trainer'){
             let traineesArray = response;
             this.loginService.setSelectedclass(traineesArray);
             this.router.navigate(['/trainer/classes']);
+          } else if (response.role === 'admin'){
+            this.router.navigate(['/admin-trainers']);
           }
         },
         error: (error) => {

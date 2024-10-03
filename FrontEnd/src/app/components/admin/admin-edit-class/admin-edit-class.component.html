@@ -1,0 +1,77 @@
+<div class=".d-flex">
+  <app-admin-sidebar></app-admin-sidebar>
+  <!-- <img src="/form4.jpg" alt="Background Image"> -->
+  <div class="main">
+  <div class="edit-container">
+    <!-- Edit Class Information -->
+    <form (ngSubmit)="save()" class="form form-background" >
+      <h2>Edit Class</h2>
+
+      <div class="form-group">
+        <label for="className">Class Name:</label>
+        <input id="className" type="text" [(ngModel)]="className" name="className" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="trainerName">Trainer Name:</label>
+        <input id="trainerName" type="text" [(ngModel)]="trainerName" name="trainerName" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="sessions">Number of Sessions:</label>
+        <input id="sessions" type="number" [(ngModel)]="sessions" name="sessions" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status:</label>
+        <select id="status" [(ngModel)]="status" name="status" class="form-control">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+
+      <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
+        <h6 class="text-secondary">Session {{ i + 1 }}</h6>
+        <label for="groupDays">Days (Session {{ i + 1 }}):</label>
+        <select id="groupDays" [(ngModel)]="group.days" name="groupDays{{ i }}" class="form-control">
+          <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+        </select>
+
+        <label for="groupHours">Hours (Session {{ i + 1 }}):</label>
+        <select id="groupHours" [(ngModel)]="group.hours" name="groupHours{{ i }}" class="form-control">
+          <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+        </select>
+      </div>
+
+      <!-- Equipment Information -->
+      <div class="form-group">
+        <label for="equipment">Equipment Name:</label>
+        <input id="equipment" type="text" [(ngModel)]="equipment" name="equipment" class="form-control">
+      </div>
+
+      <!-- Class Description -->
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="description" name="description" class="form-control" rows="5"></textarea>
+      </div>
+
+      <!-- Class Exercise -->
+      <div class="form-group">
+        <label for="exercise">Exercise:</label>
+        <textarea id="exercise" [(ngModel)]="exercise" name="exercise" class="form-control" rows="5"></textarea>
+      </div>
+
+      <!-- Save and Cancel Buttons -->
+      <div class="text-center">
+
+      <button type="submit" class="btn mt-2">Save</button>
+      <button type="button" class="btn mt-2" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+
+
+

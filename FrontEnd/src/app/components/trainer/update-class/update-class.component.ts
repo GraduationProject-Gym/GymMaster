@@ -22,24 +22,26 @@ import { Router } from '@angular/router';
 })
 
   export class UpdateClassComponent {
-    className: string = 'Yoga';
-    sessions: number = 5;
-    status: string = 'active';
-    equipment: string = 'Yoga Mats';
-    description: string = 'A yoga class focused on flexibility and balance.';
+    // className: string = 'Yoga';
+    // sessions: number = 5;
+    // status: string = 'active';
+    // equipment: string = 'Yoga Mats';
+    // description: string = 'A yoga class focused on flexibility and balance.';
+    // exercise:string='';
     //api
-    // className: string = '';
-    // sessions: number = 0;
-    // status: string = '';
-    // equipment: string = '';
-    // description: string = '';
+    className: string = '';
+    sessions: number = 0;
+    status: string = '';
+    equipment: string = '';
+    description: string = '';
+    exercise:string='';
 
-    // groups = [];
+    groups = [];
 
-    groups = [
-      { days: 'Monday, Wednesday, Friday', hours: '10:00 AM - 11:30 AM' },
-      { days: 'Tuesday, Thursday', hours: '6:00 PM - 7:30 PM' }
-    ];
+    // groups = [
+    //   { days: 'Monday, Wednesday, Friday', hours: '10:00 AM - 11:30 AM' },
+    //   { days: 'Tuesday, Thursday', hours: '6:00 PM - 7:30 PM' }
+    // ];
 
     // constructor(private classService: ClassService,private router: Router) {}
     constructor(private router: Router) {}
@@ -47,7 +49,7 @@ import { Router } from '@angular/router';
 //API
 
 // const classId = this.route.snapshot.paramMap.get('id');
-// if (classId) {
+// if (classId: any) {
 //   this.classService.getClassById(classId).subscribe(data => {
 //     this.className = data.className;
 //     this.sessions = data.sessions;

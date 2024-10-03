@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 
@@ -17,6 +17,30 @@ export class SidebarComponent {
   memberships: any[] = [];
   errorMessage: string | null = null;
 
+  profile() {
+    this.errorMessage = null; // Reset the error message 
+    this.sidebarService.getProfileData().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.sidebarService.setSelectedData(response);
+        this.router.navigate(['/trainee-profile']);
+        // this.data = response;
+        // this.setProfileImage(this.data);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/trainee-profile']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
   // Index memeberships
   membership() {
     this.errorMessage = null; // Reset the error message
@@ -24,14 +48,13 @@ export class SidebarComponent {
     this.sidebarService.indexMemberships().subscribe({
       next: (response: any) => {
         this.sidebarService.setSelectedData(response.Memberships);
-        console.log(response.Memberships);
+        // console.log(response.Memberships);
         this.router.navigate(['/trainee-membership']);
       },
       error: (error) => {
         if (error.status === 401) {
-          this.errorMessage = error.error?.message;
           this.router.navigate(['/login']);
-          console.log(error);
+          // console.log(error);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
@@ -40,20 +63,19 @@ export class SidebarComponent {
   }
 
   // Show my classes
-  myClassses(id:number){
+  myClasses() {
     this.errorMessage = null; // Reset the error message
 
-    this.sidebarService.showMyClasses(id).subscribe({
+    this.sidebarService.indexMyClasses().subscribe({
       next: (response: any) => {
-        this.sidebarService.setSelectedData(response);
-        console.log(response);
+        this.sidebarService.setSelectedData(response.joinedClasses);
+        // console.log(response.joinedClasses);
         this.router.navigate(['/trainee-myClasses']);
       },
       error: (error) => {
         if (error.status === 401) {
-          this.errorMessage = error.error?.message;
           this.router.navigate(['/login']);
-          console.log(error);
+          // console.log(error);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
@@ -62,7 +84,7 @@ export class SidebarComponent {
   }
 
   // Index classes
-  classes(){
+  classes() {
     this.errorMessage = null; // Reset the error message
 
     this.sidebarService.indexClasses().subscribe({
@@ -72,10 +94,9 @@ export class SidebarComponent {
         this.router.navigate(['/trainee-allClasses']);
       },
       error: (error) => {
+        // console.log(error);
         if (error.status === 401) {
-          this.errorMessage = error.error?.message;
           this.router.navigate(['/login']);
-          console.log(error);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
@@ -83,12 +104,35 @@ export class SidebarComponent {
     });
   }
 
+  // Index my trainers
+  trainers() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMyTrainers().subscribe({
+      next: (response: any) => {
+        this.sidebarService.setSelectedData(response);
+        console.log(response);
+        this.router.navigate(['/trainee-doReview']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  // dropdown classes & reviews
   dropdownOpenClass = false;
   dropdownOpenReview = false;
 
   toggleDropdownClass() {
     this.dropdownOpenClass = !this.dropdownOpenClass;
   }
+
   toggleDropdownReview() {
     this.dropdownOpenReview = !this.dropdownOpenReview;
   }

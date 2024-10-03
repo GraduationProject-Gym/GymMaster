@@ -12,7 +12,7 @@ use App\Models\Trainee;
      */
     public function viewAny(User $user)
     {
-        return $user->role === 'trainee' || $user->role === 'trainer';
+        return $user->role === 'trainee' || $user->role === 'admin';
     }
 
     /**
@@ -20,6 +20,7 @@ use App\Models\Trainee;
      */
     public function view(User $user)
     {
+        // return $user->role === 'trainee' || $user->role === 'admin';
         return $user->role === 'trainer';
     }
 

@@ -15,13 +15,48 @@ import { Chart, LineController, LineElement, PointElement, LinearScale, Title, C
   styleUrl: './show-report.component.css'
 })
 export class ShowReportComponent {
-  constructor() {
-    this.reportId = 3;
-  }
   reportId: number | undefined;
+  currentSlide = 0;
+  groupedTrainees = this.groupTrainees();
+
+  constructor() {
+    this.reportId ;
+  }
   trainees = [
     {
+      reportId:1,
       name: 'John Doe',
+      trainerName: 'Coach Smith',
+      className: 'Yoga',
+      sessionsAttended: 10,
+      membership: 'Premium',
+      subscription: 'Monthly',
+      age:23,
+      email:"sandy23@getMaxListeners.com",
+      phone:"01271024421",
+      address:"Asyut",
+      gender:"female",
+      totalNoOfSession:8,
+      exercise: 'Downward Dog, Warrior Pose, Tree Pose',
+      equipment: 'Yoga Mat, Resistance Bands',
+      futureRecommendations:"Continue training on flexibility and improve fitness.",
+      overallComment:"Excellent performance. Keep up the hard work!",
+
+            // Array of feedback comments with ratings
+      comments: [
+        { comment: 'This is the first comment', rate: 4 , day:"22/08/2024"},
+        { comment: 'Great post!', rate: 3 , day:"25/08/2024" },
+        { comment: 'Thanks for sharing!', rate: 5,  day:"28/08/2024" },
+        { comment: 'Really insightful post.', rate: 2,  day:"30/08/2024" },
+        { comment: 'Thanks for sharing!', rate: 5,  day:"28/08/2024" },
+        // { comment: 'Really insightful post.', rate: 2,  day:"30/08/2024" },
+        // { comment: 'Really insightful post.', rate: 2,  day:"30/08/2024" },
+        // { comment: 'Fantastic work!', rate: 5,  day:"2/09/2024"}
+      ]
+    },
+    {
+      reportId:2,
+      name: 'John Doe2',
       trainerName: 'Coach Smith',
       className: 'Yoga',
       sessionsAttended: 10,
@@ -52,6 +87,9 @@ export class ShowReportComponent {
     },
   ];
 
+  trackByReportId(index: number, trainee: any): number {
+    return trainee.reportId ? trainee.reportId : index;
+  }
     // Object to hold the trainee report details
   traineeReport = {
     overallRating:0,
@@ -66,12 +104,6 @@ export class ShowReportComponent {
     this.traineeReport.overallRating = totalRating / numberOfRatings;
   }
 
-    // Lifecycle hook that runs after component initialization
-  ngOnInit(): void {
-    this.calculateOverallRating();
-      this.createChart();
-
-  }
 
     // Method to handle report submission
     downloadReport(): void {
@@ -82,12 +114,22 @@ export class ShowReportComponent {
 
 
 //create chart
-createChart(): void {
-  const labels = this.trainees[0].comments.map(comment => comment.day);
-  const data = this.trainees[0].comments.map(comment => comment.rate);
-  Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale,Filler);
+createChart(reportId: number, index: number): void {
+  const canvasId = `ratingChart${index}`;
+  const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
 
-  new Chart('ratingChart', {
+  if (!canvas) {
+    console.error(`Failed to create chart: Canvas with id '${canvasId}' not found`);
+    return;
+  }
+  console.log('Canvas found:', canvasId);
+
+  const labels = this.trainees[index].comments.map(comment => comment.day);
+  const data = this.trainees[index].comments.map(comment => comment.rate);
+
+  Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, Filler);
+
+  new Chart(canvas, {
     type: 'line',
     data: {
       labels: labels,
@@ -111,6 +153,53 @@ createChart(): void {
     }
   });
 }
+
+
+// Lifecycle hook that runs after component initialization
+ngOnInit(): void {
+      this.calculateOverallRating();
+      this.groupedTrainees = this.groupTrainees();
+      console.log('Grouped Trainees:', this.groupedTrainees);
+
 }
 
+
+chartsCreated = false;
+
+ngAfterViewChecked(): void {
+  if (!this.chartsCreated) {
+    this.createChartsForAllReports();
+    this.chartsCreated = true;
+  }
+}
+
+createChartsForAllReports(): void {
+    this.trainees.forEach((trainee, index) => {
+      this.createChart(trainee.reportId, index);
+    });
+}
+
+
+
+prevSlide(): void {
+  if (this.currentSlide > 0) {
+    this.currentSlide--;
+  }
+}
+
+nextSlide(): void {
+  if (this.currentSlide < this.groupedTrainees.length - 1) {
+    this.currentSlide++;
+  }
+}
+
+groupTrainees(): any[] {
+  if (!this.trainees || this.trainees.length === 0) {
+    return [];
+  }
+
+  return this.trainees.map(trainee => [trainee]);
+}
+
+}
 

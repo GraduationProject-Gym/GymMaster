@@ -1,29 +1,41 @@
 <div class="d-flex">
   <app-sidebar></app-sidebar>
   <div class="main">
+    @if(dataFlag){
     <div class="profile d-flex flex-column">
       <div class="d-flex ml-5">
         <div>
-          <h1>{{ trainee[0].name }}</h1>
-          <!-- <div class="col-md-6"> -->
-            <p><strong>Age:</strong> {{ trainee[0].age }}</p>
-            <p><strong>Email:</strong> {{ trainee[0].email }}</p>
-            <p><strong>Phone:</strong> {{ trainee[0].phone }}</p>
-            <p><strong>Gender:</strong> {{ trainee[0].gender }}</p>
-          <!-- </div>
-          <div class="col-md-6"> -->
-            <p><strong>Address:</strong> {{ trainee[0].address }}</p>
-            <p><strong>Membership Type:</strong> {{ trainee[0].membership }}</p>
-            <p><strong>Subscription:</strong> {{ trainee[0].subscription }}</p>
-          <!-- </div> -->
-        </div>
-        <img [src]="trainee[0].srcImg" alt="Trainee Profile Picture" class="profile-img ms-auto">
-      </div>
-      <div class="text-center">
-        <a href="trainee-profile/edit" class="btn">Edit Profile</a>
-      </div>
+          <h1>
+            {{data.name?data.name:'doaa'}}
+            <a href="trainee-profile/edit" class="edit-icon">
+              <i class="fas fa-edit"></i>
+            </a>
+          </h1>
 
+          <p><strong>Email:</strong> {{ data.email }}</p>
+          <p><strong>Phone:</strong> {{ data.phone }}</p>
+          <p><strong>Address:</strong> {{ data.address }}</p>
+          <p><strong>Age:</strong> {{ data.age }}</p>
+          <p><strong>Gender:</strong> {{ data.gender }}</p>
+          <p><strong>Membership Type:</strong> {{ data.membership_type }}
+            <a href="/trainee-membership" class="edit-icon">
+              <i class="fas fa-edit"></i>
+            </a>
+          </p>
+          <p><strong>Subscription:</strong> {{ data.subscription }}
+            <a href="/trainee-membership" class="edit-icon">
+              <i class="fas fa-edit"></i>
+            </a>
+          </p>
+        </div>
+        <img [src]="data.srcImg" alt="Trainee Profile Picture" class="profile-img ms-auto">
+      </div>
     </div>
+
+    } @else if(errorMessage){
+    <div class="alert alert-danger profile d-flex flex-column">
+      {{errorMessage}}
+    </div>
+    }
   </div>
 </div>
-
