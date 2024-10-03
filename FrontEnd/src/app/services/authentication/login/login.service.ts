@@ -7,6 +7,9 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class LoginService {
+
+  private selectedClass:any;
+
   constructor(private readonly http: HttpClient) { }
 
   private readonly loginUrl = `${environment.domain}/login`;
@@ -19,6 +22,12 @@ export class LoginService {
         sessionStorage.setItem('role',response.role);
       }
     }));
+  }
+  setSelectedclass(classe:any){
+    this.selectedClass = classe;
+  }
+  getSelectedClass(){
+    return this.selectedClass;
   }
 }
 
