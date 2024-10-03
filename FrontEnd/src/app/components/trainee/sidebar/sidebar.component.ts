@@ -17,6 +17,30 @@ export class SidebarComponent {
   memberships: any[] = [];
   errorMessage: string | null = null;
 
+  profile() {
+    this.errorMessage = null; // Reset the error message 
+    this.sidebarService.getProfileData().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.sidebarService.setSelectedData(response);
+        this.router.navigate(['/trainee-profile']);
+        // this.data = response;
+        // this.setProfileImage(this.data);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/trainee-profile']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
   // Index memeberships
   membership() {
     this.errorMessage = null; // Reset the error message
@@ -102,7 +126,6 @@ export class SidebarComponent {
   }
 
   // dropdown classes & reviews
-  
   dropdownOpenClass = false;
   dropdownOpenReview = false;
 

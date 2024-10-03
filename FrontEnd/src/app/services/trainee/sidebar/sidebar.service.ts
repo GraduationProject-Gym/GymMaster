@@ -18,6 +18,11 @@ export class SidebarService {
     return headers;
   }
 
+  getProfileData():Observable <any>{
+    const profileUrl = `${environment.domain}/showuserdata`;
+    return this.http.get(profileUrl, { headers: this.getHeaders() });
+  }
+
   // Membership services
   // showMembership(membership:string) { 
   //   const showMembershipUrl = `${environment.domain}/membership/${membership}`;
@@ -56,7 +61,7 @@ export class SidebarService {
   setSelectedData(data: any) {
     this.selectedData = data;
   }
-
+  
   getSelectedData() {
     return this.selectedData;
   }

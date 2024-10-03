@@ -42,6 +42,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::post('report', [ReviewController::class, 'report']);
     // trainees on one class
     Route::post('trainees', [TraineeClassController::class, 'trainees']);
+    Route::get('showuserdata', [AuthController::class, 'showuserdata']);
+
 });
 
 
@@ -120,4 +122,4 @@ Route::get('/payment/success', [SubscriptionController::class, 'success'])->name
 
 
 //show user data based on his role 
-Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
+// Route::get('showuserdata', [AuthController::class, 'showuserdata']);

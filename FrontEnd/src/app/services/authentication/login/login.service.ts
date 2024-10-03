@@ -7,9 +7,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class LoginService {
-
   constructor(private readonly http: HttpClient) { }
-  private selectedData: any;
 
   private readonly loginUrl = `${environment.domain}/login`;
 
@@ -18,6 +16,7 @@ export class LoginService {
     return this.http.post(this.loginUrl, data).pipe(tap((response: any) => {
       if (response && response.token) {
         localStorage.setItem('authToken', response.token);
+        sessionStorage.setItem('role',response.role);
       }
     }));
   }

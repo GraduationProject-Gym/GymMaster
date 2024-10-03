@@ -22,7 +22,6 @@ import { AttendanceComponent } from './components/trainee/attendance/attendance.
 import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 import { ShowReportComponent } from './components/trainee/show-report/show-report.component';
 import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
-import { LoginService } from './services/authentication/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -53,12 +52,12 @@ import { LoginService } from './services/authentication/login/login.service';
   providers: [
     ClassService,
     SidebarService,
-    MembershipService
+    MembershipService,
   ],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'FrontEnd';
+  
 }

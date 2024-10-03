@@ -1,0 +1,133 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .d-flex {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .main {
+    min-height: 100vh;
+    width: 100%;
+    background: url("/background5.jpg") no-repeat;
+    background-size: cover;
+    padding: 100px 50px 50px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Profile Image */
+  .profile-img {
+    width: 250px;
+    height: auto;
+    border-radius: 5%;
+    object-fit: cover;
+    margin-left: auto;
+  }
+  
+  .profile {
+    background-color: rgba(255, 255, 255, .8);
+    width: 50%;
+    margin: auto;
+    margin-top: 10%;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  /* text */
+  h1 {
+    font-size: 28px;
+    color: #ff6207;
+    margin-bottom: 10px;
+  
+  }
+  
+  p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  p strong {
+    color: #333;
+  }
+  
+  
+  .edit-icon {
+    color: #333;
+    margin-left: 5px;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .edit-icon:hover {
+    color: #ff8c00;
+  }
+  
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .profile-img {
+      width: 130px;
+      margin-left: 0;
+      border-radius: 50%;
+      height: 130px;
+  
+    }
+  
+    .profile {
+      width: 85%;
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  
+    .profile {
+      width: 90%;
+      margin-left: 90px;
+      padding: 15px;
+  
+    }
+  }
+  
+  @media (max-width: 375px) {
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      margin-right: 0 ;
+    }
+  
+    h1 {
+      font-size: 20px;
+    }
+  
+    .profile {
+      width: 95%;
+      padding: 10px;
+    }
+  
+    p {
+      font-size: 14px;
+    }
+  }
+  

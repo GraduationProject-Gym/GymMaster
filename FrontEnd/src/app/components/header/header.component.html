@@ -13,13 +13,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item mx-3 d-flex">
-            <ng-container *ngIf="roleCheck() && isLoggedIn">
-              <a class="nav-link" routerLink="/trainee-profile" (click)="closeMenu()">Profile</a>
-            </ng-container>
-
-            <ng-container *ngIf="!roleCheck() && isLoggedIn">
-              <a class="nav-link" routerLink="/trainer-profile" (click)="closeMenu()">Profile</a>
-            </ng-container>
+            <a *ngIf="isLoggedIn" class="nav-link" (click)="profile()">Profile</a>
           </li>
           <li class="nav-item mx-3">
             <a class="nav-link" href="/home" (click)="closeMenu()">Home</a>

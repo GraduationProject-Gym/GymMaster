@@ -31,17 +31,17 @@ class AuthController extends Controller
     public function __construct()
     {
         // Apply the auth middleware only to methods logout
-        $this->middleware('auth:sanctum')->only(['logout']);
+        // $this->middleware('auth:sanctum')->only(['logout']);
     }
     public function showuserdata()
     {
-        $user = auth()->user();
-
+        $user = Auth::user();
+        // return ["message"=>$user];
         if ($user->role === 'trainee') {
             
             $trainee = $user->trainee; 
-    
                 return response()->json([
+                    'name'=>$user->name,
                     'role'=>$user->role,
                     'age' => $user->age,
                     'image' => $user->image,
@@ -54,8 +54,8 @@ class AuthController extends Controller
                 ], 200); 
             } else {
                 return response()->json([
-                    'error' => 'Trainee data or membership not found.'
-                ], 404);
+                    'message' => 'Trainee data or membership not found.'
+                ], 403);
             }
         
     }
