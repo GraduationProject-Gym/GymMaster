@@ -28,31 +28,7 @@ export class TraineesComponent implements  OnInit{
     ngOnInit(){
     this.traineees = this.classService.getTrainee();
     if(!this.traineees){
-      this.classService.geTraineeOnClass().subscribe({
-        next: (response) => {
-          let traineesArrays = response.data;
-          console.log(traineesArrays);
-          this.classService.setTrainee(traineesArrays);
-          this.traineees = this.classService.getTrainee();
-          const groupSize = 3;
-          const traineesArray = this.traineees;
-          for (let i = 0; i < traineesArray.length; i += groupSize) {
-            this.traineees[i].showReview = false;
-            this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
-          }
-          },
-        error: (error) => {
-          if (error.status === 403) {
-            // this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
-          }else if (error.status === 401) {
-            console.log("not Auth");
-            this.router.navigate(['login']);
-          }
-          else {
-            // this.errorMessage = 'An unexpected error occurred. Please try again later.';
-          }
-        }
-      });
+      this.updateData();
     }else{
       const groupSize = 3;
       const traineesArray = this.traineees;
@@ -93,6 +69,34 @@ export class TraineesComponent implements  OnInit{
     });
   }
 
+  updateData(){
+    this.classService.geTraineeOnClass().subscribe({
+      next: (response) => {
+        let traineesArrays = response.data;
+        console.log(traineesArrays);
+        this.classService.setTrainee(traineesArrays);
+        this.traineees = response.data;//this.classService.getTrainee();
+        const groupSize = 3;
+        const traineesArray = this.traineees;
+        for (let i = 0; i < traineesArray.length; i += groupSize) {
+          this.traineees[i].showReview = false;
+          this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
+        }
+        },
+      error: (error) => {
+        if (error.status === 403) {
+          // this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+        }else if (error.status === 401) {
+          console.log("not Auth");
+          this.router.navigate(['login']);
+        }
+        else {
+          // this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
   addReview(userId:string | null, comment:string|null , rate:string| null){
     let user_id: number = userId? Number(userId):0;
     let rating: number = rate? Number(rate):0;
@@ -109,9 +113,10 @@ export class TraineesComponent implements  OnInit{
           console.log(response);
           this.classService.setSelectedclass(response.data);
           this.vailedMessages[user_id]= "done";
+          window.location.href = `/trainer/trainees`;
           setTimeout(() => {
-           delete this.vailedMessages[user_id];
-         }, 5000);
+            this.vailedMessages[user_id]= "";
+          }, 5000);
         },
         error: (error) => {
           console.log(error);
@@ -121,7 +126,7 @@ export class TraineesComponent implements  OnInit{
                 Object.keys(error.error.message).forEach(key => {
                   this.errorMessages[user_id]= error.error.message[key];
                    setTimeout(() => {
-                    delete this.errorMessages[user_id];
+                    this.errorMessages[user_id]= "";
                   }, 5000);
                 });
 
@@ -142,7 +147,7 @@ export class TraineesComponent implements  OnInit{
       next: (response) => {
         console.log(response);
         this.classService.setReport(response);
-        this.router.navigate(['/trainer/trainees/create-report']);
+        this.router.navigate(['/trainer/trainees/create-report/', user_id]);
       },
       error: (error) => {
         console.log(error);

@@ -14,6 +14,8 @@ use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReportController;
+
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -45,9 +47,12 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
+    // Report
+    Route::apiResource('reportRecommend',ReportController::class);
+    Route::get('/reportTrainee', [ReviewController::class, 'reportTrainee']);
 });
 
-
+//reportTrainee
 
 // Auth User
 Route::post('register', [AuthController::class, 'store']);

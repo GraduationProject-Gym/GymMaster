@@ -15,8 +15,11 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\Schedule;
+use App\Models\UserClass;
 use App\Http\Resources\ReportResource;
 use App\Http\Resources\ReviewResource;
+use App\Http\Resources\ReportTraineeResource;
+
 class ReviewController extends Controller
 {
     /**
@@ -105,6 +108,16 @@ class ReviewController extends Controller
             'class' => new ReportResource($class),
             'review'=> ReviewResource::collection($reviews),
             'trainee'=>new UserResource($trainee),
+        ], 200);
+    }
+
+    public function reportTrainee(Request $request){
+
+        $trainee = Auth::user();
+        $gymClasses = $trainee->ClassesTrainees;
+        return response()->json([
+            'trainee' => new UserResource($trainee),
+            'data'=>ReportTraineeResource::collection($gymClasses),
         ], 200);
     }
     /**

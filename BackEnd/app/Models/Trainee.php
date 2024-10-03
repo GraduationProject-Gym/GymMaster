@@ -8,6 +8,8 @@ use App\Models\Memberships;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\Trainer;
+use App\Models\Report;
+
 
 use App\Policies\TraineeClassPolicy;
 
@@ -36,4 +38,7 @@ class Trainee extends Model
     {
         return $this->belongsToMany(Trainer::class, 'reviews', 'trainee_id', 'trainer_id');
     }// trainer_id','trainee_id
+    public function reportTrainee(){
+        return $this->hasMany(Report::class,'trainee_id','user_id');
+    }
 }

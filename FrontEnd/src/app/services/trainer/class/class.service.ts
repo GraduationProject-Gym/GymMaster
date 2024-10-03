@@ -16,7 +16,7 @@ export class ClassService {
   private createReview = `${environment.domain}/review`;
   private getClassTrainer = `${environment.domain}/getClassTrainer`;
   private create_Report =`${environment.domain}/report`;
-
+  private createRecommend = `${environment.domain}/reportRecommend`;
 
 
   private selectedClass:any;
@@ -47,24 +47,30 @@ export class ClassService {
   getSelectedClass(){
     return this.selectedClass;
   }
+
+
+
   setTrainee(trainees:any){
     this.selectedtrainee = trainees;
   }
   getTrainee(){
     return this.selectedtrainee;
   }
+
+
+
   setReport(report:any){
-    console.log(report);
+    // console.log(report);
     this.report = report;
   }
   getReport(){
-    console.log(this.report);
+    // console.log(this.report);
     return this.report;
   }
+
+
   getShowClass(id:number):Observable <any>{
-    // this.getHeaders()
     const headers =this.getHeaders() ;
-    // console.log(headers);
     return this.http.get(`${this.showClass}/${id}`, {headers});
 
   }
@@ -73,7 +79,6 @@ export class ClassService {
     return this.http.get(`${this.showTrainee}`,{headers});
   }
   setReview(data:any):Observable <any>{
-    // console.log(234234);
     const headers =this.getHeaders() ;
     return this.http.post(`${this.createReview}`,{...data},{headers});
   }
@@ -85,5 +90,10 @@ export class ClassService {
   createReport(trainee_id:number):Observable <any>{
     const headers =this.getHeaders() ;
     return this.http.post(`${this.create_Report}`,{'trainee_id':trainee_id},{headers});
+  }
+
+  setRecommend(data:any):Observable <any>{
+    const headers =this.getHeaders() ;
+    return this.http.post(`${this.createRecommend}`,{...data},{headers});
   }
 }
