@@ -23,14 +23,76 @@ use Illuminate\Support\Str;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\DB;
 use App\Models\GymClass;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
         // Apply the auth middleware only to methods logout
-        $this->middleware('auth:sanctum')->only(['logout']);
+        // $this->middleware('auth:sanctum')->only(['logout']);
     }
+    public function showuserdata()
+    {
+        $user = auth()->user();
+        if ($user->role === 'trainee') {
+            $trainee = $user->trainee;
+        
+            if ($trainee && $trainee->TraineeMembership) {
+                return response()->json([
+                    'name' => $user->name,
+                    'role' => $user->role,
+                    'age' => $user->age,
+                    'image' => $user->image,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'gender' => $user->gender,
+                    'address' => $user->address,
+                    'membership_type' => $trainee->TraineeMembership->type,
+                    'subscription' => $trainee->TraineeMembership->subscribe_type,
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Trainee data or membership not found.'
+                ], 403);
+            }
+        } elseif ($user->role === 'trainer') {
+            $trainer = $user->trainer;
+        
+            if ($trainer) {
+                return response()->json([
+                    'name' => $user->name,
+                    'role' => $user->role,
+                    'age' => $user->age,
+                    'image' => $user->image,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'gender' => $user->gender,
+                    'address' => $user->address,
+                    'cv' => $trainer->cv,
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Trainer data not found.'
+                ], 403);
+            }
+        } else {
+            return response()->json([
+                'error' => 'User role is not recognized.'
+            ], 400);
+        }
+        
+        
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexalltrainee(){
+   
+}
+
+ 
     /**
      * Display a listing of the resource.
      */
@@ -131,11 +193,18 @@ class AuthController extends Controller
                 $cv = $request->file('cv');
                 $cvPath = $cv->store('cvs', 'user_cvs');
             }
+            $user->email_verified_at = now();
+            $user->save();
             $trainer = Trainer::create([
                 'cv' => $cvPath,
                 'user_id' => $user->id,
             ]);
 
+        }
+        if($user->role === 'admin'){
+            $user->email_verified_at = now();
+            $user->save();
+            return ["message"=>"done"];
         }
         if ($request->role === 'trainee') {
             return response()->json([
@@ -156,6 +225,7 @@ class AuthController extends Controller
     {
         $user = User::where('token', $request->token)->first();
 
+        // return 'done';
         if (!$user) {
             return response()->json([
                 'message' => 'Invalid verification token',
@@ -169,7 +239,6 @@ class AuthController extends Controller
                 'message' => 'Verification token has expired. must be login to resend Verification ',
             ], 403);
         }
-
         // If the token is still valid, verify the user's email
         $user->email_verified_at = now();
         $user->token = null; // Clear the token
@@ -323,21 +392,133 @@ class AuthController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        // Log incoming request data for debugging
+        Log::info('Incoming request data:', $request->all());
+
+        // Validation rules
+        $rules = [
+            'name' => 'string|max:255|min:5',
+            'email' => 'string|email|max:255|unique:users,email,' . $id,
+            'phone' => 'nullable|string|max:11, unique:users,phone,'. $id,
+            'address' => 'nullable|string',
+            'age' => 'nullable|integer|min:15',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gender' => 'nullable|string',
+            'role' => 'nullable|string',
+            'password' => 'nullable|string|min:8',
+        ];
+
+        // Custom validation messages
+        $messages = [
+            'email.email' => 'Email must be a valid email address.',
+            'email.unique' => 'The email has already been taken.',
+            'phone.unique'=>'The phone has already been taken.',
+            'phone.max' => 'Phone number may not be greater than 11 characters.',
+            'age.min' => 'Age must be at least 15.',
+            'image.image' => 'The file must be an image.',
+            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+            'image.max' => 'The image may not be greater than 2048 kilobytes.',
+            'password.min' => 'Password must be at least 8 characters.',
+        ];
+
+        // Validate the request
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            Log::error('Validation errors:', $validator->errors()->toArray());
+            return response()->json(["message" => $validator->errors()], 403);
+        }
+
+        // Find the current user or fail
+        $currentUser = User::findOrFail($id);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'user_images');
+            $data['image'] = $imagePath;
+        }
+
+        // Hash the password if it's being updated
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $currentUser->update($request->all());
+        // $currentUser->fill($request->all());
+        // $currentUser->save();
+
+        // return response()->json($request->all());
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => new UserResource($currentUser),
+        ], 200);
+
+        // Handle trainee role update
+        if ($currentUser->role === 'trainee') {
+            $trainee = Trainee::where('user_id', $currentUser->id)->first();
+            if ($trainee) {
+                $trainee->update([
+                    'user_id' => $currentUser->id,
+                ]);
+            }
+        }
+
+        // Handle trainer role update
+        if ($currentUser->role === 'trainer') {
+            $trainer = Trainer::where('user_id', $currentUser->id)->first();
+            $cvPath = $request->cv;
+
+            if ($request->hasFile('cv')) {
+                $cv = $request->file('cv');
+                $cvPath = $cv->store('cvs', 'user_cvs');
+            }
+
+            if ($trainer) {
+                $trainer->update([
+                    'cv' => $cvPath,
+                    'user_id' => $currentUser->id,
+                ]);
+            }
+        }
+
+        // Return response based on the role
+        if ($request->role === 'trainee') {
+            return response()->json([
+                'message' => 'User updated successfully, check your mail to verify',
+                'user' => new UserResource($currentUser),
+                'traineeData' => new TraineeResource($trainee ?? null),
+            ], 201);
+        } else if ($request->role === 'trainer') {
+            return response()->json([
+                'message' => 'User updated successfully, check your mail to verify',
+                'user' => new UserResource($currentUser),
+                'trainerData' => new TrainerResource($trainer ?? null),
+            ], 201);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
+
+        public function destroy($id)
     {
-        //
+        // Find the user to delete or fail
+        $userToDelete = User::findOrFail($id);
+        $currentUser = Auth::user(); // Get the currently authenticated user
+
+        // Check if the current user is an admin
+        if ($currentUser->role === 'admin') {
+            // Check if the user to delete is not an admin
+            if ($userToDelete->role !== 'admin') {
+                $userToDelete->delete();
+                return response()->json(['message' => 'User deleted successfully.']);
+            } else {
+                return response()->json(['message' => 'You cannot delete an admin.'], 403); // Forbidden
+            }
+        } else {
+            return response()->json(['message' => 'You do not have permission to delete users.'], 403); // Forbidden
+        }
     }
+
     private function checkEmailValidity($email)
     {
 

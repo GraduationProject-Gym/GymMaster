@@ -1,34 +1,35 @@
-<div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
+<div id="carouselExampleControlsNoTouching" #carousel class="carousel slide" data-bs-touch="false">
   <div class="carousel-inner">
     <ng-container *ngFor="let group of groupedTrainees; let i = index">
       <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
         <div class="container">
           <h1 class="custom-title text-center">Trainees In Class</h1>
           <div class="row">
-            <ng-container *ngFor="let trainee of group">
+            <ng-container *ngFor="let traineee of group">
               <div class="card shadow-lg col-md-4 col-lg-3">
                 <div class="card-img-wrapper">
-                  <img [src]="trainee.image" class="card-img" [alt]="trainee.name">
+                  <img [src]="traineee.image" class="card-img" [alt]="traineee.name">
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title mb-3">{{ trainee.name }}</h5>
-                  <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
-                  <a href="javascript:void(0)" class="mt-3" (click)="toggleReview(trainee)">
-                    {{ trainee.showReview ? 'Hide Review' : 'Show Review' }}
+                  <p class="card-text" style="display: none;" #userId>{{ traineee.user_id ? traineee.user_id : 0}}</p>
+                  <h5 class="card-title mb-3">{{ traineee.name }}</h5>
+                  <p class="card-text"><strong>Membership:</strong> {{ traineee.membership }}</p>
+                  <a href="javascript:void(0)" class="mt-3" (click)="toggleReview(traineee)">
+                    {{ traineee.showReview ? 'Hide Review' : 'Show Review' }}
                   </a>
-                  <div *ngIf="trainee.showReview && trainee.Reviews.length > 0" class="mt-3">
+                  <div *ngIf="traineee.showReview && traineee.review && traineee.review.length > 0" class="mt-3">
                     <ul>
-                      <li *ngFor="let review of trainee.Reviews">
-                        <h4><strong>Date:</strong> {{ review.date }}</h4>
+                      <li *ngFor="let review of traineee.review">
+                        <h4><strong>Date:</strong> {{ review.created_at }}</h4>
                         <ul>
-                          <li><strong>Attendance:</strong> {{ review.attendens }}</li>
-                          <li><strong>Comment:</strong> {{ review.comment }}</li>
+                          <!-- <li><strong>Attendance:</strong> {{ review.attendens }}</li> -->
+                          <li><strong>Comment:</strong> {{ review.comments? review.comments: 'No Comment'}}</li>
                           <li>
-                            <strong>Rating:</strong> {{ review.rate }}/5
+                            <strong>Rating:</strong> {{ review.rating}}/5
                             <span class="star-rating">
                               <i *ngFor="let star of [].constructor(5); let j = index"
                                 class="fa"
-                                [ngClass]="j < review.rate ? 'fas fa-star' : 'far fa-star'"
+                                [ngClass]="j < review.rating ? 'fas fa-star' : 'far fa-star'"
                                 style="color: #ff6207;"></i>
                             </span>
                           </li>
@@ -39,19 +40,25 @@
                   <div class="mt-3">
                     <h6>Add Review:</h6>
                     <div>
-                      <label for="comment-{{trainee.name}}">Comment:</label>
-                      <input id="comment-{{trainee.name}}" type="text" [(ngModel)]="trainee.tempReview.comment" class="form-control">
+                      <label for="comment{{traineee.user_id}}">Comment:</label>
+                      <input id="comment{{traineee.user_id}}" #commentInput type="text" class="form-control">
                     </div>
-                    <div class="mt-2">
-                      <label for="rate-{{trainee.name}}">Rating (1-5):</label>
-                      <input id="rate-{{trainee.name}}" type="number" min="1" max="5" [(ngModel)]="trainee.tempReview.rate" class="form-control">
-                      <div *ngIf="(trainee.tempReview.rate > 5 || trainee.tempReview.rate < 1)" class="text-danger mt-2">
-                        Rating must be between 1 and 5.
-                      </div>
-                    </div>
-                    <button class="btn  mt-3" (click)="addReview(trainee)">Submit Review</button>
-                    <button class="btn  mt-3" routerLink="/trainer/trainees/create-report">Create Report</button>
 
+                    <!-- Rating Input -->
+                    <div class="mt-2">
+                      <label for="rate{{traineee.user_id}}">Rating (1-5):</label>
+                      <input id="rate{{traineee.user_id}}" #rateInput type="number" min="1" max="5" class="form-control">
+                      <!-- vailedMessages -->
+                        <div *ngIf="errorMessages[traineee.user_id]" class="alert alert-danger mt-2">
+                          {{ errorMessages[traineee.user_id] }}
+                        </div>
+                        <div *ngIf="vailedMessages[traineee.user_id]" class="alert alert-success mt-2">
+                          {{ vailedMessages[traineee.user_id] }}
+                        </div>
+                    </div>
+
+                    <button class="btn  mt-3" (click)="addReview(userId.textContent, commentInput.value, rateInput.value)">Submit Review</button>
+                    <button class="btn  mt-3" routerLink="/trainer/trainees/create-report">Create Report</button>
                   </div>
                 </div>
               </div>
@@ -61,14 +68,15 @@
       </div>
     </ng-container>
   </div>
+  <!-- </div> -->
   <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
-    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+    <span class="carousel-control-prev-icon" aria-hidden="true"
+      style="background-color:#ff6207; width: 50px; height: 50px;"></span>
     <span class="visually-hidden">Previous</span>
   </button>
   <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
-    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+    <span class="carousel-control-next-icon" aria-hidden="true"
+      style="background-color:#ff6207; width: 50px; height: 50px;"></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-
-

@@ -13,7 +13,12 @@
       <div *ngIf="showForm" class="goal-form">
         <input [(ngModel)]="newGoal" placeholder="Enter your goal" class="form-control m-2" />
         <div class="text-center">
-          <button class="btn m-2" (click)="saveGoal()">
+          @if (errorMessage){
+          <div class="alert alert-danger  my-3">
+            {{ errorMessage }}
+          </div>
+          }
+          <button class="btn m-2" (click)="saveGoal(newGoal)">
             {{ isEditing ? 'Save Changes' : 'Add Goal' }}
           </button>
           <button class="btn m-2" (click)="cancel()">Cancel</button>
@@ -24,6 +29,11 @@
       <div *ngIf="goal && !showForm">
         <p class="text-center">Current Goal: {{ goal }}</p>
         <div class="text-center">
+          @if (successMessage){
+          <div class="alert alert-success  my-3">
+            {{ successMessage }}
+          </div>
+          }
           <button class="btn m-2" (click)="editGoal()">Edit Goal</button>
         </div>
       </div>

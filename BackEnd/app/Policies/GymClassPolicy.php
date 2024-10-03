@@ -37,7 +37,7 @@ class GymClassPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'trainer' || $user->role === 'admin' ;
+        return $user->role === 'trainee' || $user->role === 'admin' ;
     }
 
     /**

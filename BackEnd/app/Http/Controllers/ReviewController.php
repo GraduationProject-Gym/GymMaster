@@ -2,8 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GymClass;
 use App\Models\Review;
+use App\Models\Trainee;
+use App\Models\Trainer;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Exception;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Access\AuthorizationException;
+use App\Models\Schedule;
 
 class ReviewController extends Controller
 {
@@ -29,8 +39,77 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         //
-    }
+        $rules = [
+            'rating'=>['required','min:1','max:5','numeric'],
+            'comments'=> ['required','string'],
+        ];
 
+        $messages = [
+            'rating.required' => 'rating mest be in range (1,5)',
+            'comments.required' => 'comment is required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json(["message"=>$validator->errors()], 403);
+        }
+        if(Auth::user()->role=="trainee"){
+            $trainee = Auth::user()->id;
+            $trainer = Trainer::where('user_id',$request->user_id)->first();
+            $trainer = $trainer->user_id;
+            $class = GymClass::where('trainer_id',$trainer)->first();
+
+        }else{
+            $trainer = Auth::user()->id;
+            $trainee = Trainee::where('user_id',$request->user_id)->first();
+            $trainee = $trainee->user_id;
+            // return ["message"=>$trainee];
+            $class = GymClass::where('trainer_id',$trainer)->first();
+        }
+
+        // return ["message"=>$trainer->class_id];
+        if (!$trainee) {
+            return response()->json(["message"=>"this trainee not found"], 403);
+        }
+        if (!$trainer) {
+            return response()->json(["message"=>"this trainer not found"], 404);
+        }
+        // Validate the request
+
+        try {
+            $this->authorize("create", Review::class);
+            $review = Review::create([
+                'rating' => $request->rating,
+                'comments' => $request->comments,
+                'class_id' => $class->id,
+                'trainee_id' => $trainee,
+                'trainer_id' => $trainer
+            ]);
+            return response()->json(["message"=>"done"]);
+        }catch(AuthorizationException $e){
+            return response()->json([
+                'message' => "You are not user to show this"
+            ], 403);
+        }
+    }
+    public function report(Request $request){
+
+        $user = Auth::user();// trainer
+        $trainee = User::where("id",$request->trainee_id)->first();
+        $class = GymClass::with(['trainer.user','equipments', 'exercises'])
+            ->where('id',$request->class_id)->first();
+        $reviews = Review::where("trainee_id", $request->trainee_id)
+                 ->where("class_id", 2)
+                 ->get();
+
+
+        return response()->json([
+            'message' => 'done',
+            'trainee'=>$trainee,
+            'review'=> $reviews,
+            'class'=>$class,
+        ], 201);
+    }
     /**
      * Display the specified resource.
      */

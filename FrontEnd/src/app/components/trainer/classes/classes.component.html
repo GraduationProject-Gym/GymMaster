@@ -1,4 +1,4 @@
-<!-- Title Section -->
+Title Section
 <div class="className text-center mb-4">
   <h1>{{ className }} Class</h1>
 </div>
@@ -20,7 +20,7 @@
           <!-- Class Information -->
           <div class="d-flex text-start">
             <p><strong>Total Number of Sessions:</strong> {{ totalNoOfSession }}</p>
-            <p><strong>Status:</strong> {{ status }}</p>
+            <!-- <p><strong>Status:</strong> {{ status }}</p> -->
           </div>
 
           <!-- Equipments and Exercises Cards -->
@@ -33,11 +33,11 @@
                 <div>
                   <ul>
                     <!-- Loop through equipments array -->
-                    <div *ngFor="let equipment of equipments;">
+                    <!-- <div *ngFor="let equipment of equipments;">
                       <li>
                         <h6 class="text-secondary"><span>{{ equipment.name }}</span></h6>
                       </li>
-                    </div>
+                    </div> -->
                   </ul>
                 </div>
               </div>
@@ -50,11 +50,11 @@
                 <div>
                   <ul>
                     <!-- Loop through exercises array -->
-                    <div *ngFor="let exercise of exercises;">
+                    <!-- <div *ngFor="let exercise of exercises;">
                       <li>
                         <h6 class="text-secondary"><span>{{ exercise.name }}</span></h6>
                       </li>
-                    </div>
+                    </div> -->
                   </ul>
                 </div>
               </div>
@@ -84,10 +84,10 @@
 
       <!-- Action Buttons -->
       <div class="buttons mt-3 text-center">
-        <a routerLink="/trainer/trainees" routerLinkActive="active" class="btn">View Trainees</a>
-        <button class="btn" (click)="addClass()">Add</button>
-        <button class="btn" (click)="goToUpdatePage()">Update</button>
-        <button class="btn" (click)="goToShowPage()">Show</button>
+        <a routerLink="/trainer/trainees" (click)="viewTrainees()" routerLinkActive="active" class="btn ">View Trainees</a>
+        <button class="btn " (click)="addClass()">Add</button>
+        <button class="btn " (click)="goToUpdatePage()">Update</button>
+        <button class="btn " (click)="goToShowPage()">Show</button>
       </div>
 
     </div>

@@ -1,0 +1,26 @@
+<div class="main">
+  @if(dataFlag){
+  <div class="profile d-flex flex-column">
+    <div class="d-flex ml-5">
+      <div>
+        <h1>
+          {{data.name?data.name:'gad'}}
+        </h1>
+
+        <p><strong>Email:</strong> {{ data.email }}</p>
+        <p><strong>Phone:</strong> {{ data.phone }}</p>
+        <p><strong>Address:</strong> {{ data.address }}</p>
+        <p><strong>Age:</strong> {{ data.age }}</p>
+        <p><strong>Gender:</strong> {{ data.gender }}</p>
+       
+      </div>
+      <img [src]="data.srcImg" alt="Trainer Profile Picture" class="profile-img ms-auto">
+    </div>
+  </div>
+
+  } @else if(errorMessage){
+  <div class="alert alert-danger profile d-flex flex-column">
+    {{errorMessage}}
+  </div>
+  }
+</div>

@@ -13,6 +13,7 @@ use App\Http\Controllers\TraineeClassController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\ReviewController;
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -28,7 +29,6 @@ Route::post('email-verification', [AuthController::class, 'verifyEmail']);
 Route::middleware(['auth:sanctum'])->group( function () {
     // membership
     Route::apiResource('membership',MembershipController::class);
-
     // subscription
     Route::apiResource('subscribe',SubscriptionController::class);
     Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
@@ -37,8 +37,16 @@ Route::middleware(['auth:sanctum'])->group( function () {
     // trainee Membership
     Route::post('create-membership', [TraineeClassController::class, 'updateMemperTrainee']);
     Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
+    // Review
+    Route::apiResource('review',ReviewController::class);
+    Route::post('report', [ReviewController::class, 'report']);
+    // trainees on one class
+    Route::post('trainees', [TraineeClassController::class, 'trainees']);
+    Route::get('showuserdata', [AuthController::class, 'showuserdata']);
 
 });
+
+
 
 // Auth User
 Route::post('register', [AuthController::class, 'store']);
@@ -46,10 +54,14 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+Route::apiResource('users', AuthController::class);
+Route::post('users/{id}', [AuthController::class, 'update']);
+// Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
 // membership
-
+Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::apiResource('trainee-class',TraineeClassController::class);
+
 Route::apiResource('schedule',SchedulesController::class);
 Route::apiResource('equipment',EquipmentController::class);
 Route::post('equipment/workon',[EquipmentController::class, 'workOn']);
@@ -108,3 +120,6 @@ Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
+
+//show user data based on his role 
+// Route::get('showuserdata', [AuthController::class, 'showuserdata']);

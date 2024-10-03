@@ -56,12 +56,12 @@ import { MoreDetailsTraineeComponent } from './components/admin/more-details-tra
   providers: [
     ClassService,
     SidebarService,
-    MembershipService
+    MembershipService,
   ],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'FrontEnd';
+  
 }

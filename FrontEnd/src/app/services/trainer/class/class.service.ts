@@ -12,6 +12,10 @@ export class ClassService {
 
   private apiUrl = '';
   private showClass = `${environment.domain}/gym-classes`;
+  private showTrainee = `${environment.domain}/trainees`;
+  private createReview = `${environment.domain}/review`;
+
+
   private selectedClass:any;
 
   constructor(private http: HttpClient, private readonly authToken:AuthTokenService) {}
@@ -19,6 +23,7 @@ export class ClassService {
     const token = this.authToken.getToken();
     console.log(token)
     return new HttpHeaders({
+      // 'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
 
@@ -31,6 +36,12 @@ export class ClassService {
   updateClass(classId: string, classData: any) {
     return this.http.put(`${this.apiUrl}/${classId}`, classData);
   }
+  setSelectedclass(classe:[]){
+    this.selectedClass = classe;
+  }
+  getSelectedClass(){
+    return this.selectedClass;
+  }
   getShowClass(id:number):Observable <any>{
     // this.getHeaders()
     const headers =this.getHeaders() ;
@@ -38,11 +49,14 @@ export class ClassService {
     return this.http.get(`${this.showClass}/${id}`, {headers});
 
   }
-  setSelectedclass(classe:any){
-    this.selectedClass = classe;
+  geTraineeOnClass(id:number):Observable <any>{
+    const headers =this.getHeaders() ;
+    return this.http.post(`${this.showTrainee}`,{'id':id},{headers});
   }
-  getSelectedClass(){
-    return this.selectedClass;
+  setReview(data:any):Observable <any>{
+    // console.log(234234);
+    const headers =this.getHeaders() ;
+    return this.http.post(`${this.createReview}`,{...data},{headers});
   }
 
 }
