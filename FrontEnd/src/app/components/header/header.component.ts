@@ -24,7 +24,6 @@ export class HeaderComponent {
   ) {
     this.checkLoginStatus();
   }
-  data: any;
 
   profile() {
     this.role = sessionStorage.getItem('role');
@@ -32,6 +31,13 @@ export class HeaderComponent {
       this.router.navigate(['/trainee-profile']);
     } else if (this.role === 'trainer'){
       this.router.navigate(['/trainer-profile']);
+    }
+  }
+
+  class(){
+    this.role = sessionStorage.getItem('role');
+    if (this.role === 'trainer'){
+      this.router.navigate(['/trainer/classes']);
     }
   }
 
@@ -54,10 +60,5 @@ export class HeaderComponent {
   logout(): void {
     this.logoutService.logout();
     this.isLoggedIn = false;
-  }
-
-  roleCheck(): boolean {
-    // Role shall be updated based on BE
-    return this.isLoggedIn && this.role === "trainee";
   }
 }

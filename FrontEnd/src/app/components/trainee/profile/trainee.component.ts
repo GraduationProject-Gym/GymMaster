@@ -21,9 +21,7 @@ import { SidebarService } from '../../../services/trainee/sidebar/sidebar.servic
   styleUrl: './trainee.component.css'
 })
 export class TraineeComponent implements OnInit {
-  constructor(private sidebarService: SidebarService, private router: Router) { //private profileService: ProfileService, private router:Router
-    // this.setProfileImage(this.data);
-  }
+  constructor(private sidebarService: SidebarService, private router: Router) {}
   data: any;
   errorMessage: string | null = null;
   dataFlag = false;

@@ -41,7 +41,6 @@ export const routes: Routes = [
     { path: 'trainer/add-class', component: AddClassComponent },
     { path: 'trainer/trainees', component: TraineesComponent },
     { path: 'trainer/trainees/create-report', component:ReportComponent},
-    // { path: "trainee", component: TraineeComponent },
     { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
