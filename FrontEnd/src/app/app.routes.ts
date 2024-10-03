@@ -25,6 +25,8 @@ import { AllTrainersComponent } from './components/admin/all-trainers/all-traine
 import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
 import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
+import { AdminAllClassesComponent } from './components/admin/admin-all-classes/admin-all-classes.component';
+import { AdminEditClassComponent } from './components/admin/admin-edit-class/admin-edit-class.component';
 
 
 export const routes: Routes = [
@@ -55,8 +57,9 @@ export const routes: Routes = [
     { path: 'admin-addTrainer', component:AddTrainerComponent},
     { path: 'admin-trainees', component:AllTraineesComponent},
     // { path: 'admin/trainee-moreDetials', component:MoreDetailsTraineeComponent},
-    { path: 'trainee/:id', component: MoreDetailsTraineeComponent },
-
+    { path: 'admin-trainee/:id', component: MoreDetailsTraineeComponent },
+    { path: 'admin-allClasses', component: AdminAllClassesComponent },
+    { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
 
     { path: "**", component: ErrorComponent }
 ];

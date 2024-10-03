@@ -26,7 +26,7 @@
                       <p><strong>Description:</strong> <span class="badge">{{ classObj.description }}</span></p>
                     </div>
                   </div>
-                  <h6 class="mt-4"><strong>Session Information</strong></h6>
+                  <h6 class="mt-4"><strong>Weekly Session Information</strong></h6>
                   <div *ngFor="let session of classObj.sessionsInfo; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
                     <h6 class="text-secondary">Session {{ i + 1 }}</h6>
                     <p><strong>Day:</strong> <span class="badge">{{ session.days || 'No day available' }}</span></p>
