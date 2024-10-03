@@ -89,57 +89,7 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
     public function indexalltrainee(){
-    try {
-        // جلب جميع المتدربين مع بيانات العضوية الخاصة بهم
-        $trainees = User::where('role', 'trainee')
-                        ->with('trainee.TraineeMembership') // التأكد من جلب بيانات العضوية
-                        ->get();
-
-        // التحقق إذا كانت البيانات فارغة
-        if ($trainees->isEmpty()) {
-            return response()->json(['message' => 'No trainees found.'], 404);
-        }
-
-        // التعامل مع بيانات كل متدرب على حدة
-        $traineeData = $trainees->map(function ($trainee) {
-            // التحقق من وجود بيانات المتدرب
-            if (!$trainee->trainee) {
-                return [
-                    'name' => $trainee->name,
-                    'error' => 'Trainee data is missing.',
-                ];
-            }
-
-            if (!$trainee->trainee->TraineeMembership) {
-                return [
-                    'name' => $trainee->name,
-                    'error' => 'Membership data is missing.',
-                ];
-            }
-
-            return [
-                'name' => $trainee->name,
-                'role' => $trainee->role,
-                'age' => $trainee->age,
-                'image' => $trainee->image,
-                'email' => $trainee->email,
-                'phone' => $trainee->phone,
-                'gender' => $trainee->gender,
-                'address' => $trainee->address,
-                'membership_type' => $trainee->trainee->TraineeMembership->type,
-                'subscription' => $trainee->trainee->TraineeMembership->subscribe_type,
-            ];
-        });
-
-        return response()->json($traineeData, 200);
-
-    } catch (\Exception $e) {
-       
-        return response()->json([
-            'error' => 'An unexpected error occurred. Please try again later.',
-            'message' => $e->getMessage() 
-        ], 500);
-    }
+   
 }
 
  
