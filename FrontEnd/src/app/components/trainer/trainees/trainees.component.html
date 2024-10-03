@@ -56,9 +56,8 @@
                           {{ vailedMessages[traineee.user_id] }}
                         </div>
                     </div>
-
                     <button class="btn  mt-3" (click)="addReview(userId.textContent, commentInput.value, rateInput.value)">Submit Review</button>
-                    <button class="btn  mt-3" routerLink="/trainer/trainees/create-report">Create Report</button>
+                    <button class="btn  mt-3" (click)="addReport(userId.textContent)">Create Report</button>
                   </div>
                 </div>
               </div>

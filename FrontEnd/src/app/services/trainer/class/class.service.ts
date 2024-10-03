@@ -15,11 +15,13 @@ export class ClassService {
   private showTrainee = `${environment.domain}/trainees`;
   private createReview = `${environment.domain}/review`;
   private getClassTrainer = `${environment.domain}/getClassTrainer`;
+  private create_Report =`${environment.domain}/report`;
 
 
 
   private selectedClass:any;
   private selectedtrainee:any;
+  private report:any;
 
   constructor(private http: HttpClient, private readonly authToken:AuthTokenService) {}
   private getHeaders(): HttpHeaders {
@@ -51,6 +53,14 @@ export class ClassService {
   getTrainee(){
     return this.selectedtrainee;
   }
+  setReport(report:any){
+    console.log(report);
+    this.report = report;
+  }
+  getReport(){
+    console.log(this.report);
+    return this.report;
+  }
   getShowClass(id:number):Observable <any>{
     // this.getHeaders()
     const headers =this.getHeaders() ;
@@ -72,6 +82,8 @@ export class ClassService {
     const headers =this.getHeaders() ;
     return this.http.get(`${this.getClassTrainer}`,{headers});
   }
-
+  createReport(trainee_id:number):Observable <any>{
+    const headers =this.getHeaders() ;
+    return this.http.post(`${this.create_Report}`,{'trainee_id':trainee_id},{headers});
+  }
 }
-

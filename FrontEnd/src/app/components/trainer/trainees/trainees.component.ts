@@ -110,7 +110,7 @@ export class TraineesComponent implements  OnInit{
           this.classService.setSelectedclass(response.data);
           this.vailedMessages[user_id]= "done";
           setTimeout(() => {
-           delete this.errorMessages[user_id];
+           delete this.vailedMessages[user_id];
          }, 5000);
         },
         error: (error) => {
@@ -135,13 +135,40 @@ export class TraineesComponent implements  OnInit{
         }
       });
     }
-
+  }
+  addReport(userId:string | null){
+    let user_id: number = userId? Number(userId):0;
+    this.classService.createReport(user_id).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.classService.setReport(response);
+        this.router.navigate(['/trainer/trainees/create-report']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 403) {
+            if (error.error?.message) {
+              Object.keys(error.error.message).forEach(key => {
+                this.errorMessages[user_id]= error.error.message[key];
+                 setTimeout(() => {
+                  delete this.errorMessages[user_id];
+                }, 5000);
+              });
+        }}else if (error.status === 401) {
+          // console.log("not Auth");
+        this.router.navigate(['login']);
+        }
+        else {
+          this.errorMessages[user_id] = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
   }
 
 }
-function ngOnInit() {
-  throw new Error('Function not implemented.');
-}
+// function ngOnInit() {
+//   throw new Error('Function not implemented.');
+// }
 
 
 

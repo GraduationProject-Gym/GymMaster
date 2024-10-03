@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\GymClass;
 use App\Models\Review;
 use App\Models\Trainee;
@@ -14,7 +15,8 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Models\Schedule;
-
+use App\Http\Resources\ReportResource;
+use App\Http\Resources\ReviewResource;
 class ReviewController extends Controller
 {
     /**
@@ -95,19 +97,15 @@ class ReviewController extends Controller
 
         $user = Auth::user();// trainer
         $trainee = User::where("id",$request->trainee_id)->first();
-        $class = GymClass::with(['trainer.user','equipments', 'exercises'])
-            ->where('id',$request->class_id)->first();
+        $class = GymClass::where("trainer_id",$user->id)->first();
         $reviews = Review::where("trainee_id", $request->trainee_id)
-                 ->where("class_id", 2)
+                 ->where("class_id", $class->id)
                  ->get();
-
-
         return response()->json([
-            'message' => 'done',
-            'trainee'=>$trainee,
-            'review'=> $reviews,
-            'class'=>$class,
-        ], 201);
+            'class' => new ReportResource($class),
+            'review'=> ReviewResource::collection($reviews),
+            'trainee'=>new UserResource($trainee),
+        ], 200);
     }
     /**
      * Display the specified resource.
