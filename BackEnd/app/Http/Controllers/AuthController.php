@@ -279,6 +279,11 @@ class AuthController extends Controller
             ], 403);
 
         }
+        // if($user->role === 'admin'){
+        // //     // $user->email_verified_at = now();
+        // //     // $user->save();
+        //     return ["message"=>$user];
+        // }
         if($user->role === 'trainer'){
             // "data"=>
             $class = GymClass::where('trainer_id', $user->id)->first();
@@ -288,6 +293,11 @@ class AuthController extends Controller
                 'class' => new GymClassResource($class),
             ], 200);
         }else if($user->role === 'trainee'){
+            return response()->json([
+                'token' => $user->createToken($request->device_name)->plainTextToken,
+                'role' => $user->role,
+            ], 200);
+        } else if($user->role === 'admin'){
             return response()->json([
                 'token' => $user->createToken($request->device_name)->plainTextToken,
                 'role' => $user->role,

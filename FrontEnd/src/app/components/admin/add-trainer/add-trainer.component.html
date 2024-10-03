@@ -1,22 +1,21 @@
-
-<app-admin-sidebar></app-admin-sidebar>
 <!-- <img src="/form4.jpg" alt="Background Image"> -->
+<app-admin-sidebar></app-admin-sidebar>
 <div class="main">
+
   <form [formGroup]="addTrainerForm" class="form form-background">
     <div class="d-flex flex-column align-items-center">
-      <h1 >Add New Trainer</h1>
+      <h1 class="registration">Add New Trainer</h1>
     </div>
 
     <!-- Name Field -->
     <div class="mb-3">
       <label for="name" class="form-label">Trainer Name</label>
       <input formControlName="name" type="text" class="form-control" id="name" name="name" autocomplete="off">
-      <div *ngIf="addTrainerForm.controls['name'].invalid && addTrainerForm.controls['name'].touched"
-        class="error-msg">
+      <div *ngIf="addTrainerForm.controls['name'].invalid && addTrainerForm.controls['name'].touched" class="error-msg">
         <div *ngIf="addTrainerForm.controls['name'].errors?.['required']">Trainer name is required</div>
-          <div *ngIf="addTrainerForm.controls['name'].errors?.['minlength']">
-          Trainer name must be at minimum 3 character
-          </div>
+        <div *ngIf="addTrainerForm.controls['name'].errors?.['pattern']">
+          Trainer name must be 3 to 15 characters long and can contain letters, numbers, underscores, or hyphens
+        </div>
         <div *ngIf="addTrainerForm.controls['name'].errors?.['backendError']">
           {{ addTrainerForm.controls['name'].errors?.['backendError'] }}
         </div>
@@ -43,7 +42,7 @@
       <input formControlName="age" type="number" name="age" class="form-control" id="age" autocomplete="off">
       <div *ngIf="addTrainerForm.controls['age'].invalid && addTrainerForm.controls['age'].touched" class="error-msg">
         <div *ngIf="addTrainerForm.controls['age'].errors?. ['required']">Age is required</div>
-        <div *ngIf="addTrainerForm.controls['age'].errors?.['min']">Age must be at least 18 years old to register</div>
+        <div *ngIf="addTrainerForm.controls['age'].errors?.['min']">Age must be at least 10 years old to register</div>
         <div *ngIf="addTrainerForm.controls['age'].errors?.['backendError']">
           {{ addTrainerForm.controls['age'].errors?.['backendError'] }}
         </div>
@@ -79,6 +78,55 @@
       </div>
     </div>
 
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <div class="input-group">
+        <input formControlName="password" type="password" class="form-control" name="password" id="password">
+        <div class="input-group-append">
+          <span class="input-group-text" id="togglePassword" style="cursor:pointer;" (click)="showPassword('password')">
+            <i class="far fa-eye" id="eyeIcon"></i>
+          </span>
+        </div>
+      </div>
+      <div *ngIf="addTrainerForm.controls['password'].invalid && addTrainerForm.controls['password'].touched"
+        class="error-msg">
+        <div *ngIf="addTrainerForm.controls['password'].errors?.['required']">Password is required</div>
+        <div *ngIf="addTrainerForm.controls['password'].errors?.['pattern']">Password must be at least 8 characters
+          long, include uppercase and lowercase letters, a number, and a special character</div>
+        <div *ngIf="addTrainerForm.controls['password'].errors?.['backendError']">
+          {{ addTrainerForm.controls['password'].errors?.['backendError'] }}
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="confirmPassword" class="form-label">Confirm Password</label>
+      <div class="input-group">
+        <input formControlName="confirmPassword" type="password" class="form-control" name="confirmPassword"
+          id="confirmPassword">
+        <div class="input-group-append">
+          <span class="input-group-text" id="toggleConfirmPassword" style="cursor:pointer;"
+            (click)="showPassword('confirmPassword')">
+            <i class="far fa-eye" id="confirmEyeIcon"></i>
+          </span>
+        </div>
+      </div>
+
+      <ng-container *ngIf="ConfirmPasswordRequired; else passwordMismatch">
+        <div class="error-msg">
+          Confirm password is required
+        </div>
+      </ng-container>
+      <ng-template #passwordMismatch>
+        <div *ngIf="!ConfirmPasswordValid && addTrainerForm.controls['confirmPassword'].touched" class="error-msg"
+          #passwordMismatch>
+          <div class="error-msg">
+            Passwords do not match
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
     <!-- Gender Field -->
     <label>Gender</label>
     <div class="form-check mt-3">
@@ -99,8 +147,9 @@
 
     <!-- Role Field -->
     <div class="form-check">
-      <input formControlName="role" class="form-check-input" type="radio" name="role" value="trainer" hidden>
+      <input formControlName="role" class="form-check-input" type="radio" name="role" id="admin" value="trainee" hidden>
     </div>
+
     <!-- Image Field -->
     <div class="mb-3">
       <label for="image" class="form-label">Upload Image</label>
@@ -130,8 +179,7 @@
     </div>
 
     <div class="d-flex justify-content-center ">
-      <button type="button" class="btn" >ADD</button>
+      <button type="button" class="btn">ADD</button>
     </div>
   </form>
 </div>
-
