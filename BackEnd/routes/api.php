@@ -120,3 +120,7 @@ Route::get('/payment/success', [SubscriptionController::class, 'success'])->name
 
 //show user data based on his role 
 Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
+
+
+// show all trainee data
+Route::middleware('auth:sanctum')->get('/alltrainees', [AuthController::class, 'indexalltrainee'])->name('alltrainees.show');

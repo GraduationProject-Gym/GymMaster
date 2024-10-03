@@ -89,8 +89,81 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
     public function indexalltrainee(){
+        try {
+            // $user = auth()->user();
+            // return $user->role;
+            // $this->authorize('viewAllTrainees', User::class);
+            $user = auth()->user();
+         
+            if ($user->role !== 'admin') {
+                return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainees.'], 403);
+            }
+
+            $trainees = User::where('role', 'trainee')
+                            ->with('trainee.TraineeMembership') 
+                            ->get();
+        
+            
+            if ($trainees->isEmpty()) {
+                return response()->json(['message' => 'No trainees found.'], 404);
+            }
    
-}
+            $traineeData = [];
+        
+          
+            foreach ($trainees as $trainee) {
+                
+                if ($trainee->trainee && $trainee->trainee->TraineeMembership) {
+                   
+                    if ($trainee->trainee->TraineeMembership->id == 20) {
+                        $membershipType = 'No membership found'; 
+                        $subscription = 'N/A'; 
+                    } else {
+                      
+                        $membershipType = $trainee->trainee->TraineeMembership->type;
+                        $subscription = $trainee->trainee->TraineeMembership->subscribe_type;
+                    }
+        
+                    
+                    $traineeData[] = [
+                        'name' => $trainee->name,
+                        'role' => $trainee->role,
+                        'age' => $trainee->age,
+                        'image' => $trainee->image,
+                        'email' => $trainee->email,
+                        'phone' => $trainee->phone,
+                        'gender' => $trainee->gender,
+                        'address' => $trainee->address,
+                        'membership_type' => $membershipType,
+                        'subscription' => $subscription,
+                    ];
+                } else {
+                    $traineeData[] = [
+                        'name' => $trainee->name,
+                        'role' => $trainee->role,
+                        'age' => $trainee->age,
+                        'image' => $trainee->image,
+                        'email' => $trainee->email,
+                        'phone' => $trainee->phone,
+                        'gender' => $trainee->gender,
+                        'address' => $trainee->address,
+                        'membership_type' => 'No membership found',
+                        'subscription' => 'N/A',
+                    ];
+                }
+            }
+        
+            return response()->json($traineeData, 200);
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'An unexpected error occurred. Please try again later.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+        
+
+    }
 
  
     /**
