@@ -122,6 +122,6 @@ Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
 // Attendance
-Route::get('attendance', [AttendanceController::class, 'index']);
+Route::post('attendance', [AttendanceController::class, 'index']);
 Route::post('attendance/checkin', [AttendanceController::class, 'checkin']);
 Route::post('attendance/checkout', [AttendanceController::class, 'checkout']);

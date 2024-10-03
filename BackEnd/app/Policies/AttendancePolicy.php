@@ -5,6 +5,8 @@ namespace App\Policies;
 use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
+
 
 class AttendancePolicy
 {
@@ -14,14 +16,18 @@ class AttendancePolicy
     public function viewAny(User $user): bool
     {
         //
+        return $user->role === 'admin';
+
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Attendance $attendance): bool
+    public function view(User $user, ?Attendance $attendance = null): bool
     {
         //
+        return $user->role === 'trainee' && $user->id === Auth::id();
+
     }
 
     /**
