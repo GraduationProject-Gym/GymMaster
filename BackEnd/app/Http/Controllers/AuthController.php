@@ -35,14 +35,14 @@ class AuthController extends Controller
     }
     public function showuserdata()
     {
-        $user = Auth::user();
-        // return ["message"=>$user];
+        $user = auth()->user();
         if ($user->role === 'trainee') {
-            
-            $trainee = $user->trainee; 
+            $trainee = $user->trainee;
+        
+            if ($trainee && $trainee->TraineeMembership) {
                 return response()->json([
-                    'name'=>$user->name,
-                    'role'=>$user->role,
+                    'name' => $user->name,
+                    'role' => $user->role,
                     'age' => $user->age,
                     'image' => $user->image,
                     'email' => $user->email,
@@ -51,14 +51,47 @@ class AuthController extends Controller
                     'address' => $user->address,
                     'membership_type' => $trainee->TraineeMembership->type,
                     'subscription' => $trainee->TraineeMembership->subscribe_type,
-                ], 200); 
+                ], 200);
             } else {
                 return response()->json([
                     'message' => 'Trainee data or membership not found.'
                 ], 403);
             }
+        } elseif ($user->role === 'trainer') {
+            $trainer = $user->trainer;
+        
+            if ($trainer) {
+                return response()->json([
+                    'name' => $user->name,
+                    'role' => $user->role,
+                    'age' => $user->age,
+                    'image' => $user->image,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'gender' => $user->gender,
+                    'address' => $user->address,
+                    'cv' => $trainer->cv,
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Trainer data not found.'
+                ], 403);
+            }
+        } else {
+            return response()->json([
+                'error' => 'User role is not recognized.'
+            ], 400);
+        }
+        
         
     }
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexalltrainee(){
+   
+}
+
  
     /**
      * Display a listing of the resource.
