@@ -24,6 +24,7 @@ import { ShowReportComponent } from './components/trainee/show-report/show-repor
 import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
 import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
+import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { LoginService } from './services/authentication/login/login.service';
 
 @Component({
@@ -51,7 +52,9 @@ import { LoginService } from './services/authentication/login/login.service';
     ShowReportComponent,
     AddTrainerComponent,
     AllTraineesComponent,
-    MoreDetailsTraineeComponent
+    MoreDetailsTraineeComponent,
+    AdminAddClassComponent ,
+
   ],
 
   providers: [
@@ -65,5 +68,5 @@ import { LoginService } from './services/authentication/login/login.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  
+
 }

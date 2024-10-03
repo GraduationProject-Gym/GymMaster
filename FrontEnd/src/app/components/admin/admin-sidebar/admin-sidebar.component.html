@@ -1,7 +1,7 @@
 <div class="sidebar w-20" >
   <nav>
     <ul>
-      <!-- <li><a routerLink="/admin-trainers">Trainers</a></li> -->
+                        <!-- Trainers -->
       <li class="dropdown">
         <a routerLink="/admin-trainers" (click)="toggleDropdownTrainers()">Trainers</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenTrainers">
@@ -9,8 +9,16 @@
           <li><a routerLink="/admin-addTrainer">Add Trainer</a></li>
         </ul>
       </li>
+                        <!-- Trainees -->
       <li><a routerLink="/admin-trainees">Trainees</a></li>
-      <li><a routerLink="/admin-allClasses">Classes</a></li>
+                        <!-- classes -->
+      <li class="dropdown">
+        <a routerLink="/admin-allClasses" (click)="toggleDropdownClasses()">Classes</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenClasses">
+          <li><a routerLink="/admin-allClasses">All Classes</a></li>
+          <li><a routerLink="/admin-addClass">Add Class</a></li>
+        </ul>
+      </li>
 
       <li><a routerLink="/trainee-goal">Goals</a></li>
       <li><a routerLink="/trainee-membership">Membership</a></li>
