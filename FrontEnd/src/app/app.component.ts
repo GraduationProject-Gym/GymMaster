@@ -24,6 +24,7 @@ import { ShowReportComponent } from './components/trainee/show-report/show-repor
 import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
 import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
+import { LoginService } from './services/authentication/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -57,6 +58,7 @@ import { MoreDetailsTraineeComponent } from './components/admin/more-details-tra
     ClassService,
     SidebarService,
     MembershipService,
+    LoginService
   ],
 
   templateUrl: './app.component.html',

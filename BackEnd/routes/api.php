@@ -41,8 +41,11 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::apiResource('review',ReviewController::class);
     Route::post('report', [ReviewController::class, 'report']);
     // trainees on one class
-    Route::post('trainees', [TraineeClassController::class, 'trainees']);
+    // Route::post('trainees', [TraineeClassController::class, 'trainees']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
+    Route::get('trainees', [TraineeClassController::class, 'trainees']);
+
+    Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
 });
 
@@ -61,8 +64,7 @@ Route::post('users/{id}', [AuthController::class, 'update']);
 // membership
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::apiResource('trainee-class',TraineeClassController::class);
-
-Route::apiResource('schedule',SchedulesController::class);
+// Route::apiResource('schedule',SchedulesController::class);
 Route::apiResource('equipment',EquipmentController::class);
 Route::post('equipment/workon',[EquipmentController::class, 'workOn']);
 Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->middleware('guest');
@@ -92,7 +94,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/equipments/{id}', [EquipmentsController::class, 'destroy'])->name('equipments.destroy');
     Route::patch('/equipments/restore/{id}', [EquipmentsController::class, 'restore'])->name('equipments.restore');
 
-});
+    });
+
 
 
 // Exercises Routes

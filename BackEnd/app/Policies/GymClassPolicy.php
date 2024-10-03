@@ -15,6 +15,11 @@ class GymClassPolicy
     {
         return $user->role === 'admin';
     }
+    public function wiewClass(User $user): bool
+    {
+        return $user->role === 'trainer';
+    }
+
 
     /**
      * Determine whether the user can view any models.

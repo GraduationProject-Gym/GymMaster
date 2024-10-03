@@ -36,7 +36,7 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Schedule::class);
+        // $this->authorize('create', Schedule::class);
 
         try {
             $validatedData= $request->validate([
@@ -45,6 +45,7 @@ class ScheduleController extends Controller
                 'session_end' => 'required|date_format:H:i|after:session_start',
                 'session_duration' => 'required|numeric|min:0',
                 'nameDay' => 'required|string|max:255',
+                'date_day'=>'required'
             ]);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();

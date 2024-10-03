@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\GymClass;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\Http\Resources\Api\GymClassResource;
 
 class AuthController extends Controller
 {
@@ -278,11 +279,24 @@ class AuthController extends Controller
             ], 403);
 
         }
+        if($user->role === 'trainer'){
+            // "data"=>
+            $class = GymClass::where('trainer_id', $user->id)->first();
+            return response()->json([
+                'token' => $user->createToken($request->device_name)->plainTextToken,
+                'role' => $user->role,
+                'class' => new GymClassResource($class),
+            ], 200);
+        }else if($user->role === 'trainee'){
+            return response()->json([
+                'token' => $user->createToken($request->device_name)->plainTextToken,
+                'role' => $user->role,
+            ], 200);
+        }
 
-        return response()->json([
-            'token' => $user->createToken($request->device_name)->plainTextToken,
-            'role' => $user->role
-        ]);
+        // return response()->json([
+
+        // ]);
     }
 
     // Logout

@@ -31,7 +31,7 @@ class MembershipController extends Controller
         // return ["message"=>'done'];
         try {
             $this->authorize('viewAny', Memberships::class);
-            $memberships = Memberships::all();
+            $memberships = Memberships::whereNot('id',20)->get();
             return response()->json([
                 'Memberships' => MembershipResource::collection($memberships),
             ]);

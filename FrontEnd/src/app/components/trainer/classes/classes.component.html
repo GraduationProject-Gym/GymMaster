@@ -1,6 +1,6 @@
 Title Section
 <div class="className text-center mb-4">
-  <h1>{{ className }} Class</h1>
+  <h1>{{data.class.name}} class</h1>
 </div>
 
 <!-- Main Content Wrapper -->
@@ -19,8 +19,8 @@ Title Section
 
           <!-- Class Information -->
           <div class="d-flex text-start">
-            <p><strong>Total Number of Sessions:</strong> {{ totalNoOfSession }}</p>
-            <!-- <p><strong>Status:</strong> {{ status }}</p> -->
+            <p><strong>Total Number of Sessions:</strong> {{ data.class.total_no_of_sessions }}</p>
+            <p><strong>Status:</strong> {{ data.class.status == 1?'Active':'Not Active' }}</p>
           </div>
 
           <!-- Equipments and Exercises Cards -->
@@ -33,11 +33,11 @@ Title Section
                 <div>
                   <ul>
                     <!-- Loop through equipments array -->
-                    <!-- <div *ngFor="let equipment of equipments;">
+                    <div *ngFor="let equipment of data.class.equipments;">
                       <li>
                         <h6 class="text-secondary"><span>{{ equipment.name }}</span></h6>
                       </li>
-                    </div> -->
+                    </div>
                   </ul>
                 </div>
               </div>
@@ -50,11 +50,11 @@ Title Section
                 <div>
                   <ul>
                     <!-- Loop through exercises array -->
-                    <!-- <div *ngFor="let exercise of exercises;">
+                    <div *ngFor="let exercise of data.class.exercises;">
                       <li>
                         <h6 class="text-secondary"><span>{{ exercise.name }}</span></h6>
                       </li>
-                    </div> -->
+                    </div>
                   </ul>
                 </div>
               </div>
@@ -66,18 +66,18 @@ Title Section
       </div>
 
       <!-- Loop through Classes Array -->
-      <div *ngFor="let class of Classes" style="width: 100%; max-width: 600px; text-align: center;">
+      <div *ngFor="let class of data.class.scheduals; let i = index" style="width: 100%; max-width: 600px; text-align: center;">
 
         <!-- Class Card -->
         <div class="card mb-3" (click)="toggleDetails(class.id)">
-          <h5 class="card-title">{{ class.session }}</h5>
+          <h5 class="card-title"> session {{ i + 1 }}</h5>
         </div>
 
         <!-- Class Details: Displayed when clicked -->
         <div *ngIf="activeClassId === class.id" class="details p-3 border rounded text-start" style="width: 100%; max-width: 600px;">
           <p class="details-title"><strong>Details:</strong></p>
-          <p><strong>Days:</strong> <span class="details-info">{{ class.days }}</span></p>
-          <p><strong>Hours:</strong>: <span class="details-info">{{ class.hours }}</span></p>
+          <p><strong>Days:</strong> <span class="details-info">{{ class.nameDay }}</span></p>
+          <p><strong>Hours:</strong>: <span class="details-info">{{ class.session_start }}</span></p>
         </div>
 
       </div>
@@ -95,7 +95,7 @@ Title Section
     <!-- Right Section: Image and Description -->
     <div class="content" style="flex: 1;">
       <img [src]="image" alt="Group Image" class="img-fluid" style="max-width: 600px;">
-      <div class="description mt-3" style="width: 100%; max-width: 600px;">{{ description }}</div>
+      <div class="description mt-3" style="width: 100%; max-width: 600px;">{{ data.class.description }}</div>
     </div>
 
   </div>
