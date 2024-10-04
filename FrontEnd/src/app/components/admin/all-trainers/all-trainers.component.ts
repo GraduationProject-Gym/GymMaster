@@ -19,7 +19,7 @@ export class AllTrainersComponent {
 
   // Constructor to initialize the component and group the trainers
   constructor(private adminService: AdminService, private router: Router) {
-    
+
   }
 
   // List of trainers data
@@ -37,6 +37,8 @@ export class AllTrainersComponent {
       console.log(this.trainers);
       return;
     }
+    this.groupTrainers(); // Group trainers into sets for the carousel
+    this.setProfileImage(); // Set default profile images based on gender
   }
 
   indexTrainersData() {
@@ -47,7 +49,7 @@ export class AllTrainersComponent {
         this.trainers = response;
         this.adminService.setSelectedData(response);
         this.groupTrainers(); // Group trainers into sets for the carousel
-    this.setProfileImage(); // Set default profile images based on gender
+        this.setProfileImage(); // Set default profile images based on gender
         this.router.navigate(['/admin-trainers']);
       },
       error: (error) => {
@@ -63,61 +65,6 @@ export class AllTrainersComponent {
       }
     });
   }
-  // trainers: any[] = [
-  //   {
-  //     name: 'John Doe1',
-  //     id: 5,
-  //     srcImg: '/male.jfif',
-  //     age: 23,
-  //     email: "sandy23@gmail.com",
-  //     phone: "01271024421",
-  //     address: "Asyut",
-  //     gender: "male",
-  //     class: "yoga",
-  //     cv: '',
-  //   },
-  //   {
-  //     name: 'John Doe2',
-  //     id: 1,
-  //     srcImg: '',
-  //     age: 23,
-  //     email: "sandy23@gmail.com",
-  //     phone: "01271024421",
-  //     address: "Asyut",
-  //     gender: "male",
-  //     class: "yoga",
-  //     cv: '',
-  //   },
-  //   {
-  //     name: 'John Doe3',
-  //     id: 5,
-  //     srcImg: '/male.jfif',
-  //     age: 23,
-  //     email: "sandy23@gmail.com",
-  //     phone: "01271024421",
-  //     address: "Asyut",
-  //     gender: "male",
-  //     class: "yoga",
-  //     cv: '',
-  //   },
-  //   {
-  //     name: 'John Doe2',
-  //     id: 1,
-  //     srcImg: '',
-  //     age: 23,
-  //     email: "sandy23@gmail.com",
-  //     phone: "01271024421",
-  //     address: "Asyut",
-  //     gender: "male",
-  //     class: "yoga",
-  //     cv: '',
-  //   },
-  // ];
-
-  // Grouped trainers for displaying in the carousel
-  // groupedTrainers: any[] = [];
-  // currentSlide: number = 0;
-
 
   // Group trainers into sets of 3 for carousel slides
   groupTrainers() {
@@ -147,6 +94,9 @@ export class AllTrainersComponent {
 
   // Update the active carousel item based on the current slide index
   updateCarousel() {
+    if (!this.carousel || !this.carousel.nativeElement) {
+      return; // Exit if the carousel is not yet initialized
+    }
     const carouselItems = this.carousel.nativeElement.querySelectorAll('.carousel-item');
     carouselItems.forEach((item: { classList: { remove: (arg0: string) => void; add: (arg0: string) => void; }; }, index: number) => {
       item.classList.remove('active'); // Remove 'active' class from all items

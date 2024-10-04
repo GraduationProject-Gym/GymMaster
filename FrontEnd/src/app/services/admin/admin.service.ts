@@ -13,6 +13,7 @@ export class AdminService {
   // }
   constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
   private selectedData: any;
+  private selectedTraineesData: any;
 
   // Get token to send it with each request
   private getHeaders(): HttpHeaders {
@@ -29,10 +30,10 @@ export class AdminService {
   }
 
   // Trainee services
-  // indexTrainees(): Observable<any> {
-  //   const indexTraineesUrl = `${environment.domain}/`;
-  //   return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
-  // }
+  indexTrainees(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/alltrainees`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
 
 
   // Setter and getter to move data between components
@@ -43,4 +44,12 @@ export class AdminService {
   getSelectedData() {
     return this.selectedData;
   }
+
+  // setSelectedTraineesData(data: any) {
+  //   this.selectedTraineesData = data;
+  // }
+
+  // getSelectedTraineesData() {
+  //   return this.selectedTraineesData;
+  // }
 }

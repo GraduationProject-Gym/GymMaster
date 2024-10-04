@@ -3,14 +3,14 @@
     <ul>
                         <!-- Trainers -->
       <li class="dropdown">
-        <a routerLink="/admin-trainers" (click)="toggleDropdownTrainers()">Trainers</a>
+        <a (click)="trainers()" (click)="toggleDropdownTrainers()">Trainers</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenTrainers">
-          <li><a routerLink="/admin-trainers">All Trainers</a></li>
+          <li><a (click)="trainers()">All Trainers</a></li>
           <li><a routerLink="/admin-addTrainer">Add Trainer</a></li>
         </ul>
       </li>
                         <!-- Trainees -->
-      <li><a routerLink="/admin-trainees">Trainees</a></li>
+      <li><a (click)="trainees()">Trainees</a></li>
                         <!-- classes -->
       <li class="dropdown">
         <a routerLink="/admin-allClasses" (click)="toggleDropdownClasses()">Classes</a>
