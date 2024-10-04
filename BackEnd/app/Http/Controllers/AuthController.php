@@ -290,7 +290,7 @@ class AuthController extends Controller
             return response()->json([
                 'token' => $user->createToken($request->device_name)->plainTextToken,
                 'role' => $user->role,
-                'class' => new GymClassResource($class),
+                // 'class' => new GymClassResource($class),
             ], 200);
         }else if($user->role === 'trainee'){
             return response()->json([
