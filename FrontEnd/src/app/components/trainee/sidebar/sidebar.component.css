@@ -85,3 +85,7 @@ ul li {
     width: 30%;
   }
 }
+
+a:hover {
+  cursor: pointer; 
+}

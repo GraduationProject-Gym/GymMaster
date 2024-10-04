@@ -125,6 +125,28 @@ export class SidebarComponent {
     });
   }
 
+  // Index my attendance
+  attendance() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMyAttendance().subscribe({
+      next: (response: any) => {
+        this.sidebarService.setSelectedData(response.attendance);
+        console.log(response.attendance);
+        this.router.navigate(['/trainee-attendance']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+
   // dropdown classes & reviews
   dropdownOpenClass = false;
   dropdownOpenReview = false;

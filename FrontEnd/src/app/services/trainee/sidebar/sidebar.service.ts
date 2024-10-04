@@ -57,12 +57,20 @@ export class SidebarService {
   //   return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
   // }
 
+  // Attendance service
+  indexMyAttendance(): Observable<any> {
+    const indexMyAttendanceUrl = `${environment.domain}/attendance`;
+    return this.http.post(indexMyAttendanceUrl, {}, { headers: this.getHeaders() });
+  }
+
   // Setter and getter to move data between components
   setSelectedData(data: any) {
     this.selectedData = data;
+    console.log(this.selectedData);
   }
   
   getSelectedData() {
+    console.log(this.selectedData);
     return this.selectedData;
   }
 }
