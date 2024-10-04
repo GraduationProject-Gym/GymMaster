@@ -118,7 +118,7 @@ Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
 
-//show user data based on his role 
+// show user data based on his role 
 Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
 
 
@@ -128,3 +128,7 @@ Route::middleware('auth:sanctum')->get('/alltrainees', [AuthController::class, '
 
 //show all trainer data
 Route::middleware('auth:sanctum')->get('/alltrainers', [AuthController::class, 'indexalltrainer'])->name('alltrainers.show');
+
+
+//update trainee data
+Route::middleware('auth:sanctum')->put('/updatetrainees/{id}', [AuthController::class, 'update'])->name('trainees.update');
