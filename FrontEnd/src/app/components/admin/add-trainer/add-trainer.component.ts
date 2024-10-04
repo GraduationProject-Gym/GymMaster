@@ -21,6 +21,7 @@ export class AddTrainerComponent {
 
   errorMessage: string | null = null;
   selectedFile: File | null = null;
+  selectedImage: File | null = null;
 
   constructor(
     private registrationService: RegistrationService,
@@ -41,13 +42,20 @@ export class AddTrainerComponent {
     cv: new FormControl(null)
   });
 
+  onImageChange(event: any): void {
+    const img = event.target.files[0];
+    if (img) {
+      this.selectedImage = img;
+      this.addTrainerForm.patchValue({ image: img.name });
+    }
+  }
+
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      this.addTrainerForm.patchValue({ image: file.name });
+      this.addTrainerForm.patchValue({ cv: file.name });
     }
-    // selectedImage
   }
 
   passwordMatcher() {
@@ -91,7 +99,7 @@ export class AddTrainerComponent {
         } else if (key === 'cv'){
           const file = this.selectedFile;
           if (file) {
-            formData.append('image', file);
+            formData.append('cv', file);
           }
         } else {
           const sanitizedValue = this.sanitizeInput(this.addTrainerForm.get(key)?.value);
