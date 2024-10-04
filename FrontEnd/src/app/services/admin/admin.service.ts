@@ -8,6 +8,9 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AdminService {
+  // indexTrainees() {
+  //   throw new Error('Method not implemented.');
+  // }
   constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
   private selectedData: any;
 
@@ -18,9 +21,10 @@ export class AdminService {
     return headers;
   }
 
+
   // Trainer service
   indexTrainers(): Observable<any> {
-    const indexTrainersUrl = `${environment.domain}/`;
+    const indexTrainersUrl = `${environment.domain}/alltrainers`;
     return this.http.get(indexTrainersUrl, { headers: this.getHeaders() });
   }
 
