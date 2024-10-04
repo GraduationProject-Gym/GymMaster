@@ -131,3 +131,12 @@ Route::get('/payment/success', [SubscriptionController::class, 'success'])->name
 
 //show user data based on his role 
 // Route::get('showuserdata', [AuthController::class, 'showuserdata']);
+// Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
+
+
+// show all trainee data
+Route::middleware('auth:sanctum')->get('/alltrainees', [AuthController::class, 'indexalltrainee'])->name('alltrainees.show');
+
+
+//show all trainer data
+Route::middleware('auth:sanctum')->get('/alltrainers', [AuthController::class, 'indexalltrainer'])->name('alltrainers.show');
