@@ -117,6 +117,7 @@ class ReviewController extends Controller
         $gymClasses = $trainee->ClassesTrainees;
         return response()->json([
             'trainee' => new UserResource($trainee),
+            // 'class'=> $gymClasses,
             'data'=>ReportTraineeResource::collection($gymClasses),
         ], 200);
     }
