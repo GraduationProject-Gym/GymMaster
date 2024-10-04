@@ -6,7 +6,7 @@
     <ng-container *ngFor="let group of groupedTrainees; let i = index">
       <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
         <div class="container report-container">
-          <ng-container *ngFor="let trainees of group; let i = index; trackBy: trackByReportId">
+          <ng-container *ngFor="let trainees of group; let k = index; trackBy: trackByReportId">
                     <!-- Hidden input for the report ID -->
                     <input type="hidden" [(ngModel)]="reportId" />
                     <!-- Main title of the report -->
@@ -46,8 +46,8 @@
                     <h5 class="card-title">Coach feedback</h5>
                     <div class="row text-start">
                       <div class="col-md-6">
-                        <div *ngFor="let feedback of trainees.comments; let i = index">
-                          <p><strong>Comment {{ i + 1 }}:</strong> {{ feedback.comment }}</p>
+                        <div *ngFor="let feedback of trainees.comments;">
+                          <p><strong>Comment {{ k + 1 }}:</strong> {{ feedback.comment }}</p>
                           <p><strong>Rating:</strong>
                             <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
                               <i class="fa" [ngClass]="j < feedback.rate ? 'fas fa-star' : 'far fa-star'"></i>

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class SidebarService {
   constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
   private selectedData: any;
-
+  private getOwnerReports = `${environment.domain}/reportTrainee`;
   // Get token to send it with each request
   private getHeaders(): HttpHeaders {
     const token = this.authTokenService.getToken();
@@ -24,7 +24,7 @@ export class SidebarService {
   }
 
   // Membership services
-  // showMembership(membership:string) { 
+  // showMembership(membership:string) {
   //   const showMembershipUrl = `${environment.domain}/membership/${membership}`;
   //   return this.http.get(showMembershipUrl, { headers: this.getHeaders() });
   // }
@@ -46,7 +46,7 @@ export class SidebarService {
   }
 
   // Trainer service
-  indexMyTrainers(): Observable<any> {
+  indexMyTrainers():Observable<any> {
     const indexMyTrainersUrl = `${environment.domain}/`;
     return this.http.get(indexMyTrainersUrl, { headers: this.getHeaders() });
   }
@@ -61,8 +61,12 @@ export class SidebarService {
   setSelectedData(data: any) {
     this.selectedData = data;
   }
-  
-  getSelectedData() {
+
+  getSelectedData(){
     return this.selectedData;
+  }
+
+  getReports():Observable <any>{
+    return this.http.get(this.getOwnerReports, { headers: this.getHeaders() });
   }
 }

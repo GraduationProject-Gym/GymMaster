@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, Filler } from 'chart.js';
@@ -9,12 +9,11 @@ import { Chart, LineController, LineElement, PointElement, LinearScale, Title, C
   imports: [CommonModule,
     FormsModule,
     SidebarComponent,
-
   ],
   templateUrl: './show-report.component.html',
   styleUrl: './show-report.component.css'
 })
-export class ShowReportComponent {
+export class ShowReportComponent implements OnInit{
   reportId: number | undefined;
   currentSlide = 0;
   groupedTrainees = this.groupTrainees();
@@ -22,6 +21,15 @@ export class ShowReportComponent {
   constructor() {
     this.reportId ;
   }
+
+  ngOnInit() {
+    
+    this.calculateOverallRating();
+    this.groupedTrainees = this.groupTrainees();
+    console.log('Grouped Trainees:', this.groupedTrainees);
+  }
+
+
   trainees = [
     {
       reportId:1,
@@ -156,12 +164,6 @@ createChart(reportId: number, index: number): void {
 
 
 // Lifecycle hook that runs after component initialization
-ngOnInit(): void {
-      this.calculateOverallRating();
-      this.groupedTrainees = this.groupTrainees();
-      console.log('Grouped Trainees:', this.groupedTrainees);
-
-}
 
 
 chartsCreated = false;

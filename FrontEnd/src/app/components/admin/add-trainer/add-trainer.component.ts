@@ -78,13 +78,13 @@ export class AddTrainerComponent {
   }
 
   addTrainer() {
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
     this.addTrainerForm.markAllAsTouched();
     if (this.addTrainerForm.valid) {
       const formData = new FormData();
       Object.keys(this.addTrainerForm.value).forEach(key => {
         if (key === 'image') {
-          const img = this.selectedImage;
+          const img = this.selectedFile;
           if (img) {
             formData.append('image', img);
           }
