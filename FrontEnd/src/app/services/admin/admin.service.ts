@@ -19,10 +19,10 @@ export class AdminService {
   }
 
   // Trainer service
-  // indexTrainers(): Observable<any> {
-  //   const indexTrainersUrl = `${environment.domain}/`;
-  //   return this.http.get(indexTrainersUrl, { headers: this.getHeaders() });
-  // }
+  indexTrainers(): Observable<any> {
+    const indexTrainersUrl = `${environment.domain}/`;
+    return this.http.get(indexTrainersUrl, { headers: this.getHeaders() });
+  }
 
   // Trainee services
   // indexTrainees(): Observable<any> {
