@@ -41,7 +41,6 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
     // Review
     Route::apiResource('review',ReviewController::class);
-    Route::post('report', [ReviewController::class, 'report']);
     // trainees on one class
     // Route::post('trainees', [TraineeClassController::class, 'trainees']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
@@ -49,9 +48,10 @@ Route::middleware(['auth:sanctum'])->group( function () {
 
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
-    // Report
+    // Report && review
     Route::apiResource('reportRecommend',ReportController::class);
-    Route::get('/reportTrainee', [ReviewController::class, 'reportTrainee']);
+    Route::post('report', [ReviewController::class, 'report']);
+    Route::get('reportTrainee', [ReviewController::class, 'reportTrainee']);
 });
 
 //reportTrainee
@@ -129,5 +129,5 @@ Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
 
-//show user data based on his role 
+//show user data based on his role
 // Route::get('showuserdata', [AuthController::class, 'showuserdata']);

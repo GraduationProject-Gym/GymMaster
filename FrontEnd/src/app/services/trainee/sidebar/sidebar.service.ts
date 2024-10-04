@@ -11,6 +11,7 @@ export class SidebarService {
   constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
   private selectedData: any;
   private getOwnerReports = `${environment.domain}/reportTrainee`;
+
   // Get token to send it with each request
   private getHeaders(): HttpHeaders {
     const token = this.authTokenService.getToken();
@@ -59,10 +60,12 @@ export class SidebarService {
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
+    console.log(2222);
     this.selectedData = data;
   }
 
   getSelectedData(){
+    console.log(33333);
     return this.selectedData;
   }
 
