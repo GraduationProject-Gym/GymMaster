@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\GymClassController;
 use App\Http\Controllers\Api\EquipmentsController;
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TraineeClassController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
@@ -16,6 +17,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReportController;
 
+use App\Models\Attendance;
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -68,6 +70,7 @@ Route::post('users/{id}', [AuthController::class, 'update']);
 
 // membership
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
+Route::get('trainee-class/joined-classes-trainers', [TraineeClassController::class, 'indexJoinedClassesTrainers']);
 Route::apiResource('trainee-class',TraineeClassController::class);
 // Route::apiResource('schedule',SchedulesController::class);
 Route::apiResource('equipment',EquipmentController::class);
@@ -133,10 +136,7 @@ Route::get('/payment/success', [SubscriptionController::class, 'success'])->name
 // Route::get('showuserdata', [AuthController::class, 'showuserdata']);
 // Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
 
-
-// show all trainee data
-Route::middleware('auth:sanctum')->get('/alltrainees', [AuthController::class, 'indexalltrainee'])->name('alltrainees.show');
-
-
-//show all trainer data
-Route::middleware('auth:sanctum')->get('/alltrainers', [AuthController::class, 'indexalltrainer'])->name('alltrainers.show');
+// Attendance
+Route::post('attendance', [AttendanceController::class, 'index']);
+Route::post('attendance/checkin', [AttendanceController::class, 'checkin']);
+Route::post('attendance/checkout', [AttendanceController::class, 'checkout']);
