@@ -14,13 +14,11 @@ use Carbon\Carbon;
 
 class GymClass extends Model
 {
-    use HasFactory;
-    // protected $table = 'gymclass';
-    protected $table = 'gymclass';
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory,SoftDeletes;
+    use SoftDeletes; 
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at']; 
+    protected $table = 'gymclass';
     // protected $table = 'gym_classes';
     protected $fillable = [
         'name',

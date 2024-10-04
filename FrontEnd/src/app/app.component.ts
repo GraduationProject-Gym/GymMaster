@@ -21,6 +21,10 @@ import { TraineeMyClassesComponent } from './components/trainee/trainee-my-class
 import { AttendanceComponent } from './components/trainee/attendance/attendance.component';
 import { ShowReviewComponent } from './components/trainee/show-review/show-review.component';
 import { ShowReportComponent } from './components/trainee/show-report/show-report.component';
+import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.component';
+import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
+import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
+import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { LoginService } from './services/authentication/login/login.service';
 
 @Component({
@@ -45,7 +49,12 @@ import { LoginService } from './services/authentication/login/login.service';
     DoReviewComponent,
     ShowReviewComponent,
     AttendanceComponent,
-    ShowReportComponent
+    ShowReportComponent,
+    AddTrainerComponent,
+    AllTraineesComponent,
+    MoreDetailsTraineeComponent,
+    AdminAddClassComponent ,
+
   ],
 
   providers: [
@@ -59,5 +68,5 @@ import { LoginService } from './services/authentication/login/login.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'FrontEnd';
+
 }

@@ -43,6 +43,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::apiResource('review',ReviewController::class);
     Route::post('report', [ReviewController::class, 'report']);
     // trainees on one class
+    // Route::post('trainees', [TraineeClassController::class, 'trainees']);
+    Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
 
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
@@ -65,7 +67,7 @@ Route::post('users/{id}', [AuthController::class, 'update']);
 // Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
 // membership
-
+Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::apiResource('trainee-class',TraineeClassController::class);
 // Route::apiResource('schedule',SchedulesController::class);
 Route::apiResource('equipment',EquipmentController::class);
@@ -126,3 +128,6 @@ Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
+
+//show user data based on his role 
+// Route::get('showuserdata', [AuthController::class, 'showuserdata']);

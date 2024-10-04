@@ -32,8 +32,68 @@ class AuthController extends Controller
     public function __construct()
     {
         // Apply the auth middleware only to methods logout
-        $this->middleware('auth:sanctum')->only(['logout']);
+        // $this->middleware('auth:sanctum')->only(['logout']);
     }
+    public function showuserdata()
+    {
+        $user = auth()->user();
+        if ($user->role === 'trainee') {
+            $trainee = $user->trainee;
+        
+            if ($trainee && $trainee->TraineeMembership) {
+                return response()->json([
+                    'name' => $user->name,
+                    'role' => $user->role,
+                    'age' => $user->age,
+                    'image' => $user->image,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'gender' => $user->gender,
+                    'address' => $user->address,
+                    'membership_type' => $trainee->TraineeMembership->type,
+                    'subscription' => $trainee->TraineeMembership->subscribe_type,
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Trainee data or membership not found.'
+                ], 403);
+            }
+        } elseif ($user->role === 'trainer') {
+            $trainer = $user->trainer;
+        
+            if ($trainer) {
+                return response()->json([
+                    'name' => $user->name,
+                    'role' => $user->role,
+                    'age' => $user->age,
+                    'image' => $user->image,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'gender' => $user->gender,
+                    'address' => $user->address,
+                    'cv' => $trainer->cv,
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Trainer data not found.'
+                ], 403);
+            }
+        } else {
+            return response()->json([
+                'error' => 'User role is not recognized.'
+            ], 400);
+        }
+        
+        
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexalltrainee(){
+   
+}
+
+ 
     /**
      * Display a listing of the resource.
      */
@@ -142,6 +202,11 @@ class AuthController extends Controller
             ]);
 
         }
+        if($user->role === 'admin'){
+            $user->email_verified_at = now();
+            $user->save();
+            return ["message"=>"done"];
+        }
         if ($request->role === 'trainee') {
             return response()->json([
                 'message' => 'User registered successfully check your mail to verifiy',
@@ -161,6 +226,7 @@ class AuthController extends Controller
     {
         $user = User::where('token', $request->token)->first();
 
+        // return 'done';
         if (!$user) {
             return response()->json([
                 'message' => 'Invalid verification token',
@@ -213,6 +279,11 @@ class AuthController extends Controller
             ], 403);
 
         }
+        // if($user->role === 'admin'){
+        // //     // $user->email_verified_at = now();
+        // //     // $user->save();
+        //     return ["message"=>$user];
+        // }
         if($user->role === 'trainer'){
             // "data"=>
             $class = GymClass::where('trainer_id', $user->id)->first();
@@ -226,6 +297,11 @@ class AuthController extends Controller
                 'token' => $user->createToken($request->device_name)->plainTextToken,
                 'role' => $user->role,
                 
+            ], 200);
+        } else if($user->role === 'admin'){
+            return response()->json([
+                'token' => $user->createToken($request->device_name)->plainTextToken,
+                'role' => $user->role,
             ], 200);
         }
 

@@ -57,6 +57,8 @@ export class DoReviewComponent {
 
     constructor() {
       this.groupTrainers();
+      this.setProfileImage();
+
     }
 
     groupTrainers() {
@@ -95,7 +97,6 @@ export class DoReviewComponent {
       }
     }
 
-
     updateCarousel() {
       const carouselItems = this.carousel.nativeElement.querySelectorAll('.carousel-item');
       carouselItems.forEach((item: { classList: { remove: (arg0: string) => void; add: (arg0: string) => void; }; }, index: number) => {
@@ -104,5 +105,13 @@ export class DoReviewComponent {
           item.classList.add('active');
         }
       });
+    }
+
+
+    setProfileImage() {
+      const trainee = this.trainers[0];
+      if (!trainee.srcImg) {
+        trainee.srcImg = trainee.gender === 'female' ? "/female.png" : "/male.png";
+      }
     }
   }

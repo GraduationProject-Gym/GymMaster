@@ -1,0 +1,76 @@
+<div class="d-flex">
+  <!-- Sidebar component (Admin Sidebar) -->
+  <app-admin-sidebar></app-admin-sidebar>
+
+  <!-- Main content area -->
+  <div class="main">
+    <!-- Carousel for navigating between trainers' groups -->
+    <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
+      <div class="carousel-inner">
+        <!-- Loop through grouped trainers to display each group in a carousel slide -->
+        <ng-container *ngFor="let group of groupedTrainees; let i = index">
+
+          <!-- Individual carousel item, dynamically active based on currentSlide index -->
+          <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
+
+            <div class="container">
+              <!-- Title section for All Trainers -->
+              <h1 class="custom-title text-center">All Trainees</h1>
+
+              <!-- Row to organize trainee cards in the group -->
+              <div class="row d-flex justify-content-center">
+                <!-- Loop through each trainee in the group and create a card for each trainee -->
+                <ng-container *ngFor="let trainee of group">
+
+                  <!-- Trainee card -->
+                  <div class="card shadow-lg col-md-4 col-lg-3 ">
+                    <div class="card-img-wrapper">
+                      <!-- Trainee profile image -->
+                      <img [src]="trainee.srcImg" class="card-img">
+                    </div>
+                    <div class="card-body">
+                      <!-- Trainee details -->
+                      <h5 class="card-title mb-3">{{ trainee.name }}</h5>
+                      <p class="card-text"><strong>ID:</strong> {{ trainee.id }}</p>
+                      <p class="card-text"><strong>Joined Class:</strong> </p>
+                      <ul>
+                        <li *ngFor="let classItem of trainee.classes">
+                          {{ classItem }}
+                        </li>
+                      </ul>
+                      <p class="card-text"><strong>Membership:</strong> {{ trainee.membership }}</p>
+                      <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
+
+                      <!-- Action buttons for show trainee details-->
+                      <!-- <div class="text-center">
+                        <button class="btn" routerLink="/admin/trainee-moreDetials" >Read More</button>
+                      </div> -->
+                      <div class="text-center">
+                        <button class="btn" [routerLink]="['/admin-trainee', trainee.id]">Read More</button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Carousel controls for navigating between slides -->
+      <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
+        <!-- Previous button with custom styling -->
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+
+      <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
+        <!-- Next button with custom styling -->
+        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+
+    </div>
+  </div>
+</div>
