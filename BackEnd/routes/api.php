@@ -130,5 +130,5 @@ Route::middleware('auth:sanctum')->get('/alltrainees', [AuthController::class, '
 Route::middleware('auth:sanctum')->get('/alltrainers', [AuthController::class, 'indexalltrainer'])->name('alltrainers.show');
 
 
-//update trainee data
-Route::middleware('auth:sanctum')->put('/updatetrainees/{id}', [AuthController::class, 'update'])->name('trainees.update');
+//update users data
+Route::middleware('auth:sanctum')->put('/updateusers/{id}', [AuthController::class, 'update'])->name('trainees.update');
