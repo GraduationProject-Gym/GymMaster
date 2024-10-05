@@ -18,16 +18,13 @@ use App\Models\Trainee;
     /**
      * Determine whether the user can view the trainee .
      */
-<<<<<<< HEAD
     public function view(User $user)
     {
         // return $user->role === 'trainee' || $user->role === 'admin';
         return $user->role === 'trainer';
-=======
-    public function view(User $user, ?Trainee $trainee=null)
-    {
-        return $user->role === 'trainee';
->>>>>>> Attendance
+    // public function view(User $user, ?Trainee $trainee=null)
+    // {
+    //     return $user->role === 'trainee';
     }
 
     /**
