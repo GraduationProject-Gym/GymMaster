@@ -36,6 +36,7 @@ export class SidebarService {
   }
 
   indexClasses(): Observable<any> {
+    console.log("at service");
     const indexClassesUrl = `${environment.domain}/gym-classes`;
     return this.http.get(indexClassesUrl, { headers: this.getHeaders() });
   }

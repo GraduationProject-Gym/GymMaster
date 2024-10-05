@@ -8,6 +8,11 @@
         <a (click)="toggleDropdownClass()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClass">
           <li><a (click)="classes()">All Classes</a></li>
+          @if(warningMessage){
+            <div class="alert alert-warning">
+              {{ warningMessage }}
+            </div>
+          }
           <li><a (click)="myClasses()">My Class</a></li>
         </ul>
       </li>

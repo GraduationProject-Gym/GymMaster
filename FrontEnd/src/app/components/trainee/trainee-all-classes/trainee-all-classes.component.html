@@ -14,7 +14,8 @@
                 <div class="col-md-6">
                   <p><strong>Trainer Name:</strong> <span class="badge">{{ classObj.trainer.name }}</span></p>
 
-                  <p><strong>Number of Sessions:</strong> <span class="badge">{{ classObj.total_no_of_session }}</span>
+                  <p><strong>Number of Sessions:</strong> <span class="badge">{{ classObj.total_no_of_sessions
+                      }}</span>
                   </p>
                   <p>
                     <strong>Equipment:</strong>
@@ -61,7 +62,7 @@
               </div>
               }
               <!-- Hide Join button if the user has already joined the class -->
-              <div class="text-center" >
+              <div class="text-center">
                 <!-- *ngIf="!isJoined" -->
                 <button class="btn" (click)="joinClass(classIdInput.value)">Join</button>
               </div>

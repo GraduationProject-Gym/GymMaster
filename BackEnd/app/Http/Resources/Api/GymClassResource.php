@@ -9,6 +9,8 @@ use App\Http\Resources\EquipmentResource;
 use App\Http\Resources\Api\ScheduleResource;
 use App\Http\Resources\Api\ExerciseResource;
 use App\Models\UserClass;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
 
 class GymClassResource extends JsonResource
@@ -24,6 +26,7 @@ class GymClassResource extends JsonResource
         $user = Auth::user();
         $class = UserClass::where('user_id',$user->id)
         ->where('class_id', $this->id)->first();
+        $trainer = User::where('id',$this->trainer_id)->first();
         $checkJoin = false;
         if($class)
         {
@@ -37,8 +40,9 @@ class GymClassResource extends JsonResource
             'total_no_of_sessions' => $this->total_no_of_session,
             'max_trainee' => $this->max_trainee,
             'equipments' => EquipmentResource::collection($equipment),
-            'scheduals' => ScheduleResource::collection($this->schedule),
+            'schedule' => ScheduleResource::collection($this->scheduleReport),
             'exercises'=> ExerciseResource::collection($this->exercises),
+            'trainer'=>$trainer,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'checkJoin' => $checkJoin

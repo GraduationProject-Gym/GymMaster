@@ -28,7 +28,6 @@ export class TraineeAllClassesComponent {
   currentSlide: number = 0;
   errorMessage: string | null = null;
   successMessage: string | null = null;
-  isJoined = false;
 
   // Index classes
   ngOnInit() {
@@ -74,7 +73,6 @@ export class TraineeAllClassesComponent {
     this.classesService.joinClass(classIdNumber).subscribe({
       next: (response: any) => {
         console.log(response);
-        this.isJoined = true;
         this.successMessage = response.message;
         // Show success message for 3 seconds before navigating
         setTimeout(() => {

@@ -18,18 +18,9 @@ export class ClassesService {
     return headers;
   }
 
-  // Classes services
+  // join class service
   joinClass(class_id: number): Observable<any> {
     const joinClassUrl = `${environment.domain}/trainee-class`;
     return this.http.post(joinClassUrl, {'class_id':class_id}, { headers: this.getHeaders() });
   }
-
-  // // Setter and getter to move data between components
-  // setSelectedData(data: any) {
-  //   this.selectedData = data;
-  // }
-
-  // getSelectedData() {
-  //   return this.selectedData;
-  // }
 }

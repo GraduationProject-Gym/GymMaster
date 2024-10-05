@@ -16,9 +16,10 @@ export class SidebarComponent {
 
   memberships: any[] = [];
   errorMessage: string | null = null;
+  warningMessage: string | null = null;
 
 
-  showReports(){
+  showReports() {
     this.sidebarService.getReports().subscribe({
       next: (response) => {
         console.log(response);
@@ -86,7 +87,7 @@ export class SidebarComponent {
   // Show my classes
   myClasses() {
     this.errorMessage = null; // Reset the error message
-
+    this.warningMessage = null;
     this.sidebarService.indexMyClasses().subscribe({
       next: (response: any) => {
         this.sidebarService.setSelectedData(response.joinedClasses);
@@ -110,12 +111,19 @@ export class SidebarComponent {
 
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
-        this.sidebarService.setSelectedData(response.gymclassData);
-        // console.log(response);
-        this.router.navigate(['/trainee-allClasses']);
+        console.log(response);
+        const unjoinedClasses = response.gymclassData.filter((gymClass: any) => gymClass.checkJoin === false);
+        if (unjoinedClasses.length > 0) {
+          this.sidebarService.setSelectedData(unjoinedClasses);
+          console.log(unjoinedClasses);
+          this.router.navigate(['/trainee-allClasses']);
+        } else {
+          // console.log('You have already joined all classes.');
+          this.warningMessage = 'You have already joined all available classes.';
+        }
       },
       error: (error) => {
-        // console.log(error);
+        console.log(error);
         if (error.status === 401) {
           this.router.navigate(['/login']);
         } else {

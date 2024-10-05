@@ -34,6 +34,7 @@ class GymClassController extends Controller
         $gymClasses = GymClass::get();
         $user = Auth::user();
         $trainee = Trainee::where('user_id',$user->id)->first();
+        // return ["message"=>$trainee];
         if($user->role === 'trainee')
         {
             return response()->json([
