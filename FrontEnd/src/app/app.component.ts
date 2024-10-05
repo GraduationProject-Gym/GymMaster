@@ -26,6 +26,7 @@ import { AllTraineesComponent } from './components/admin/all-trainees/all-traine
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { LoginService } from './services/authentication/login/login.service';
+import { ClassesService } from './services/trainee/classes/classes.service';
 
 @Component({
   selector: 'app-root',
@@ -61,7 +62,8 @@ import { LoginService } from './services/authentication/login/login.service';
     ClassService,
     SidebarService,
     MembershipService,
-    LoginService
+    LoginService,
+    ClassesService
   ],
 
   templateUrl: './app.component.html',

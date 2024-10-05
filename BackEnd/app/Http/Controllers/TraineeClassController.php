@@ -147,7 +147,7 @@ class TraineeClassController extends Controller
         } catch (AuthorizationException $e) {
             return response()->json([
                 'message' => 'You are not authorized to join the class'
-            ], 403);
+            ], 401);
         }
 
         $trainee_class = GymClass::findOrFail($class_id);
@@ -163,10 +163,11 @@ class TraineeClassController extends Controller
                     'class_id' => $request->class_id
                 ]);
             } else {
-                return response()->json(['message' => 'You joined to this class']);
+                return response()->json(['message' => 'You joined to class successfully']);
             }
         } else {
-            return response()->json(['message' => 'You cannot join to this class, max number of trainees is exceeded']);
+            return response()->json(
+                ['message' => 'You cannot join to this class, max number of trainees is exceeded'],403);
         }
         return response()->json([
             'message' => 'You joined to class successfully',

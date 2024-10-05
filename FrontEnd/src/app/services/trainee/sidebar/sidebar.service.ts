@@ -66,12 +66,10 @@ export class SidebarService {
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
-    // console.log(2222);
     this.selectedData = data;
   }
 
   getSelectedData() {
-    // console.log(33333);
     return this.selectedData;
   }
 }

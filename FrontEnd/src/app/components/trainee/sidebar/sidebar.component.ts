@@ -110,7 +110,7 @@ export class SidebarComponent {
 
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
-        this.sidebarService.setSelectedData(response);
+        this.sidebarService.setSelectedData(response.gymclassData);
         // console.log(response);
         this.router.navigate(['/trainee-allClasses']);
       },
@@ -134,6 +134,27 @@ export class SidebarComponent {
         this.sidebarService.setSelectedData(response);
         console.log(response);
         this.router.navigate(['/trainee-doReview']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  // Index my attendance
+  attendance() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMyAttendance().subscribe({
+      next: (response: any) => {
+        this.sidebarService.setSelectedData(response.attendance);
+        console.log(response.attendance);
+        this.router.navigate(['/trainee-attendance']);
       },
       error: (error) => {
         console.log(error);

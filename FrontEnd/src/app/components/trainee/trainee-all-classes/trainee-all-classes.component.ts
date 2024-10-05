@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
+import { ClassesService } from '../../../services/trainee/classes/classes.service';
 
 @Component({
   selector: 'app-trainee-all-classes',
@@ -18,6 +19,7 @@ export class TraineeAllClassesComponent {
 
   constructor(
     private sidebarService: SidebarService,
+    private classesService: ClassesService,
     private router: Router
   ) { }
 
@@ -63,4 +65,28 @@ export class TraineeAllClassesComponent {
       this.currentSlide++;
     }
   }
+
+  joinClass(classId: string) {
+    this.errorMessage = null; // Reset the error message
+    let classIdNumber: number = Number(classId);
+
+    this.classesService.joinClass(classIdNumber).subscribe({
+      next: (response: any) => {
+        // this.classesService.setSelectedData(response);
+        console.log(response);
+        this.router.navigate(['/trainee-myClasses']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
 }
