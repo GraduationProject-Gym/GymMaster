@@ -138,6 +138,25 @@ class ReviewController extends Controller
 
 
     }
+
+    // index all auth trainee reviews
+    public function indexTraineeReviews()
+    {
+        try {
+            $this->authorize("traineeReports", Review::class);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to show these reviews'
+            ], 403);
+        }
+        $trainee = Auth::user();
+        $joinedClasses = $trainee->gymClass()
+            ->with(['classTrainer.user','review'])
+            ->get();
+        return response()->json([
+            'message' => $joinedClasses
+        ]);
+    }
     /**
      * Display the specified resource.
      */
