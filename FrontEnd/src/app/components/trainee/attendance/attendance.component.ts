@@ -20,6 +20,4 @@ export class AttendanceComponent {
         { date: '2024-09-14', checkIn: '08:00 AM', checkOut: '10:00 AM' },
         { date: '2024-09-15', checkIn: '07:00 PM', checkOut: '11:30 PM' }
       ];
-
-
-    }
+}
