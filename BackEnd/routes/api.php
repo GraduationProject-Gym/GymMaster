@@ -52,6 +52,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::apiResource('reportRecommend',ReportController::class);
     Route::post('report', [ReviewController::class, 'report']);
     Route::get('reportTrainee', [ReviewController::class, 'reportTrainee']);
+    Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
+
 });
 
 //reportTrainee
@@ -126,7 +128,7 @@ Route::middleware('auth:sanctum')->group(function () {
 // api
 Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
-Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
+// Route::get('/payment/success/{membership_id}', [SubscriptionController::class, 'success'])->name('success');
 
 
 //show user data based on his role

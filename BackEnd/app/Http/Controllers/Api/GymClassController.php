@@ -1,19 +1,20 @@
 <?php
-
 namespace App\Http\Controllers\Api;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\GymClass;
 use App\Http\Resources\Api\GymClassResource;
-use App\Models\Trainer; 
-use App\Models\User; 
+use App\Models\Trainer;
+use App\Models\User;
 use App\Models\ClassEquipment;
 use Illuminate\Auth\Access\AuthorizationException;
-use App\Models\Equipment;
+use App\Models\Trainee;
 use Illuminate\Validation\ValidationException;
 use Exception;
+use App\Http\Resources\MembershipResource;
 
 
 class GymClassController extends Controller
@@ -23,9 +24,19 @@ class GymClassController extends Controller
      */
     public function index()
     {
-        // return["message"=>"at backend"];
         $this->authorize('viewAny', GymClass::class);
-        $gymClasses = GymClass::with(['equipments', 'exercises','trainer.user', 'schedule'])->get();
+        $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer'])->get();
+        // return["message"=>$gymClasses];
+        // $user1 = User::findOrFail(Auth::id());
+        $user = Auth::user();
+        $trainee = Trainee::where('user_id',$user->id)->first();
+        if($user->role === 'trainee')
+        {
+            return response()->json([
+                'membershipData'=> new MembershipResource($trainee->TraineeMembership),
+                'gymclassData'=>$gymClasses
+            ], 200);
+        }
         return response()->json($gymClasses, 200);
     }
 
@@ -76,30 +87,30 @@ class GymClassController extends Controller
             if (!User::where('id', $userId)->exists()) {
                 return $fail('The user associated with the selected trainer does not exist.');
             }
-            
-            
+
+
     },
 ],
-'equipment_ids' => 'nullable|array',  
+'equipment_ids' => 'nullable|array',
 'equipment_ids.*' => 'exists:equipments,id',
-'exercise_ids' => 'nullable|array',  
+'exercise_ids' => 'nullable|array',
 'exercise_ids.*' => 'exists:exercises,id',
              ]);
          } catch (ValidationException $e) {
              $errors = $e->validator->errors();
              $customMessages = [];
-     
+
              foreach ($errors->all() as $error) {
-                 $customMessages[] = $error;  
+                 $customMessages[] = $error;
              }
-     
+
              return response()->json([
                  'message' => 'Validation failed',
                  'errors' => $customMessages,
              ], 422);
          }
-     
-         
+
+
          $gymClass = GymClass::create($validatedData);
 if ($request->has('equipment_ids')) {
     $gymClass->equipments()->sync($request->input('equipment_ids'));
@@ -110,7 +121,7 @@ if ($request->has('exercise_ids')) {
 }
          return new GymClassResource($gymClass);
      }
-     
+
        /**
      * Display the specified resource.
      */
