@@ -9,13 +9,18 @@ use App\Http\Controllers\Api\GymClassController;
 use App\Http\Controllers\Api\EquipmentsController;
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\Api\ScheduleController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TraineeClassController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\EquipmentController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ReviewController;
+<<<<<<< HEAD
 use App\Http\Controllers\ReportController;
 
+=======
+use App\Models\Attendance;
+>>>>>>> Attendance
 
 Route::resource('schedules', ScheduleController::class);
 
@@ -68,6 +73,7 @@ Route::post('users/{id}', [AuthController::class, 'update']);
 
 // membership
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
+Route::get('trainee-class/joined-classes-trainers', [TraineeClassController::class, 'indexJoinedClassesTrainers']);
 Route::apiResource('trainee-class',TraineeClassController::class);
 // Route::apiResource('schedule',SchedulesController::class);
 Route::apiResource('equipment',EquipmentController::class);
@@ -128,6 +134,13 @@ Route::post('/create-payment', [SubscriptionController::class, 'store']);
 Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
 
+<<<<<<< HEAD
 
 //show user data based on his role
 // Route::get('showuserdata', [AuthController::class, 'showuserdata']);
+=======
+// Attendance
+Route::post('attendance', [AttendanceController::class, 'index']);
+Route::post('attendance/checkin', [AttendanceController::class, 'checkin']);
+Route::post('attendance/checkout', [AttendanceController::class, 'checkout']);
+>>>>>>> Attendance
