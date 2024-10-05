@@ -28,16 +28,18 @@ class GymClassController extends Controller
     public function index()
     {
         $this->authorize('viewAny', GymClass::class);
-        $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer'])->get();
+        // $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer'])->get();
         // return["message"=>$gymClasses];
         // $user1 = User::findOrFail(Auth::id());
+        $gymClasses = GymClass::get();
         $user = Auth::user();
         $trainee = Trainee::where('user_id',$user->id)->first();
         if($user->role === 'trainee')
         {
             return response()->json([
                 'membershipData'=> new MembershipResource($trainee->TraineeMembership),
-                'gymclassData'=>$gymClasses
+                // 'gymclassData'=>$gymClasses
+                'gymclassData'=> GymClassResource::collection($gymClasses)
             ], 200);
         }
         return response()->json($gymClasses, 200);

@@ -42,6 +42,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::post('create-membership', [TraineeClassController::class, 'updateMemperTrainee']);
     Route::post('goals', [TraineeClassController::class, 'addAndUpdateGoals']);
     // Review
+    // indexTraineeReviews
+    Route::get('review/trainee-reviews', [ReviewController::class, 'indexTraineeReviews']);
     Route::apiResource('review',ReviewController::class);
     // trainees on one class
     // Route::post('trainees', [TraineeClassController::class, 'trainees']);
