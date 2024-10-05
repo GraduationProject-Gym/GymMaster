@@ -1,9 +1,9 @@
 <div class="sidebar w-20">
   <nav>
     <ul>
-      <li><a  (click)="profile()">Profile</a></li><!--routerLink="/trainee-profile"-->
+      <li><a (click)="profile()">Profile</a></li><!--routerLink="/trainee-profile"-->
       <li><a routerLink="/trainee-goal">Goals</a></li>
-      <li><a  (click)="membership()">Membership</a></li><!-- routerLink="/trainee-membership"-->
+      <li><a (click)="membership()">Membership</a></li><!-- routerLink="/trainee-membership"-->
       <li class="dropdown">
         <a (click)="toggleDropdownClass()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClass">
@@ -12,10 +12,10 @@
         </ul>
       </li>
       <li class="dropdown">
-        <a routerLink="/trainee-showReviews" (click)="toggleDropdownReview()">Reviews</a>
+        <a (click)="toggleDropdownReview()">Reviews</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenReview">
-          <li><a routerLink="/trainee-doReview" (click)="trainers()">Do Review</a></li>
-          <li><a routerLink="/trainee-showReviews">Show Reviews</a></li>
+          <li><a (click)="trainers()">Do Review</a></li>
+          <li><a >Show Reviews</a></li>
         </ul>
       </li>
 
