@@ -27,13 +27,13 @@ class GymClassController extends Controller
      */
     public function index()
     {
-        // return["message"=>"at backend"];
         $this->authorize('viewAny', GymClass::class);
-        $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer.user'])->get();
-        $user1 = User::findOrFail(Auth::id());
-        $user = Auth::user()->id;
-        $trainee = Trainee::find($user);
-        if($user1->role === 'trainee')
+        $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer'])->get();
+        // return["message"=>$gymClasses];
+        // $user1 = User::findOrFail(Auth::id());
+        $user = Auth::user();
+        $trainee = Trainee::where('user_id',$user->id)->first();
+        if($user->role === 'trainee')
         {
             return response()->json([
                 'membershipData'=> new MembershipResource($trainee->TraineeMembership),
@@ -42,6 +42,24 @@ class GymClassController extends Controller
         }
         return response()->json($gymClasses, 200);
     }
+
+    // public function index()
+    // {
+    //     $this->authorize('viewAny', GymClass::class);
+    //     $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer'])->get();
+    //     $user1 = User::find(Auth::id());
+    //     // $user = Auth::user()->id;
+    //     $trainee = Trainee::find($user1);
+    //     return["message"=>$trainee];
+    //     if($user1->role === 'trainee')
+    //     {
+    //         return response()->json([
+    //             'membershipData'=> new MembershipResource($trainee->TraineeMembership),
+    //             'gymclassData'=>$gymClasses
+    //         ], 200);
+    //     }
+    //     return response()->json($gymClasses, 200);
+    // }
 
     /**
      * Store a newly created resource in storage.

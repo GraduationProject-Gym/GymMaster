@@ -188,7 +188,7 @@ class TraineeClassController extends Controller
             ], 403);
         }
 
-        $user = User::findOrFail(Auth::id());
+        $user = User::find(Auth::id());
 
         if($user->role == 'trainee')
         {
@@ -196,10 +196,12 @@ class TraineeClassController extends Controller
             ->with(['schedule', 'equipments', 'exercises', 'trainer'])
             ->get();
 
+            return $joinedClasses;
+
         }
         else if($user->role == 'admin')
         {
-            $trainee = User::findOrFail($request->trainee_id);
+            $trainee = User::find($request->trainee_id);
             $joinedClasses = $trainee->gymClass()
                 ->with(['schedule', 'equipments', 'exercises', 'trainer'])
                 ->get();
