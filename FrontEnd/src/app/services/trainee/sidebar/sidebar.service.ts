@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 export class SidebarService {
   constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
   private selectedData: any;
-  private getOwnerReports = `${environment.domain}/reportTrainee`;
 
   // Get token to send it with each request
   private getHeaders(): HttpHeaders {
@@ -19,17 +18,12 @@ export class SidebarService {
     return headers;
   }
 
-  getProfileData():Observable <any>{
+  getProfileData(): Observable<any> {
     const profileUrl = `${environment.domain}/showuserdata`;
     return this.http.get(profileUrl, { headers: this.getHeaders() });
   }
 
-  // Membership services
-  // showMembership(membership:string) {
-  //   const showMembershipUrl = `${environment.domain}/membership/${membership}`;
-  //   return this.http.get(showMembershipUrl, { headers: this.getHeaders() });
-  // }
-
+  // Membership service
   indexMemberships(): Observable<any> {
     const indexMembershipsUrl = `${environment.domain}/membership`;
     return this.http.get(indexMembershipsUrl, { headers: this.getHeaders() });
@@ -47,7 +41,7 @@ export class SidebarService {
   }
 
   // Trainer service
-  indexMyTrainers():Observable<any> {
+  indexMyTrainers(): Observable<any> {
     const indexMyTrainersUrl = `${environment.domain}/`;
     return this.http.get(indexMyTrainersUrl, { headers: this.getHeaders() });
   }
@@ -58,18 +52,26 @@ export class SidebarService {
   //   return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
   // }
 
+  // Attendance service
+  indexMyAttendance(): Observable<any> {
+    const indexMyAttendanceUrl = `${environment.domain}/attendance`;
+    return this.http.post(indexMyAttendanceUrl, {}, { headers: this.getHeaders() });
+  }
+
+  // Report service
+  getReports(): Observable<any> {
+    const getOwnerReports = `${environment.domain}/reportTrainee`;
+    return this.http.get(getOwnerReports, { headers: this.getHeaders() });
+  }
+
   // Setter and getter to move data between components
   setSelectedData(data: any) {
-    console.log(2222);
+    // console.log(2222);
     this.selectedData = data;
   }
 
-  getSelectedData(){
-    console.log(33333);
+  getSelectedData() {
+    // console.log(33333);
     return this.selectedData;
-  }
-
-  getReports():Observable <any>{
-    return this.http.get(this.getOwnerReports, { headers: this.getHeaders() });
   }
 }
