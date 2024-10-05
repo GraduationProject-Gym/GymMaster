@@ -15,6 +15,7 @@ class TrainerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        
         $user = $this->user ? new UserResource($this->user) : null;        // $exercises = $this->exercise ? TraineeExerciseResource::collection($this->exercise) : [];
 
         return [

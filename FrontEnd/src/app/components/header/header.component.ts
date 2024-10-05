@@ -13,7 +13,7 @@ import { LoginService } from '../../services/authentication/login/login.service'
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   isLoggedIn: boolean = false;
   role: string | null = null;
 
@@ -24,7 +24,9 @@ export class HeaderComponent {
   ) {
     this.checkLoginStatus();
   }
-
+  ngOnInit(){
+    
+  }
   profile() {
     this.role = sessionStorage.getItem('role');
     if (this.role === 'trainee'){

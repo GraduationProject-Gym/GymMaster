@@ -181,7 +181,7 @@ class TraineeClassController extends Controller
                 'message' => 'You are not authorized to join the class'
             ], 403);
         }
-   
+
         $user = User::findOrFail(Auth::id());
 
         if($user->role == 'trainee')

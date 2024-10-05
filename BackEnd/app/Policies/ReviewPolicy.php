@@ -36,18 +36,21 @@ class ReviewPolicy
     /**
      * Determine whether the user can update the model.
      */
-    // public function update(User $user, Review $review): bool
-    // {
-    //     //
-    // }
+    public function report(User $user): bool
+    {
+        //
+        return $user->role === "trainer";
+
+    }
 
     /**
      * Determine whether the user can delete the model.
      */
-    // public function delete(User $user, Review $review): bool
-    // {
-    //     //
-    // }
+    public function traineeReports(User $user): bool
+    {
+        return $user->role === "trainee";
+
+    }
 
     /**
      * Determine whether the user can restore the model.

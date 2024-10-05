@@ -19,7 +19,7 @@ class TraineeClassResource extends JsonResource
         // return parent::toArray($request);
         $trainee = User::findOrFail(auth::id());
         $schedules = $this->schedule ? TraineeScheduleResource::collection($this->schedule) : [];
-        $trainer = $this->trainer ? new TrainerResource($this->trainer) : null;        // $exercises = $this->exercise ? TraineeExerciseResource::collection($this->exercise) : [];
+        $trainer = $this->trainer ? new UserResource($this->trainer) : null;        // $exercises = $this->exercise ? TraineeExerciseResource::collection($this->exercise) : [];
         $user = $this->user ? new UserResource($this->user) : null;
 
         if($trainee){
@@ -34,7 +34,7 @@ class TraineeClassResource extends JsonResource
                 'scheduleData' => $schedules,
                 'exerciseData' => $this->exercises ? $this->exercises->map(function ($exercise) {
                     return [
-                        'exercise_id' => $exercise->pivot->exercies_id, 
+                        'exercise_id' => $exercise->pivot->exercies_id,
                         'name' => $exercise->name,
                         'category' => $exercise->category,
                         'no_of_times' => $exercise->no_of_times,
@@ -48,7 +48,7 @@ class TraineeClassResource extends JsonResource
                         'number_of_equipments' => $equipment->number_of_equipments,
                     ];
                 }) : [],
-    
+
             ];
         }
 
@@ -57,7 +57,7 @@ class TraineeClassResource extends JsonResource
             'description' => $this->description,
             'status' => $this->status,
             'total_no_of_session' => $this->total_no_of_session,
-            'max_trainee' => $this->max_trainee,            
+            'max_trainee' => $this->max_trainee,
             'traineesData' => $this->user ? $this->user->map(function ($user) {
                 return new UserResource($user);
             }) : [],
@@ -65,7 +65,7 @@ class TraineeClassResource extends JsonResource
             'scheduleData' => $schedules,
             'exerciseData' => $this->exercises ? $this->exercises->map(function ($exercise) {
                 return [
-                    'exercise_id' => $exercise->pivot->exercies_id, 
+                    'exercise_id' => $exercise->pivot->exercies_id,
                     'name' => $exercise->name,
                     'category' => $exercise->category,
                     'no_of_times' => $exercise->no_of_times,
