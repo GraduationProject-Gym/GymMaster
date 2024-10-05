@@ -85,6 +85,8 @@ export class LoginComponent {
         next: (response) => {
           console.log(response);
           if (response.role === 'trainee'){
+            let traineesArray = response;
+            this.loginService.setSelectedclass(traineesArray);
             this.router.navigate(['/trainee-profile']);
           } else if (response.role === 'trainer'){
             let traineesArray = response;

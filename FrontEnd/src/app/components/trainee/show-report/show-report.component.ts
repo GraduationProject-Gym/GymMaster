@@ -64,8 +64,6 @@ export class ShowReportComponent implements OnInit{
       this.traineeReports[index] = { overallRating };
       this.equipments[index] = this.data.data[index].class.equipments.map((el: any) => el.name).join(', ');
       this.exercises[index] = this.data.data[index].class.exercises.map((el: any) => el.name).join(', ');
-      // this.recommend[index] = this.data.data[index].recommend.recommend;
-      // this.overAllComment[index] = this.data.data[index].recommend.over_all_comment;
     });
   }
 
