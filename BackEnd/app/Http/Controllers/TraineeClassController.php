@@ -136,11 +136,13 @@ class TraineeClassController extends Controller
     {
         //
         $request->validate([
-            'class_id' => 'required|exists:gym_classes,id',
+            // 'class_id' => 'required|exists:gym_classes,id',
+            'class_id' => 'required|exists:gymclass,id',
         ]);
+        $trainee = Trainee::where('user_id',auth::id());
         $class_id = $request->class_id;
-        $trainee = Trainee::findOrFail(auth::id());
-        $currentUser = User::findOrFail(auth::id());
+        $currentUser = User::find(auth::id());
+        
         // $this->authorize('create', $trainee);
         try {
             $this->authorize('create', UserClass::class);
@@ -149,8 +151,9 @@ class TraineeClassController extends Controller
                 'message' => 'You are not authorized to join the class'
             ], 401);
         }
-
+        
         $trainee_class = GymClass::findOrFail($class_id);
+        // return ["message"=>$class_id];     
         $no_trainees = UserClass::where('class_id', $request->class_id)->count();
         $exists = UserClass::where('user_id', auth::id())
             ->where('class_id', $class_id)
@@ -163,7 +166,7 @@ class TraineeClassController extends Controller
                     'class_id' => $request->class_id
                 ]);
             } else {
-                return response()->json(['message' => 'You joined to class successfully']);
+                return response()->json(['joined' => 'You already joined to this class'], 403);
             }
         } else {
             return response()->json(

@@ -27,6 +27,8 @@ export class TraineeAllClassesComponent {
   groupedClasses: any[] = [];
   currentSlide: number = 0;
   errorMessage: string | null = null;
+  successMessage: string | null = null;
+  isJoined = false;
 
   // Index classes
   ngOnInit() {
@@ -67,24 +69,35 @@ export class TraineeAllClassesComponent {
   }
 
   joinClass(classId: string) {
-    this.errorMessage = null; // Reset the error message
     let classIdNumber: number = Number(classId);
 
     this.classesService.joinClass(classIdNumber).subscribe({
       next: (response: any) => {
-        // this.classesService.setSelectedData(response);
         console.log(response);
-        this.router.navigate(['/trainee-myClasses']);
+        this.isJoined = true;
+        this.successMessage = response.message;
+        // Show success message for 3 seconds before navigating
+        setTimeout(() => {
+          this.successMessage = null;
+          this.router.navigate(['/trainee-myClasses']);
+        }, 3000); 
       },
       error: (error) => {
         console.log(error);
         if (error.status === 401) {
           this.router.navigate(['/login']);
-        } else if (error.status === 403) {
+        } else if (error.status === 403 && error.error?.message) {
           this.errorMessage = error.error?.message;
+        } else if (error.status === 403 && error.error?.joined) {
+          this.errorMessage = error.error?.joined;
+          this.router.navigate(['/trainee-myClasses']);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
+        // Show error message for 5 seconds before clearing it
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 5000);
       }
     });
   }

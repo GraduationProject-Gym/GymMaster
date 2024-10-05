@@ -52,9 +52,26 @@
                   </span>
                 </p>
               </div>
-              <div class="text-center">
-                <button class="btn" (click)="joinClass()">Join</button>
+              <!-- Hidden input for classId -->
+              <input type="hidden" [value]="classObj.id" #classIdInput>
+
+              @if(errorMessage){
+              <div class="alert alert-danger">
+                {{errorMessage}}
               </div>
+              }
+              <!-- Hide Join button if the user has already joined the class -->
+              <div class="text-center" >
+                <!-- *ngIf="!isJoined" -->
+                <button class="btn" (click)="joinClass(classIdInput.value)">Join</button>
+              </div>
+              <!-- <div *ngIf="isJoined" class="text-center text-success">
+                @if(successMessage){
+                <div class="alert alert-success">
+                  {{successMessage}}
+                </div>
+                }
+              </div> -->
               <div class="buttons">
                 <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
                   <span class="carousel-control-prev-icon" aria-hidden="true"
