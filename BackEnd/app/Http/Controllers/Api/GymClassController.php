@@ -51,7 +51,10 @@ class GymClassController extends Controller
                 'gymclassData'=> GymClassResource::collection($gymClasses)
             ], 200);
         }
-        return response()->json($gymClasses, 200);
+        return response()->json([
+            'gymclassData'=> GymClassResource::collection($gymClasses)
+        ], 200);
+
     }
 
     /**

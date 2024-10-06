@@ -21,7 +21,7 @@ use App\Models\Trainee;
     public function view(User $user)
     {
         // return $user->role === 'trainee' || $user->role === 'admin';
-        return $user->role === 'trainer';
+        return $user->role === 'trainee';
     // public function view(User $user, ?Trainee $trainee=null)
     // {
     //     return $user->role === 'trainee';

@@ -59,7 +59,7 @@ class GymClass extends Model
 
     public function trainer()
     {
-        return $this->belongsTo(User::class, 'trainer_id','id');
+        return $this->belongsTo(Trainer::class, 'trainer_id','user_id');
     }
 
     public function user()
@@ -78,7 +78,7 @@ class GymClass extends Model
     }
 
     public function classTrainer(){
-        return $this->belongsTo(Trainer::class, 'trainer_id','id');
+        return $this->belongsTo(Trainer::class, 'trainer_id','user_id');
     }
 
 
