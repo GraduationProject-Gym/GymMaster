@@ -1,10 +1,11 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminAllClassesComponent } from '../admin-all-classes/admin-all-classes.component';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+ 
 
 @Component({
   selector: 'app-admin-edit-class',
@@ -13,36 +14,37 @@ import { FormsModule } from '@angular/forms';
     AdminSidebarComponent,
     AdminAllClassesComponent,
     CommonModule,
-    FormsModule
-  ],
+    FormsModule,
+    ],
   templateUrl: './admin-edit-class.component.html',
-  styleUrl: './admin-edit-class.component.css'
+  styleUrls: ['./admin-edit-class.component.css']  
 })
-export class AdminEditClassComponent implements OnInit{
 
-  className: string = '';
-  sessions: number = 0;
-  status: string = '';
-  equipment: string = '';
-  description: string = '';
-  exercise: string = '';
-  groups = [
-    { days: '', hours: '' },
-    { days: '', hours: '' }
-  ];
+
+export class AdminEditClassComponent implements OnInit {
+  // Declare variables for editing the class
   trainerName: string | undefined;
+  className!: string;
+  sessions!: number;
+  status!: string;
+  equipment!: string[];
+  description!: string;
+  exercise!: string[];
+  selectedEquipment: { [key: string]: boolean } = {};
+  selectedExercises: { [key: string]: boolean } = {};
+  exerciseList: string[] = [];
+  groups: any[] = [];
 
-
-
-
+  interface SessionInfo {
+    days: string;
+    startHour: string;
+    endHour: string;
+  }
+  // Available days
   days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  hours = [
-    '08:00 AM - 09:00 AM', '09:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
-    '12:00 PM - 01:00 PM', '01:00 PM - 02:00 PM', '02:00 PM - 03:00 PM', '03:00 PM - 04:00 PM',
-    '04:00 PM - 05:00 PM', '05:00 PM - 06:00 PM', '06:00 PM - 07:00 PM', '07:00 PM - 08:00 PM',
-    '08:00 PM - 09:00 PM', '09:00 PM - 10:00 PM', '10:00 PM - 11:00 PM', '11:00 PM - 12:00 AM'
-  ];
+ 
+  // List of available classes
   classes = [
     {
       className: 'Yoga Class',
@@ -53,9 +55,13 @@ export class AdminEditClassComponent implements OnInit{
       description: 'A yoga class focused on flexibility and balance.',
       totalNoOfSession: 8,
       exercise: 'Downward Dog, Warrior Pose, Tree Pose',
-      sessionsInfo: [
-        { days: 'Monday', hours: '10:00 AM - 11:00 AM' },
-        { days: 'Thursday', hours: '06:00 PM - 07:00 PM' }
+      // sessionsInfo: [
+      //   { days: 'Monday', hours: '10:00 AM - 11:00 AM' },
+      //   { days: 'Thursday', hours: '06:00 PM - 07:00 PM' }
+      // ],
+      groups: [
+        { days: 'Monday', startHour: '10:00', endHour: '11:00' },
+        { days: 'Thursday', startHour: '18:00', endHour: '19:00' }
       ],
       trainerName: "Ahmed"
     },
@@ -68,9 +74,13 @@ export class AdminEditClassComponent implements OnInit{
       description: 'Improve core strength and flexibility with Pilates.',
       totalNoOfSession: 10,
       exercise: 'Hundred, Leg Circles, Roll Up',
-      sessionsInfo: [
-        { days: 'Wednesday', hours: '08:00 AM - 09:00 AM' },
-        { days: 'Friday', hours: '5:00 PM - 6:00 PM' }
+      // sessionsInfo: [
+      //   { days: 'Wednesday', hours: '08:00 AM - 09:00 AM' },
+      //   { days: 'Friday', hours: '5:00 PM - 6:00 PM' }
+      // ],
+      groups: [
+        { days: 'Monday', startHour: '10:00', endHour: '11:00' },
+        { days: 'Thursday', startHour: '18:00', endHour: '19:00' }
       ],
       trainerName: "Ahmed"
     },
@@ -83,9 +93,13 @@ export class AdminEditClassComponent implements OnInit{
       description: 'A fun and energetic dance workout to keep you moving.',
       totalNoOfSession: 12,
       exercise: 'Salsa, Merengue, Cumbia',
-      sessionsInfo: [
-        { days: 'Tuesday', hours: '07:00 PM - 08:00 PM' },
-        { days: 'Saturday', hours: '10:00 AM - 11:00 AM' }
+      // sessionsInfo: [
+      //   { days: 'Tuesday', hours: '07:00 PM - 08:00 PM' },
+      //   { days: 'Saturday', hours: '10:00 AM - 11:00 AM' }
+      // ],
+      groups: [
+        { days: 'Monday', startHour: '10:00', endHour: '11:00' },
+        { days: 'Thursday', startHour: '18:00', endHour: '19:00' }
       ],
       trainerName: "Ahmed"
     },
@@ -98,9 +112,13 @@ export class AdminEditClassComponent implements OnInit{
       description: 'High-intensity interval training to boost cardio and strength.',
       totalNoOfSession: 15,
       exercise: 'Burpees, Mountain Climbers, Jump Squats',
-      sessionsInfo: [
-        { days: 'Monday', hours: '06:00 AM - 07:00 AM' },
-        { days: 'Wednesday', hours: '06:00 PM - 07:00 PM' }
+      // sessionsInfo: [
+      //   { days: 'Monday', hours: '06:00 AM - 07:00 AM' },
+      //   { days: 'Wednesday', hours: '06:00 PM - 07:00 PM' }
+      // ],
+      groups: [
+        { days: 'Monday', startHour: '10:00', endHour: '11:00' },
+        { days: 'Thursday', startHour: '18:00', endHour: '19:00' }
       ],
       trainerName: "Ahmed"
     },
@@ -113,10 +131,16 @@ export class AdminEditClassComponent implements OnInit{
       description: 'Indoor cycling workout for endurance and strength.',
       totalNoOfSession: 10,
       exercise: 'Hill Climb, Sprint, Interval Training',
-      sessionsInfo: [
-        { days: 'Tuesday', hours: '06:00 PM - 07:00 PM' },
-        { days: 'Thursday', hours: '08:00 AM - 09:00 AM' }
-      ]
+      // sessionsInfo: [
+      //   { days: 'Tuesday', hours: '06:00 PM - 07:00 PM' },
+      //   { days: 'Thursday', hours: '08:00 AM - 09:00 AM' }
+      // ]
+      groups: [
+        { days: 'Monday', startHour: '10:00', endHour: '11:00' },
+        { days: 'Thursday', startHour: '18:00', endHour: '19:00' }
+      ],
+      trainerName: "Ahmed"
+
     },
     {
       className: 'CrossFit Class',
@@ -127,38 +151,50 @@ export class AdminEditClassComponent implements OnInit{
       description: 'Strength and conditioning program with varied movements.',
       totalNoOfSession: 20,
       exercise: 'Deadlifts, Pull-ups, Box Jumps',
-      sessionsInfo: [
-        { days: 'Friday', hours: '05:00 PM - 6:00 PM' },
-        { days: 'Sunday', hours: '09:00 AM - 10:00 AM' }
-      ],
+      // sessionsInfo: [
+      //   { days: 'Friday', hours: '05:00 PM - 6:00 PM' },
+      //   { days: 'Sunday', hours: '09:00 AM - 10:00 AM' }
+      // ],
+         // ]
+         groups: [
+          { days: 'Monday', startHour: '10:00', endHour: '11:00' },
+          { days: 'Thursday', startHour: '18:00', endHour: '19:00' }
+        ],
       trainerName: "Ahmed"
     }
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    // Get classId from route params
     const classId = Number(this.route.snapshot.paramMap.get('classId'));
-
-    // Find the class by classId
     const classData = this.classes.find(c => c.classId === classId);
+    
     if (classData) {
-      // Populate the form with the selected class data
       this.className = classData.className;
       this.sessions = classData.sessions;
       this.status = classData.status;
-      this.equipment = classData.equipment;
       this.description = classData.description;
-      this.exercise = classData.exercise;
-      this.trainerName= classData.trainerName;
-      this.groups = classData.sessionsInfo.map(session => ({
+      this.trainerName = classData.trainerName;
+
+      this.equipment = classData.equipment.split(', ').map(item => item.trim());
+      this.exercise = classData.exercise.split(', ').map(item => item.trim());
+      this.exerciseList = this.exercise;
+
+      this.equipment.forEach(item => {
+        this.selectedEquipment[item] = true;
+      });
+
+      this.exercise.forEach(item => {
+        this.selectedExercises[item] = true;
+      });
+
+      this.groups = classData.groups.map((session: SessionInfo) => ({
         days: session.days,
-        hours: session.hours
+        startHour: session.startHour,
+        endHour: session.endHour
       }));
     }
-
-    console.log(classData);
   }
 
   save() {
@@ -169,18 +205,14 @@ export class AdminEditClassComponent implements OnInit{
       groups: this.groups,
       equipment: this.equipment,
       description: this.description,
-      exercise: this.exercise,
-      // trainerName: this.trainerName,
-
+      exercise: this.exercise
     });
 
-    this.router.navigate(['/admin-allClasses']);
+    // Redirect to the all classes page after saving
+    // this.router.navigate(['/admin-allClasses']);
   }
 
   cancel() {
-    this.router.navigate(['/admin-allClasses']);
+    // this.router.navigate(['/admin-allClasses']);
   }
 }
-
-
-
