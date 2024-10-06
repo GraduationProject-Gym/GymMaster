@@ -68,9 +68,6 @@ export class TraineeComponent implements OnInit {
     } else {
       data.srcImg = data.image; // Use the actual image from the response
     }
-    // if (!data.srcImg) {
-    //   data.srcImg = data.gender === 'female' ? "/female.png" : "/male.png";
-    // }
   }
 
   updateProfile(id: string) {
@@ -82,25 +79,32 @@ export class TraineeComponent implements OnInit {
       image: this.data?.srcImg
     };
     console.log(updatedData);
-    this.sidebarService.updateProfileData(idNumber, updatedData).subscribe({
-      next: (response:any) => {
-        console.log(response);
-        this.successMessage = 'Profile updated successfully!';
-        setTimeout(() => {
-          this.successMessage = null;
-        }, 3000);
-      },
-      error: (error) => {
-        console.log(error);
-        if (error.status === 401) {
-          this.router.navigate(['/login']);
-        } else {
-          this.errorMessage = 'An error occurred while updating the profile. Please try again later.';
-        }
-        setTimeout(() => {
-          this.errorMessage = null;
-        }, 5000);
-      }
-    });
+
+    
+    // Navigate to the EditProfileComponent and pass the data
+    // this.router.navigate(['/edit-profile'], {
+    //   state: { data: updatedData, id: idNumber }
+    // });
+    // this.sidebarService.updateProfileData(idNumber, updatedData).subscribe({
+    //   next: (response: any) => {
+    //     console.log(response);
+
+    //     // this.successMessage = 'Profile updated successfully!';
+    //     setTimeout(() => {
+    //       this.successMessage = null;
+    //     }, 3000);
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //     if (error.status === 401) {
+    //       this.router.navigate(['/login']);
+    //     } else {
+    //       this.errorMessage = 'An error occurred while updating the profile. Please try again later.';
+    //     }
+    //     setTimeout(() => {
+    //       this.errorMessage = null;
+    //     }, 5000);
+    //   }
+    // });
   }
 }

@@ -37,20 +37,18 @@ class AuthController extends Controller
     public function showuserdata()
     {
         $user = auth()->user();
-        // return ["message"=>$user];
-
+        
         if ($user->role === 'trainee') {
             $trainee = $user->trainee;
 
             $membershipType = $trainee->TraineeMembership->type;
             $subscription = $trainee->TraineeMembership->subscribe_type;
-            if ($trainee->trainee->TraineeMembership->id == 20) {
+            
+            if ($trainee->TraineeMembership->id === 20) {
                 $membershipType = 'No membership found'; 
                 $subscription = 'N/A';
             }
-        
             if ($trainee && $trainee->TraineeMembership) {
-                // return ["message"=>"done"];
                 return response()->json([
                     'id'=>$user->id,
                     'name' => $user->name,
