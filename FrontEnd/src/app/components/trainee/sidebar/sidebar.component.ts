@@ -154,6 +154,29 @@ export class SidebarComponent {
     });
   }
 
+  // show my reviews
+  showMyReviews() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMyReviews().subscribe({
+      next: (response) => {
+        this.sidebarService.setReviews(response);
+        console.log(response.joinedClasses);
+        // console.log(response);
+        window.location.href = this.router.serializeUrl(this.router.createUrlTree(['trainee-showReviews']));
+        // this.router.navigate(['/trainee-showReviews']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
   // Index my attendance
   attendance() {
     this.errorMessage = null; // Reset the error message

@@ -42,7 +42,7 @@ class AuthController extends Controller
 
             $membershipType = $trainee->TraineeMembership->type;
             $subscription = $trainee->TraineeMembership->subscribe_type;
-            if ($trainee->trainee->TraineeMembership->id == 20) {
+            if ($trainee->TraineeMembership->id == 20) {
                 $membershipType = 'No membership found'; 
                 $subscription = 'N/A';
             }

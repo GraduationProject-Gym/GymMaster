@@ -48,10 +48,10 @@ export class SidebarService {
   }
 
   // Review services
-  // indexMyReviews(): Observable<any> {
-  //   const reviewTrainerUrl = `${environment.domain}/review`;
-  //   return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
-  // }
+  indexMyReviews(): Observable<any> {
+    const reviewTrainerUrl = `${environment.domain}/review/trainee-reviews`;
+    return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
+  }
 
   // Attendance service
   indexMyAttendance(): Observable<any> {
@@ -71,6 +71,14 @@ export class SidebarService {
   }
 
   getSelectedData() {
+    return this.selectedData;
+  }
+  setReviews(data: any) {
+    console.log(333333);
+    this.selectedData = data;
+  }
+
+  getReviews() {
     return this.selectedData;
   }
 }

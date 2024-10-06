@@ -20,7 +20,7 @@
         <a (click)="toggleDropdownReview()">Reviews</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenReview">
           <li><a (click)="trainers()">Do Review</a></li>
-          <li><a >Show Reviews</a></li>
+          <li><a (click)="showMyReviews()">Show Reviews</a></li> <!--routerLink="/trainee-showReviews" -->
         </ul>
       </li>
 
