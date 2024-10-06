@@ -196,19 +196,12 @@ class TraineeClassController extends Controller
 
         if($user->role == 'trainee')
         {
-            $joinedClasses = $user->gymClass()
-            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
-            ->get();
-
-            return $joinedClasses;
-
+            $joinedClasses = $user->gymClass;
         }
         else if($user->role == 'admin')
         {
             $trainee = User::find($request->trainee_id);
-            $joinedClasses = $trainee->gymClass()
-                ->with(['schedule', 'equipments', 'exercises', 'trainer'])
-                ->get();
+            $joinedClasses = $trainee->gymClass;
         }
         return response()->json([
             // 'traineeData' => $user,
