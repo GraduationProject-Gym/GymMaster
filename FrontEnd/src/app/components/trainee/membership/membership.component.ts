@@ -5,6 +5,8 @@ import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 import { MembershipService } from '../../../services/trainee/membership/membership.service';
 import { HttpClient } from '@angular/common/http';  // Import HttpClient
+import { environment } from '../../../../environments/environment';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 
 @Component({
   selector: 'app-membership',
@@ -19,7 +21,6 @@ export class MembershipComponent implements OnInit {
     private sidebarService: SidebarService,
     private membershipService: MembershipService,
     private router: Router,
-    private httpClient: HttpClient,  // Inject HttpClient
 
   ) { }
 
@@ -77,39 +78,19 @@ export class MembershipComponent implements OnInit {
     this.errorMessage = null; // Reset the error message
     console.log(membershipId);
     this.membershipService.subscribeMemberShip(membershipId).subscribe({
-      next: (response: any) => {
+      next:(response) => {
         this.membershipService.setSelectedData(response);
         console.log(response);
         window.location.href = response.url;
-        if (response.success_url) {
-          const token = localStorage.getItem('token'); // Get the stored token from localStorage
-
-          // Make the request to the success URL after payment is successful
-          const headers = {
-            'Authorization': `Bearer ${token}`, // Set Authorization header with Bearer token
-            'Content-Type': 'application/json'  // Set content type
-          };
-          this.httpClient.post(response.success_url,
-            {'membership_id':membershipId},{headers}).subscribe(
-            (successResponse: any) => {
-              console.log('Payment success:', successResponse);
-              // Optionally navigate the user back to the membership page
-              this.router.navigate(['/trainee-membership']);
-            },
-            (error: any) => {
-              console.log('Error during payment success:', error);
-            }
-          );
-        }
       },
-      error: (error) => {
+      error:(error) => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
           // this.errorMessage = error.error?.message;
           // console.log(error);
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;
-          // console.log(error);
+          console.log(error);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }

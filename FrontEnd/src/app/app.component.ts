@@ -26,6 +26,7 @@ import { AllTraineesComponent } from './components/admin/all-trainees/all-traine
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { LoginService } from './services/authentication/login/login.service';
+import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
 
 @Component({
   selector: 'app-root',
@@ -54,7 +55,7 @@ import { LoginService } from './services/authentication/login/login.service';
     AllTraineesComponent,
     MoreDetailsTraineeComponent,
     AdminAddClassComponent ,
-
+    PaymentVerifyComponent
   ],
 
   providers: [

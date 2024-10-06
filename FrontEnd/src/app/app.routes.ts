@@ -29,6 +29,7 @@ import { AdminAllClassesComponent } from './components/admin/admin-all-classes/a
 import { AdminEditClassComponent } from './components/admin/admin-edit-class/admin-edit-class.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { TrainerComponent } from './components/trainer/profile/trainer.component';
+import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
 
 
 export const routes: Routes = [
@@ -64,8 +65,8 @@ export const routes: Routes = [
     { path: 'admin-allClasses', component: AdminAllClassesComponent },
     { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
     { path: 'admin-addClass', component: AdminAddClassComponent },
-    { path: 'payment/success/:membership_id', component:  MembershipComponent},
-    { path: 'payment/cancel', component: MembershipComponent },
+    { path: 'payment/verify', component:PaymentVerifyComponent},
+
 
     { path: "**", component: ErrorComponent }
 ];

@@ -114,13 +114,13 @@ class SubscriptionController extends Controller
                             //     'name' => $member,
                             // ],
                             'product' => $product->id, // Use the created product ID
-                            'unit_amount' => intval($amount),  // Price is already in cents
+                            'unit_amount' => $amount,  // Price is already in cents
                         ],
                         'quantity' => 1,
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('success'),
+                'success_url' => url(env('Front_Domin').'/payment/verify?status=success&member_id='.$membership->id),
                 'cancel_url' => route('cancel'),
             ]);
             return response()->json(['url' => $session->url]);
@@ -134,7 +134,7 @@ class SubscriptionController extends Controller
         }
 
     }
-    public function success($membership_id){
+    public function success(Request $request){
         try{
             $user_id = Auth::user()->id;
             // return $user_id;
@@ -147,11 +147,12 @@ class SubscriptionController extends Controller
             // $trainee = Trainee::where('user_id', $user_id)->first();
 
             $trainee_ = Subscription::create([
-                // TraineeMembership
                 'user_id'=> $user_id,// $user_id
-                // 'payment_method'=> $payment_method,
                 'amount' => $trainee->TraineeMembership->amount,
             ]);
+            // update
+            $trainee->membership_id = $request->membership_id;
+            $trainee->save();
             $NO_days = 0;
             if($trainee->TraineeMembership->subscribe_type == 'weekly'){
                 $NO_days = 7;
@@ -166,13 +167,11 @@ class SubscriptionController extends Controller
             $trainee->expiration_date = Carbon::now()->addDays($NO_days);
             $trainee->save();
             return response()->json([
-                'message' => $trainee_],
-                    403);
+                'message' => $trainee_]);
             }
             catch (Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 500);
             }
-
     }
 
     public function cancel(){

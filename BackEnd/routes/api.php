@@ -52,8 +52,8 @@ Route::middleware(['auth:sanctum'])->group( function () {
     Route::apiResource('reportRecommend',ReportController::class);
     Route::post('report', [ReviewController::class, 'report']);
     Route::get('reportTrainee', [ReviewController::class, 'reportTrainee']);
-    Route::get('/payment/success', [SubscriptionController::class, 'success'])->name('success');
-
+    Route::post('/payment/success', [SubscriptionController::class, 'success'])->name('success');
+    Route::post('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
 });
 
 //reportTrainee
@@ -126,8 +126,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/schedules/restore/{id}', [ScheduleController::class, 'restore'])->name('schedules.restore');
 });
 // api
-Route::post('/create-payment', [SubscriptionController::class, 'store']);
-Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
+// Route::post('/create-payment', [SubscriptionController::class, 'store']);
 // Route::get('/payment/success/{membership_id}', [SubscriptionController::class, 'success'])->name('success');
 
 

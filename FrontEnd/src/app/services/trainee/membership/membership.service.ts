@@ -32,4 +32,10 @@ export class MembershipService {
   getSelectedData() {
     return this.selectedData;
   }
+
+
+  paymentSuccess(id:any): Observable<any>{
+    const subscriptionUrl = `${environment.domain}/payment/success/`;
+    return this.http.post(subscriptionUrl, { 'membership_id':id }, { headers: this.getHeaders() });
+  }
 }

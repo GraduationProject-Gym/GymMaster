@@ -186,10 +186,7 @@ class TraineeClassController extends Controller
 
         if($user->role == 'trainee')
         {
-            $joinedClasses = $user->gymClass()
-            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
-            ->get();
-
+            $joinedClasses = $user->gymClass;
         }
         else if($user->role == 'admin')
         {
