@@ -16,9 +16,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let record of attendanceRecords">
-              <td>{{ record.date }}</td>
-              <td>{{ record.checkIn }}</td>
-              <td>{{ record.checkOut }}</td>
+              <td>{{ record.created_at | date: 'yyyy-MM-dd' }}</td>
+              <td>{{ record.check_in | date: 'shortTime' }}</td>
+              <td>{{ record.check_out | date: 'shortTime' }}</td>
             </tr>
           </tbody>
         </table>

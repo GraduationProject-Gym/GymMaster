@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
+import { ClassesService } from '../../../services/trainee/classes/classes.service';
 
 @Component({
   selector: 'app-trainee-all-classes',
@@ -18,6 +19,7 @@ export class TraineeAllClassesComponent {
 
   constructor(
     private sidebarService: SidebarService,
+    private classesService: ClassesService,
     private router: Router
   ) { }
 
@@ -25,6 +27,7 @@ export class TraineeAllClassesComponent {
   groupedClasses: any[] = [];
   currentSlide: number = 0;
   errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   // Index classes
   ngOnInit() {
@@ -63,4 +66,38 @@ export class TraineeAllClassesComponent {
       this.currentSlide++;
     }
   }
+
+  joinClass(classId: string) {
+    let classIdNumber: number = Number(classId);
+
+    this.classesService.joinClass(classIdNumber).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.successMessage = response.message;
+        // Show success message for 3 seconds before navigating
+        setTimeout(() => {
+          this.successMessage = null;
+          this.router.navigate(['/trainee-myClasses']);
+        }, 3000); 
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else if (error.status === 403 && error.error?.message) {
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403 && error.error?.joined) {
+          this.errorMessage = error.error?.joined;
+          this.router.navigate(['/trainee-myClasses']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+        // Show error message for 5 seconds before clearing it
+        setTimeout(() => {
+          this.errorMessage = null;
+        }, 5000);
+      }
+    });
+  }
+
 }

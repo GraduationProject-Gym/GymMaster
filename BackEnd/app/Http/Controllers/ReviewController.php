@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\TraineeClassResource;
 use App\Models\GymClass;
 use App\Models\Review;
 use App\Models\Trainee;
@@ -19,6 +20,7 @@ use App\Models\UserClass;
 use App\Http\Resources\ReportResource;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\ReportTraineeResource;
+use App\Http\Resources\TraineeJoinedClassReviews;
 
 class ReviewController extends Controller
 {
@@ -137,6 +139,26 @@ class ReviewController extends Controller
         }
 
 
+    }
+
+    // index all auth trainee reviews
+    public function indexTraineeReviews()
+    {
+        try {
+            $this->authorize("traineeReports", Review::class);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to show these reviews'
+            ], 403);
+        }
+        $trainee = Auth::user();
+        $joinedClasses = $trainee->gymClass()
+            ->with(['classTrainer.user','review'])
+            ->get();
+        return response()->json([
+            // 'message' => $joinedClasses
+            'joinedClasses' => TraineeJoinedClassReviews::collection($joinedClasses)
+        ]);
     }
     /**
      * Display the specified resource.

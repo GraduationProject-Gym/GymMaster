@@ -16,9 +16,10 @@ export class SidebarComponent {
 
   memberships: any[] = [];
   errorMessage: string | null = null;
+  warningMessage: string | null = null;
 
 
-  showReports(){
+  showReports() {
     this.sidebarService.getReports().subscribe({
       next: (response) => {
         console.log(response);
@@ -86,7 +87,7 @@ export class SidebarComponent {
   // Show my classes
   myClasses() {
     this.errorMessage = null; // Reset the error message
-
+    this.warningMessage = null;
     this.sidebarService.indexMyClasses().subscribe({
       next: (response: any) => {
         this.sidebarService.setSelectedData(response.joinedClasses);
@@ -110,12 +111,19 @@ export class SidebarComponent {
 
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
-        this.sidebarService.setSelectedData(response);
-        // console.log(response);
-        this.router.navigate(['/trainee-allClasses']);
+        console.log(response);
+        const unjoinedClasses = response.gymclassData.filter((gymClass: any) => gymClass.checkJoin === false);
+        if (unjoinedClasses.length > 0) {
+          this.sidebarService.setSelectedData(unjoinedClasses);
+          console.log(unjoinedClasses);
+          this.router.navigate(['/trainee-allClasses']);
+        } else {
+          // console.log('You have already joined all classes.');
+          this.warningMessage = 'You have already joined all available classes.';
+        }
       },
       error: (error) => {
-        // console.log(error);
+        console.log(error);
         if (error.status === 401) {
           this.router.navigate(['/login']);
         } else {
@@ -134,6 +142,50 @@ export class SidebarComponent {
         this.sidebarService.setSelectedData(response);
         console.log(response);
         this.router.navigate(['/trainee-doReview']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  // show my reviews
+  showMyReviews() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMyReviews().subscribe({
+      next: (response) => {
+        this.sidebarService.setReviews(response);
+        console.log(response.joinedClasses);
+        // console.log(response);
+        window.location.href = this.router.serializeUrl(this.router.createUrlTree(['trainee-showReviews']));
+        // this.router.navigate(['/trainee-showReviews']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  // Index my attendance
+  attendance() {
+    this.errorMessage = null; // Reset the error message
+
+    this.sidebarService.indexMyAttendance().subscribe({
+      next: (response: any) => {
+        this.sidebarService.setSelectedData(response.attendance);
+        console.log(response.attendance);
+        this.router.navigate(['/trainee-attendance']);
       },
       error: (error) => {
         console.log(error);

@@ -27,6 +27,7 @@ import { MoreDetailsTraineeComponent } from './components/admin/more-details-tra
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { LoginService } from './services/authentication/login/login.service';
 import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
+import { ClassesService } from './services/trainee/classes/classes.service';
 
 @Component({
   selector: 'app-root',
@@ -62,7 +63,8 @@ import { PaymentVerifyComponent } from './components/trainee/payment-verify/paym
     ClassService,
     SidebarService,
     MembershipService,
-    LoginService
+    LoginService,
+    ClassesService
   ],
 
   templateUrl: './app.component.html',
