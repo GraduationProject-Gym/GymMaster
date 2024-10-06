@@ -39,6 +39,13 @@ class AuthController extends Controller
         $user = auth()->user();
         if ($user->role === 'trainee') {
             $trainee = $user->trainee;
+
+            $membershipType = $trainee->TraineeMembership->type;
+            $subscription = $trainee->TraineeMembership->subscribe_type;
+            if ($trainee->trainee->TraineeMembership->id == 20) {
+                $membershipType = 'No membership found'; 
+                $subscription = 'N/A';
+            }
         
             if ($trainee && $trainee->TraineeMembership) {
                 return response()->json([
@@ -50,8 +57,8 @@ class AuthController extends Controller
                     'phone' => $user->phone,
                     'gender' => $user->gender,
                     'address' => $user->address,
-                    'membership_type' => $trainee->TraineeMembership->type,
-                    'subscription' => $trainee->TraineeMembership->subscribe_type,
+                    'membership_type' => $membershipType,
+                    'subscription' => $subscription
                 ], 200);
             } else {
                 return response()->json([
