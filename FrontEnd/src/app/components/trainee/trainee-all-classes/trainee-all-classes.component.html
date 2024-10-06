@@ -13,9 +13,11 @@
               <div class="row">
                 <div class="col-md-6">
                   <p><strong>Trainer Name:</strong> <span class="badge">{{ classObj.trainer.name }}</span></p>
-
-                  <p><strong>Number of Sessions:</strong> <span class="badge">{{ classObj.total_no_of_sessions
-                      }}</span>
+                  <p>
+                    <strong>Number of Sessions:</strong>
+                    <span class="badge">
+                      {{ classObj.total_no_of_sessions}}
+                    </span>
                   </p>
                   <p>
                     <strong>Equipment:</strong>
@@ -53,26 +55,24 @@
                   </span>
                 </p>
               </div>
-              <!-- Hidden input for classId -->
-              <input type="hidden" [value]="classObj.id" #classIdInput>
 
+              @if(successMessage){
+              <div class="alert alert-success">
+                {{successMessage}}
+              </div>
+              }
               @if(errorMessage){
               <div class="alert alert-danger">
                 {{errorMessage}}
               </div>
               }
-              <!-- Hide Join button if the user has already joined the class -->
+
+              <input type="hidden" [value]="classObj.id" #classIdInput>
+
               <div class="text-center">
-                <!-- *ngIf="!isJoined" -->
                 <button class="btn" (click)="joinClass(classIdInput.value)">Join</button>
               </div>
-              <!-- <div *ngIf="isJoined" class="text-center text-success">
-                @if(successMessage){
-                <div class="alert alert-success">
-                  {{successMessage}}
-                </div>
-                }
-              </div> -->
+
               <div class="buttons">
                 <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
                   <span class="carousel-control-prev-icon" aria-hidden="true"

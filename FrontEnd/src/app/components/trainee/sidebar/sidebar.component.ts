@@ -112,6 +112,7 @@ export class SidebarComponent {
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
         console.log(response);
+        // Index unjoined classes only
         const unjoinedClasses = response.gymclassData.filter((gymClass: any) => gymClass.checkJoin === false);
         if (unjoinedClasses.length > 0) {
           this.sidebarService.setSelectedData(unjoinedClasses);
