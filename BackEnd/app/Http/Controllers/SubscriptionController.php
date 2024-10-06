@@ -84,9 +84,9 @@ class SubscriptionController extends Controller
     {
         //payment
         try {
-
             $this->authorize('create', Subscription::class);
             Stripe::setApiKey(config('stripe.stripe_sk'));
+            // return ["message"=>111];
 
             $membership = Memberships::find($request->id);
             if($membership){
@@ -101,7 +101,7 @@ class SubscriptionController extends Controller
                 'name' => $membership->subscribe_type,
                 // Additional product data can be added here if needed
             ];
-    
+
             // Create the product in Stripe
             $product = \Stripe\Product::create($productData);
 
@@ -134,9 +134,10 @@ class SubscriptionController extends Controller
         }
 
     }
-    public function success(){
+    public function success($membership_id){
         try{
             $user_id = Auth::user()->id;
+            // return $user_id;
             $trainee = Trainee::where('user_id', $user_id)->first();
             if(!$trainee){
                 return response()->json(['message' => 'Please Do Registe First'], 404);

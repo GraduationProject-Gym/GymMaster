@@ -12,9 +12,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item mx-3 d-flex">
-            <a *ngIf="isLoggedIn" class="nav-link" (click)="class()">Class</a>
-          </li>
+          @if(role === 'trainer'){
+            <li class="nav-item mx-3 d-flex">
+              <a *ngIf="isLoggedIn" class="nav-link" (click)="class()">Class</a>
+            </li>
+          }
           <li class="nav-item mx-3 d-flex">
             <a *ngIf="isLoggedIn" class="nav-link" (click)="profile()">Profile</a>
           </li>
@@ -30,10 +32,10 @@
           <li class="nav-item mx-3">
             <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
           </li>
-          <li class="nav-item mx-3 d-flex" *ngIf="!isLoggedIn">
+          <li class="nav-item mx-3 d-flex" *ngIf="!loading && !isLoggedIn">
             <button class="btn" routerLinkActive="active" (click)="closeMenu()">Login</button><!--routerLink="/login"-->
           </li>
-          <li class="nav-item mx-3 d-flex" *ngIf="isLoggedIn">
+          <li class="nav-item mx-3 d-flex" *ngIf="!loading && isLoggedIn">
             <button class="btn" (click)="logout()">Logout</button>
           </li>
         </ul>
