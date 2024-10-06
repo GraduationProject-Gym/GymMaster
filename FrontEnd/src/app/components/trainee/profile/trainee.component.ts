@@ -24,11 +24,11 @@ export class TraineeComponent implements OnInit {
   constructor(private sidebarService: SidebarService, private router: Router) {}
   data: any;
   errorMessage: string | null = null;
-  dataFlag = false;
+  // dataFlag = false;
 
   ngOnInit() {
     this.data = this.sidebarService.getSelectedData();
-    this.dataFlag = true;
+    // this.dataFlag = true;
     if (!this.data) {
       this.profile();
       // console.log(this.data);  
@@ -43,7 +43,7 @@ export class TraineeComponent implements OnInit {
     this.errorMessage = null; // Reset the error message 
     this.sidebarService.getProfileData().subscribe({
       next: (response) => {
-        this.dataFlag = true;
+        // this.dataFlag = true;
         console.log(response);
         this.data = response;
         this.setProfileImage(this.data);

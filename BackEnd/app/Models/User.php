@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Trainee;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\CustomResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -101,7 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function trainee()
     {
-        return $this->hasOne(Trainer::class, 'user_id');
+        return $this->hasOne(Trainee::class, 'user_id');
     }
     public function attendance()
     {

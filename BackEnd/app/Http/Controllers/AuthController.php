@@ -37,10 +37,13 @@ class AuthController extends Controller
     public function showuserdata()
     {
         $user = auth()->user();
+        // return ["message"=>$user];
+
         if ($user->role === 'trainee') {
             $trainee = $user->trainee;
-        
+            
             if ($trainee && $trainee->TraineeMembership) {
+                // return ["message"=>"done"];
                 return response()->json([
                     'name' => $user->name,
                     'role' => $user->role,
@@ -83,8 +86,6 @@ class AuthController extends Controller
                 'error' => 'User role is not recognized.'
             ], 400);
         }
-        
-        
     }
     /**
      * Display a listing of the resource.

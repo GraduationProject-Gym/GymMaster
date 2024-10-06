@@ -1,7 +1,7 @@
 <div class="d-flex">
   <app-sidebar></app-sidebar>
   <div class="main">
-    @if(dataFlag){
+    <!-- @if(dataFlag){ -->
     <div class="profile d-flex flex-column">
       <div class="d-flex ml-5">
         <div>
@@ -22,17 +22,14 @@
               <i class="fas fa-edit"></i>
             </a>
           </p>
-          <p><strong>Subscription:</strong> {{ data.subscription }}
-            <a href="/trainee-membership" class="edit-icon">
-              <i class="fas fa-edit"></i>
-            </a>
-          </p>
+          <p><strong>Subscription:</strong> {{ data.subscription }}</p>
         </div>
         <img [src]="data.srcImg" alt="Trainee Profile Picture" class="profile-img ms-auto">
       </div>
     </div>
 
-    } @else if(errorMessage){
+    <!-- }else  -->
+    @if(errorMessage){
     <div class="alert alert-danger profile d-flex flex-column">
       {{errorMessage}}
     </div>

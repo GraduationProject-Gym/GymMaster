@@ -18,7 +18,13 @@ export class SidebarService {
     return headers;
   }
 
+  // Profile services
   getProfileData(): Observable<any> {
+    const profileUrl = `${environment.domain}/showuserdata`;
+    return this.http.get(profileUrl, { headers: this.getHeaders() });
+  }
+
+  updateProfileData(): Observable<any> {
     const profileUrl = `${environment.domain}/showuserdata`;
     return this.http.get(profileUrl, { headers: this.getHeaders() });
   }
@@ -66,6 +72,7 @@ export class SidebarService {
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
+    console.log("111");
     this.selectedData = data;
   }
 
