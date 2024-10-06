@@ -45,10 +45,12 @@ class AuthController extends Controller
             if ($trainee && $trainee->TraineeMembership) {
                 // return ["message"=>"done"];
                 return response()->json([
+                    'id'=>$user->id,
                     'name' => $user->name,
                     'role' => $user->role,
                     'age' => $user->age,
-                    'image' => $user->image,
+                    // 'image' => $user->image,
+                    'image' => $user->image ? asset('images/users/' . $user->image) : null,
                     'email' => $user->email,
                     'phone' => $user->phone,
                     'gender' => $user->gender,
@@ -548,20 +550,20 @@ public function indexalltrainer() {
     
         // Validation rules
         $rules = [
-            'name' => 'string|max:255|min:5',
-            'email' => 'string|email|max:255|unique:users,email,' . $id,
+            // 'name' => 'string|max:255|min:5',
+            // 'email' => 'string|email|max:255|unique:users,email,' . $id,
             'phone' => 'nullable|string|max:11|unique:users,phone,' . $id,
             'address' => 'nullable|string',
             'age' => 'nullable|integer|min:15',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'gender' => 'nullable|string',
-            'role' => 'nullable|string',
-            'password' => 'nullable|string|min:8',
+            // 'gender' => 'nullable|string',
+            // 'role' => 'nullable|string',
+            // 'password' => 'nullable|string|min:8',
         ];
     
         $messages = [
-            'email.email' => 'Email must be a valid email address.',
-            'email.unique' => 'The email has already been taken.',
+            // 'email.email' => 'Email must be a valid email address.',
+            // 'email.unique' => 'The email has already been taken.',
             'phone.unique' => 'The phone has already been taken.',
             'phone.max' => 'Phone number may not be greater than 11 characters.',
             'age.min' => 'Age must be at least 15.',

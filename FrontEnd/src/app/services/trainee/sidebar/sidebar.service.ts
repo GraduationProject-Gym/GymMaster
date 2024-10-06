@@ -24,9 +24,10 @@ export class SidebarService {
     return this.http.get(profileUrl, { headers: this.getHeaders() });
   }
 
-  updateProfileData(): Observable<any> {
-    const profileUrl = `${environment.domain}/showuserdata`;
-    return this.http.get(profileUrl, { headers: this.getHeaders() });
+  updateProfileData(id: number, updatedData: any): Observable<any> {
+    console.log(id, updatedData);
+    const updateProfileDataUrl = `${environment.domain}/updateusers/${id}`;
+    return this.http.put(updateProfileDataUrl, { updatedData }, { headers: this.getHeaders() });
   }
 
   // Membership service

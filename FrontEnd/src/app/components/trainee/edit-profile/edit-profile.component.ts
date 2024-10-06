@@ -30,7 +30,6 @@ export class EditProfileComponent implements OnInit {
     this.editProfileForm = this.fb.group({
       name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
-      email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       address: ['', Validators.required],
       image:['',Validators.required]
@@ -46,7 +45,6 @@ export class EditProfileComponent implements OnInit {
     const trainee = {
       name: 'John Doe',
       age: 30,
-      email: 'john.doe@example.com',
       phone: '123456789',
       address: '123 Main St'
     };

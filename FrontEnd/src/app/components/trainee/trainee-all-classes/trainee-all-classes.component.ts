@@ -123,13 +123,13 @@ export class TraineeAllClassesComponent {
   // }
   joinClass(classId: string) {
     let classIdNumber: number = Number(classId);
-  
+
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
         const membershipData = response.membershipData;
-  console.log(membershipData);
+        console.log(membershipData);
         // Check if membership subscribe_type is valid (monthly or yearly)
-        if (membershipData && 
+        if (membershipData &&
           (membershipData.subscribe_type === 'Monthly' || membershipData.subscribe_type === 'Yearly')) {
           // Proceed with joining the class if the membership is valid
           this.classesService.joinClass(classIdNumber).subscribe({
@@ -161,7 +161,7 @@ export class TraineeAllClassesComponent {
               }, 5000);
             }
           });
-  
+
         } else {
           this.errorMessage = 'You need a valid monthly or yearly subscription to join this class.';
           setTimeout(() => {
@@ -184,5 +184,5 @@ export class TraineeAllClassesComponent {
       }
     });
   }
-  
+
 }
