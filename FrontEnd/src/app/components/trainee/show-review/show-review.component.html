@@ -8,13 +8,14 @@
             <div class="container">
               <h1 class="custom-title text-center">Your Rate</h1>
               <div class="row">
-                <ng-container >
+                <ng-container *ngFor="let class of group; let k = index">
                   <div class="card shadow-lg col-md-4 col-lg-3">
                     <div class="card-body">
-                      <h5 class="card-title ">Trainer:{{ group.trainerData.name }}</h5>
-                      <!-- <ul>
-                        <li *ngFor="let review of group.reviews">
-                          <h4><strong>Date:</strong> {{ review.created_at }}</h4>
+                      <h6 class="card-title">Trainer:{{ class.trainerData.name }}</h6>
+                      <h6 class="card-title">Class:{{ class.name }}</h6>
+                      <ul>
+                        <li *ngFor="let review of class.reviews">
+                          <h4><strong>Date:</strong> {{ review.created_at|date:'yyyy-MM-dd' }}</h4>
                           <ul>
                             <li><strong>Comment:</strong> {{ review.comments }}</li>
                             <li>
@@ -28,7 +29,7 @@
                             </li>
                           </ul>
                         </li>
-                      </ul> -->
+                      </ul>
                     </div>
                   </div>
                 </ng-container>

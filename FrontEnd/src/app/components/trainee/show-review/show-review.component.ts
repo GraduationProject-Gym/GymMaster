@@ -33,11 +33,8 @@ export class ShowReviewComponent implements OnInit{
 
     if (!this.allReviews) {
       this.showMyReviews();
-      this.groupReviews(); // Group reviews into sets for the carousel
-      // console.log('jjjjj');
       return;
     }
-
     this.groupReviews(); // Group reviews into sets for the carousel
   }
   // show my reviews
@@ -49,9 +46,10 @@ export class ShowReviewComponent implements OnInit{
         this.sidebarService.setReviews(response.joinedClasses);
         this.allReviews = response.joinedClasses;
         console.log(this.allReviews);
-        window.location.href = this.router.serializeUrl(this.router.createUrlTree(['trainee-showReviews']));
+        this.groupReviews()
+        // window.location.href = this.router.serializeUrl(this.router.createUrlTree(['trainee-showReviews']));
         // console.log(response);
-        // this.router.navigate(['trainee-showReviews']);
+        this.router.navigate(['trainee-showReviews']);
       },
       error: (error) => {
         console.log(error);
@@ -98,6 +96,7 @@ export class ShowReviewComponent implements OnInit{
         console.log('all',this.allReviews);
       for (let i = 0; i < this.allReviews.length; i += groupSize) {
         this.groupedReviews.push(this.allReviews.slice(i, i + groupSize));
+
       }
       console.log('group',this.groupedReviews);
 

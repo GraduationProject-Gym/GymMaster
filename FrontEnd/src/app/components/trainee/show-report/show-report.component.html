@@ -67,7 +67,7 @@
                           <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
                             <i class="fa" [ngClass]="j < traineeReports[i].overallRating ? 'fas fa-star' : 'far fa-star'"></i>
                           </span>
-                          <p>{{ traineeReports[i]?.overallRating | number:'1.1-1' }} out of 5</p>
+                          <p>{{ traineeReports[i].overallRating | number:'1.1-1' }} out of 5</p>
                         </div>
 
                         <!-- Section for Overall Comment -->
