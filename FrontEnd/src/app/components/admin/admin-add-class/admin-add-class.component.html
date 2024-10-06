@@ -1,153 +1,130 @@
-
-
 <div class="d-flex">
   <app-admin-sidebar></app-admin-sidebar>
   <div class="main">
-    <div class="add-container">
-      <h2>Add New Class</h2>
+      <div class="add-container">
+          <h2>Add New Class</h2>
+          <form (ngSubmit)="save(classForm)" #classForm="ngForm">
+            <!-- Class Name -->
+            <div class="form-group">
+              <label for="className">Class Name:</label>
+              <input id="className" type="text" name="className" [(ngModel)]="className" #classNameField="ngModel" required minlength="3" class="form-control">
+              <div *ngIf="classNameField.invalid && classNameField.touched" class="text-danger">
+                <small *ngIf="classNameField.errors?.['required']">Class name is required.</small>
+                <small *ngIf="classNameField.errors?.['minlength']">Class name must be at least 3 characters long.</small>
+              </div>
+            </div>
+          
+            <!-- Trainer Name -->
+            <div class="form-group">
+              <label for="trainerName">Trainer Name:</label>
+              <input id="trainerName" type="text" name="trainerName" [(ngModel)]="trainerName" #trainerNameField="ngModel" required class="form-control">
+              <div *ngIf="trainerNameField.invalid && trainerNameField.touched" class="text-danger">
+                <small *ngIf="trainerNameField.errors?.['required']">Trainer name is required.</small>
+              </div>
+            </div>
+          
+            <!-- Number of Sessions -->
+            <div class="form-group">
+              <label for="sessions">Number of Sessions:</label>
+              <input id="sessions" type="number" name="sessions" [(ngModel)]="sessions" #sessionsField="ngModel" required min="8" class="form-control">
+              <div *ngIf="sessionsField.invalid && sessionsField.touched" class="text-danger">
+                <small *ngIf="sessionsField.errors?.['required']">Number of sessions is required.</small>
+                <small *ngIf="sessionsField.errors?.['min']">There must be at least 8 session.</small>
+              </div>
+            </div>
+          
+            <!-- Status -->
+            <div class="form-group">
+              <label for="status">Status:</label>
+              <select id="status" name="status" [(ngModel)]="status" #statusField="ngModel" required class="form-control">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+              <div *ngIf="statusField.invalid && statusField.touched" class="text-danger">
+                <small *ngIf="statusField.errors?.['required']">Status is required.</small>
+              </div>
+            </div>
+          
+            <!-- Description -->
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea id="description" name="description" [(ngModel)]="description" #descriptionField="ngModel" required minlength="10" class="form-control" rows="5"></textarea>
+              <div *ngIf="descriptionField.invalid && descriptionField.touched" class="text-danger">
+                <small *ngIf="descriptionField.errors?.['required']">Description is required.</small>
+                <small *ngIf="descriptionField.errors?.['minlength']">Description must be at least 10 characters long.</small>
+              </div>
+            </div>
+             <!-- Session Information -->
+             <h5 class="mt-2">Sessions</h5>
+             <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
+               <h6 class="text-secondary">Session {{ i + 1 }}</h6>
+             
+               <!-- Days control -->
+               <label for="groupDays{{ i }}">Days (Session {{ i + 1 }}):</label>
+               <select id="groupDays{{ i }}" [(ngModel)]="group.day" name="groupDays{{i}}" class="form-control" #dayField="ngModel" required>
+                 <option value="" disabled selected>Select a day</option>
+                 <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+               </select>
+               <div *ngIf="dayField.invalid && dayField.touched" class="text-danger">
+                <small *ngIf="dayField.errors?.['required']">Day is required.</small>
+              </div>
 
-      <form [formGroup]="classForm" (ngSubmit)="save()">
+               <!-- Start Hour control -->
+               <label for="groupStartHour{{ i }}">Start Hour (Session {{ i + 1 }}):</label>
+               <input id="groupStartHour{{ i }}" type="time" [(ngModel)]="group.startHour" name="groupStartHour{{i}}" class="form-control" #startHourField="ngModel" required>
+             
+               <div *ngIf="startHourField.invalid && startHourField.touched" class="text-danger">
+                <small *ngIf="startHourField.errors?.['required']"> Start Hour is required.</small>
+              </div>
 
-        <!-- Class Name -->
-        <div class="form-group">
-          <label for="className">Class Name:</label>
-          <input id="className" type="text" formControlName="className" class="form-control">
-          <!-- Error Message -->
-          <div *ngIf="classForm.controls['className'].invalid && classForm.controls['className'].touched" class="text-danger">
-            Class Name is required.
-          </div>
-        </div>
+               <!-- End Hour control -->
+               <label for="groupEndHour{{ i }}">End Hour (Session {{ i + 1 }}):</label>
+               <input id="groupEndHour{{ i }}" type="time" [(ngModel)]="group.endHour" name="groupEndHour{{i}}" class="form-control" #endHourField="ngModel"  required>
+                               
+               <div *ngIf="endHourField.invalid && endHourField.touched" class="text-danger">
+                <small *ngIf="endHourField.errors?.['required']"> End Hour is required.</small>
+               </div>
+                <!-- Validation for Start Hour before End Hour -->
+                  <div *ngIf="!validateHours(group.startHour, group.endHour) && (startHourField.touched || endHourField.touched)" class="text-danger">
+                    <small>Start Hour must be before End Hour.</small>
+                  </div>
+             </div>
+             
 
-        <!-- Trainer Name -->
-        <div class="form-group">
-          <label for="trainerName">Trainer Name:</label>
-          <input id="trainerName" type="text" formControlName="trainerName" class="form-control">
-          <!-- Error Message -->
-          <div *ngIf="classForm.controls['trainerName'].invalid && classForm.controls['trainerName'].touched" class="text-danger">
-            Trainer Name is required.
-          </div>
-        </div>
+ 
+             <!-- Add Session button -->
+             <button type="button" class="btn mt-3" (click)="addSession()">Add Session</button>
+          
+             <div class="d-flex justify-content-start">
+              <!-- Equipment Information -->
+              <div class="row col-6">
+                <div class="form-group m-5">
+                  <label for="equipment">Equipment Name:</label>
+                  <div *ngFor="let item of equipmentList">
+                    <input type="checkbox" [id]="item" [value]="item" [(ngModel)]="selectedEquipment[item]" name="equipment-{{item}}" class="form-check-input">
+                    <label [for]="item" class="form-check-label">{{ item }}</label>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Equipment Exercise -->
+              <div class="row col-6">
+                <div class="form-group m-5">
+                  <label for="exercise">Exercise:</label>
+                  <div *ngFor="let exercise of exerciseList">
+                    <input type="checkbox" [id]="exercise" [value]="exercise" [(ngModel)]="selectedExercises[exercise]" name="exercise-{{exercise}}" class="form-check-input">
+                    <label [for]="exercise" class="form-check-label">{{ exercise }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <!-- Number of Sessions -->
-        <div class="form-group">
-          <label for="sessions">Number of Sessions:</label>
-          <input id="sessions" type="number" formControlName="sessions" class="form-control">
-          <!-- Error Message -->
-          <div *ngIf="classForm.controls['sessions'].invalid && classForm.controls['sessions'].touched" class="text-danger">
-            Number of Sessions must be at least 4.
-          </div>
-        </div>
-
-        <!-- Status -->
-        <div class="form-group">
-          <label for="status">Status:</label>
-          <select id="status" formControlName="status" class="form-control">
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-
-        <!-- Session Information -->
-        <!-- <h5 class="mt-2">Sessions</h5>
-        <div *ngFor="let group of groupsFormArray.controls; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
-          <h6 class="text-secondary">Session {{ i + 1 }}</h6>
-          <label for="groupDays{{ i }}">Days (Session {{ i + 1 }}):</label>
-          <select id="groupDays{{ i }}" formControlName="days" class="form-control">
-            <option *ngFor="let day of days" [value]="day">{{ day }}</option>
-          </select>
-
-          <label for="groupHours{{ i }}">Start Hour (Session {{ i + 1 }}):</label>
-          <select id="groupHours{{ i }}" formControlName="hours" class="form-control">
-            <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
-          </select>
-          <label for="groupHours{{ i }}">End Hour (Session {{ i + 1 }}):</label>
-          <select id="groupHours{{ i }}" formControlName="hours" class="form-control">
-            <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
-          </select>
-
-          <div *ngIf="group.get('days').invalid && group.get('days').touched" class="text-danger">
-            Days is required.
-          </div>
-          <div *ngIf="group.get('hours').invalid && group.get('hours').touched" class="text-danger">
-            Hours is required.
-          </div>
-        </div> -->
-
-
-        <h5 class="mt-2">Sessions</h5>
-<div *ngFor="let group of groupsFormArray.controls; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
-  <h6 class="text-secondary">Session {{ i + 1 }}</h6>
-
-  <label for="groupDays{{ i }}">Days (Session {{ i + 1 }}):</label>
-  <select id="groupDays{{ i }}" [formControlName]="'days'" class="form-control">
-    <option *ngFor="let day of days" [value]="day">{{ day }}</option>
-  </select>
-  <label for="groupStartHour{{ i }}">Start Hour Session {{ i + 1 }}:</label>
-<input id="groupStartHour{{ i }}" type="time" formControlName="startHour" class="form-control">
-
-<label for="groupEndHour{{ i }}">  End Hour Session {{ i + 1 }}:</label>
-<input id="groupEndHour{{ i }}" type="time" formControlName="endHour" class="form-control">
-
-<!--
-  <label for="groupHours{{ i }}">Start Hour (Session {{ i + 1 }}):</label>
-  <select id="groupHours{{ i }}" [formControlName]="'hours'" class="form-control">
-    <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
-  </select>
-
-  <label for="groupHoursEnd{{ i }}">End Hour (Session {{ i + 1 }}):</label>
-  <select id="groupHoursEnd{{ i }}" [formControlName]="'hours'" class="form-control">
-    <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
-  </select> -->
-
-  
-  <!-- Error Messages -->
-  <div *ngIf="group?.get('days')?.invalid && group?.get('days')?.touched" class="text-danger">
-    Days is required.
-  </div>
-  <div *ngIf="group?.get('hours')?.invalid && group?.get('hours')?.touched" class="text-danger">
-    Hours is required.
-  </div>
-</div>
-
-        <button type="button" class="btn btn-primary" (click)="addGroup()">Add Session</button>
-
-        <!-- Equipment Information -->
-        <div class="form-group">
-          <label for="equipment">Equipment Name:</label>
-          <input id="equipment" type="text" formControlName="equipment" class="form-control">
-          <!-- Error Message -->
-          <div *ngIf="classForm.controls['equipment'].invalid && classForm.controls['equipment'].touched" class="text-danger">
-            Equipment is required.
-          </div>
-        </div>
-
-        <!-- Class Description -->
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <textarea id="description" formControlName="description" class="form-control" rows="5"></textarea>
-          <!-- Error Message -->
-          <div *ngIf="classForm.controls['description'].invalid && classForm.controls['description'].touched" class="text-danger">
-            Maximum length is 500 characters.
-          </div>
-        </div>
-
-        <!-- Class exercise -->
-        <div class="form-group">
-          <label for="exercise">Exercise:</label>
-          <textarea id="exercise" formControlName="exercise" class="form-control" rows="5"></textarea>
-          <!-- Error Message -->
-          <div *ngIf="classForm.controls['exercise'].invalid && classForm.controls['exercise'].touched" class="text-danger">
-            Maximum length is 500 characters.
-          </div>
-        </div>
-
-        <!-- Save and Cancel Buttons -->
-        <div class="text-center mt-2">
-          <button type="submit" class="btn btn-success" [disabled]="classForm.invalid">Save</button>
-          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
-        </div>
-      </form>
-    </div>
+            <!-- Save Button -->
+            <div class="text-center">
+              <button type="submit" class="btn" [disabled]="classForm.invalid">Save</button>
+              <button type="button" class="btn" (click)="cancel()">Cancel</button>
+            </div>
+          </form>     
+      </div>
   </div>
 </div>
-
