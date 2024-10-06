@@ -64,7 +64,8 @@ export const routes: Routes = [
     { path: 'admin-allClasses', component: AdminAllClassesComponent },
     { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
     { path: 'admin-addClass', component: AdminAddClassComponent },
-
+    { path: 'payment/success/:membership_id', component:  MembershipComponent},
+    { path: 'payment/cancel', component: MembershipComponent },
 
     { path: "**", component: ErrorComponent }
 ];

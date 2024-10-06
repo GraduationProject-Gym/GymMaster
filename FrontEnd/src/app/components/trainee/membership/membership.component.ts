@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 import { MembershipService } from '../../../services/trainee/membership/membership.service';
+import { HttpClient } from '@angular/common/http';  // Import HttpClient
 
 @Component({
   selector: 'app-membership',
@@ -17,7 +18,9 @@ export class MembershipComponent implements OnInit {
   constructor(
     private sidebarService: SidebarService,
     private membershipService: MembershipService,
-    private router: Router
+    private router: Router,
+    private httpClient: HttpClient,  // Inject HttpClient
+
   ) { }
 
   data: any;
@@ -38,11 +41,10 @@ export class MembershipComponent implements OnInit {
   // Handle reload case
   membership() {
     this.errorMessage = null; // Reset the error message
-
     this.sidebarService.indexMemberships().subscribe({
       next: (response) => {
         this.data = response.Memberships;
-        this.toArray(this.data);        
+        this.toArray(this.data);
       },
       error: (error) => {
         if (error.status === 401) {
@@ -73,11 +75,32 @@ export class MembershipComponent implements OnInit {
   // Subscribe a membership
   subscribe(membershipId: number) {
     this.errorMessage = null; // Reset the error message
+    console.log(membershipId);
     this.membershipService.subscribeMemberShip(membershipId).subscribe({
       next: (response: any) => {
         this.membershipService.setSelectedData(response);
-        // console.log(response);
+        console.log(response);
         window.location.href = response.url;
+        if (response.success_url) {
+          const token = localStorage.getItem('token'); // Get the stored token from localStorage
+
+          // Make the request to the success URL after payment is successful
+          const headers = {
+            'Authorization': `Bearer ${token}`, // Set Authorization header with Bearer token
+            'Content-Type': 'application/json'  // Set content type
+          };
+          this.httpClient.post(response.success_url,
+            {'membership_id':membershipId},{headers}).subscribe(
+            (successResponse: any) => {
+              console.log('Payment success:', successResponse);
+              // Optionally navigate the user back to the membership page
+              this.router.navigate(['/trainee-membership']);
+            },
+            (error: any) => {
+              console.log('Error during payment success:', error);
+            }
+          );
+        }
       },
       error: (error) => {
         if (error.status === 401) {
