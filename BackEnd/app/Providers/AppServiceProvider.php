@@ -22,7 +22,7 @@ use App\Policies\ExercisePolicy;
 use App\Policies\TraineeClassPolicy;
 use App\Policies\MembershipPolicy;
 use App\Policies\ReviewPolicy;
-
+use App\Policies\TraineeUserPolicy;
 class AppServiceProvider extends ServiceProvider
 {
     protected $policies = [

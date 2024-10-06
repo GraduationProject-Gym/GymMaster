@@ -139,3 +139,17 @@ Route::get('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('
 Route::post('attendance', [AttendanceController::class, 'index']);
 Route::post('attendance/checkin', [AttendanceController::class, 'checkin']);
 Route::post('attendance/checkout', [AttendanceController::class, 'checkout']);
+// show user data based on his role 
+Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
+
+
+// show all trainee data
+Route::middleware('auth:sanctum')->get('/alltrainees', [AuthController::class, 'indexalltrainee'])->name('alltrainees.show');
+
+
+//show all trainer data
+Route::middleware('auth:sanctum')->get('/alltrainers', [AuthController::class, 'indexalltrainer'])->name('alltrainers.show');
+
+
+//update users data
+Route::middleware('auth:sanctum')->put('/updateusers/{id}', [AuthController::class, 'update'])->name('trainees.update');

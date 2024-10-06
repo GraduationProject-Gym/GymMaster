@@ -91,9 +91,131 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
     public function indexalltrainee(){
+        try {
+            // $user = auth()->user();
+            // return $user->role;
+            // $this->authorize('viewAllTrainees', User::class);
+            $user = auth()->user();
+         
+            if ($user->role !== 'admin') {
+                return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainees.'], 403);
+            }
+
+            $trainees = User::where('role', 'trainee')
+                            ->with('trainee.TraineeMembership') 
+                            ->get();
+        
+            
+            if ($trainees->isEmpty()) {
+                return response()->json(['message' => 'No trainees found.'], 404);
+            }
    
+            $traineeData = [];
+        
+          
+            foreach ($trainees as $trainee) {
+                
+                if ($trainee->trainee && $trainee->trainee->TraineeMembership) {
+                   
+                    if ($trainee->trainee->TraineeMembership->id == 20) {
+                        $membershipType = 'No membership found'; 
+                        $subscription = 'N/A'; 
+                    } else {
+                      
+                        $membershipType = $trainee->trainee->TraineeMembership->type;
+                        $subscription = $trainee->trainee->TraineeMembership->subscribe_type;
+                    }
+        
+                    
+                    $traineeData[] = [
+                        'name' => $trainee->name,
+                        'role' => $trainee->role,
+                        'age' => $trainee->age,
+                        'image' => $trainee->image,
+                        'email' => $trainee->email,
+                        'phone' => $trainee->phone,
+                        'gender' => $trainee->gender,
+                        'address' => $trainee->address,
+                        'membership_type' => $membershipType,
+                        'subscription' => $subscription,
+                    ];
+                } else {
+                    $traineeData[] = [
+                        'name' => $trainee->name,
+                        'role' => $trainee->role,
+                        'age' => $trainee->age,
+                        'image' => $trainee->image,
+                        'email' => $trainee->email,
+                        'phone' => $trainee->phone,
+                        'gender' => $trainee->gender,
+                        'address' => $trainee->address,
+                        'membership_type' => 'No membership found',
+                        'subscription' => 'N/A',
+                    ];
+                }
+            }
+        
+            return response()->json($traineeData, 200);
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'An unexpected error occurred. Please try again later.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+        
+
+    }
+
+//////////////////////
+
+public function indexalltrainer() {
+    try {
+        $user = auth()->user();
+
+        
+        if ($user->role !== 'admin') {
+            return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainers.'], 403);
+        }
+
+       
+        $trainers = User::where('role', 'trainer')
+                        ->with('trainer') 
+                        ->get();
+
+        if ($trainers->isEmpty()) {
+            return response()->json(['message' => 'No trainers found.'], 404);
+        }
+
+        $trainerData = [];
+
+        foreach ($trainers as $trainer) {
+           
+            $trainerData[] = [
+                'name' => $trainer->name,
+                'role' => $trainer->role,
+                'age' => $trainer->age,
+                'image' => $trainer->image,
+                'email' => $trainer->email,
+                'phone' => $trainer->phone,
+                'gender' => $trainer->gender,
+                'address' => $trainer->address,
+                'cv' => $trainer->trainer->cv ?? 'N/A', 
+            ];
+        }
+
+        return response()->json($trainerData, 200);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'An unexpected error occurred. Please try again later.',
+            'message' => $e->getMessage()
+        ], 500);
+    }
 }
 
+
+/////////////////////
  
     /**
      * Display a listing of the resource.
@@ -417,17 +539,18 @@ class AuthController extends Controller
     {
         //
     }
-
     public function update(Request $request, $id)
     {
-        // Log incoming request data for debugging
-        Log::info('Incoming request data:', $request->all());
-
+      
+        if (auth()->user()->id !== (int)$id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    
         // Validation rules
         $rules = [
             'name' => 'string|max:255|min:5',
             'email' => 'string|email|max:255|unique:users,email,' . $id,
-            'phone' => 'nullable|string|max:11, unique:users,phone,'. $id,
+            'phone' => 'nullable|string|max:11|unique:users,phone,' . $id,
             'address' => 'nullable|string',
             'age' => 'nullable|integer|min:15',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -435,12 +558,11 @@ class AuthController extends Controller
             'role' => 'nullable|string',
             'password' => 'nullable|string|min:8',
         ];
-
-        // Custom validation messages
+    
         $messages = [
             'email.email' => 'Email must be a valid email address.',
             'email.unique' => 'The email has already been taken.',
-            'phone.unique'=>'The phone has already been taken.',
+            'phone.unique' => 'The phone has already been taken.',
             'phone.max' => 'Phone number may not be greater than 11 characters.',
             'age.min' => 'Age must be at least 15.',
             'image.image' => 'The file must be an image.',
@@ -448,58 +570,39 @@ class AuthController extends Controller
             'image.max' => 'The image may not be greater than 2048 kilobytes.',
             'password.min' => 'Password must be at least 8 characters.',
         ];
-
-        // Validate the request
+    
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
             Log::error('Validation errors:', $validator->errors()->toArray());
             return response()->json(["message" => $validator->errors()], 403);
         }
-
-        // Find the current user or fail
         $currentUser = User::findOrFail($id);
-
-        // Handle image upload
+    
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'user_images');
             $data['image'] = $imagePath;
         }
-
-        // Hash the password if it's being updated
+    
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
-
+    
         $currentUser->update($request->all());
-        // $currentUser->fill($request->all());
-        // $currentUser->save();
-
-        // return response()->json($request->all());
-        return response()->json([
-            'message' => 'User updated successfully',
-            'user' => new UserResource($currentUser),
-        ], 200);
-
-        // Handle trainee role update
         if ($currentUser->role === 'trainee') {
             $trainee = Trainee::where('user_id', $currentUser->id)->first();
             if ($trainee) {
-                $trainee->update([
-                    'user_id' => $currentUser->id,
-                ]);
+                $trainee->update($request->only(['goals']));
             }
         }
-
-        // Handle trainer role update
         if ($currentUser->role === 'trainer') {
             $trainer = Trainer::where('user_id', $currentUser->id)->first();
             $cvPath = $request->cv;
-
+    
             if ($request->hasFile('cv')) {
                 $cv = $request->file('cv');
                 $cvPath = $cv->store('cvs', 'user_cvs');
             }
-
+    
             if ($trainer) {
                 $trainer->update([
                     'cv' => $cvPath,
@@ -507,8 +610,6 @@ class AuthController extends Controller
                 ]);
             }
         }
-
-        // Return response based on the role
         if ($request->role === 'trainee') {
             return response()->json([
                 'message' => 'User updated successfully, check your mail to verify',
@@ -523,17 +624,15 @@ class AuthController extends Controller
             ], 201);
         }
     }
-
-
+    
         public function destroy($id)
     {
-        // Find the user to delete or fail
+     
         $userToDelete = User::findOrFail($id);
-        $currentUser = Auth::user(); // Get the currently authenticated user
+        $currentUser = Auth::user(); 
 
-        // Check if the current user is an admin
         if ($currentUser->role === 'admin') {
-            // Check if the user to delete is not an admin
+            
             if ($userToDelete->role !== 'admin') {
                 $userToDelete->delete();
                 return response()->json(['message' => 'User deleted successfully.']);
