@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\TraineeClassResource;
 use App\Models\GymClass;
 use App\Models\Review;
 use App\Models\Trainee;
@@ -19,6 +20,7 @@ use App\Models\UserClass;
 use App\Http\Resources\ReportResource;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\ReportTraineeResource;
+use App\Http\Resources\TraineeJoinedClassReviews;
 
 class ReviewController extends Controller
 {
@@ -154,7 +156,8 @@ class ReviewController extends Controller
             ->with(['classTrainer.user','review'])
             ->get();
         return response()->json([
-            'message' => $joinedClasses
+            // 'message' => $joinedClasses
+            'joinedClasses' => TraineeJoinedClassReviews::collection($joinedClasses)
         ]);
     }
     /**

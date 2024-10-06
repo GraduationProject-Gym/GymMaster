@@ -28,41 +28,31 @@ class GymClassController extends Controller
     public function index()
     {
         $this->authorize('viewAny', GymClass::class);
-        // $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer'])->get();
-        // return["message"=>$gymClasses];
-        // $user1 = User::findOrFail(Auth::id());
         $gymClasses = GymClass::get();
         $user = Auth::user();
         $trainee = Trainee::where('user_id',$user->id)->first();
         // return ["message"=>$trainee];
         if($user->role === 'trainee')
+        if(!$gymClasses)
         {
             return response()->json([
+                'message' => 'There are not classes'
+            ], 403);
+        }
+        if($user->role === 'trainee')
+        {if(!$trainee->TraineeMembership)
+            {
+                return response()->json([
+                    'message' => 'You are not subscribe, please subscribe and try again'
+                ], 403);
+            }
+            return response()->json([
                 'membershipData'=> new MembershipResource($trainee->TraineeMembership),
-                // 'gymclassData'=>$gymClasses
                 'gymclassData'=> GymClassResource::collection($gymClasses)
             ], 200);
         }
         return response()->json($gymClasses, 200);
     }
-
-    // public function index()
-    // {
-    //     $this->authorize('viewAny', GymClass::class);
-    //     $gymClasses = GymClass::with(['equipments', 'exercises','schedule','trainer'])->get();
-    //     $user1 = User::find(Auth::id());
-    //     // $user = Auth::user()->id;
-    //     $trainee = Trainee::find($user1);
-    //     return["message"=>$trainee];
-    //     if($user1->role === 'trainee')
-    //     {
-    //         return response()->json([
-    //             'membershipData'=> new MembershipResource($trainee->TraineeMembership),
-    //             'gymclassData'=>$gymClasses
-    //         ], 200);
-    //     }
-    //     return response()->json($gymClasses, 200);
-    // }
 
     /**
      * Store a newly created resource in storage.
