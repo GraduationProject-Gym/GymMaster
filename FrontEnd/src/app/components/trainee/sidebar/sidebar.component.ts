@@ -47,13 +47,11 @@ export class SidebarComponent {
         console.log(response);
         this.sidebarService.setSelectedData(response);
         this.router.navigate(['/trainee-profile']);
-        // this.data = response;
-        // this.setProfileImage(this.data);
       },
       error: (error) => {
         console.log(error);
         if (error.status === 401) {
-          this.router.navigate(['/trainee-profile']);
+          this.router.navigate(['/login']);
           this.errorMessage = error.error?.message;
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;
@@ -112,6 +110,7 @@ export class SidebarComponent {
     this.sidebarService.indexClasses().subscribe({
       next: (response: any) => {
         console.log(response);
+        // Index unjoined classes only
         const unjoinedClasses = response.gymclassData.filter((gymClass: any) => gymClass.checkJoin === false);
         if (unjoinedClasses.length > 0) {
           this.sidebarService.setSelectedData(unjoinedClasses);

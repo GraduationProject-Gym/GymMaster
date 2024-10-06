@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
+import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -15,7 +16,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    EditProfileComponent,
+    // EditProfileComponent,
 
   ],
   templateUrl: './edit-profile.component.html',
@@ -25,15 +26,15 @@ import { CommonModule } from '@angular/common';
 export class EditProfileComponent implements OnInit {
 
   editProfileForm: FormGroup;
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private sidebarService: SidebarService) {
     this.editProfileForm = this.fb.group({
       name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
-      email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
       address: ['', Validators.required],
-      image:['',Validators.required]
+      image: ['', Validators.required]
     });
   }
 
@@ -42,17 +43,34 @@ export class EditProfileComponent implements OnInit {
   }
 
   loadTraineeData(): void {
-    // Example trainee data (could be fetched from a service)
-    const trainee = {
-      name: 'John Doe',
-      age: 30,
-      email: 'john.doe@example.com',
-      phone: '123456789',
-      address: '123 Main St'
-    };
+    this.errorMessage = null; // Reset the error message 
+    this.sidebarService.getProfileData().subscribe({
+      next: (response) => {
+        const trainee = response;
 
-    // Populate form with trainee data
-    this.editProfileForm.patchValue(trainee);
+        // Populate the form with the fetched trainee data
+        this.editProfileForm.patchValue({
+          name: trainee.name,
+          age: trainee.age,
+          phone: trainee.phone,
+          address: trainee.address,
+          // Assuming image or other fields may be part of the response
+          image: trainee.image || '' // Optional, if the image is available
+        });
+
+        console.log('Trainee data loaded successfully:', trainee);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
   }
 
   onSubmit(): void {
@@ -107,4 +125,3 @@ export class EditProfileComponent implements OnInit {
 //     }
 //   }
 // }
-

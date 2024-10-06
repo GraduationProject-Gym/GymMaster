@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 use App\Models\GymClass;
 use App\Http\Resources\Api\GymClassResource;
 use App\Models\Trainer;
+use App\Models\Trainee;
 use App\Models\User;
 use App\Models\ClassEquipment;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Http\Resources\MembershipResource;
-use App\Models\Trainee;
 use App\Models\Equipment;
 use Illuminate\Validation\ValidationException;
 use Exception;
@@ -51,6 +51,7 @@ class GymClassController extends Controller
         return response()->json([
             'gymclassData' => GymClassResource::collection($gymClasses)
         ], 200);
+
 
     }
 

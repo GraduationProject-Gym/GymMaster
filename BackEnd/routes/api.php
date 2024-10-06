@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipController;
-use App\Http\Controllers\SubscriptionController ;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Api\GymClassController;
 use App\Http\Controllers\Api\EquipmentsController;
 use App\Http\Controllers\Api\ExerciseController;
@@ -30,11 +30,11 @@ Route::get('/user', function (Request $request) {
 Route::post('email-verification', [AuthController::class, 'verifyEmail']);
 
 // authorization
-Route::middleware(['auth:sanctum'])->group( function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     // membership
-    Route::apiResource('membership',MembershipController::class);
+    Route::apiResource('membership', MembershipController::class);
     // subscription
-    Route::apiResource('subscribe',SubscriptionController::class);
+    Route::apiResource('subscribe', SubscriptionController::class);
     Route::post('subscribesUser/{user_id}', [SubscriptionController::class, 'subscribe_User']);
     Route::post('subscriptions', [SubscriptionController::class, 'subscribe_Own_User']);
 
@@ -44,16 +44,22 @@ Route::middleware(['auth:sanctum'])->group( function () {
     // Review
     // indexTraineeReviews
     Route::get('review/trainee-reviews', [ReviewController::class, 'indexTraineeReviews']);
-    Route::apiResource('review',ReviewController::class);
+    Route::apiResource('review', ReviewController::class);
     // trainees on one class
     // Route::post('trainees', [TraineeClassController::class, 'trainees']);
+    // show all trainee data
+    Route::get('/alltrainees', [AuthController::class, 'indexalltrainee']);
+    //show all trainer data
+    Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
+    //update users data
+    Route::put('/updateusers/{id}', [AuthController::class, 'update']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
 
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
     // Report && review
-    Route::apiResource('reportRecommend',ReportController::class);
+    Route::apiResource('reportRecommend', ReportController::class);
     Route::post('report', [ReviewController::class, 'report']);
     Route::get('reportTrainee', [ReviewController::class, 'reportTrainee']);
     Route::post('/payment/success', [SubscriptionController::class, 'success'])->name('success');
@@ -65,7 +71,7 @@ Route::middleware(['auth:sanctum'])->group( function () {
 // Auth User
 Route::post('register', [AuthController::class, 'store']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('/logout',[AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 Route::apiResource('users', AuthController::class);
@@ -75,10 +81,10 @@ Route::post('users/{id}', [AuthController::class, 'update']);
 // membership
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::get('trainee-class/joined-classes-trainers', [TraineeClassController::class, 'indexJoinedClassesTrainers']);
-Route::apiResource('trainee-class',TraineeClassController::class);
+Route::apiResource('trainee-class', TraineeClassController::class);
 // Route::apiResource('schedule',SchedulesController::class);
-Route::apiResource('equipment',EquipmentController::class);
-Route::post('equipment/workon',[EquipmentController::class, 'workOn']);
+Route::apiResource('equipment', EquipmentController::class);
+Route::post('equipment/workon', [EquipmentController::class, 'workOn']);
 Route::post('/forgot-password', [AuthController::class, 'forgetPassword'])->middleware('guest');
 Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
@@ -106,7 +112,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/equipments/{id}', [EquipmentsController::class, 'destroy'])->name('equipments.destroy');
     Route::patch('/equipments/restore/{id}', [EquipmentsController::class, 'restore'])->name('equipments.restore');
 
-    });
+});
 
 
 
@@ -138,3 +144,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('attendance', [AttendanceController::class, 'index']);
 Route::post('attendance/checkin', [AttendanceController::class, 'checkin']);
 Route::post('attendance/checkout', [AttendanceController::class, 'checkout']);
+
+
+

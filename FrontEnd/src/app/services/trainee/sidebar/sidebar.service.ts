@@ -18,9 +18,16 @@ export class SidebarService {
     return headers;
   }
 
+  // Profile services
   getProfileData(): Observable<any> {
     const profileUrl = `${environment.domain}/showuserdata`;
     return this.http.get(profileUrl, { headers: this.getHeaders() });
+  }
+
+  updateProfileData(id: number, updatedData: any): Observable<any> {
+    console.log(id, updatedData);
+    const updateProfileDataUrl = `${environment.domain}/updateusers/${id}`;
+    return this.http.put(updateProfileDataUrl, { updatedData }, { headers: this.getHeaders() });
   }
 
   // Membership service
@@ -36,7 +43,6 @@ export class SidebarService {
   }
 
   indexClasses(): Observable<any> {
-    console.log("at service");
     const indexClassesUrl = `${environment.domain}/gym-classes`;
     return this.http.get(indexClassesUrl, { headers: this.getHeaders() });
   }
@@ -67,6 +73,7 @@ export class SidebarService {
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
+    console.log("111");
     this.selectedData = data;
   }
 
