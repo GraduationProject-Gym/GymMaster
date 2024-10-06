@@ -18,7 +18,8 @@ class UserResource extends JsonResource
     {
         // return parent::toArray($request); 'no_vouchers','expiration_date','membership_id'
         $trainee = Trainee::where('user_id', $this->id)->first();
-        $membership = $trainee->TraineeMembership;
+        if($this->role==='trainee')$membership = $trainee->TraineeMembership;
+        else $membership = '';
         return
         [
             'id' => $this->id,

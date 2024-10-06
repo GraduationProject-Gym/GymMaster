@@ -90,9 +90,132 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
     public function indexalltrainee(){
+        try {
+            // $user = auth()->user();
+            // return $user->role;
+            // $this->authorize('viewAllTrainees', User::class);
+            $user = auth()->user();
+         
+            if ($user->role !== 'admin') {
+                return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainees.'], 403);
+            }
+
+            $trainees = User::where('role', 'trainee')
+                            ->with('trainee.TraineeMembership') 
+                            ->get();
+        
+            
+            if ($trainees->isEmpty()) {
+                return response()->json(['message' => 'No trainees found.'], 404);
+            }
    
+            $traineeData = [];
+        
+          
+            foreach ($trainees as $trainee) {
+                
+                if ($trainee->trainee && $trainee->trainee->TraineeMembership) {
+                   
+                    if ($trainee->trainee->TraineeMembership->id == 20) {
+                        $membershipType = 'No membership found'; 
+                        $subscription = 'N/A'; 
+                    } else {
+                      
+                        $membershipType = $trainee->trainee->TraineeMembership->type;
+                        $subscription = $trainee->trainee->TraineeMembership->subscribe_type;
+                    }
+        
+                    
+                    $traineeData[] = [
+                        'name' => $trainee->name,
+                        'role' => $trainee->role,
+                        'age' => $trainee->age,
+                        'image' => $trainee->image,
+                        'email' => $trainee->email,
+                        'phone' => $trainee->phone,
+                        'gender' => $trainee->gender,
+                        'address' => $trainee->address,
+                        'membership_type' => $membershipType,
+                        'subscription' => $subscription,
+                    ];
+                } else {
+                    $traineeData[] = [
+                        'name' => $trainee->name,
+                        'role' => $trainee->role,
+                        'age' => $trainee->age,
+                        'image' => $trainee->image,
+                        'email' => $trainee->email,
+                        'phone' => $trainee->phone,
+                        'gender' => $trainee->gender,
+                        'address' => $trainee->address,
+                        'membership_type' => 'No membership found',
+                        'subscription' => 'N/A',
+                    ];
+                }
+            }
+        
+            return response()->json($traineeData, 200);
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'An unexpected error occurred. Please try again later.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+        
+
+    }
+
+//////////////////////
+
+public function indexalltrainer() {
+    try {
+        $user = auth()->user();
+
+        
+        if ($user->role !== 'admin') {
+            return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainers.'], 403);
+        }
+
+       
+        $trainers = User::where('role', 'trainer')
+                        ->with('trainer') 
+                        ->get();
+
+        if ($trainers->isEmpty()) {
+            return response()->json(['message' => 'No trainers found.'], 404);
+        }
+
+        $trainerData = [];
+
+        foreach ($trainers as $trainer) {
+           
+            $trainerData[] = [
+                'id'=>$trainer->trainer->id,
+                'name' => $trainer->name,
+                'role' => $trainer->role,
+                'age' => $trainer->age,
+                'image' => $trainer->image,
+                'email' => $trainer->email,
+                'phone' => $trainer->phone,
+                'gender' => $trainer->gender,
+                'address' => $trainer->address,
+                'cv' => $trainer->trainer->cv ?? 'N/A',
+            ];
+        }
+
+        return response()->json($trainerData, 200);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'An unexpected error occurred. Please try again later.',
+            'message' => $e->getMessage()
+        ], 500);
+    }
 }
 
+
+/////////////////////
  
     /**
      * Display a listing of the resource.
@@ -279,15 +402,26 @@ class AuthController extends Controller
             ], 403);
 
         }
+        // if($user->role === 'admin'){
+        // //     // $user->email_verified_at = now();
+        // //     // $user->save();
+        //     return ["message"=>$user];
+        // }
         if($user->role === 'trainer'){
             // "data"=>
             $class = GymClass::where('trainer_id', $user->id)->first();
             return response()->json([
                 'token' => $user->createToken($request->device_name)->plainTextToken,
                 'role' => $user->role,
-                'class' => new GymClassResource($class),
+                // 'class' => new GymClassResource($class),
             ], 200);
         }else if($user->role === 'trainee'){
+            return response()->json([
+                'token' => $user->createToken($request->device_name)->plainTextToken,
+                'role' => $user->role,
+                
+            ], 200);
+        } else if($user->role === 'admin'){
             return response()->json([
                 'token' => $user->createToken($request->device_name)->plainTextToken,
                 'role' => $user->role,

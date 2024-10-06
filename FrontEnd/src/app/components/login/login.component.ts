@@ -90,6 +90,8 @@ export class LoginComponent {
             let traineesArray = response;
             this.loginService.setSelectedclass(traineesArray);
             this.router.navigate(['/trainer/classes']);
+          } else if (response.role === 'admin'){
+            this.router.navigate(['/admin-trainers']);
           }
         },
         error: (error) => {

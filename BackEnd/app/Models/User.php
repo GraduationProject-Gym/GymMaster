@@ -11,6 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Subscription;
 use App\Models\Vouchers;
 use App\Notifications\EmailVerification;
+use App\Models\UserClass;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens;
@@ -81,13 +82,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
        return $this->belongsToMany(GymClass::class, 'user_classes', 'user_id', 'class_id');
     }
+    public function ClassesTrainees()
+    {
+       return $this->hasMany(UserClass::class,  'user_id', 'id');
+    }
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomResetPasswordNotification($token));
     }
     public function isAdmin()
     {
-        return $this->role === 'admin'; 
+        return $this->role === 'admin';
     }
     public function trainer()
     {

@@ -9,6 +9,7 @@ use App\Models\Review;
 use App\Models\GymClass;
 use App\Models\Trainee;
 
+
 class Trainer extends Model
 {
 
@@ -39,5 +40,8 @@ class Trainer extends Model
     public function ReviewTrainer()
     {
         return $this->belongsToMany(Trainee::class, 'reviews', 'trainer_id', 'trainee_id');
+    }
+    public function reportTrainer(){
+        return $this->hasMany(Report::class,'trainer_id','user_id');
     }
 }

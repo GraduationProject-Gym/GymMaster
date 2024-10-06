@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Trainer;
+use App\Models\User;
+
 use App\Models\Equipment;
 use Carbon\Carbon;
 
@@ -57,7 +59,7 @@ class GymClass extends Model
 
     public function trainer()
     {
-        return $this->belongsTo(Trainer::class, 'trainer_id','id');
+        return $this->belongsTo(User::class, 'trainer_id','id');
     }
 
     public function user()

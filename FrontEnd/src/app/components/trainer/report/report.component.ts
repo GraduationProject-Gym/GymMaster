@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Chart, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, registerables, Filler } from 'chart.js';
 import { ClassService } from '../../../services/trainer/class/class.service';
+// import { Router } from 'express';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-report',
@@ -16,79 +18,61 @@ export class ReportComponent implements OnInit{
   report:any;
   equipments:string='';
   exercises:string='';
-
-  constructor(private classService:ClassService) {
-    // this.reportId = 3;
-  }
-
+  errorMessages:string='';
+  vailedMessages:string='';
+  trainee_id:any;
+  constructor(
+    private router: Router,
+    private classService:ClassService,
+     private route: ActivatedRoute,
+     private cd: ChangeDetectorRef
+    ) {}
   ngOnInit(){
     this.report = this.classService.getReport();
     if(this.report){
       this.equipments = this.report.class.equipments.map((el:any) => el.name).join(', ');
       this.exercises = this.report.class.exercises.map((el:any) => el.name).join(', ');
-      console.log(this.report);
       this.calculateOverallRating();
       this.createChart();
-
     }
-    if(!this.report){
-      return ;
-      // this.classService.geTraineeOnClass().subscribe({
-      //   next: (response) => {
-      //     let traineesArrays = response.data;
-      //     console.log(traineesArrays);
-      //     this.classService.setTrainee(traineesArrays);
-      //     this.traineees = this.classService.getTrainee();
-      //     const groupSize = 3;
-      //     const traineesArray = this.traineees;
-      //     for (let i = 0; i < traineesArray.length; i += groupSize) {
-      //       this.traineees[i].showReview = false;
-      //       this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
-      //     }
-      //     },
-      //   error: (error) => {
-      //     if (error.status === 403) {
-      //       // this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
-      //     }else if (error.status === 401) {
-      //       console.log("not Auth");
-      //       this.router.navigate(['login']);
-      //     }
-      //     else {
-      //       // this.errorMessage = 'An unexpected error occurred. Please try again later.';
-      //     }
-      //   }
-      // });
+    else{
+       // Access the trainee ID from the route parameters
+    this.route.paramMap.subscribe(params => {
+      this.trainee_id = params.get('id'); // Access the ID passed in the URL
+      this.trainee_id = this.trainee_id? Number(this.trainee_id):0;
+      this.classService.createReport(this.trainee_id).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.classService.setReport(response);
+          this.report = this.classService.getReport();
+          this.equipments = this.report.class.equipments.map((el:any) => el.name).join(', ');
+          this.exercises = this.report.class.exercises.map((el:any) => el.name).join(', ');
+          this.calculateOverallRating();
+          this.createChart();
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status === 403) {
+              if (error.error?.message) {
+                Object.keys(error.error.message).forEach(key => {
+                  this.errorMessages= error.error.message[key];
+                   setTimeout(() => {
+                    // delete this.errorMessages;
+                  }, 5000);
+                });
+          }}else if (error.status === 401) {
+            // console.log("not Auth");
+          this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessages = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    });
     }
   }
-  // setSelectedclass
-    // Array of trainee objects to hold trainee details
-  trainees = [
-    {
-      name: 'John Doe',
-      trainerName: 'Coach Smith',
-      className: 'Yoga',
-      sessionsAttended: 10,
-      membership: 'Premium',
-      subscription: 'Monthly',
-      age:23,
-      email:"sandy23@getMaxListeners.com",
-      phone:"01271024421",
-      address:"Asyut",
-      gender:"female",
-      totalNoOfSession:8,
-      // exercise: 'Downward Dog, Warrior Pose, Tree Pose',
-      equipment: 'Yoga Mat, Resistance Bands',
-      showComments: false,
-            // Array of feedback comments with ratings
-      comments: [
-        { comment: 'This is the first comment', rate: 4 , day:"22/08/2024"},
-        { comment: 'Great post!', rate: 3 , day:"25/08/2024" },
-        { comment: 'Thanks for sharing!', rate: 5,  day:"28/08/2024" },
-        { comment: 'Really insightful post.', rate: 2,  day:"30/08/2024" },
-        { comment: 'Thanks for sharing!', rate: 5,  day:"28/08/2024" },
-      ]
-    },
-  ];
+
 
     // Object to hold the trainee report details
   traineeReport = {
@@ -115,7 +99,6 @@ export class ReportComponent implements OnInit{
     const labels = this.report.review.map((comment: any) => comment.created_at);
     const data = this.report.review.map((comment:  any) => comment.rating);
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, Filler);
-
     new Chart('ratingChart', {
       type: 'line',
       data: {
@@ -142,8 +125,51 @@ export class ReportComponent implements OnInit{
   }
 
     // Method to handle report submission
-  submitReport(): void {
-    console.log('Report Submitted:', this.traineeReport);
+  // submitReport(): void {
+  //   console.log('Report Submitted:', this.traineeReport);
+  // }
+  submitReport(userId:string | null, over_all_comment:string|null , recommend:string| null){
+    let user_id: number = userId? Number(userId):0;
+
+      const newReview = {
+        'trainee_id':user_id,
+        'over_all_comment':over_all_comment,
+        'recommend': recommend,
+      };
+
+    if (user_id) {
+      this.classService.setRecommend(newReview).subscribe({
+        next: (response) => {
+          console.log(response);
+          window.location.href = `/trainer/trainees/create-report/${user_id}`;
+          this.vailedMessages= "done";
+          setTimeout(() => {
+            this.vailedMessages= "";
+
+         }, 5000);
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status === 403) {
+              if (error.error?.message) {
+                Object.keys(error.error.message).forEach(key => {
+                  this.errorMessages= error.error.message[key];
+                  setTimeout(() => {
+                    this.errorMessages = "";
+                  }, 5000);
+                });
+
+
+          }}else if (error.status === 401) {
+            // console.log("not Auth");
+            this.router.navigate(['login']);
+          }
+          else {
+            this.errorMessages = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    }
   }
 }
 
