@@ -11,8 +11,8 @@
                 <ng-container *ngFor="let class of group; let k = index">
                   <div class="card shadow-lg col-md-4 col-lg-3">
                     <div class="card-body">
-                      <h6 class="card-title">Trainer:{{ class.trainerData.name }}</h6>
-                      <h6 class="card-title">Class:{{ class.name }}</h6>
+                      <h5 class="card-title">Trainer:{{ class.trainerData.name }}</h5>
+                      <h6 class="card-subtitle">Class:{{ class.name }}</h6>
                       <ul>
                         <li *ngFor="let review of class.reviews">
                           <h4><strong>Date:</strong> {{ review.created_at|date:'yyyy-MM-dd' }}</h4>
