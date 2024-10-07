@@ -42,7 +42,7 @@ export class AllTrainersComponent {
   }
 
   indexTrainersData() {
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
     this.adminService.indexTrainers().subscribe({
       next: (response) => {
         console.log(response);
@@ -108,12 +108,16 @@ export class AllTrainersComponent {
 
   // Set default profile images for trainers without a profile picture
   setProfileImage() {
-    this.trainers.forEach((trainer: { srcImg: string; gender: string; }) => {
-      if (!trainer.srcImg) {
+    this.trainers.forEach((trainer: { image: string | null; srcImg: string; gender: string; }) => {
+      if (trainer.image) {
+        // Use provided image if available
+        trainer.srcImg = trainer.image;
+      } else {
         // If no image is provided, use default based on gender
         trainer.srcImg = trainer.gender === 'female' ? "/female.png" : "/male.png";
       }
     });
+
   }
 }
 
