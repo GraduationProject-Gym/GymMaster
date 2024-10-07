@@ -32,12 +32,17 @@
                       <!-- Trainee details -->
                       <h5 class="card-title mb-3">{{ trainee.name }}</h5>
                       <p class="card-text"><strong>ID:</strong> {{ trainee.id }}</p>
-                      <p class="card-text"><strong>Joined Class:</strong> </p>
+                      <p class="card-text"><strong>Joined Classes:</strong> </p>
                       <ul>
+                        <li *ngFor="let class of trainee.joinedClasses">
+                         {{ class.name }}
+                        </li>
+                        </ul>
+                      <!-- <ul>
                         <li *ngFor="let classItem of trainee.classes">
                           {{ classItem }}
                         </li>
-                      </ul>
+                      </ul> -->
                       <p class="card-text"><strong>Membership:</strong> {{ trainee.membership_type }}</p>
                       <p class="card-text"><strong>Subscription:</strong> {{ trainee.subscription }}</p>
 

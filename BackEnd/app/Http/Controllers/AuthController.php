@@ -133,6 +133,7 @@ class AuthController extends Controller
 
 
                     $traineeData[] = [
+                        'id' => $trainee->id,
                         'name' => $trainee->name,
                         'role' => $trainee->role,
                         'age' => $trainee->age,
@@ -143,9 +144,11 @@ class AuthController extends Controller
                         'address' => $trainee->address,
                         'membership_type' => $membershipType,
                         'subscription' => $subscription,
+                        'joinedClasses' => $trainee->gymClass
                     ];
                 } else {
                     $traineeData[] = [
+                        'id' => $trainee->id,
                         'name' => $trainee->name,
                         'role' => $trainee->role,
                         'age' => $trainee->age,
@@ -178,11 +181,9 @@ public function indexalltrainer() {
     try {
         $user = auth()->user();
 
-
         if ($user->role !== 'admin') {
             return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainers.'], 403);
         }
-
 
         $trainers = User::where('role', 'trainer')
                         ->with('trainer')
@@ -207,6 +208,7 @@ public function indexalltrainer() {
                 'gender' => $trainer->gender,
                 'address' => $trainer->address,
                 'cv' => $trainer->trainer->cv ?? 'N/A',
+                'classes' => $trainer->trainer->ClassTrainer->first()
             ];
         }
 
