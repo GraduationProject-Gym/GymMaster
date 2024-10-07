@@ -35,6 +35,12 @@ export class AdminService {
     return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
   }
 
+  // Classes services
+  indexClasses(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/gym-classes`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
+
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {

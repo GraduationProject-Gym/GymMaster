@@ -73,4 +73,27 @@ export class AdminSidebarComponent {
       }
     });
   }
+
+  //indexClasses
+  allClasses(){
+    this.errorMessage = null; // Reset the error message 
+    this.adminService.indexClasses().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response.gymclassData);
+        this.router.navigate(['/admin-allClasses']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-allClasses']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
 }
