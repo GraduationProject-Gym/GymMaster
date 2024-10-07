@@ -2,7 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AdminService } from '../../../services/admin/admin.service';
 
 @Component({
   selector: 'app-all-trainees',
@@ -16,91 +17,63 @@ export class AllTraineesComponent {
   // Access to the carousel element in the template
   @ViewChild('carousel', { static: true }) carousel!: ElementRef;
 
-  // List of trainers data
-  trainees: any[] = [
-      {
-        name: 'Jane Smith',
-        id: 6,
-        srcImg: '/female.png',
-        age: 28,
-        email: "jane28@gmail.com",
-        phone: "01023456789",
-        address: "Cairo",
-        gender: "female",
-        classes: ["pilates", "yoga"],
-        membership: "Gold",
-        subscription: "Annual",
-      },
-      {
-        name: 'Michael Johnson',
-        id: 7,
-        srcImg: '/male.png',
-        age: 30,
-        email: "mike30@gmail.com",
-        phone: "01123456789",
-        address: "Alexandria",
-        gender: "male",
-        classes: ["zomba", "crossfit"],
-        membership: "Silver",
-        subscription: "Monthly",
-      },
-      {
-        name: 'Sara Connor',
-        id: 8,
-        srcImg: '/female.png',
-        age: 26,
-        email: "sara26@gmail.com",
-        phone: "01234567890",
-        address: "Giza",
-        gender: "female",
-        classes: ["yoga", "box"],
-        membership: "Platinum",
-        subscription: "Quarterly",
-      },
-      {
-        name: 'James Bond',
-        id: 9,
-        srcImg: '/male.png',
-        age: 35,
-        email: "bond35@gmail.com",
-        phone: "01012345678",
-        address: "Luxor",
-        gender: "male",
-        classes: ["martial arts", "zomba"],
-        membership: "Gold",
-        subscription: "Annual",
-      },
-      {
-        name: 'Emma Watson',
-        id: 10,
-        srcImg: '/female.png',
-        age: 24,
-        email: "emma24@gmail.com",
-        phone: "01198765432",
-        address: "Fayoum",
-        gender: "female",
-        classes: ["pilates", "yoga"],
-        membership: "Silver",
-        subscription: "Monthly",
-      }
-    ];
+  // Constructor to initialize the component and group the trainers
+  constructor(private adminService: AdminService, private router: Router) {
+  }
 
+  // List of trainees data
 
-  // Grouped trainers for displaying in the carousel
+  trainees: any;
+  errorMessage: string | null = null;
+  dataFlag = false;
   groupedTrainees: any[] = [];
   currentSlide: number = 0;
-
-  // Constructor to initialize the component and group the trainers
-  constructor() {
+  ngOnInit() {
+    this.trainees = this.adminService.getSelectedData();
+    this.dataFlag = true;
+    if (!this.trainees) {
+      this.indexTraineesData();
+      console.log(this.trainees);
+      this.groupTrainees();
+      return;
+    }
     this.groupTrainees(); // Group trainers into sets for the carousel
     this.setProfileImage(); // Set default profile images based on gender
+
+  }
+  // reload
+  indexTraineesData() {
+    this.errorMessage = null; // Reset the error message 
+    this.adminService.indexTrainees().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.trainees = response;
+        this.adminService.setSelectedData(response);
+        this.groupTrainees(); // Group trainers into sets for the carousel
+        this.setProfileImage(); // Set default profile images based on gender
+        this.router.navigate(['/admin-trainees']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-trainees']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
   }
 
   // Group trainers into sets of 3 for carousel slides
   groupTrainees() {
     const groupSize = 2; // Number of trainers per slide
-    for (let i = 0; i < this.trainees.length; i += groupSize) {
-      this.groupedTrainees.push(this.trainees.slice(i, i + groupSize));
+    if (this.trainees && this.trainees.length) {
+      for (let i = 0; i < this.trainees.length; i += groupSize) {
+        this.groupedTrainees.push(this.trainees.slice(i, i + groupSize));
+      }
     }
   }
 
@@ -122,6 +95,9 @@ export class AllTraineesComponent {
 
   // Update the active carousel item based on the current slide index
   updateCarousel() {
+    if (!this.carousel || !this.carousel.nativeElement) {
+      return; // Exit if the carousel is not yet initialized
+    }
     const carouselItems = this.carousel.nativeElement.querySelectorAll('.carousel-item');
     carouselItems.forEach((item: { classList: { remove: (arg0: string) => void; add: (arg0: string) => void; }; }, index: number) => {
       item.classList.remove('active'); // Remove 'active' class from all items
@@ -133,7 +109,7 @@ export class AllTraineesComponent {
 
   // Set default profile images for trainers without a profile picture
   setProfileImage() {
-    this.trainees.forEach(trainee => {
+    this.trainees.forEach((trainee: { srcImg: string; gender: string; }) => {
       if (!trainee.srcImg) {
         // If no image is provided, use default based on gender
         trainee.srcImg = trainee.gender === 'female' ? "/female.png" : "/male.png";
