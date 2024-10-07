@@ -50,7 +50,7 @@ export const routes: Routes = [
     { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
-    { path: 'trainee-profile/edit', component:EditProfileComponent},
+    { path: 'trainee-profile/edit', component:EditProfileComponent}, 
     { path: 'trainee-myClasses', component:TraineeMyClassesComponent},
     { path: 'trainee-allClasses', component:TraineeAllClassesComponent},
     { path: 'trainee-doReview', component:DoReviewComponent},

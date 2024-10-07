@@ -114,7 +114,7 @@ class SubscriptionController extends Controller
                             //     'name' => $member,
                             // ],
                             'product' => $product->id, // Use the created product ID
-                            'unit_amount' => $amount,  // Price is already in cents
+                            'unit_amount' => intval($amount*100),  // Price is already in cents
                         ],
                         'quantity' => 1,
                     ],
@@ -145,24 +145,23 @@ class SubscriptionController extends Controller
             // $user_id = Auth::user()->id;
             $trainee = Trainee::where('user_id', $user_id)->first();
             // $trainee = Trainee::where('user_id', $user_id)->first();
-
+            $membership = Memberships::where('id', $request->membership_id)->first();
             $trainee_ = Subscription::create([
                 'user_id'=> $user_id,// $user_id
-                'amount' => $trainee->TraineeMembership->amount,
+                'amount' => $membership->amount,
             ]);
             // update
-            $trainee->membership_id = $request->membership_id;
+            $trainee->membership_id = $membership->id;
             $trainee->save();
             $NO_days = 0;
-            if($trainee->TraineeMembership->subscribe_type == 'weekly'){
+            if($membership->subscribe_type == 'weekly'){
                 $NO_days = 7;
             }
-            else if($trainee->TraineeMembership->subscribe_type == 'Monthly'){
+            else if($membership->subscribe_type == 'Monthly'){
                 $NO_days = 30;
             }
-            else if($trainee->TraineeMembership->subscribe_type == 'Yearly'){
+            else if($membership->subscribe_type == 'Yearly'){
                 $NO_days = 365;
-
             }
             $trainee->expiration_date = Carbon::now()->addDays($NO_days);
             $trainee->save();

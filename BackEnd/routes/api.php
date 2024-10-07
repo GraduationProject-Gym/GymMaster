@@ -55,15 +55,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/updateusers/{id}', [AuthController::class, 'update']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
+    // show all trainee data in admin profile
+    Route::get('/alltrainees', [AuthController::class, 'indexalltrainee']);
+    //show all trainer datain admin profile
+    Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
+
 
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
     // Report && review
-    Route::apiResource('reportRecommend', ReportController::class);
     Route::post('report', [ReviewController::class, 'report']);
     Route::get('reportTrainee', [ReviewController::class, 'reportTrainee']);
     Route::post('/payment/success', [SubscriptionController::class, 'success'])->name('success');
     Route::post('/payment/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
+    // Report
+    Route::apiResource('reportRecommend', ReportController::class);
+    Route::get('/reportTrainee', [ReviewController::class, 'reportTrainee']);
 });
 
 //reportTrainee
@@ -145,5 +152,9 @@ Route::post('attendance', [AttendanceController::class, 'index']);
 Route::post('attendance/checkin', [AttendanceController::class, 'checkin']);
 Route::post('attendance/checkout', [AttendanceController::class, 'checkout']);
 
+
+
+//show user data based on his role 
+// Route::middleware('auth:sanctum')->get('/showuserdata', [AuthController::class, 'showuserdata'])->name('schedules.restore');
 
 

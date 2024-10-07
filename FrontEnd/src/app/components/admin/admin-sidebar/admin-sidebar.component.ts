@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AdminService } from '../../../services/admin/admin.service';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -9,6 +10,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './admin-sidebar.component.css'
 })
 export class AdminSidebarComponent {
+  constructor(private adminService: AdminService, private router: Router) { }
 //dropdown
   dropdownOpenTrainers = false;
   dropdownOpenReview = false;
@@ -22,5 +24,53 @@ export class AdminSidebarComponent {
   }
   toggleDropdownReview() {
     this.dropdownOpenReview = !this.dropdownOpenReview;
+  }
+
+  errorMessage: string | null = null;
+  // get all trainers
+  trainers(){
+    this.errorMessage = null; // Reset the error message 
+    this.adminService.indexTrainers().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response);
+        this.router.navigate(['/admin-trainers']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-trainers']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+
+  // get all trainees
+  trainees(){
+    this.errorMessage = null; // Reset the error message 
+    this.adminService.indexTrainees().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response);
+        this.router.navigate(['/admin-trainees']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-trainees']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
   }
 }

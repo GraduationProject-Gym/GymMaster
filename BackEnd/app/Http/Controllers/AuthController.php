@@ -197,6 +197,7 @@ public function indexalltrainer() {
         foreach ($trainers as $trainer) {
 
             $trainerData[] = [
+                'id'=>$trainer->trainer->id,
                 'name' => $trainer->name,
                 'role' => $trainer->role,
                 'age' => $trainer->age,

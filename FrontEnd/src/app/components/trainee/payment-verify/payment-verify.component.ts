@@ -51,7 +51,7 @@ export class PaymentVerifyComponent implements OnInit {
       this.message = 'Payment was successful!';
       this.membershipService.paymentSuccess(this.member_id).subscribe({
         next: (response) => {
-          this.router.navigate(['/trainee-membership']);
+          this.router.navigate(['/trainee-profile']);
           // console.log('Success API called:', response);
         },
         error: (error) => {
