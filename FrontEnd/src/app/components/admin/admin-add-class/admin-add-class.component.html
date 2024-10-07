@@ -62,7 +62,7 @@
                <!-- Days control -->
                 <label for="groupDate{{ i }}">Date (Session {{ i + 1 }}):</label>
                 <input id="groupDate{{ i }}" type="date" [(ngModel)]="group.date" name="groupDate{{i}}" class="form-control">
-                
+
                <label for="groupDays{{ i }}">Days (Session {{ i + 1 }}):</label>
                <select id="groupDays{{ i }}" [(ngModel)]="group.day" name="groupDays{{i}}" class="form-control" #dayField="ngModel" required>
                  <option value="" disabled selected>Select a day</option>
