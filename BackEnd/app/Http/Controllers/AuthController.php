@@ -136,7 +136,7 @@ class AuthController extends Controller
                         'name' => $trainee->name,
                         'role' => $trainee->role,
                         'age' => $trainee->age,
-                        'image' => $trainee->image,
+                        'image' => $trainee->image ? asset('images/users/' . $trainee->image) : null,//asset($trainee->image),
                         'email' => $trainee->email,
                         'phone' => $trainee->phone,
                         'gender' => $trainee->gender,
@@ -197,10 +197,11 @@ public function indexalltrainer() {
         foreach ($trainers as $trainer) {
 
             $trainerData[] = [
+                'id'=>$trainer->trainer->id,
                 'name' => $trainer->name,
                 'role' => $trainer->role,
                 'age' => $trainer->age,
-                'image' => $trainer->image,
+                'image' => $trainer->image ? asset('images/users/' . $trainer->image) : null,//asset($trainee->image),
                 'email' => $trainer->email,
                 'phone' => $trainer->phone,
                 'gender' => $trainer->gender,
