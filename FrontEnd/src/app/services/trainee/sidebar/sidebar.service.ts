@@ -25,9 +25,8 @@ export class SidebarService {
   }
 
   updateProfileData(id: number, updatedData: any): Observable<any> {
-    console.log(id, updatedData);
     const updateProfileDataUrl = `${environment.domain}/updateusers/${id}`;
-    return this.http.put(updateProfileDataUrl, { updatedData }, { headers: this.getHeaders() });
+    return this.http.post(updateProfileDataUrl, updatedData, { headers: this.getHeaders() });
   }
 
   // Membership service

@@ -102,7 +102,7 @@ export class RegistrationComponent {
         },
         error: (error) => {
           console.log(error);
-          if (error.status === 422) { // Validation error
+          if (error.status === 403) { // Validation error
             const validationErrors = error.error;
             console.log(validationErrors);
             Object.keys(validationErrors).forEach(field => {
@@ -116,8 +116,8 @@ export class RegistrationComponent {
                 });
               }
             });
-          } else if (error.status === 403) {
-            this.errorMessage = 'Access Denied: You are not authorized to perform this action.';
+          // } else if (error.status === 403) {
+          //   this.errorMessage = 'Access Denied: You are not authorized to perform this action.';
           } else {
             this.errorMessage = 'An unexpected error occurred. Please try again later.';
           }
