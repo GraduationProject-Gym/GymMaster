@@ -138,7 +138,7 @@ export class SidebarComponent {
 
     this.sidebarService.indexMyTrainers().subscribe({
       next: (response: any) => {
-        this.sidebarService.setSelectedData(response);
+        this.sidebarService.setSelectedData(response.trainers);
         console.log(response);
         this.router.navigate(['/trainee-doReview']);
       },

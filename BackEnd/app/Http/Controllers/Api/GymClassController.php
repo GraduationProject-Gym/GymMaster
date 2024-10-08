@@ -59,7 +59,7 @@ class GymClassController extends Controller
 
      public function getClassTrainer(){
          try {
-            $this->authorize('wiewClass', GymClass::class);
+            $this->authorize('viewClass', GymClass::class);
             $user = auth()->user();
             $class = GymClass::where('trainer_id', $user->id)->first();
             return response()->json([
