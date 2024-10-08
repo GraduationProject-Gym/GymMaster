@@ -10,6 +10,7 @@ import { Chart, LineController, LineElement, PointElement, LinearScale, Title, C
     FormsModule,
     SidebarComponent,
 
+    
   ],
   templateUrl: './show-report.component.html',
   styleUrl: './show-report.component.css'
