@@ -32,6 +32,7 @@ import { TrainerComponent } from './components/trainer/profile/trainer.component
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component';
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
+import { AddEquipmentComponent } from './components/admin/add-equipment/add-equipment.component';
 
 
 export const routes: Routes = [
@@ -70,6 +71,8 @@ export const routes: Routes = [
     { path: 'admin-allEquipments', component: AllEquipmentsComponent },
     { path: 'admin-allExersise', component: AllExersiseComponent },
     { path: 'admin-addExersise', component: AdminAddExerciseComponent },
+    { path: 'admin-addEquipments', component: AddEquipmentComponent },
     { path: "**", component: ErrorComponent }
+    
 ];
 
