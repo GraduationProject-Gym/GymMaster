@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
   selector: 'app-admin-add-exercise',
   standalone: true,
   imports: [AdminSidebarComponent, CommonModule, FormsModule],
-  templateUrl: './admin-add-exercise.component.html',
-  styleUrls: ['./admin-add-exercise.component.css']
+  templateUrl: './add-exercise.component.html',
+  styleUrls: ['./add-exercise.component.css']
 })
 export class AdminAddExerciseComponent {
   // serverErrors: string[] = [];
