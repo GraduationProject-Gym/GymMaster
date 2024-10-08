@@ -2,16 +2,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { CommonModule } from '@angular/common';
-
-
-interface Class {
-  className: string;
-  // sessions: number;
-  status: 'active' | 'inactive';
-  groups: Array<{ days: string; hours: string }>;
-  equipment: string;
-  description: string;
-}
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-add-class',
@@ -27,77 +18,67 @@ interface Class {
 
 
 export class AdminAddClassComponent {
+  className: string = '';
+  trainerName: string = '';
+  sessions: number = 0;
+  status: string = 'active';
+  description: string = '';
+  days: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  equipmentList: string[] = ['Treadmill', 'Dumbbells', 'Yoga Mat', 'Resistance Bands'];
+  selectedEquipment: { [key: string]: boolean } = {};
+  exerciseList: string[] = ['Squats', 'Push-ups', 'Pull-ups', 'Plank'];
+  selectedExercises: { [key: string]: boolean } = {};
+  groups: { day: string, startHour: string, endHour: string , date:string}[] = [];
 
-  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  // hours = [
-  //   '08:00 AM - 09:00 AM', '09:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
-  //   '12:00 PM - 01:00 PM', '01:00 PM - 02:00 PM', '02:00 PM - 03:00 PM', '03:00 PM - 04:00 PM',
-  //   '04:00 PM - 05:00 PM', '05:00 PM - 06:00 PM', '06:00 PM - 07:00 PM', '07:00 PM - 08:00 PM',
-  //   '08:00 PM - 09:00 PM', '09:00 PM - 10:00 PM', '10:00 PM - 11:00 PM', '11:00 PM - 12:00 AM'
-  // ];
+  constructor() {
+    this.addSession();
+  }
 
-
-  classForm: FormGroup;
-  groups: Array<{ days: string; hours: string }> = [{
-    days: '',
-    hours: ''
-  }];
-
-  constructor(private fb: FormBuilder) {
-    this.classForm = this.fb.group({
-      className: ['', Validators.required],
-      trainerName: ['', Validators.required],
-      sessions: [1, [Validators.required, Validators.min(4)]],
-      startHour: ['', Validators.required],
-      endHour: ['', Validators.required],
-      status: ['active'],
-      groups: this.fb.array(this.groups.map(group => this.fb.group({
-        days: ['', Validators.required],
-        hours: ['', Validators.required]
-      }))),
-      equipment: ['', Validators.required],
-      description: ['', Validators.maxLength(500)],
-      exercise: ['', Validators.maxLength(500)]
-
+  addSession() {
+    this.groups.push({
+      day: '',
+      startHour: '',
+      endHour: '',
+      date: '',
     });
   }
 
-
-
-  get groupsFormArray(): FormArray {
-    return this.classForm.get('groups') as FormArray;
-  }
-
-
-
-  addGroup() {
-    this.groups.push({ days: '', hours: '' });
-    this.classForm.setControl('groups', this.fb.array(this.groups.map(group => this.fb.group({
-      days: ['', Validators.required],
-      hours: ['', Validators.required]
-    }))));
-  }
-
-  save() {
-    const startHour = this.classForm.get('startHour')?.value;
-    const endHour = this.classForm.get('endHour')?.value;
-
-    if (startHour && endHour && startHour >= endHour) {
-      alert('End time must be after start time');
-      return;
+  // Validation for Start Hour before End Hour
+  validateHours(startHour: string, endHour: string): boolean {
+    if (!startHour || !endHour) {
+      return true; 
     }
+    return new Date(`1970-01-01T${startHour}`) < new Date(`1970-01-01T${endHour}`);
+  }
 
-    if (this.classForm.valid) {
-      const newClass: Class = this.classForm.value;
-      console.log('Class added:', newClass);
+  save(classForm: any) {
+    if (classForm.valid) {
+      // Execute the logic to save the class
+      console.log('Class saved:', {
+        className: this.className,
+        trainerName: this.trainerName,
+        sessions: this.sessions,
+        status: this.status,
+        description: this.description,
+        groups: this.groups,
+        selectedEquipment: this.selectedEquipment,
+        selectedExercises: this.selectedExercises
+      });
+      // Reset the form or navigate to another page if needed
     } else {
-      console.log('Form is invalid');
+      console.log('Form is invalid, please fill in all required fields.');
     }
   }
 
   cancel() {
-    this.classForm.reset();
+    // Reset form fields or navigate away
+    this.className = '';
+    this.trainerName = '';
+    this.sessions = 0;
+    this.status = 'active';
+    this.description = '';
+    this.groups = [];
+    this.selectedEquipment = {};
+    this.selectedExercises = {};
   }
-
 }
-
