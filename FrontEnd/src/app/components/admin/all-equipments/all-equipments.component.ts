@@ -46,6 +46,8 @@ export class AllEquipmentsComponent{
       next: (response) => {
         console.log(response);
         this.adminService.setSelectedData(response);
+        this.equipments = response;
+        this.groupEquipments();
         this.router.navigate(['/admin-allEquipments']);
       },
       error: (error) => {

@@ -15,15 +15,25 @@
             <div class="row d-flex justify-content-center">
               <div class="card shadow-lg col-md-4 col-lg-3 mx-2 my-2" *ngFor="let equipment of group">
                 <div class="card-body">
-                  <!-- Equipment details -->
                   <h5 class="card-title mb-3">{{ equipment.name }}</h5>
                   <p class="card-text"><strong>Used Weight:</strong> {{ equipment.used_weight }} kg</p>
                   <p class="card-text"><strong>Number of Equipments:</strong> {{ equipment.number_of_equipments }}</p>
-                </div> <!-- End card body -->
-              </div> <!-- End card -->
+                </div> 
+              </div>
+        
+              
+              <!-- <div class="card shadow-lg col-md-4 col-lg-3 mx-2 my-2" *ngFor="let equipment of group">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">{{ equipment.another_property }}</h5>
+                  <p class="card-text"><strong>Another Used Weight:</strong> {{ equipment.another_used_weight }} kg</p>
+                  <p class="card-text"><strong>Another Number of Equipments:</strong> {{ equipment.another_number_of_equipments }}</p>
+                </div>
+              </div> -->
             </div> <!-- End row -->
           </div> <!-- End carousel-item -->
         </ng-container>
+        
+        
       </div> <!-- End carousel-inner -->
     </div> <!-- End carousel -->
    
