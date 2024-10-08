@@ -29,6 +29,7 @@ import { LoginService } from './services/authentication/login/login.service';
 import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
 import { ClassesService } from './services/trainee/classes/classes.service';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
+import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 
 @Component({
   selector: 'app-root',
@@ -59,6 +60,7 @@ import { AllEquipmentsComponent } from './components/admin/all-equipments/all-eq
     AdminAddClassComponent ,
     PaymentVerifyComponent,
     AllEquipmentsComponent,
+    AllExersiseComponent,
   ],
 
   providers: [

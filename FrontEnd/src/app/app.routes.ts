@@ -31,6 +31,7 @@ import { AdminAddClassComponent } from './components/admin/admin-add-class/admin
 import { TrainerComponent } from './components/trainer/profile/trainer.component';
 import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component';
+import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 
 
 export const routes: Routes = [
@@ -69,6 +70,7 @@ export const routes: Routes = [
     { path: 'payment/verify', component:PaymentVerifyComponent},
 
     { path: 'admin-allEquipments', component: AllEquipmentsComponent },
+    { path: 'admin-allExersise', component: AllExersiseComponent },
 
     { path: "**", component: ErrorComponent }
 ];
