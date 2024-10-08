@@ -26,10 +26,11 @@ import { AddTrainerComponent } from './components/admin/add-trainer/add-trainer.
 import { AllTraineesComponent } from './components/admin/all-trainees/all-trainees.component';
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
 import { AdminAllClassesComponent } from './components/admin/admin-all-classes/admin-all-classes.component';
-import { AdminEditClassComponent } from './components/admin/admin-edit-class/admin-edit-class.component';
+// import { AdminEditClassComponent } from './components/admin/admin-edit-class/admin-edit-class.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { TrainerComponent } from './components/trainer/profile/trainer.component';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component';
+import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 
 
 export const routes: Routes = [
@@ -63,9 +64,10 @@ export const routes: Routes = [
     // { path: 'admin/trainee-moreDetials', component:MoreDetailsTraineeComponent},
     { path: 'admin-trainee/:id', component: MoreDetailsTraineeComponent },
     { path: 'admin-allClasses', component: AdminAllClassesComponent },
-    { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
+    // { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
     { path: 'admin-addClass', component: AdminAddClassComponent },
     { path: 'admin-allEquipments', component: AllEquipmentsComponent },
+    { path: 'admin-allExersise', component: AllExersiseComponent },
 
     { path: "**", component: ErrorComponent }
 ];

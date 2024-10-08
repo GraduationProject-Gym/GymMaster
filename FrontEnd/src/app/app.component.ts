@@ -27,6 +27,7 @@ import { MoreDetailsTraineeComponent } from './components/admin/more-details-tra
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { LoginService } from './services/authentication/login/login.service';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
+import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 
 @Component({
   selector: 'app-root',
@@ -56,6 +57,7 @@ import { AllEquipmentsComponent } from './components/admin/all-equipments/all-eq
     MoreDetailsTraineeComponent,
     AdminAddClassComponent ,
     AllEquipmentsComponent,
+    AllExersiseComponent,
   ],
 
   providers: [
