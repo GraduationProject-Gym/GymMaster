@@ -28,6 +28,7 @@ import { AdminAddClassComponent } from './components/admin/admin-add-class/admin
 import { LoginService } from './services/authentication/login/login.service';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
+import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
 
 @Component({
   selector: 'app-root',
@@ -58,6 +59,7 @@ import { AllExersiseComponent } from './components/admin/all-exersise/all-exersi
     AdminAddClassComponent ,
     AllEquipmentsComponent,
     AllExersiseComponent,
+    AdminAddExerciseComponent,
   ],
 
   providers: [
