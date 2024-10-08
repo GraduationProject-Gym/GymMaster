@@ -28,6 +28,7 @@ import { AdminAddClassComponent } from './components/admin/admin-add-class/admin
 import { LoginService } from './services/authentication/login/login.service';
 import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
 import { ClassesService } from './services/trainee/classes/classes.service';
+import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
 
 @Component({
   selector: 'app-root',
@@ -56,7 +57,8 @@ import { ClassesService } from './services/trainee/classes/classes.service';
     AllTraineesComponent,
     MoreDetailsTraineeComponent,
     AdminAddClassComponent ,
-    PaymentVerifyComponent
+    PaymentVerifyComponent,
+    AllEquipmentsComponent,
   ],
 
   providers: [

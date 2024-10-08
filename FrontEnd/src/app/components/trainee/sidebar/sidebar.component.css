@@ -87,3 +87,19 @@ ul li {
 }
 
 
+.carousel-control-prev {
+  position: absolute;
+  left: calc(20% + 10px); /* Adjust based on sidebar width */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ff6207;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.carousel-control-prev-icon {
+  width: 20px;
+  height: 20px;
+  background-color: white; /* Icon color */
+}
