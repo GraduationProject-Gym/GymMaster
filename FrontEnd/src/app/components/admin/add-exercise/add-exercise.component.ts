@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-exercise.component.css']
 })
 export class AdminAddExerciseComponent {
-  // serverErrors: string[] = [];
+  serverErrors: string[] = [];
 
   // save(exerciseForm: NgForm) {
   //   if (exerciseForm.valid) {
