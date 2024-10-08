@@ -1,8 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';  // Add this import
+import { Router, RouterModule } from '@angular/router';  // Add this import
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';  // Import the AdminSidebarComponent
+import { AdminService } from '../../../services/admin/admin.service';
 
 @Component({
   styleUrls: ['./all-equipments.component.css'],
@@ -17,50 +18,89 @@ export class AllEquipmentsComponent{
   // Access to the carousel element in the template
   @ViewChild('carousel', { static: true }) carousel!: ElementRef;
 
-  // List of Equipments data
-  equipments: any[] = [
-      {
-        id: 1,
-        name: 'Treadmill',
-        used_weight: 120,
-        number_of_equipments: 5,
-      },
-      {
-        id: 2,
-        name: 'Dumbbells',
-        used_weight: 50,
-        number_of_equipments: 10,
-      },
-      {
-        id: 3,
-        name: 'Rowing Machine',
-        used_weight: 100,
-        number_of_equipments: 3,
-      },
-      {
-        id: 4,
-        name: 'Exercise Bike',
-        used_weight: 90,
-        number_of_equipments: 4,
-      }
-    ];
-
-
-  // Grouped Equipment for displaying in the carousel
+  equipments: any;
+  errorMessage: string | null = null;
+  dataFlag = false;
+  // Array to hold the grouped equipments for the slider
   groupedEquipments: any[] = [];
-  currentSlide: number = 0;
 
-  // Constructor to initialize the component and group the Equipments
-  constructor() {
-    this.groupEquipments();
-}
+  currentSlide: number = 0;
+  constructor(private adminService: AdminService, private router: Router) {
+  }
+  
+  ngOnInit() {
+    this.equipments = this.adminService.getSelectedData();
+    this.dataFlag = true;
+    if (!this.equipments) {
+      this.allEquipments();
+      console.log(this.equipments);
+      this.groupEquipments();
+      return;
+    }
+    this.groupEquipments(); // Group equipments into sets for the carousel
+  }
+  //reload
+  allEquipments(){
+    this.errorMessage = null; // Reset the error message 
+    this.adminService.indexEquipments().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response);
+        this.equipments = response;
+        this.groupEquipments();
+        this.router.navigate(['/admin-allEquipments']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-allEquipments']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  // List of Equipments data
+  // equipments: any[] = [
+  //     {
+  //       id: 1,
+  //       name: 'Treadmill',
+  //       used_weight: 120,
+  //       number_of_equipments: 5,
+  //     },
+  //     {
+  //       id: 2,
+  //       name: 'Dumbbells',
+  //       used_weight: 50,
+  //       number_of_equipments: 10,
+  //     },
+  //     {
+  //       id: 3,
+  //       name: 'Rowing Machine',
+  //       used_weight: 100,
+  //       number_of_equipments: 3,
+  //     },
+  //     {
+  //       id: 4,
+  //       name: 'Exercise Bike',
+  //       used_weight: 90,
+  //       number_of_equipments: 4,
+  //     }
+  //   ];
+
 
   // Group Equipments into sets of 3 for carousel slides
   groupEquipments() {
     const groupSize = 3; 
+    if (this.equipments && this.equipments.length) {
     for (let i = 0; i < this.equipments.length; i += groupSize) {
       this.groupedEquipments.push(this.equipments.slice(i, i + groupSize));
     }
+  }
   }
 
   // Navigate to the previous carousel slide

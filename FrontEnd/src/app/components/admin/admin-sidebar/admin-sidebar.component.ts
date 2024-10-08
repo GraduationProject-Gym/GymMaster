@@ -96,4 +96,27 @@ export class AdminSidebarComponent {
       }
     });
   }
+
+  //indexEquipments
+  allEquipments(){
+    this.errorMessage = null; // Reset the error message 
+    this.adminService.indexEquipments().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response);
+        this.router.navigate(['/admin-allEquipments']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-allEquipments']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
 }
