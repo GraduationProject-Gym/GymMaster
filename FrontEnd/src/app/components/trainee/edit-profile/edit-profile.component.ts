@@ -64,7 +64,7 @@ export class EditProfileComponent implements OnInit {
           phone: trainee.phone,
           address: trainee.address,
           // Assuming image or other fields may be part of the response
-          image: trainee.image || '' // Optional, if the image is available
+          image: trainee.selectedImage || '' // Optional, if the image is available
         });
         console.log('Trainee data loaded successfully:', trainee);
       },
@@ -118,7 +118,7 @@ export class EditProfileComponent implements OnInit {
       this.sidebarService.updateProfileData(id, formData).subscribe({
         next: (response) => {
           console.log(response);
-          this.router.navigate(['/trainee-profile']);
+          window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/trainee-profile']));
         },
         error: (error) => {
           console.log(error);
@@ -148,56 +148,4 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  // update() {
-  //   const id = this.editProfileForm.get('id')?.value;
-  //   console.log(id);
-  //   this.errorMessage = null; // Reset the error message 
-  //   this.editProfileForm.markAllAsTouched();
-  //   if (this.editProfileForm.valid) {
-  //     const formData = new FormData();
-  //     Object.keys(this.editProfileForm.value).forEach(key => {
-  //       if (key === 'image') {
-  //         const img = this.selectedImage;
-  //         if (img) {
-  //           formData.append('image', img);
-  //         }
-  //       } else {
-  //         const sanitizedValue = this.sanitizeInput(this.editProfileForm.get(key)?.value);
-  //         formData.append(key, sanitizedValue);
-  //       }
-  //     });
-
-  //     formData.append('_method', 'PUT');
-
-  //     // Call update profile service and handle response
-  //     this.sidebarService.updateProfileData(id, formData).subscribe({
-  //       next: (response) => {
-  //         console.log(response);
-  //         this.router.navigate(['/trainee-profile']);
-  //       },
-  //       error: (error) => {
-  //         console.log(error);
-  //         if (error.status === 403) { // Validation error
-  //           const validationErrors = error.error.message;
-  //           console.log(validationErrors);
-  //           Object.keys(validationErrors).forEach(field => {
-  //             const control = this.editProfileForm.get(field);
-  //             if (control) {
-  //               control.setErrors(null); // Clear previous errors
-  //               // Create a new error object with all the error messages for the control
-  //               const errorMessageArray = validationErrors[field];
-  //               control.setErrors({
-  //                 backendError: errorMessageArray.join(', ')
-  //               });
-  //             }
-  //           });
-  //         } else {
-  //           this.errorMessage = 'An unexpected error occurred. Please try again later.';
-  //         }
-  //       }
-  //     });
-  //   } else {
-  //     this.errorMessage = 'Please correct the errors in the form.';
-  //   }
-  // }
 }
