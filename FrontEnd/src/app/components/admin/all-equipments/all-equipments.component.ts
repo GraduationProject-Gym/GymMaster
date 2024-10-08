@@ -64,35 +64,6 @@ export class AllEquipmentsComponent{
     });
   }
 
-  // List of Equipments data
-  // equipments: any[] = [
-  //     {
-  //       id: 1,
-  //       name: 'Treadmill',
-  //       used_weight: 120,
-  //       number_of_equipments: 5,
-  //     },
-  //     {
-  //       id: 2,
-  //       name: 'Dumbbells',
-  //       used_weight: 50,
-  //       number_of_equipments: 10,
-  //     },
-  //     {
-  //       id: 3,
-  //       name: 'Rowing Machine',
-  //       used_weight: 100,
-  //       number_of_equipments: 3,
-  //     },
-  //     {
-  //       id: 4,
-  //       name: 'Exercise Bike',
-  //       used_weight: 90,
-  //       number_of_equipments: 4,
-  //     }
-  //   ];
-
-
   // Group Equipments into sets of 3 for carousel slides
   groupEquipments() {
     const groupSize = 3; 

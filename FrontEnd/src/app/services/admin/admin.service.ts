@@ -41,9 +41,15 @@ export class AdminService {
     return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
   }
 
-   // Classes services
+   // Equipments services
    indexEquipments(): Observable<any> {
     const indexTraineesUrl = `${environment.domain}/equipments`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
+
+  // Exercises services
+  indexExercises(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/exercises`;
     return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
   }
 

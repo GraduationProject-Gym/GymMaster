@@ -70,7 +70,7 @@ export const routes: Routes = [
     { path: 'payment/verify', component:PaymentVerifyComponent},
 
     { path: 'admin-allEquipments', component: AllEquipmentsComponent },
-    { path: 'admin-allExersise', component: AllExersiseComponent },
+    { path: 'admin-allExercises', component: AllExersiseComponent },
 
     { path: "**", component: ErrorComponent }
 ];
