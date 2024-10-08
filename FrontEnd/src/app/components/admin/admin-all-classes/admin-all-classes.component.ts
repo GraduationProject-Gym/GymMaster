@@ -35,7 +35,7 @@ export class AdminAllClassesComponent {
       this.groupClasses();
       return;
     }
-    this.groupClasses(); // Group trainers into sets for the carousel
+    this.groupClasses(); // Group classes into sets for the carousel
   }
 
   //reload
