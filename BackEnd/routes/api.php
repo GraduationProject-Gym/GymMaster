@@ -44,6 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('report', [ReviewController::class, 'report']);
     // trainees on one class
     // Route::post('trainees', [TraineeClassController::class, 'trainees']);
+    Route::get('getUserRole', [AuthController::class, 'getUserRole']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
     // show all trainee data in admin profile
