@@ -16,7 +16,7 @@
         <a routerLink="/admin-allClasses" (click)="toggleDropdownClasses()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClasses">
           <li><a routerLink="/admin-allClasses">All Classes</a></li>
-          <li><a routerLink="/admin-addClass">Add Class</a></li>
+          <li><a  (click)="addClass()">Add Class</a></li><!--routerLink="/admin-addClass"-->
         </ul>
       </li>
 

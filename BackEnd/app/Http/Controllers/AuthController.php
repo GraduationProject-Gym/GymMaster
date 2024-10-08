@@ -583,7 +583,7 @@ public function indexalltrainer() {
             return response()->json(["message" => $validator->errors()], 403);
         }
         $currentUser = User::findOrFail($id);
-
+        $data = $request->all();
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'user_images');
             $data['image'] = $imagePath;
@@ -593,7 +593,7 @@ public function indexalltrainer() {
             $data['password'] = Hash::make($request->password);
         }
 
-        $currentUser->update($request->all());
+        $currentUser->update($data);
         if ($currentUser->role === 'trainee') {
             $trainee = Trainee::where('user_id', $currentUser->id)->first();
             if ($trainee) {

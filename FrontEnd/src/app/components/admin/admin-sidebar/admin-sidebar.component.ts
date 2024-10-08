@@ -29,17 +29,17 @@ export class AdminSidebarComponent {
   errorMessage: string | null = null;
   // get all trainers
   trainers(){
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
     this.adminService.indexTrainers().subscribe({
       next: (response) => {
         console.log(response);
-        this.adminService.setSelectedData(response);
+        this.adminService.setTools(response);
         this.router.navigate(['/admin-trainers']);
       },
       error: (error) => {
         console.log(error);
         if (error.status === 401) {
-          this.router.navigate(['/admin-trainers']);
+          this.router.navigate(['/login']);
           this.errorMessage = error.error?.message;
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;
@@ -53,7 +53,7 @@ export class AdminSidebarComponent {
 
   // get all trainees
   trainees(){
-    this.errorMessage = null; // Reset the error message 
+    this.errorMessage = null; // Reset the error message
     this.adminService.indexTrainees().subscribe({
       next: (response) => {
         console.log(response);
@@ -63,7 +63,28 @@ export class AdminSidebarComponent {
       error: (error) => {
         console.log(error);
         if (error.status === 401) {
-          this.router.navigate(['/admin-trainees']);
+          this.router.navigate(['/login']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
+  addClass(){
+    this.adminService.addClass().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response);
+        this.router.navigate(['/admin-addClass']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-addClass']);
           this.errorMessage = error.error?.message;
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;

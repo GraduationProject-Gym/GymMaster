@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { CommonModule } from '@angular/common';
 import { NgForm } from '@angular/forms';
+import { AdminService } from '../../../services/admin/admin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-add-class',
@@ -17,38 +19,108 @@ import { NgForm } from '@angular/forms';
 })
 
 
-export class AdminAddClassComponent {
+export class AdminAddClassComponent implements OnInit{
   className: string = '';
-  trainerName: string = '';
+  trainerID: string = '';
+  trainers:any;
   sessions: number = 0;
   status: string = 'active';
   description: string = '';
   days: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  equipmentList: string[] = ['Treadmill', 'Dumbbells', 'Yoga Mat', 'Resistance Bands'];
-  selectedEquipment: { [key: string]: boolean } = {};
-  exerciseList: string[] = ['Squats', 'Push-ups', 'Pull-ups', 'Plank'];
-  selectedExercises: { [key: string]: boolean } = {};
+  equipmentList: any;
+  selectedEquipment: number[]=[];
+  exerciseList: any;
+  selectedExercises: number[]=[];
   groups: { day: string, startHour: string, endHour: string , date:string}[] = [];
+  errorMessage:string ='';
+  data:any;
+  add_Session:boolean =false;
+  trainerName: any;
+  selectedTrainerId:any;
 
-  constructor() {
+  constructor(private adminService: AdminService,private router: Router) {
     this.addSession();
   }
+  ngOnInit(): void {
+    this.data= this.adminService.getTools();
+    console.log(this.data);
+    if(!this.data){
+      this.addClassReload();
+      return;
+    }
+    console.log(this.data);
+    this.equipmentList=this.data.equpments;
+    this.exerciseList=this.data.exercises;
+    this.trainers = this.data.trainers.filter((trainer:any) => trainer.name !==null);
+        console.log(this.trainers);
 
+  }
   addSession() {
-    this.groups.push({
-      day: '',
-      startHour: '',
-      endHour: '',
-      date: '',
+    if(this.groups.length>1){
+      this.add_Session=true;
+    }else{
+      this.groups.push({
+        day: '',
+        startHour: '',
+        endHour: '',
+        date: '',
+      });
+    }
+  }
+
+  onTrainerChange(event: Event) {
+    const selectedOption = (event.target as HTMLSelectElement).selectedOptions[0];
+    this.selectedTrainerId = selectedOption.getAttribute('data-id'); // Access the data-id attribute
+    console.log('Selected Trainer ID:', this.selectedTrainerId);
+  }
+
+  addClassReload(){
+    this.adminService.addClass().subscribe({
+      next: (response) => {
+        this.data = response;
+        this.equipmentList=this.data.equpments;
+        this.exerciseList=this.data.exercises;
+        this.trainers = this.data.trainers.filter((trainer:any) => trainer.name !==null);
+        this.router.navigate(['/admin-addClass']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
     });
   }
 
   // Validation for Start Hour before End Hour
   validateHours(startHour: string, endHour: string): boolean {
     if (!startHour || !endHour) {
-      return true; 
+      return true;
     }
     return new Date(`1970-01-01T${startHour}`) < new Date(`1970-01-01T${endHour}`);
+  }
+  onEquipmentChange(event: Event, id: number): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedEquipment.push(id);
+    } else {
+      this.selectedEquipment = this.selectedEquipment.filter((equipId: any) => equipId !== id);
+    }
+  }
+
+  onExerciseChange(event: Event, id: number): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedExercises.push(id);
+    } else {
+      this.selectedExercises = this.selectedExercises.filter(exId => exId !== id);
+    }
+    // console.log(this.selectedExercises);
   }
 
   save(classForm: any) {
@@ -56,14 +128,15 @@ export class AdminAddClassComponent {
       // Execute the logic to save the class
       console.log('Class saved:', {
         className: this.className,
-        trainerName: this.trainerName,
+        trainerID: this.trainerID,
         sessions: this.sessions,
         status: this.status,
         description: this.description,
         groups: this.groups,
         selectedEquipment: this.selectedEquipment,
-        selectedExercises: this.selectedExercises
+        selectedExercises: this.selectedExercises,
       });
+      // this.addClassReload();
       // Reset the form or navigate to another page if needed
     } else {
       console.log('Form is invalid, please fill in all required fields.');
@@ -73,12 +146,13 @@ export class AdminAddClassComponent {
   cancel() {
     // Reset form fields or navigate away
     this.className = '';
-    this.trainerName = '';
+    this.trainerID = '';
     this.sessions = 0;
     this.status = 'active';
     this.description = '';
     this.groups = [];
-    this.selectedEquipment = {};
-    this.selectedExercises = {};
+    this.selectedEquipment = [];
+    this.selectedExercises = [];
+    this.selectedTrainerId = 0;
   }
 }

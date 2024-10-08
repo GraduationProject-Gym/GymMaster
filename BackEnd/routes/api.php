@@ -107,6 +107,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/gym-classes/{gymClass}', [GymClassController::class, 'update']);
     Route::delete('/gym-classes/{gymClass}', [GymClassController::class, 'destroy']);
     Route::patch('/gym-classes/restore/{gymClass}', [GymClassController::class, 'restore'])->name('equipments.restore');
+    Route::get('/component-add-class', [GymClassController::class, 'ComponentAddClass']);
 
 });
 

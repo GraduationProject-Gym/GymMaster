@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api;
+use App\Http\Resources\TrainerResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\TraineeClassesResource;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +16,12 @@ use App\Models\User;
 use App\Models\ClassEquipment;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Http\Resources\MembershipResource;
+use App\Http\Resources\EquipmentResource;
+use App\Http\Resources\TrainerClassResource;
+use App\Http\Resources\Api\ExerciseResource;
 use App\Models\Equipment;
+use App\Models\Exercise;
+
 use Illuminate\Validation\ValidationException;
 use Exception;
 
@@ -244,6 +251,31 @@ class GymClassController extends Controller
         $gymClass->restore();
 
         return response()->json(['message' => 'Gym class restored successfully']);
+    }
+
+    public function ComponentAddClass(){
+        try{
+            $this->authorize('addClass', GymClass::class);
+            $equpments = Equipment::get();
+            $exercises = Exercise::get();
+            $trainers = Trainer::get();
+
+            if(empty($equpments)){
+                return response()->json(["equpments"=>"First add equipment"]);
+            }
+            if(empty($exercises)){
+                return response()->json(["equpments"=>"First add exercise"]);
+            }
+            return response()->json([
+                "equpments"=>EquipmentResource::collection($equpments),
+                "exercises"=>ExerciseResource::collection($exercises),
+                'trainers'=>TrainerClassResource::collection($trainers)
+            ], 200);  // Forbidden status
+        }catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => "You are not user to show this"
+            ], 403);  // Forbidden status
+        }
     }
 
 }

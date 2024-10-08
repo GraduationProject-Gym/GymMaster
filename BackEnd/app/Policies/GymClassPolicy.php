@@ -20,6 +20,11 @@ class GymClassPolicy
         return $user->role === 'trainer';
     }
 
+    public function addClass(User $user): bool
+    {
+        return $user->role === 'admin';
+    }
+
 
     /**
      * Determine whether the user can view any models.
