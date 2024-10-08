@@ -28,7 +28,7 @@ export class AdminAddClassComponent {
   selectedEquipment: { [key: string]: boolean } = {};
   exerciseList: string[] = ['Squats', 'Push-ups', 'Pull-ups', 'Plank'];
   selectedExercises: { [key: string]: boolean } = {};
-  groups: { day: string, startHour: string, endHour: string }[] = [];
+  groups: { day: string, startHour: string, endHour: string , date:string}[] = [];
 
   constructor() {
     this.addSession();
@@ -38,7 +38,8 @@ export class AdminAddClassComponent {
     this.groups.push({
       day: '',
       startHour: '',
-      endHour: ''
+      endHour: '',
+      date: '',
     });
   }
 

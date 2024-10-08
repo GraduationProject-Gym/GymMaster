@@ -30,36 +30,77 @@
         </select>
       </div>
 
-      <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
-        <h6 class="text-secondary">Session {{ i + 1 }}</h6>
-        <label for="groupDays">Days (Session {{ i + 1 }}):</label>
-        <select id="groupDays" [(ngModel)]="group.days" name="groupDays{{ i }}" class="form-control">
-          <option *ngFor="let day of days" [value]="day">{{ day }}</option>
-        </select>
+         <!-- Session Information -->
+         <h5 class="mt-2">Sessions</h5>
+         <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
+           <h6 class="text-secondary">Session {{ i + 1 }}</h6>
 
-        <label for="groupHours">Hours (Session {{ i + 1 }}):</label>
-        <select id="groupHours" [(ngModel)]="group.hours" name="groupHours{{ i }}" class="form-control">
-          <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
-        </select>
-      </div>
+           <!-- Days control -->
+           <label for="groupDays{{ i }}">Days (Session {{ i + 1 }}):</label>
+           <select id="groupDays{{ i }}" [(ngModel)]="group.days" name="groupDays{{i}}" class="form-control" #dayField="ngModel" required>
+             <option value="" disabled selected>Select a day</option>
+             <option *ngFor="let day of days" [value]="day">{{ day }}</option>
+           </select>
 
-      <!-- Equipment Information -->
-      <div class="form-group">
-        <label for="equipment">Equipment Name:</label>
-        <input id="equipment" type="text" [(ngModel)]="equipment" name="equipment" class="form-control">
-      </div>
+          <!-- Start Date control -->
+          <label for="groupDate{{ i }}">Date (Session {{ i + 1 }}):</label>
+          <input id="groupDate{{ i }}" type="date" [(ngModel)]="group.date" name="groupDate{{i}}" class="form-control">
 
-      <!-- Class Description -->
-      <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" [(ngModel)]="description" name="description" class="form-control" rows="5"></textarea>
-      </div>
+           <!-- Start Hour control -->
+           <label for="groupStartHour{{ i }}">Start Hour (Session {{ i + 1 }}):</label>
+           <input id="groupStartHour{{ i }}" type="time" [(ngModel)]="group.startHour" name="groupStartHour{{i}}" #startHourField="ngModel" class="form-control">
 
-      <!-- Class Exercise -->
-      <div class="form-group">
-        <label for="exercise">Exercise:</label>
-        <textarea id="exercise" [(ngModel)]="exercise" name="exercise" class="form-control" rows="5"></textarea>
-      </div>
+           <!-- End Hour control -->
+           <label for="groupEndHour{{ i }}">End Hour (Session {{ i + 1 }}):</label>
+           <input id="groupEndHour{{ i }}" type="time" [(ngModel)]="group.endHour" name="groupEndHour{{i}}" #endHourField="ngModel" class="form-control">
+
+
+            <!-- Validation for Start Hour before End Hour -->
+              <div *ngIf="!validateHours(group.startHour, group.endHour) && (startHourField.touched || endHourField.touched)" class="text-danger">
+                <small>Start Hour must be before End Hour.</small>
+              </div>
+         </div>
+
+        <!-- Class Description -->
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" [(ngModel)]="description" name="description" class="form-control" rows="5"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-start">
+          <!-- Equipment Information -->
+          <div class="row col-6">
+            <div class="form-group m-5">
+              <label for="equipment">Equipment Name:</label>
+              <div *ngFor="let item of equipment">
+                <input
+                  type="checkbox"
+                  [id]="item"
+                  [value]="item"
+                  [(ngModel)]="selectedEquipment[item]"
+                  name="equipment-{{item}}"
+                  class="form-check-input">
+                <label [for]="item" class="form-check-label">{{ item }}</label>
+              </div>
+            </div>
+          </div>
+          <!-- Equipment Exercise -->
+          <div class="row col-6">
+            <div class="form-group m-5">
+              <label for="exercise">Exercise:</label>
+              <div *ngFor="let exercise of exerciseList">
+                <input
+                  type="checkbox"
+                  [id]="exercise"
+                  [value]="exercise"
+                  [(ngModel)]="selectedExercises[exercise]"
+                  name="exercise-{{exercise}}"
+                  class="form-check-input">
+                <label [for]="exercise" class="form-check-label">{{ exercise }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
 
       <!-- Save and Cancel Buttons -->
       <div class="text-center">
