@@ -13,7 +13,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-add-exercise.component.css']
 })
 export class AdminAddExerciseComponent {
+  // serverErrors: string[] = [];
 
+  // save(exerciseForm: NgForm) {
+  //   if (exerciseForm.valid) {
+  //     const exerciseData = {
+  //       name: this.name,
+  //       category: this.category,
+  //       no_of_times: this.no_of_times
+  //     };
+
+  //     this.http.post('/api/exercises', exerciseData).subscribe({
+  //       next: (response) => {
+  //         console.log('Exercise saved:', response);
+  //         this.router.navigate(['/admin/exercises']);
+  //       },
+  //       error: (error) => {
+  //         if (error.status === 422) {
+  //           this.serverErrors = error.error.errors;
+  //         } else {
+  //           console.error('An error occurred:', error);
+  //         }
+  //       }
+  //     });
+  //   } else {
+  //     console.log('Form is invalid, please fill in all required fields.');
+  //   }
+  // }
   name: string = '';
   category: string = '';
   no_of_times: number | null = null;
