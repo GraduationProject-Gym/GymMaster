@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 
 export class AdminAddClassComponent implements OnInit{
   className: string = '';
-  trainerID: string = '';
+  trainerID: number = 0;
   trainers:any;
   sessions: number = 0;
   status: string = 'active';
@@ -69,9 +69,9 @@ export class AdminAddClassComponent implements OnInit{
   }
 
   onTrainerChange(event: Event) {
-    const selectedOption = (event.target as HTMLSelectElement).selectedOptions[0];
-    this.selectedTrainerId = selectedOption.getAttribute('data-id'); // Access the data-id attribute
-    console.log('Selected Trainer ID:', this.selectedTrainerId);
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.trainerID = +selectedValue; // Convert the value to a number
+    // console.log(this.trainerID);
   }
 
   addClassReload(){
@@ -126,15 +126,36 @@ export class AdminAddClassComponent implements OnInit{
   save(classForm: any) {
     if (classForm.valid) {
       // Execute the logic to save the class
-      console.log('Class saved:', {
-        className: this.className,
-        trainerID: this.trainerID,
-        sessions: this.sessions,
-        status: this.status,
+      let status_ =0;
+      if(this.status === 'Active') status_=1;
+      const data_class =  {
+        name: this.className,
+        trainer_id: this.trainerID,
+        total_no_of_session: this.sessions,
+        status: status_,
         description: this.description,
         groups: this.groups,
         selectedEquipment: this.selectedEquipment,
         selectedExercises: this.selectedExercises,
+      };
+
+      this.adminService.createClass(data_class).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.data = this.adminService.getSelectedData();
+          this.router.navigate(['/admin-addClass']);
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+            this.errorMessage = error.error?.message;
+          } else if (error.status === 403) {
+            this.errorMessage = error.error?.message;
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
       });
       // this.addClassReload();
       // Reset the form or navigate to another page if needed
@@ -146,7 +167,7 @@ export class AdminAddClassComponent implements OnInit{
   cancel() {
     // Reset form fields or navigate away
     this.className = '';
-    this.trainerID = '';
+    this.trainerID = 0;
     this.sessions = 0;
     this.status = 'active';
     this.description = '';

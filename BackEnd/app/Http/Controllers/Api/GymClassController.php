@@ -87,7 +87,7 @@ class GymClassController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', GymClass::class);
-
+        // return ["message"=>$request->all()];
         try {
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
@@ -97,14 +97,12 @@ class GymClassController extends Controller
                 'max_trainee' => 'required|integer|min:1',
                 'trainer_id' => [
                         'required',
-                        'exists:trainers,id',
+                        'exists:trainerID,user_id',
                         function ($attribute, $value, $fail) {
                             $trainer = Trainer::find($value);
                             if (!$trainer) {
                                 return $fail('The selected trainer does not exist.');
                             }
-
-
                             $userId = $trainer->user_id;
 
                             if (!User::where('id', $userId)->exists()) {
@@ -114,10 +112,10 @@ class GymClassController extends Controller
 
                         },
                     ],
-                'equipment_ids' => 'nullable|array',
-                'equipment_ids.*' => 'exists:equipments,id',
-                'exercise_ids' => 'nullable|array',
-                'exercise_ids.*' => 'exists:exercises,id',
+                'selectedEquipment' => 'nullable|array',
+                'selectedEquipment.*' => 'exists:equipments,id',
+                'selectedExercises' => 'nullable|array',
+                'selectedExercises.*' => 'exists:exercises,id',
             ]);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
@@ -135,11 +133,11 @@ class GymClassController extends Controller
 
 
         $gymClass = GymClass::create($validatedData);
-        if ($request->has('equipment_ids')) {
+        if ($request->has('selectedEquipment')) {
             $gymClass->equipments()->sync($request->input('equipment_ids'));
         }
 
-        if ($request->has('exercise_ids')) {
+        if ($request->has('selectedExercises')) {
             $gymClass->exercises()->sync($request->input('exercise_ids'));
         }
         return new GymClassResource($gymClass);
