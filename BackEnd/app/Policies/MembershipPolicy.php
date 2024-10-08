@@ -16,7 +16,7 @@ class MembershipPolicy
     public function viewAny(User $user): bool
     {
         //
-        return $user !== null;
+        return $user->role === 'admin' || $user->role === 'trainee';
     }
 
     /**

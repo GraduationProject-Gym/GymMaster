@@ -38,7 +38,7 @@ class TraineeClassController extends Controller
     }
     public function trainees(){
         try{
-            $this->authorize('view', UserClass::class);
+            $this->authorize('viewTrainer', UserClass::class);
             $user = Auth::user();
             $class = GymClass::where('trainer_id', $user->id)->first();
             if(!$class){
@@ -142,7 +142,7 @@ class TraineeClassController extends Controller
         $trainee = Trainee::where('user_id',auth::id());
         $class_id = $request->class_id;
         $currentUser = User::find(auth::id());
-        
+
         // $this->authorize('create', $trainee);
         try {
             $this->authorize('create', UserClass::class);
@@ -151,9 +151,9 @@ class TraineeClassController extends Controller
                 'message' => 'You are not authorized to join the class'
             ], 401);
         }
-        
+
         $trainee_class = GymClass::findOrFail($class_id);
-        // return ["message"=>$class_id];     
+        // return ["message"=>$class_id];
         $no_trainees = UserClass::where('class_id', $request->class_id)->count();
         $exists = UserClass::where('user_id', auth::id())
             ->where('class_id', $class_id)

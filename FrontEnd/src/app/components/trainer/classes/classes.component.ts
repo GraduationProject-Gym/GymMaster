@@ -127,11 +127,13 @@ export class ClassesComponent implements OnInit{
           const traineesArray = response.data;
           console.log(traineesArray);
           this.classService.setTrainee(traineesArray);
-          this.router.navigate(['/trainer/trainees']);
+          window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/trainer/trainees']));
+          // this.router.navigate(['/trainer/trainees']);
         },
         //6|TUEzIo5nQg9QMaaQxkZUVhC9EuEcqA9t1KSn4S7Xc1b8a391
         error: (error) => {
           if (error.status === 403) {
+            
             this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
           }else if (error.status === 401) {
             console.log("not Auth");

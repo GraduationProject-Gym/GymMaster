@@ -62,7 +62,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //show all trainer datain admin profile
     Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
 
-
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
     // Report && review
