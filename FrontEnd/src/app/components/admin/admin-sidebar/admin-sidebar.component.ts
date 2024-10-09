@@ -13,8 +13,11 @@ export class AdminSidebarComponent {
   constructor(private adminService: AdminService, private router: Router) { }
 //dropdown
   dropdownOpenTrainers = false;
-  dropdownOpenReview = false;
+  dropdownOpenEquipment = false;
+  dropdownOpenExercise = false;
   dropdownOpenClasses = false;
+  dropdownOpenMembership= false;
+  dropdownOpenAttendance= false;
 
   toggleDropdownTrainers() {
     this.dropdownOpenTrainers = !this.dropdownOpenTrainers;
@@ -22,8 +25,20 @@ export class AdminSidebarComponent {
   toggleDropdownClasses() {
     this.dropdownOpenClasses = !this.dropdownOpenClasses;
   }
-  toggleDropdownReview() {
-    this.dropdownOpenReview = !this.dropdownOpenReview;
+  toggleDropdownEquipment() {
+    this.dropdownOpenEquipment = !this.dropdownOpenEquipment;
+  }
+
+  toggleDropdownExercise() {
+    this.dropdownOpenExercise = !this.dropdownOpenExercise;
+  }
+
+   toggleDropdownMembership() {
+    this.dropdownOpenMembership = !this.dropdownOpenMembership;
+  }
+
+  toggleDropdownAttendance (){
+    this.dropdownOpenAttendance = !this.dropdownOpenAttendance;
   }
 
   errorMessage: string | null = null;
@@ -49,18 +64,7 @@ export class AdminSidebarComponent {
       }
     });
   }
-  dropdownOpenMembership= false;
-  dropdownOpenAttendance= false;
-
-   toggleDropdownMembership() {
-    this.dropdownOpenMembership = !this.dropdownOpenMembership;
-  }
-
-  toggleDropdownAttendance (){
-    this.dropdownOpenAttendance = !this.dropdownOpenAttendance;
-  }
-
-
+  
   // get all trainees
   trainees(){
     this.errorMessage = null; // Reset the error message
