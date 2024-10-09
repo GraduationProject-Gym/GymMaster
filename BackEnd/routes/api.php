@@ -73,6 +73,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Report
     Route::apiResource('reportRecommend', ReportController::class);
     Route::get('/reportTrainee', [ReviewController::class, 'reportTrainee']);
+    Route::get('/reportAdmin', [ReviewController::class, 'reportAdmin']);
+
 });
 
 //reportTrainee

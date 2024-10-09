@@ -7,6 +7,7 @@ import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component'
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClassService } from '../../../services/trainer/class/class.service';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
+import { AdminService } from '../../../services/admin/admin.service';
 
 
 @Component({
@@ -27,15 +28,15 @@ export class AdminAllReportsComponent {
   exercises:string[]=[];
   recommend:string[]=[];
   overAllComment:string[]=[];
-
   data:any;
+
   constructor(
-     private sidebarService: SidebarService,
+     private adminService: AdminService,
      private router: Router) {
   }
 
   ngOnInit() {
-    this.data = this.sidebarService.getSelectedData();
+    this.data = this.adminService.getSelectedData();
     if(this.data){
       console.log(this.data);
       this.calculateOverallRating();
@@ -120,16 +121,14 @@ createChart(index: number): void {
 }
 
 reloadPage(){
-  this.sidebarService.getReports().subscribe({
+  this.adminService.getReports().subscribe({
     next: (response) => {
-      this.sidebarService.setSelectedData(response);
-      this.data = this.sidebarService.getSelectedData();
-      // console.log(this.data);
-      // Only after setting the data, call these methods
+      this.adminService.setSelectedData(response);
+      this.data = this.adminService.getSelectedData();
       this.calculateOverallRating();
       this.groupedTrainees = this.groupTrainees();
-      // console.log('Grouped Trainees:', this.groupedTrainees);
-      this.router.navigate(['/trainee-showReport']);
+      console.log('Grouped Trainees:', this.groupedTrainees);
+      this.router.navigate(['/admin-reports']);
     },
     error: (error) => {
       console.log(error);

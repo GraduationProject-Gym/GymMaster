@@ -69,4 +69,9 @@ export class AdminService {
     const indexTraineesUrl = `${environment.domain}/gym-classes`;
     return this.http.post(indexTraineesUrl,{...data},{ headers: this.getHeaders() });
   }
+
+  getReports(): Observable<any> {
+    const getOwnerReports = `${environment.domain}/reportAdmin`;
+    return this.http.get(getOwnerReports, { headers: this.getHeaders() });
+  }
 }

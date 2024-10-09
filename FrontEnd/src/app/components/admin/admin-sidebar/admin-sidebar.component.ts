@@ -104,4 +104,28 @@ export class AdminSidebarComponent {
       }
     });
   }
+
+  allReports(){
+    this.adminService.getReports().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response);
+        this.router.navigate(['/admin-reports']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
 }
+
+
+
