@@ -20,6 +20,7 @@ export class AdminMembershipComponent {
   }
   membershipOptions: any;
   errorMessage: string | null = null;
+  memberships: any[] = [];
   dataFlag = false;
 
   ngOnInit() {
@@ -30,6 +31,8 @@ export class AdminMembershipComponent {
       console.log(this.membershipOptions);
       return;
     }
+    this.toArray(this.membershipOptions);
+
   }
 
   //reload
@@ -37,10 +40,10 @@ export class AdminMembershipComponent {
     this.errorMessage = null; // Reset the error message 
     this.adminService.indexMemberships().subscribe({
       next: (response) => {
-        console.log(response.Memberships);
-        this.adminService.setSelectedData(response.Memberships);
         this.membershipOptions = response.Memberships;
-        // this.groupEquipments();
+        this.toArray(this.membershipOptions);
+        // this.membershipOptions = response.Memberships;
+        // this.toArray(this.membershipOptions);
         this.router.navigate(['/admin-membership']);
       },
       error: (error) => {
@@ -56,44 +59,20 @@ export class AdminMembershipComponent {
       }
     });
   }
-  // membershipOptions = [
-  //   {
-  //     id:1,
-  //     type: 'VIP',
-  //     prices: [
-  //       { period: 'Yearly', price: 5000 ,periodID:1},
-  //       { period: 'Monthly', price: 700 ,periodID:2},
-  //       { period: 'Weekly', price: 200 ,periodID:3}
-  //     ]
-  //   },
-  //   {
-  //     type: 'Normal',
-  //     id:2,
-  //     prices: [
-  //       { period: 'Yearly', price: 5000 ,periodID:1},
-  //       { period: 'Monthly', price: 700 ,periodID:2},
-  //       { period: 'Weekly', price: 200 ,periodID:3}
-  //     ]
-  //   }, {
-  //     type: 'Normal',
-  //     id: 3,
-  //     prices: [
-  //       { period: 'Yearly', price: 5000 ,periodID:1},
-  //       { period: 'Monthly', price: 700 ,periodID:2},
-  //       { period: 'Weekly', price: 200 ,periodID:3}
-  //     ]
-  //   }
-  // ];
-  
-  // deleteMembershipPrice(optionId: number, periodID: number): void {
-  //   if (window.confirm("Are you sure you want to delete this price option?")) {
-  //     this.membershipOptions.forEach((option: { id: number; prices: any[]; }) => {
-  //       if (option.id === optionId) {
-  //         option.prices = option.prices.filter(price => price.periodID !== periodID);
-  //       }
-  //     });
-  //   }
-  // }
+  toArray(data: any) {
+    // Group memberships by membership type to show them in a user friendly way
+    this.membershipOptions.forEach((membership: any) => {
+      const type = membership.type;
+      if (!this.memberships[type]) {
+        this.memberships[type] = [];
+      }
+      this.memberships[type].push(membership);
+    });
+  }
+  // Uniform subsctiption type to begin with capital letters
+  capitalizeFirstLetter(string: string): string {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
 
   deleteMembershipPrice(optionId: number): void {
     if (window.confirm("Are you sure you want to delete this price option?")) {
