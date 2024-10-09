@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getRole() {
+    this.errorMessage = null;
     this.profileService.getUserRole().subscribe({
       next: (response: any) => {
         console.log(response);
