@@ -4,6 +4,7 @@ import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component'
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AdminService } from '../../../services/admin/admin.service';
 @Component({
   selector: 'app-add-equipment',
   standalone: true,
@@ -17,10 +18,13 @@ export class AddEquipmentComponent {
   used_weight: number | null = null;
   number_of_equipments: number | null = null;
   serverErrors: string[] = [];
+  data: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
-
+  // constructor(private http: HttpClient, private router: Router) {}
+  constructor(private adminService: AdminService,private router: Router) {
+  }
   
+
   save(equipmentForm: NgForm) {
     if (equipmentForm.valid) {
       const equipmentData = {
@@ -29,11 +33,18 @@ export class AddEquipmentComponent {
         number_of_equipments: this.number_of_equipments
       };
 
-    
-      this.http.post('/api/equipments', equipmentData).subscribe({
-        next: (response) => {
+      const data_equipment =  {
+        name: this.name,
+        used_weight: this.used_weight,
+        number_of_equipments:this.number_of_equipments
+      };
+
+      this.adminService.addEquipment(data_equipment).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.data = this.adminService.getSelectedData();
           console.log('Equipment saved:', response);
-          this.router.navigate(['admin-allEquipments']);
+          this.router.navigate(['admin-allEquipments'])
         },
         error: (error) => {
           if (error.status === 422) {
