@@ -148,6 +148,7 @@ class AuthController extends Controller
 
 
                     $traineeData[] = [
+                        'id' => $trainee->id,
                         'name' => $trainee->name,
                         'role' => $trainee->role,
                         'age' => $trainee->age,

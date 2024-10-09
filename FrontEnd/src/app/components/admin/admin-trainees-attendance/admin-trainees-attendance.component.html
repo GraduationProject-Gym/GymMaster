@@ -19,29 +19,33 @@
                             <ng-container *ngFor="let traineeAttendance of group; trackBy: trackById">
                                 <tr>
                                     <td>{{ traineeAttendance.name }}</td>
+                                    <td style="display: none;">{{ traineeAttendance.id }}</td>
                                     <td>
-                                        <button class="btn " (click)="checkIn(traineeAttendance)">In</button>
-                                        <button class="btn " (click)="checkOut(traineeAttendance)">Out</button>
-                                        <div *ngIf="traineeAttendance.message" class="message">{{ traineeAttendance.message }}</div>
+                                        <button class="btn " (click)="checkIn(traineeAttendance.id )">In</button>
+                                        <button class="btn " (click)="checkOut(traineeAttendance.id )">Out</button>
+                                        <div *ngIf="traineeAttendance.message" class="message">{{traineeAttendance.message }}</div>
                                     </td>
-        
+
                                     <td>
-                                        <button class="btn" [routerLink]="['/admin-history-attendance', traineeAttendance.id]">History</button>
-                                        <!-- <button class="btn" (click)="getAttendanceHistory(traineeAttendance.id)">History</button> -->
+                                        <!-- <button class="btn" [routerLink]="['/admin-history-attendance', traineeAttendance.id]">History</button> -->
+                                        <button class="btn"
+                                            (click)="getAttendanceHistory(traineeAttendance.id)">History</button>
 
                                     </td>
-                                    
+
                                 </tr>
                             </ng-container>
                         </tbody>
                     </table>
                     <div class="buttons">
                         <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
-                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207;"></span>
+                            <span class="carousel-control-prev-icon" aria-hidden="true"
+                                style="background-color:#ff6207;"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
                         <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
-                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207;"></span>
+                            <span class="carousel-control-next-icon" aria-hidden="true"
+                                style="background-color:#ff6207;"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
@@ -49,5 +53,5 @@
             </div>
         </ng-container>
     </div>
-    
+
 </div>

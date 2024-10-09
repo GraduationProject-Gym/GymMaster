@@ -27,14 +27,14 @@
           <li><a routerLink="/admin-addMembership">Add Membership</a></li>
         </ul>
       </li>
-      <li class="dropdown">
+      <!-- <li class="dropdown">
         <a (click)="toggleDropdownAttendance()">Attendance</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenAttendance">
           <li><a routerLink="/admin-trainees-attendance"> Trainees Attendance</a></li>
           <li><a routerLink="/admin-trainers-attendance">Trainers Attendance</a></li>
         </ul>
-      </li>
-      <li><a routerLink="/admin-trainees-attendance"> Trainees Attendance</a></li>
+      </li> -->
+      <li><a (click)="traineeAttendance()"> Trainees Attendance</a></li>
       <li><a routerLink="/admin-reports">Reports</a></li>
 
 

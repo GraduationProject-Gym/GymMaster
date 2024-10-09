@@ -11,7 +11,7 @@ import { AdminService } from '../../../services/admin/admin.service';
 })
 export class AdminSidebarComponent {
   constructor(private adminService: AdminService, private router: Router) { }
-//dropdown
+  //dropdown
   dropdownOpenTrainers = false;
   dropdownOpenReview = false;
   dropdownOpenClasses = false;
@@ -28,7 +28,7 @@ export class AdminSidebarComponent {
 
   errorMessage: string | null = null;
   // get all trainers
-  trainers(){
+  trainers() {
     this.errorMessage = null; // Reset the error message
     this.adminService.indexTrainers().subscribe({
       next: (response) => {
@@ -49,20 +49,20 @@ export class AdminSidebarComponent {
       }
     });
   }
-  dropdownOpenMembership= false;
-  dropdownOpenAttendance= false;
+  dropdownOpenMembership = false;
+  dropdownOpenAttendance = false;
 
-   toggleDropdownMembership() {
+  toggleDropdownMembership() {
     this.dropdownOpenMembership = !this.dropdownOpenMembership;
   }
 
-  toggleDropdownAttendance (){
+  toggleDropdownAttendance() {
     this.dropdownOpenAttendance = !this.dropdownOpenAttendance;
   }
 
 
   // get all trainees
-  trainees(){
+  trainees() {
     this.errorMessage = null; // Reset the error message
     this.adminService.indexTrainees().subscribe({
       next: (response) => {
@@ -84,7 +84,7 @@ export class AdminSidebarComponent {
     });
   }
 
-  addClass(){
+  addClass() {
     this.adminService.addClass().subscribe({
       next: (response) => {
         console.log(response);
@@ -104,4 +104,26 @@ export class AdminSidebarComponent {
       }
     });
   }
+
+  traineeAttendance() {
+    this.adminService.indexTrainees().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.adminService.setSelectedData(response);
+        this.router.navigate(['/admin-trainees-attendance']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
 }

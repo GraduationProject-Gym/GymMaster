@@ -8,9 +8,6 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AdminService {
-  // indexTrainees() {
-  //   throw new Error('Method not implemented.');
-  // }
   constructor(private readonly http: HttpClient, private readonly authTokenService: AuthTokenService) { }
   private selectedData: any;
   private selectedTraineesData: any;
@@ -21,7 +18,6 @@ export class AdminService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return headers;
   }
-
 
   // Trainer service
   indexTrainers(): Observable<any> {
@@ -35,6 +31,25 @@ export class AdminService {
     return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
   }
 
+  addClass(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/component-add-class`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
+
+  createClass(data: any): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/gym-classes`;
+    return this.http.post(indexTraineesUrl, { ...data }, { headers: this.getHeaders() });
+  }
+
+  checkIn(user_id: number) {
+    const checkInUrl = `${environment.domain}/attendance/checkin`;
+    return this.http.post(checkInUrl, { "user_id": user_id }, { headers: this.getHeaders() });
+  }
+
+  checkOut(user_id: number) {
+    const checkInUrl = `${environment.domain}/attendance/checkout`;
+    return this.http.post(checkInUrl, { "user_id": user_id }, { headers: this.getHeaders() });
+  }
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
@@ -45,7 +60,7 @@ export class AdminService {
     return this.selectedData;
   }
 
-  setTools(data: any){
+  setTools(data: any) {
     this.selectedData = data;
   }
   getTools() {
@@ -59,14 +74,4 @@ export class AdminService {
   // getSelectedTraineesData() {
   //   return this.selectedTraineesData;
   // }
-
-  addClass(): Observable<any> {
-    const indexTraineesUrl = `${environment.domain}/component-add-class`;
-    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
-  }
-
-  createClass(data:any): Observable<any>{
-    const indexTraineesUrl = `${environment.domain}/gym-classes`;
-    return this.http.post(indexTraineesUrl,{...data},{ headers: this.getHeaders() });
-  }
 }
