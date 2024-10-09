@@ -251,7 +251,7 @@ class AuthController extends Controller
 
         $rules = [
             'name' => ['required', 'string', 'max:255', 'min:5'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'], // confirmed
             'phone' => ['nullable', 'string', 'max:11'],
             'address' => ['nullable', 'string'],
@@ -287,15 +287,14 @@ class AuthController extends Controller
         }
         // dd($this->checkEmailValidity($request->email));
         // if (!$this->checkEmailValidity($request->email)) {
-            //     return response()->json(['message' => 'This email not real'],403);
-            // }
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imagePath = $image->store('images', 'user_images');
-                // return response()->json(["ads"=>$request->all()]);
-            }
+        //     return response()->json(['message' => 'This email not real'],403);
+        // }
 
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('images', 'user_images');
+        }
         $user = User::where('email', $request->email)->first();
         $user1 = User::where('phone', $request->phone)->first();
         if ($user) {
@@ -319,6 +318,8 @@ class AuthController extends Controller
             'token' => Str::random(60),
             'timer' => now(),
         ]);
+        // return response()->json($request);
+
         if ($request->role === 'trainee') {
             Mail::to($user->email)->send(new VerifyEmail($user));
             $trainee = Trainee::create([
@@ -358,7 +359,6 @@ class AuthController extends Controller
                 'trainerData' => new TrainerResource($trainer),
             ], 201);
         }
-
     }
     public function verifyEmail(Request $request)
     {

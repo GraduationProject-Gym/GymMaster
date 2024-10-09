@@ -1,4 +1,4 @@
-  import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -158,4 +158,3 @@ export class AddTrainerComponent {
     }
   }
 }
-
