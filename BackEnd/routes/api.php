@@ -55,6 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
     //update users data
     Route::put('/updateusers/{id}', [AuthController::class, 'update']);
+    Route::get('getUserRole', [AuthController::class, 'getUserRole']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
     // show all trainee data in admin profile

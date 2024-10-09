@@ -6,6 +6,7 @@ import { LogoutService } from '../../services/authentication/logout/logout.servi
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../services/authentication/login/login.service';
 import { Subscription } from 'rxjs';
+import { ProfileService } from '../../services/authentication/profile/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -20,11 +21,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
   role: string | null = null;
   profileData: any = null;
   private authSubscription!: Subscription;
+  errorMessage: string | null = null;
 
   constructor(
     private authTokenService: AuthTokenService,
+    private profileService: ProfileService,
     private logoutService: LogoutService,
-    private router:Router
+    private router: Router
   ) {
     // this.checkLoginStatus();
   }
@@ -33,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.authTokenService.isAuthenticated$.subscribe((authStatus: boolean) => {
       this.isLoggedIn = authStatus;
       this.loading = false;
-      this.role = sessionStorage.getItem('role');
+      this.getRole();
     });
 
     // this.authSubscription = this.authTokenService.isAuthenticated$.subscribe(
@@ -66,19 +69,47 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.authSubscription.unsubscribe();
     }
   }
+  // ngOnInit(): void {
+  // }
+
+  getRole() {
+    this.profileService.getUserRole().subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.role = response.role;
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
+
   profile() {
-    this.role = sessionStorage.getItem('role');
-    if (this.role === 'trainee'){
+    if (this.role === 'trainee') {
       this.router.navigate(['/trainee-profile']);
-    } else if (this.role === 'trainer'){
+    } else if (this.role === 'trainer') {
       this.router.navigate(['/trainer-profile']);
     }
   }
 
-  class(){
+  class() {
     this.role = sessionStorage.getItem('role');
-    if (this.role === 'trainer'){
+    if (this.role === 'trainer') {
       this.router.navigate(['/trainer/classes']);
+    }
+  }
+
+  trainers() {
+    this.role = sessionStorage.getItem('role');
+    if (this.role === 'admin') {
+      this.router.navigate(['/admin-trainers']);
     }
   }
 

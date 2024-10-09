@@ -16,9 +16,13 @@ export class ProfileService {
     return headers;
   }
 
-  private readonly profileUrl = `${environment.domain}/showuserdata`;
-
+  getUserRole(){
+    const getUserRoleUrl = `${environment.domain}/getUserRole`;
+    return this.http.get(getUserRoleUrl, { headers: this.getHeaders() });
+  }
+  
   getProfileData() {
-    return this.http.get(this.profileUrl, { headers: this.getHeaders() });
+    const profileUrl = `${environment.domain}/showuserdata`;
+    return this.http.get(profileUrl, { headers: this.getHeaders() });
   }
 }
