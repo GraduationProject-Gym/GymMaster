@@ -33,6 +33,9 @@ import { AllEquipmentsComponent } from './components/admin/all-equipments/all-eq
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
 import { AddEquipmentComponent } from './components/admin/add-equipment/add-equipment.component';
+import { AdminTraineesAttendanceComponent } from './components/admin/admin-trainees-attendance/admin-trainees-attendance.component';
+import { AdminHistoryAttendanceComponent } from './components/admin/admin-history-attendance/admin-history-attendance.component';
+import { AuthorizedComponent } from './components/authorized/authorized.component';
 
 
 export const routes: Routes = [
@@ -72,6 +75,9 @@ export const routes: Routes = [
     { path: 'admin-allExersise', component: AllExersiseComponent },
     { path: 'admin-addExersise', component: AdminAddExerciseComponent },
     { path: 'admin-addEquipments', component: AddEquipmentComponent },
+    { path: 'admin-trainees-attendance', component: AdminTraineesAttendanceComponent},
+    { path: 'admin-history-attendance/:id', component: AdminHistoryAttendanceComponent},
+    { path: 'Not-Authorized', component: AuthorizedComponent},
     { path: "**", component: ErrorComponent }
     
 ];
