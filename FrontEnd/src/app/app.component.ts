@@ -28,6 +28,9 @@ import { AdminAddClassComponent } from './components/admin/admin-add-class/admin
 import { LoginService } from './services/authentication/login/login.service';
 import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
 import { ClassesService } from './services/trainee/classes/classes.service';
+import { AdminAllReportsComponent } from './components/admin/admin-all-reports/admin-all-reports.component';
+import { AppAdminEditMembershipComponent } from './components/admin/app-admin-edit-membership/app-admin-edit-membership.component';
+import { AdminMembershipComponent } from './components/admin/admin-membership/admin-membership.component';
 
 @Component({
   selector: 'app-root',
@@ -56,7 +59,10 @@ import { ClassesService } from './services/trainee/classes/classes.service';
     AllTraineesComponent,
     MoreDetailsTraineeComponent,
     AdminAddClassComponent ,
-    PaymentVerifyComponent
+    PaymentVerifyComponent,
+    AdminMembershipComponent,
+    AppAdminEditMembershipComponent,
+    AdminAllReportsComponent  
   ],
 
   providers: [

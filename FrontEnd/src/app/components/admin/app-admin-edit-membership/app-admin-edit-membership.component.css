@@ -1,0 +1,82 @@
+.main {
+    min-height: 100vh;
+    width: 100%;
+    background: url("/background5.jpg") no-repeat;
+    background-size: cover;
+    padding: 100px 50px 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  h2 {
+    color: #ff6207;
+    text-align: center;
+  }
+  
+  .edit-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* input {
+    margin-left: 0;
+    margin-bottom: 15px;
+    background-colo: rgba(255, 255, 255, 0.6);
+    border: 1px solid #ccc
+  } */
+  
+  label {
+    margin-bottom: 5px;
+  }
+
+   input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid gray;
+    }
+    .btn {
+        width: 210px;
+    } 
+  
+  /* Responsive Styles */
+  
+  /* @media (min-width: 768px) {
+    .edit-profile-form  {
+      width: 70%;
+      margin-left: 220px;
+    }
+  }
+  */
+  @media (max-width: 576px) {
+    .edit-profile-form  {
+      width: 87%;
+      margin: 20px 97px;
+    }
+  
+    input,
+    textarea {
+      margin-left: 0;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  
+    .btn {
+      text-align: center;
+      width: 100%;
+    }
+  }
+  

@@ -1,3 +1,4 @@
+
 <div class="sidebar w-20" >
   <nav>
     <ul>
@@ -19,28 +20,33 @@
           <li><a  (click)="addClass()">Add Class</a></li><!--routerLink="/admin-addClass"-->
         </ul>
       </li>
-
-      <li><a routerLink="/trainee-goal">Goals</a></li>
-      <li><a>Membership</a></li>
-      <!-- <li class="dropdown">
-        <a routerLink="/trainee-myClasses" (click)="toggleDropdownClass()">Classes</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpenClass">
-          <li><a routerLink="/trainee-allClasses" (click)="classes()">All Classes</a></li>
-          <li><a routerLink="/trainee-myClasses">My Class</a></li>
-        </ul>
-      </li> -->
+      <!-- memberhip -->
       <li class="dropdown">
-        <a routerLink="/trainee-showReviews" (click)="toggleDropdownReview()">Reviews</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpenReview">
-          <li><a routerLink="/trainee-doReview">Do Review</a></li>
-          <li><a routerLink="/trainee-showReviews">Show Reviews</a></li>
+        <a (click)="toggleDropdownMembership()">Membership</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenMembership">
+          <li><a routerLink="/admin-membership">All Membership</a></li>
+          <li><a routerLink="/admin-addMembership">Add Membership</a></li>
         </ul>
       </li>
 
-      <li><a routerLink="/equipment">Equipment</a></li>
+                   <!-- schedule -->
+      <!-- <li>
+        <a routerLink="/admin-schedule">Schedule</a>
+      </li> -->
+                         <!-- Attendance -->
+      <li class="dropdown">
+        <a (click)="toggleDropdownAttendance()">Attendance</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenAttendance">
+          <li><a routerLink="/admin-trainees-attendance" > Trainees Attendance</a></li>
+          <li><a routerLink="/admin-trainers-attendance">Trainers Attendance</a></li>
+        </ul>
+      </li>
+
+
+      <!-- <li><a routerLink="/equipment">Equipment</a></li>
       <li><a routerLink="/trainee-attendance">Attendance</a></li>
       <li><a routerLink="/trainee-showReport">Reports</a></li>
-      <li><a routerLink="/vouchers">Vouchers</a></li>
+      <li><a routerLink="/vouchers">Vouchers</a></li> -->
     </ul>
   </nav>
 </div>

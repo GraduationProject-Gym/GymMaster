@@ -30,7 +30,10 @@ import { AdminEditClassComponent } from './components/admin/admin-edit-class/adm
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { TrainerComponent } from './components/trainer/profile/trainer.component';
 import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
-
+import { AdminAllReportsComponent } from './components/admin/admin-all-reports/admin-all-reports.component';
+import { AdminAddMembershipComponent } from './components/admin/admin-add-membership/admin-add-membership.component';
+import { AppAdminEditMembershipComponent } from './components/admin/app-admin-edit-membership/app-admin-edit-membership.component';
+import { AdminMembershipComponent } from './components/admin/admin-membership/admin-membership.component';
 
 export const routes: Routes = [
     {path: "", component: LandingPageComponent },
@@ -50,7 +53,7 @@ export const routes: Routes = [
     { path: 'trainee-profile', component:TraineeComponent},
     { path: 'trainee-goal', component:GoalComponent},
     { path: 'trainee-membership', component:MembershipComponent},
-    { path: 'trainee-profile/edit', component:EditProfileComponent}, 
+    { path: 'trainee-profile/edit', component:EditProfileComponent},
     { path: 'trainee-myClasses', component:TraineeMyClassesComponent},
     { path: 'trainee-allClasses', component:TraineeAllClassesComponent},
     { path: 'trainee-doReview', component:DoReviewComponent},
@@ -66,8 +69,10 @@ export const routes: Routes = [
     { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
     { path: 'admin-addClass', component: AdminAddClassComponent },
     { path: 'payment/verify', component:PaymentVerifyComponent},
-
-
+    { path: 'admin-membership', component: AdminMembershipComponent},
+    { path: 'admin-editMembership/:id', component: AppAdminEditMembershipComponent},
+    { path: 'admin-addMembership', component: AdminAddMembershipComponent},
+     { path: 'admin-reports', component: AdminAllReportsComponent},
     { path: "**", component: ErrorComponent }
 ];
 

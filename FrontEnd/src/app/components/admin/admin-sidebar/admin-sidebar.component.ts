@@ -49,6 +49,16 @@ export class AdminSidebarComponent {
       }
     });
   }
+  dropdownOpenMembership= false;
+  dropdownOpenAttendance= false;
+
+   toggleDropdownMembership() {
+    this.dropdownOpenMembership = !this.dropdownOpenMembership;
+  }
+
+  toggleDropdownAttendance (){
+    this.dropdownOpenAttendance = !this.dropdownOpenAttendance;
+  }
 
 
   // get all trainees

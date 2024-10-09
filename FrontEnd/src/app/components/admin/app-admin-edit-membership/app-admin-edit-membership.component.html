@@ -1,0 +1,18 @@
+<div class="d-flex">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="main">
+      <div class="edit-container">
+        <h2>Edit Membership: {{ membershipOption.type }}</h2>
+  
+        <div *ngFor="let price of membershipOption.prices">
+          <h5>{{ price.period }}</h5>
+          <label> Price: </label>
+            <input type="number" [(ngModel)]="price.price" />
+        </div>
+        <div class="text-center">
+            <button (click)="save()" class="btn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

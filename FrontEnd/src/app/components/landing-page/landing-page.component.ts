@@ -21,25 +21,24 @@
   export class LandingPageComponent {
 
 
-    classes = [
+    schedule = [
       {
         day: 'Monday',
         classes: [
-          { name: 'Yoga', trainer: 'John Doe', time: '9:00 AM' },
-          { name: 'Pilates', trainer: 'Jane Doe', time: '11:00 AM' },
-          { name: 'Crossfit', trainer: 'Mike Smith', time: '1:00 PM' }
+          { name: 'Yoga', trainer: 'John Doe', startHour: '9:00 AM', endHour:'10:00AM' , id:1},
+          { name: 'Pilates', trainer: 'Jane Doe', startHour: '11:00 AM', endHour:'12:00 PM' , id:3 },
+          { name: 'Crossfit', trainer: 'Mike Smith',startHour: '1:00 PM', endHour:'2:00 PM', id:4 }
         ]
       },
       {
         day: 'Tuesday',
         classes: [
-          { name: 'Zumba', trainer: 'Emily Davis', time: '9:00 AM' },
-          { name: 'Spinning', trainer: 'Luke Scott', time: '11:00 AM' },
-          { name: 'Boxing', trainer: 'Chris Lee', time: '1:00 PM' }
+          { name: 'Zumba', trainer: 'Emily Davis', startHour: '9:00 AM', endHour:'10:AM', id:5},
+          { name: 'Spinning', trainer: 'Luke Scott', startHour: '9:00 AM', endHour:'10:AM', id:6},
+          { name: 'Boxing', trainer: 'Chris Lee', startHour: '9:00 AM', endHour:'10:AM' , id:7}
         ]
       }
     ];
-
 
 
     categories = [
