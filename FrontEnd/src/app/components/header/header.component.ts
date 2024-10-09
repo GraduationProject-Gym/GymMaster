@@ -97,9 +97,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
       collapse.classList.remove('show');
     }
   }
+  login(){
+    this.router.navigate(['/login']);
+  }
 
   logout() {
-
     this.logoutService.logout();
     this.isLoggedIn = false;
     this.router.navigate(['/login']);

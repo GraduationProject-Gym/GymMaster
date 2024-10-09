@@ -47,6 +47,15 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label for="sessions">Max Number of trainee:</label>
+              <input id="sessions" type="number" name="sessions" [(ngModel)]="maxTrainee" #maxTraineeField="ngModel" required max="50" class="form-control">
+              <div *ngIf="maxTraineeField.invalid && maxTraineeField.touched" class="text-danger">
+                <small *ngIf="maxTraineeField.errors?.['required']">Number of trainee is required.</small>
+                <small *ngIf="maxTraineeField.errors?.['min']">There must be at least 10 trainee.</small>
+              </div>
+            </div>
+
             <!-- Status -->
             <div class="form-group">
               <label for="status">Status:</label>
@@ -72,7 +81,7 @@
              <h5 class="mt-2">Sessions Per week</h5>
              <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
                <h6 class="text-secondary">Session {{ i + 1 }}</h6>
-
+               <!-- duration -->
                <!-- Days control -->
                 <label for="groupDate{{ i }}">Date (Session {{ i + 1 }}):</label>
                 <input id="groupDate{{ i }}" type="date" [(ngModel)]="group.date" name="groupDate{{i}}" class="form-control">

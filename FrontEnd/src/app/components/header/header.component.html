@@ -33,7 +33,7 @@
             <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
           </li>
           <li class="nav-item mx-3 d-flex" *ngIf="!loading && !isLoggedIn">
-            <button class="btn" routerLinkActive="active" (click)="closeMenu()">Login</button><!--routerLink="/login"-->
+            <button class="btn" routerLinkActive="active" (click)="login()">Login</button><!--routerLink="/login"-->
           </li>
           <li class="nav-item mx-3 d-flex" *ngIf="!loading && isLoggedIn">
             <button class="btn" (click)="logout()">Logout</button>
