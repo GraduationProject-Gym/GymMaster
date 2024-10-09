@@ -21,6 +21,7 @@ export class MembershipComponent implements OnInit {
     private sidebarService: SidebarService,
     private membershipService: MembershipService,
     private router: Router,
+    private httpClient: HttpClient,
 
   ) { }
 

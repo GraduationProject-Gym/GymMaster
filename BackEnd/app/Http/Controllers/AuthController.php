@@ -568,6 +568,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        // return ["req"=>$request->all()];
         // Validation rules
         $rules = [
             // 'name' => 'string|max:255|min:5',
@@ -608,7 +609,6 @@ class AuthController extends Controller
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
-
         $currentUser->update($data);
         if ($currentUser->role === 'trainee') {
             $trainee = Trainee::where('user_id', $currentUser->id)->first();
