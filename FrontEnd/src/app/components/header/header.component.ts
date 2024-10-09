@@ -73,6 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   // }
 
   getRole() {
+    this.errorMessage = null;
     this.profileService.getUserRole().subscribe({
       next: (response: any) => {
         console.log(response);

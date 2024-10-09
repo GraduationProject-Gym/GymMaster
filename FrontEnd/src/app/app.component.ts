@@ -35,6 +35,9 @@ import { AllEquipmentsComponent } from './components/admin/all-equipments/all-eq
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
 import { AddEquipmentComponent } from './components/admin/add-equipment/add-equipment.component';
+import { AdminTraineesAttendanceComponent } from './components/admin/admin-trainees-attendance/admin-trainees-attendance.component';
+import { AdminHistoryAttendanceComponent } from './components/admin/admin-history-attendance/admin-history-attendance.component';
+import { AuthorizedComponent } from './components/authorized/authorized.component';
 
 @Component({
   selector: 'app-root',
@@ -70,6 +73,9 @@ import { AddEquipmentComponent } from './components/admin/add-equipment/add-equi
     AllExersiseComponent,
     AdminAddExerciseComponent,
     AddEquipmentComponent,
+    AdminTraineesAttendanceComponent,
+    AdminHistoryAttendanceComponent,
+    AuthorizedComponent
   ],
 
   providers: [

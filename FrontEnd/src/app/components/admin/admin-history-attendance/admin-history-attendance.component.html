@@ -1,0 +1,29 @@
+<div class="d-flex">
+    <div class="sidebar">
+        <app-admin-sidebar></app-admin-sidebar>
+    </div>
+    <div class="main">
+        <div class="container mt-5">
+            <h1 class="text-center">{{ traineeData?.name }} Attendance History</h1>
+
+            <div class="table-responsive">
+                <table class="table custom-table text-center">
+                    <thead class="thead">
+                        <tr>
+                            <th>Date</th>
+                            <th>Check-In Time</th>
+                            <th>Check-Out Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of traineeData?.attendanceRecords">
+                            <td>{{ record.date }}</td>
+                            <td>{{ record.checkIn }}</td>
+                            <td>{{ record.checkOut }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
