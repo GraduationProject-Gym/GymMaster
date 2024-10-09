@@ -128,31 +128,38 @@ class GymClassController extends Controller
             if ($request->has('selectedExercises')) {
                 $class->exercises()->sync($request->input('selectedExercises'));
             }
+            $num = $request->total_no_of_session;
+            $day=0;
+            for( $i = 0; $i < $num; $i++ ){
+                foreach ($request->groups as $group) {
+                    $start = Carbon::createFromFormat('H:i:s', $group['startHour']);
+                    $end = Carbon::createFromFormat('H:i:s', $group['endHour']);
+                    $duration = $start->diff($end);
+                    // Get the difference in hours and minutes
+                    $hours = $duration->h; // Number of hours
+                    $minutes = $duration->i; // Number of minutes
 
-        foreach ($request->groups as $group) {
-            $start = Carbon::createFromFormat('H:i:s', $group['startHour']);
-            $end = Carbon::createFromFormat('H:i:s', $group['endHour']);
-            $duration = $start->diff($end);
-            // Get the difference in hours and minutes
-            $hours = $duration->h; // Number of hours
-            $minutes = $duration->i; // Number of minutes
+                    $totalMinutes = ($hours * 60) + $minutes;
 
-            $totalMinutes = ($hours * 60) + $minutes;
-
-             $hours = floor($totalMinutes / 60); // Get whole hours
-            $remainingMinutes = $totalMinutes % 60;
-            $formattedDuration = sprintf('%d.%02d', $hours, $remainingMinutes);
-            // return ["message"=>number_format($formattedDuration, 2)];
-
-            Schedule::create([
-                'nameDay' => $group['day'], // Day of the week
-                'session_start' => $group['startHour'], // Store as a Carbon instance
-                'session_end' => $group['endHour'], // Store as a Carbon instance
-                'date_day' => $group['date'], // Formatted date
-                'session_duration' => number_format($formattedDuration, 2), // Format duration as HH:MM:SS
-                'class_id' => $class->id, // Class ID
-            ]);
-        }
+                    $hours = floor($totalMinutes / 60); // Get whole hours
+                    $remainingMinutes = $totalMinutes % 60;
+                    $formattedDuration = sprintf('%d.%02d', $hours, $remainingMinutes);
+                    // return ["message"=>number_format($formattedDuration, 2)];
+                    $group['date']=Carbon::parse($group['date'])->addDays($day);
+                    Schedule::create([
+                        'nameDay' => $group['day'], // Day of the week
+                        'session_start' => $group['startHour'], // Store as a Carbon instance
+                        'session_end' => $group['endHour'], // Store as a Carbon instance
+                        'date_day' => $group['date'], // Formatted date
+                        'session_duration' => number_format($formattedDuration, 2), // Format duration as HH:MM:SS
+                        'class_id' => $class->id, // Class ID
+                    ]);
+                    $i++;
+                    if($i==$num)break;
+                }
+                $i--;
+                $day+=7;
+            }
            return $class;
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
