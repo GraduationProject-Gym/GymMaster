@@ -291,6 +291,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()], 403);
         }
+        return ["message"=>$request->all()];
         // dd($this->checkEmailValidity($request->email));
         // if (!$this->checkEmailValidity($request->email)) {
         //     return response()->json(['message' => 'This email not real'],403);

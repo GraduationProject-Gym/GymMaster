@@ -36,6 +36,8 @@ export class AdminAddClassComponent implements OnInit{
   errorMessage:string ='';
   data:any;
   add_Session:boolean =false;
+  status_:boolean =false;
+
   trainerName: any;
   selectedTrainerId:any;
 
@@ -128,8 +130,7 @@ export class AdminAddClassComponent implements OnInit{
   save(classForm: any) {
     if (classForm.valid) {
       // Execute the logic to save the class
-      let status_ =0;
-      if(this.status === 'Active') status_=1;
+      if(this.status === 'active') this.status_=true;
       this.groups.forEach(group => {
         if (group.startHour) {
           group.startHour = new Date(`1970-01-01T${group.startHour}`).toLocaleTimeString('en-GB', {
@@ -172,7 +173,7 @@ export class AdminAddClassComponent implements OnInit{
         name: this.className,
         trainer_id: this.trainerID,
         total_no_of_session: this.sessions,
-        status: status_,
+        status: this.status_,
         description: this.description,
         max_trainee:this.maxTrainee,
         groups: this.groups,

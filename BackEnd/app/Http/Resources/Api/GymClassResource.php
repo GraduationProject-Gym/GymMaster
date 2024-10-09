@@ -40,7 +40,7 @@ class GymClassResource extends JsonResource
             'total_no_of_sessions' => $this->total_no_of_session,
             'max_trainee' => $this->max_trainee,
             'equipments' => EquipmentResource::collection($equipment),
-            'schedule' => ScheduleResource::collection($this->scheduleReport),
+            'schedule' => ScheduleResource::collection($this->schedule),
             'exercises'=> ExerciseResource::collection($this->exercises),
             'trainer'=>$trainer,
             'created_at' => $this->created_at,
