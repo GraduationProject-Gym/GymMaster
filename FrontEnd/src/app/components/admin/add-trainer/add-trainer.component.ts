@@ -92,7 +92,7 @@ export class AddTrainerComponent {
       const formData = new FormData();
       Object.keys(this.addTrainerForm.value).forEach(key => {
         if (key === 'image') {
-          const img = this.selectedFile;
+          const img = this.selectedImage;
           if (img) {
             formData.append('image', img);
           }

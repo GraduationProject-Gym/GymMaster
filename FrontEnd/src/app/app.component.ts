@@ -54,7 +54,6 @@ import { AddEquipmentComponent } from './components/admin/add-equipment/add-equi
     TraineeComponent,
     EditProfileComponent,
     TraineeMyClassesComponent,
-    TraineeAllClassesComponent,
     DoReviewComponent,
     ShowReviewComponent,
     AttendanceComponent,

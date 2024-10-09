@@ -37,29 +37,21 @@ class AuthController extends Controller
     public function showuserdata()
     {
         $user = auth()->user();
-
         if ($user->role === 'trainee') {
             $trainee = $user->trainee;
 
-            $membershipType = $trainee->TraineeMembership->type;
-            $subscription = $trainee->TraineeMembership->subscribe_type;
-            if ($trainee->TraineeMembership->id == 20) {
-                $membershipType = 'No membership found';
-                $subscription = 'N/A';
-            }
             if ($trainee && $trainee->TraineeMembership) {
                 return response()->json([
-                    'id'=>$user->id,
                     'name' => $user->name,
                     'role' => $user->role,
                     'age' => $user->age,
-                    'image' => $user->image ? asset('images/users/' . $user->image) : null,
+                    'image' => $user->image,
                     'email' => $user->email,
                     'phone' => $user->phone,
                     'gender' => $user->gender,
                     'address' => $user->address,
-                    'membership_type' => $membershipType,
-                    'subscription' => $subscription
+                    'membership_type' => $trainee->TraineeMembership->type,
+                    'subscription' => $trainee->TraineeMembership->subscribe_type,
                 ], 200);
             } else {
                 return response()->json([
@@ -74,7 +66,7 @@ class AuthController extends Controller
                     'name' => $user->name,
                     'role' => $user->role,
                     'age' => $user->age,
-                    'image' => $user->image ? asset('images/users/' . $user->image) : null,
+                    'image' => $user->image,
                     'email' => $user->email,
                     'phone' => $user->phone,
                     'gender' => $user->gender,
@@ -91,6 +83,8 @@ class AuthController extends Controller
                 'error' => 'User role is not recognized.'
             ], 400);
         }
+
+
     }
 
     public function getUserRole()
@@ -257,7 +251,7 @@ class AuthController extends Controller
 
         $rules = [
             'name' => ['required', 'string', 'max:255', 'min:5'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8'], // confirmed
             'phone' => ['nullable', 'string', 'max:11'],
             'address' => ['nullable', 'string'],
@@ -291,17 +285,17 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()], 403);
         }
-        return ["message"=>$request->all()];
         // dd($this->checkEmailValidity($request->email));
         // if (!$this->checkEmailValidity($request->email)) {
-        //     return response()->json(['message' => 'This email not real'],403);
-        // }
+            //     return response()->json(['message' => 'This email not real'],403);
+            // }
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagePath = $image->store('images', 'user_images');
+                // return response()->json(["ads"=>$request->all()]);
+            }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imagePath = $image->store('images', 'user_images');
-        }
         $user = User::where('email', $request->email)->first();
         $user1 = User::where('phone', $request->phone)->first();
         if ($user) {
@@ -325,8 +319,6 @@ class AuthController extends Controller
             'token' => Str::random(60),
             'timer' => now(),
         ]);
-        // return response()->json($request);
-
         if ($request->role === 'trainee') {
             Mail::to($user->email)->send(new VerifyEmail($user));
             $trainee = Trainee::create([
@@ -562,30 +554,29 @@ class AuthController extends Controller
     {
         //
     }
+
     public function update(Request $request, $id)
     {
+        // Log incoming request data for debugging
+        Log::info('Incoming request data:', $request->all());
 
-        if (auth()->user()->id !== (int)$id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
-
-        // return ["req"=>$request->all()];
         // Validation rules
         $rules = [
-            // 'name' => 'string|max:255|min:5',
-            // 'email' => 'string|email|max:255|unique:users,email,' . $id,
-            'phone' => 'nullable|string|max:11|unique:users,phone,' . $id,
+            'name' => 'string|max:255|min:5',
+            'email' => 'string|email|max:255|unique:users,email,' . $id,
+            'phone' => 'nullable|string|max:11, unique:users,phone,' . $id,
             'address' => 'nullable|string',
             'age' => 'nullable|integer|min:15',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            // 'gender' => 'nullable|string',
-            // 'role' => 'nullable|string',
-            // 'password' => 'nullable|string|min:8',
+            'gender' => 'nullable|string',
+            'role' => 'nullable|string',
+            'password' => 'nullable|string|min:8',
         ];
 
+        // Custom validation messages
         $messages = [
-            // 'email.email' => 'Email must be a valid email address.',
-            // 'email.unique' => 'The email has already been taken.',
+            'email.email' => 'Email must be a valid email address.',
+            'email.unique' => 'The email has already been taken.',
             'phone.unique' => 'The phone has already been taken.',
             'phone.max' => 'Phone number may not be greater than 11 characters.',
             'age.min' => 'Age must be at least 15.',
@@ -595,28 +586,48 @@ class AuthController extends Controller
             'password.min' => 'Password must be at least 8 characters.',
         ];
 
+        // Validate the request
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
             Log::error('Validation errors:', $validator->errors()->toArray());
             return response()->json(["message" => $validator->errors()], 403);
         }
+
+        // Find the current user or fail
         $currentUser = User::findOrFail($id);
-        $data = $request->all();
+
+        // Handle image upload
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'user_images');
             $data['image'] = $imagePath;
         }
 
+        // Hash the password if it's being updated
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
-        $currentUser->update($data);
+
+        $currentUser->update($request->all());
+        // $currentUser->fill($request->all());
+        // $currentUser->save();
+
+        // return response()->json($request->all());
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => new UserResource($currentUser),
+        ], 200);
+
+        // Handle trainee role update
         if ($currentUser->role === 'trainee') {
             $trainee = Trainee::where('user_id', $currentUser->id)->first();
             if ($trainee) {
-                $trainee->update($request->only(['goals']));
+                $trainee->update([
+                    'user_id' => $currentUser->id,
+                ]);
             }
         }
+
+        // Handle trainer role update
         if ($currentUser->role === 'trainer') {
             $trainer = Trainer::where('user_id', $currentUser->id)->first();
             $cvPath = $request->cv;
@@ -633,6 +644,8 @@ class AuthController extends Controller
                 ]);
             }
         }
+
+        // Return response based on the role
         if ($request->role === 'trainee') {
             return response()->json([
                 'message' => 'User updated successfully, check your mail to verify',
@@ -651,12 +664,13 @@ class AuthController extends Controller
 
     public function destroy($id)
     {
-
+        // Find the user to delete or fail
         $userToDelete = User::findOrFail($id);
-        $currentUser = Auth::user();
+        $currentUser = Auth::user(); // Get the currently authenticated user
 
+        // Check if the current user is an admin
         if ($currentUser->role === 'admin') {
-
+            // Check if the user to delete is not an admin
             if ($userToDelete->role !== 'admin') {
                 $userToDelete->delete();
                 return response()->json(['message' => 'User deleted successfully.']);
