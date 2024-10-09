@@ -73,17 +73,23 @@ export class AdminTraineesAttendanceComponent implements OnInit {
     });
   }
 
-  // checkIn(trainee: any): void {
-  checkIn(userId: string): void {
-    let user_id: number = userId ? Number(userId) : 0;
+  // Function to group classes for display in slides
+  groupTrainees() {
+    const groupSize = 5;  // Group size (5 row per group)
+    for (let i = 0; i < this.attendance.length; i += groupSize) {
+      this.groupedTrainees.push(this.attendance.slice(i, i + groupSize));  // Grouping the classes
+    }
+  }
+
+  checkIn(trainee: any): void {
+    let user_id: number = trainee.id ? Number(trainee.id) : 0;
     this.adminService.checkIn(user_id).subscribe({
       next: (response) => {
         console.log(response);
-        this.checkedIn = true;
-        if (trainee.checkedIn) {
-          trainee.message = `${trainee.name} has already checked in.`;
+        if (this.checkedIn) {
+          trainee.message = `${this.checkedIn} has already checked in.`;
         } else {
-          trainee.checkedIn = true;
+          this.checkedIn = true;
           trainee.message = `${trainee.name} has checked in.`;
         }
         this.hideMessage(trainee);
@@ -103,13 +109,30 @@ export class AdminTraineesAttendanceComponent implements OnInit {
   }
 
   checkOut(trainee: any): void {
-    if (trainee.checkedOut) {
-      trainee.message = `${trainee.name} has already checked out.`;
-    } else {
-      trainee.checkedOut = true;
-      trainee.message = `${trainee.name} has checked out.`;
-    }
-    this.hideMessage(trainee);
+    let user_id: number = trainee.id ? Number(trainee.id) : 0;
+    this.adminService.checkOut(user_id).subscribe({
+      next: (response) => {
+        console.log(response);
+        if (this.checkedOut) {
+          trainee.message = `${this.checkedOut} has already checked out.`;
+        } else {
+          this.checkedOut = true;
+          trainee.message = `${trainee.name} has checked out.`;
+        }
+        this.hideMessage(trainee);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
   }
 
   hideMessage(trainee: any): void {
@@ -117,21 +140,13 @@ export class AdminTraineesAttendanceComponent implements OnInit {
       trainee.message = '';
     }, 1000);
   }
+
   trackById(index: number, trainee: any): number {
     return trainee.id;
   }
 
+  getHistory() {
 
-  // constructor() {
-  //   // this.groupTrainees();  // Call the grouping function when the component is initialized
-  // }
-
-  // Function to group classes for display in slides
-  groupTrainees() {
-    const groupSize = 5;  // Group size (5 row per group)
-    for (let i = 0; i < this.attendance.length; i += groupSize) {
-      this.groupedTrainees.push(this.attendance.slice(i, i + groupSize));  // Grouping the classes
-    }
   }
 
   // Function to go to the previous slide

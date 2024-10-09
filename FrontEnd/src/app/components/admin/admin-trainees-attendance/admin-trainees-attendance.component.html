@@ -21,8 +21,8 @@
                                     <td>{{ traineeAttendance.name }}</td>
                                     <td style="display: none;">{{ traineeAttendance.id }}</td>
                                     <td>
-                                        <button class="btn " (click)="checkIn(traineeAttendance.id )">In</button>
-                                        <button class="btn " (click)="checkOut(traineeAttendance.id )">Out</button>
+                                        <button class="btn " (click)="checkIn(traineeAttendance)">In</button>
+                                        <button class="btn " (click)="checkOut(traineeAttendance)">Out</button>
                                         <div *ngIf="traineeAttendance.message" class="message">{{traineeAttendance.message }}</div>
                                     </td>
 
