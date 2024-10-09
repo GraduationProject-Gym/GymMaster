@@ -25,9 +25,8 @@ export class SidebarService {
   }
 
   updateProfileData(id: number, updatedData: any): Observable<any> {
-    console.log(id, updatedData);
     const updateProfileDataUrl = `${environment.domain}/updateusers/${id}`;
-    return this.http.put(updateProfileDataUrl, { updatedData }, { headers: this.getHeaders() });
+    return this.http.post(updateProfileDataUrl, updatedData, { headers: this.getHeaders() });
   }
 
   // Membership service
@@ -49,7 +48,7 @@ export class SidebarService {
 
   // Trainer service
   indexMyTrainers(): Observable<any> {
-    const indexMyTrainersUrl = `${environment.domain}/`;
+    const indexMyTrainersUrl = `${environment.domain}/trainee-class/joined-classes-trainers`;
     return this.http.get(indexMyTrainersUrl, { headers: this.getHeaders() });
   }
 
@@ -58,6 +57,11 @@ export class SidebarService {
   //   const reviewTrainerUrl = `${environment.domain}/review`;
   //   return this.http.get(reviewTrainerUrl, { headers: this.getHeaders() });
   // }
+
+  doReview(data: any): Observable<any> {
+    const doReviewUrl = `${environment.domain}/review`;
+    return this.http.post(doReviewUrl, { ...data }, { headers: this.getHeaders() });
+  }
 
   // Attendance service
   indexMyAttendance(): Observable<any> {
@@ -73,7 +77,6 @@ export class SidebarService {
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
-    console.log("111");
     this.selectedData = data;
   }
 

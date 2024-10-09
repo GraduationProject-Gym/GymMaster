@@ -70,21 +70,17 @@ export class TraineeComponent implements OnInit {
     }
   }
 
-  updateProfile(id: string) {
-    let idNumber: number = Number(id);
-    const updatedData = {
-      age: this.data.age,
-      address: this.data.address,
-      phone: this.data.phone,
-      image: this.data?.srcImg
-    };
-    console.log(updatedData);
+  // updateProfile(id: string) {
+  //   let idNumber: number = Number(id);
+  //   const updatedData = {
+  //     age: this.data.age,
+  //     address: this.data.address,
+  //     phone: this.data.phone,
+  //     image: this.data?.srcImg
+  //   };
+  //   console.log(updatedData);
 
-    
-    // Navigate to the EditProfileComponent and pass the data
-    // this.router.navigate(['/edit-profile'], {
-    //   state: { data: updatedData, id: idNumber }
-    // });
+
     // this.sidebarService.updateProfileData(idNumber, updatedData).subscribe({
     //   next: (response: any) => {
     //     console.log(response);
@@ -106,5 +102,5 @@ export class TraineeComponent implements OnInit {
     //     }, 5000);
     //   }
     // });
-  }
+  // }
 }

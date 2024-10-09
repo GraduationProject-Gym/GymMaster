@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-edit-profile',
@@ -27,14 +28,21 @@ export class EditProfileComponent implements OnInit {
 
   editProfileForm: FormGroup;
   errorMessage: string | null = null;
+  selectedImage: File | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router, private sidebarService: SidebarService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private sidebarService: SidebarService,
+    private sanitizer: DomSanitizer
+  ) {
     this.editProfileForm = this.fb.group({
+      id: [''],
       name: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(1)]],
-      phone: ['', Validators.required],
-      address: ['', Validators.required],
-      image: ['', Validators.required]
+      age: ['', [Validators.required, Validators.min(10)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      address: ['', [Validators.pattern(/^(?=.*[A-Za-z])[A-Za-z0-9'.\-\s,]+$/)]],
+      image: ['']
     });
   }
 
@@ -46,18 +54,18 @@ export class EditProfileComponent implements OnInit {
     this.errorMessage = null; // Reset the error message 
     this.sidebarService.getProfileData().subscribe({
       next: (response) => {
+        // console.log(response);
         const trainee = response;
-
         // Populate the form with the fetched trainee data
         this.editProfileForm.patchValue({
+          id: trainee.id,
           name: trainee.name,
           age: trainee.age,
           phone: trainee.phone,
           address: trainee.address,
           // Assuming image or other fields may be part of the response
-          image: trainee.image || '' // Optional, if the image is available
+          image: trainee.selectedImage || '' // Optional, if the image is available
         });
-
         console.log('Trainee data loaded successfully:', trainee);
       },
       error: (error) => {
@@ -73,55 +81,71 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.editProfileForm.valid) {
-      console.log('Profile updated:', this.editProfileForm.value);
-      // Navigate to the profile page after successful form submission
-      this.router.navigate(['/trainee-profile']);
-    } else {
-      console.log('Form is invalid');
+  onImageChange(event: any): void {
+    const img = event.target.files[0];
+    if (img) {
+      this.selectedImage = img;
+      this.editProfileForm.patchValue({ image: img.name });
     }
   }
+
+  sanitizeInput(input: string): string {
+    return this.sanitizer.sanitize(1, input) || '';
+  }
+
+  update() {
+    const id = this.editProfileForm.get('id')?.value;
+    this.errorMessage = null; // Reset the error message 
+    this.editProfileForm.markAllAsTouched();
+
+    if (this.editProfileForm.valid) {
+      const formData = new FormData();
+      Object.keys(this.editProfileForm.value).forEach(key => {
+        if (key === 'image') {
+          const img = this.selectedImage;
+          if (img) {
+            formData.append('image', img);
+          }
+        } else {
+          const sanitizedValue = this.sanitizeInput(this.editProfileForm.get(key)?.value);
+          formData.append(key, sanitizedValue);
+        }
+      });
+
+      formData.append('_method', 'PUT');
+
+      // Call update profile service and handle response
+      this.sidebarService.updateProfileData(id, formData).subscribe({
+        next: (response) => {
+          console.log(response);
+          window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/trainee-profile']));
+        },
+        error: (error) => {
+          console.log(error);
+          if (error.status === 403) { // Validation error
+            const validationErrors = error.error.message;
+            console.log(validationErrors);
+            // Iterate over the validation errors and set them on the form controls
+            Object.keys(validationErrors).forEach(field => {
+              const control = this.editProfileForm.get(field);
+              if (control) {
+                control.setErrors(null); // Clear any previous errors
+
+                // Check if the error is an array and join them if necessary
+                const errorMessageArray = validationErrors[field];
+                control.setErrors({
+                  backendError: Array.isArray(errorMessageArray) ? errorMessageArray.join(', ') : errorMessageArray
+                });
+              }
+            });
+          } else {
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+          }
+        }
+      });
+    } else {
+      this.errorMessage = 'Please correct the errors in the form.';
+    }
+  }
+
 }
-
-
-// export class EditProfileComponent implements OnInit {
-
-//   editProfileForm: FormGroup;
-
-//   constructor(private fb: FormBuilder, private router: Router) {
-//     this.editProfileForm = this.fb.group({
-//       name: ['', Validators.required],
-//       age: ['', [Validators.required, Validators.min(1)]],
-//       email: ['', [Validators.required, Validators.email]],
-//       phone: ['', Validators.required],
-//       address: ['', Validators.required]
-//     });
-//   }
-
-//   ngOnInit(): void {
-//     this.loadTraineeData();
-//   }
-
-//   loadTraineeData(): void {
-//     const trainee = {
-//       name: 'John Doe',
-//       age: 30,
-//       email: 'john.doe@example.com',
-//       phone: '123456789',
-//       address: '123 Main St'
-//     };
-
-//     this.editProfileForm.patchValue(trainee);
-//   }
-
-//   onSubmit(): void {
-//     if (this.editProfileForm.valid) {
-//       console.log('Profile updated:', this.editProfileForm.value);
-
-//       this.router.navigate(['/profile']);
-//     } else {
-//       console.log('Form is invalid');
-//     }
-//   }
-// }

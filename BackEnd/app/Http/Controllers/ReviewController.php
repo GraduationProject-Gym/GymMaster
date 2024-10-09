@@ -91,7 +91,7 @@ class ReviewController extends Controller
                 'trainee_id' => $trainee,
                 'trainer_id' => $trainer
             ]);
-            return response()->json(["message"=>"done"]);
+            // return response()->json(["message"=>"done"]);
         }catch(AuthorizationException $e){
             return response()->json([
                 'message' => "You are not user to show this"

@@ -154,7 +154,7 @@
     <label for="image" class="form-label">Upload Image</label>
     <input formControlName="image" type="file" class="form-control" id="image" name="image"
       (change)="onFileChange($event)">
-    <div *ngIf="registrationForm.controls['gender'].invalid && registrationForm.controls['gender'].touched"
+    <div *ngIf="registrationForm.controls['image'].invalid && registrationForm.controls['image'].touched"
       class="error-msg">
       <div *ngIf="registrationForm.controls['image'].errors?.['backendError']">
         {{ registrationForm.controls['image'].errors?.['backendError'] }}
