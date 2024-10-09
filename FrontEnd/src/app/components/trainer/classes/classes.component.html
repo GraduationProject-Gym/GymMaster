@@ -84,10 +84,7 @@ Title Section
 
       <!-- Action Buttons -->
       <div class="buttons mt-3 text-center">
-        <a routerLink="/trainer/trainees" (click)="viewTrainees()" routerLinkActive="active" class="btn ">View Trainees</a>
-        <button class="btn " (click)="addClass()">Add</button>
-        <button class="btn " (click)="goToUpdatePage()">Update</button>
-        <button class="btn " (click)="goToShowPage()">Show</button>
+        <a (click)="viewTrainees()" routerLinkActive="active" class="btn ">View Trainees</a>
       </div>
 
     </div>

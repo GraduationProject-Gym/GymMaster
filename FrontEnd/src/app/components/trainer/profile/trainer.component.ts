@@ -54,8 +54,13 @@ export class TrainerComponent {
   }
 
   setProfileImage(data: any) {
-    if (!data.srcImg) {
-      data.srcImg = data.gender === 'female' ? "/female.png" : "/male.png";
+    // if (!data.srcImg) {
+    //   data.srcImg = data.gender === 'female' ? "/female.png" : "/male.png";
+    // }
+    if (!data.image || data.image === '') {
+      data.srcImg = data.gender === 'female' ? '/female.png' : '/male.png';
+    } else {
+      data.srcImg = data.image; // Use the actual image from the response
     }
   }
 }

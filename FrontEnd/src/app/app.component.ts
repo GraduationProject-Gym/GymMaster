@@ -30,6 +30,11 @@ import { PaymentVerifyComponent } from './components/trainee/payment-verify/paym
 import { ClassesService } from './services/trainee/classes/classes.service';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
+import { AdminAllReportsComponent } from './components/admin/admin-all-reports/admin-all-reports.component';
+import { AppAdminEditMembershipComponent } from './components/admin/app-admin-edit-membership/app-admin-edit-membership.component';
+import { AdminMembershipComponent } from './components/admin/admin-membership/admin-membership.component';
+import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
+import { AddEquipmentComponent } from './components/admin/add-equipment/add-equipment.component';
 
 @Component({
   selector: 'app-root',
@@ -61,6 +66,13 @@ import { AllExersiseComponent } from './components/admin/all-exersise/all-exersi
     PaymentVerifyComponent,
     AllEquipmentsComponent,
     AllExersiseComponent,
+    AdminMembershipComponent,
+    AppAdminEditMembershipComponent,
+    AdminAllReportsComponent,
+    AllEquipmentsComponent,
+    AllExersiseComponent,
+    AdminAddExerciseComponent,
+    AddEquipmentComponent,
   ],
 
   providers: [

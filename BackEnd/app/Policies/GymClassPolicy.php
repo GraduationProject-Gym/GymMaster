@@ -15,9 +15,14 @@ class GymClassPolicy
     {
         return $user->role === 'admin';
     }
-    public function wiewClass(User $user): bool
+    public function viewClass(User $user): bool
     {
         return $user->role === 'trainer';
+    }
+
+    public function addClass(User $user): bool
+    {
+        return $user->role === 'admin';
     }
 
 

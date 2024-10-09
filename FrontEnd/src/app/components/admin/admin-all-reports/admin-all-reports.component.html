@@ -1,0 +1,107 @@
+<div class="d-flex">
+  <app-admin-sidebar></app-admin-sidebar>
+  <div class="main">
+<img src="/background5.jpg" alt="Background Image">
+<div class="test">
+  <ng-container *ngFor="let group of groupedTrainees; let i = index">
+    <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
+      <div class="container report-container">
+        <ng-container *ngFor="let trainees of group; let k = index;">
+                  <!-- Hidden input for the report ID -->
+                  <input type="hidden" [(ngModel)]="reportId" />
+                  <!-- Main title of the report -->
+                  <h1>Report for: {{ data.trainee.name }}</h1>
+
+                  <!-- Section for Trainee Details -->
+                  <h5 class="card-title">Trainee Details</h5>
+                  <div class="row text-start">
+                    <div class="col-md-6">
+                      <p><strong>Age:</strong> {{ data.trainee.age }}</p>
+                      <p><strong>Email:</strong> {{ data.trainee.email }}</p>
+                      <p><strong>Phone:</strong> {{ data.trainee.phone }}</p>
+                      <p><strong>Gender:</strong> {{ data.trainee.gender }}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p><strong>Address:</strong> {{ data.trainee.address }}</p>
+                      <p><strong>Membership Type:</strong> {{ data.trainee.membership.type }}</p>
+                      <p><strong>Subscription:</strong> {{ data.trainee.membership.subscribe_type }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Section for Class Overview -->
+                  <h5 class="card-title">Class Overview</h5>
+                  <div class="row text-start">
+                    <div class="col-md-6">
+                      <p><strong>Trainer:</strong> {{ trainees.trainer.name }}</p>
+                      <p><strong>Equipment used in class:</strong> {{ equipments[i] }}</p>
+                      <p><strong>Exercise done in class:</strong> {{ exercises[i] }}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p><strong>Class:</strong> {{ trainees.class.name }}</p>
+                      <p><strong>Total Number of Sessions:</strong> {{ trainees.class.total_no_of_sessions }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Section for Coach Feedback -->
+                  <h5 class="card-title">Coach feedback</h5>
+                  <div class="row text-start">
+                    <div class="col-md-6">
+                      <div *ngFor="let feedback of trainees.reviews; let l = index;">
+                        <p><strong>Comment {{ l + 1 }}:</strong> {{ feedback.comments }}</p>
+                        <p><strong>Rating:{{feedback.rating}}</strong>
+                          <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
+                            <i class="fa" [ngClass]="j < feedback.rating ? 'fas fa-star' : 'far fa-star'"></i>
+                          </span>
+                          ({{ feedback.rating }} out of 5)
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div>
+                        <!-- <canvas id="ratingChart"></canvas> -->
+                        <canvas id="ratingChart{{ i }}" width="400" height="200"></canvas>
+                      </div>
+                      <!-- Section for Overall Rating -->
+                      <div class="overall-rating">
+                        <p><strong>Overall Rating:</strong></p>
+                        <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
+                          <i class="fa" [ngClass]="j < traineeReports[i].overallRating ? 'fas fa-star' : 'far fa-star'"></i>
+                        </span>
+                        <p>{{ traineeReports[i].overallRating | number:'1.1-1' }} out of 5</p>
+                      </div>
+
+                      <!-- Section for Overall Comment -->
+                      <div class="overall-comment mt-4">
+                        <span><strong>Overall Comment:</strong> {{ trainees.recommend?.over_all_comment }}</span>
+                      </div>
+
+                      <!-- Section for Future Recommendations -->
+                      <div class="overall-comment mt-4">
+                        <span><strong>Future Recommendations:</strong> {{ trainees.recommend?.recommend }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Submit button for the report -->
+                  <div class="mt-3 text-center">
+                    <button class="btn" (click)="downloadReport()">Download Report</button>
+                  </div>
+                  <div class="buttons">
+                    <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
+                      <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
+                      <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+        </ng-container>
+      </div> <!-- Closing report-container -->
+    </div> <!-- Closing carousel-item -->
+  </ng-container>
+</div>
+
+  </div>
+</div>
+

@@ -21,6 +21,7 @@ export class MembershipComponent implements OnInit {
     private sidebarService: SidebarService,
     private membershipService: MembershipService,
     private router: Router,
+    private httpClient: HttpClient,
 
   ) { }
 
@@ -50,7 +51,9 @@ export class MembershipComponent implements OnInit {
       error: (error) => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
-        } else {
+        } else if(error.status === 403){
+
+          this.router.navigate(['trainer/classes']);
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
       }

@@ -62,6 +62,13 @@ export class AdminService {
     return this.selectedData;
   }
 
+  setTools(data: any){
+    this.selectedData = data;
+  }
+  getTools() {
+    return this.selectedData;
+  }
+
   // setSelectedTraineesData(data: any) {
   //   this.selectedTraineesData = data;
   // }
@@ -69,4 +76,14 @@ export class AdminService {
   // getSelectedTraineesData() {
   //   return this.selectedTraineesData;
   // }
+
+  addClass(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/component-add-class`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
+
+  createClass(data:any): Observable<any>{
+    const indexTraineesUrl = `${environment.domain}/gym-classes`;
+    return this.http.post(indexTraineesUrl,{...data},{ headers: this.getHeaders() });
+  }
 }

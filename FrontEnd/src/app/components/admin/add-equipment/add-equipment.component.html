@@ -1,0 +1,85 @@
+<div class="d-flex">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="main">
+      <div class="add-container">
+        <h2>Add New Equipment</h2>
+        <form (ngSubmit)="save(equipmentForm)" #equipmentForm="ngForm">
+          <!-- Equipment Name -->
+          <div class="form-group">
+            <label for="name">Equipment Name:</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              [(ngModel)]="name"
+              #nameField="ngModel"
+              required
+              minlength="3"
+              maxlength="255"
+              class="form-control"
+            />
+            <div *ngIf="nameField.invalid && nameField.touched" class="text-danger">
+              <small *ngIf="nameField.errors?.['required']">Equipment name is required.</small>
+              <small *ngIf="nameField.errors?.['minlength']">
+                Equipment name must be at least 3 characters long.
+              </small>
+              <small *ngIf="nameField.errors?.['maxlength']">
+                Equipment name cannot exceed 255 characters.
+              </small>
+            </div>
+          </div>
+  
+          <!-- Used Weight -->
+          <div class="form-group">
+            <label for="used_weight">Used Weight (kg):</label>
+            <input
+              id="used_weight"
+              type="number"
+              name="used_weight"
+              [(ngModel)]="used_weight"
+              #usedWeightField="ngModel"
+              min="0"
+              class="form-control"
+            />
+            <div *ngIf="usedWeightField.invalid && usedWeightField.touched" class="text-danger">
+              <small *ngIf="usedWeightField.errors?.['min']">Used weight cannot be negative.</small>
+              <small *ngIf="usedWeightField.errors?.['pattern']">Used weight must be a number.</small>
+            </div>
+          </div>
+  
+          <!-- Number of Equipments -->
+          <div class="form-group">
+            <label for="number_of_equipments">Number of Equipments:</label>
+            <input
+              id="number_of_equipments"
+              type="number"
+              name="number_of_equipments"
+              [(ngModel)]="number_of_equipments"
+              #numberOfEquipmentsField="ngModel"
+              required
+              min="1"
+              class="form-control"
+            />
+            <div *ngIf="numberOfEquipmentsField.invalid && numberOfEquipmentsField.touched" class="text-danger">
+              <small *ngIf="numberOfEquipmentsField.errors?.['required']">Number of equipments is required.</small>
+              <small *ngIf="numberOfEquipmentsField.errors?.['min']">There must be at least 1 equipment.</small>
+            </div>
+          </div>
+  
+          <!-- Save Button -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary" [disabled]="equipmentForm.invalid">Save</button>
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+          </div>
+  
+          <!-- عرض رسائل الأخطاء من الباك إند -->
+          <div *ngIf="serverErrors.length > 0" class="text-danger mt-3">
+            <div *ngFor="let error of serverErrors">
+              <small>{{ error }}</small>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

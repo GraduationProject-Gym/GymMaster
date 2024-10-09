@@ -55,9 +55,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
     //update users data
     Route::put('/updateusers/{id}', [AuthController::class, 'update']);
+    Route::get('getUserRole', [AuthController::class, 'getUserRole']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
-    
+    // show all trainee data in admin profile
+    //show all trainer datain admin profile
+
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
     // Report && review
@@ -103,6 +106,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/gym-classes/{gymClass}', [GymClassController::class, 'update']);
     Route::delete('/gym-classes/{gymClass}', [GymClassController::class, 'destroy']);
     Route::patch('/gym-classes/restore/{gymClass}', [GymClassController::class, 'restore'])->name('equipments.restore');
+    Route::get('/component-add-class', [GymClassController::class, 'ComponentAddClass']);
 
 });
 

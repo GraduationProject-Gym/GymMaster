@@ -98,7 +98,8 @@ export class LoginComponent {
             // this.router.navigate(['/trainer/classes']);
             window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/trainer/classes']));
           } else if (response.role === 'admin'){
-            this.router.navigate(['/admin-trainers']);
+            window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/admin-trainers']));
+            // this.router.navigate(['/admin-trainers']);
           }
         },
         error: (error) => {

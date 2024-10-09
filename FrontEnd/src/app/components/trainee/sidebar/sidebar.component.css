@@ -86,7 +86,6 @@ ul li {
   }
 }
 
-
 .carousel-control-prev {
   position: absolute;
   left: calc(20% + 10px); /* Adjust based on sidebar width */

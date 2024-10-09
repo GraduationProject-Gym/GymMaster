@@ -22,9 +22,12 @@ use App\Models\Trainee;
     {
         // return $user->role === 'trainee' || $user->role === 'admin';
         return $user->role === 'trainee';
-    // public function view(User $user, ?Trainee $trainee=null)
-    // {
-    //     return $user->role === 'trainee';
+
+    }
+
+     public function viewTrainer(User $user, ?Trainee $trainee=null)
+    {
+        return $user->role === 'trainer';
     }
 
     /**

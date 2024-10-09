@@ -92,10 +92,25 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
+    public function getUserRole()
+    {
+        $user = auth()->user();
+        if ($user->role) {
+            return response()->json([
+                'role' => $user->role
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'User role is not recognized.'
+            ], 403);
+        }
+    }
     /**
      * Display a listing of the resource.
      */
-    public function indexalltrainee(){
+    public function indexalltrainee()
+    {
         try {
             // $user = auth()->user();
             // return $user->role;
@@ -107,8 +122,8 @@ class AuthController extends Controller
             }
 
             $trainees = User::where('role', 'trainee')
-                            ->with('trainee.TraineeMembership')
-                            ->get();
+                ->with('trainee.TraineeMembership')
+                ->get();
 
 
             if ($trainees->isEmpty()) {
@@ -175,12 +190,12 @@ class AuthController extends Controller
 
     }
 
-//////////////////////
+    //////////////////////
 
-public function indexalltrainer() {
-    try {
-        $user = auth()->user();
-
+    public function indexalltrainer()
+    {
+        try {
+            $user = auth()->user();
         if ($user->role !== 'admin') {
             return response()->json(['error' => 'Unauthorized. You do not have permission to view all trainers.'], 403);
         }
@@ -219,11 +234,12 @@ public function indexalltrainer() {
             'error' => 'An unexpected error occurred. Please try again later.',
             'message' => $e->getMessage()
         ], 500);
+
     }
 }
 
 
-/////////////////////
+    /////////////////////
 
     /**
      * Display a listing of the resource.
@@ -242,7 +258,7 @@ public function indexalltrainer() {
 
 
         $rules = [
-            'name' => ['required', 'string', 'max:255','min:5'],
+            'name' => ['required', 'string', 'max:255', 'min:5'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'], // confirmed
             'phone' => ['nullable', 'string', 'max:11'],
@@ -275,7 +291,7 @@ public function indexalltrainer() {
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return response()->json(["message"=>$validator->errors()], 403);
+            return response()->json(["message" => $validator->errors()], 403);
         }
         // dd($this->checkEmailValidity($request->email));
         // if (!$this->checkEmailValidity($request->email)) {
@@ -290,10 +306,10 @@ public function indexalltrainer() {
         $user = User::where('email', $request->email)->first();
         $user1 = User::where('phone', $request->phone)->first();
         if ($user) {
-            return response()->json(['message' => 'this email are used'],403);
+            return response()->json(['message' => 'this email are used'], 403);
         }
         if ($user1) {
-            return response()->json(['message' => 'this phone are used'],403);
+            return response()->json(['message' => 'this phone are used'], 403);
         }
 
         // Create a new user
@@ -333,10 +349,10 @@ public function indexalltrainer() {
             ]);
 
         }
-        if($user->role === 'admin'){
+        if ($user->role === 'admin') {
             $user->email_verified_at = now();
             $user->save();
-            return ["message"=>"done"];
+            return ["message" => "done"];
         }
         if ($request->role === 'trainee') {
             return response()->json([
@@ -415,7 +431,7 @@ public function indexalltrainer() {
         // //     // $user->save();
         //     return ["message"=>$user];
         // }
-        if($user->role === 'trainer'){
+        if ($user->role === 'trainer') {
             // "data"=>
             $class = GymClass::where('trainer_id', $user->id)->first();
             return response()->json([
@@ -423,13 +439,13 @@ public function indexalltrainer() {
                 'role' => $user->role,
                 // 'class' => new GymClassResource($class),
             ], 200);
-        }else if($user->role === 'trainee'){
+        } else if ($user->role === 'trainee') {
             return response()->json([
                 'token' => $user->createToken($request->device_name)->plainTextToken,
                 'role' => $user->role,
 
             ], 200);
-        } else if($user->role === 'admin'){
+        } else if ($user->role === 'admin') {
             return response()->json([
                 'token' => $user->createToken($request->device_name)->plainTextToken,
                 'role' => $user->role,
@@ -554,6 +570,7 @@ public function indexalltrainer() {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
+        // return ["req"=>$request->all()];
         // Validation rules
         $rules = [
             // 'name' => 'string|max:255|min:5',
@@ -585,7 +602,7 @@ public function indexalltrainer() {
             return response()->json(["message" => $validator->errors()], 403);
         }
         $currentUser = User::findOrFail($id);
-
+        $data = $request->all();
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'user_images');
             $data['image'] = $imagePath;
@@ -594,8 +611,7 @@ public function indexalltrainer() {
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
-
-        $currentUser->update($request->all());
+        $currentUser->update($data);
         if ($currentUser->role === 'trainee') {
             $trainee = Trainee::where('user_id', $currentUser->id)->first();
             if ($trainee) {
@@ -633,7 +649,8 @@ public function indexalltrainer() {
         }
     }
 
-        public function destroy($id)
+
+    public function destroy($id)
     {
 
         $userToDelete = User::findOrFail($id);

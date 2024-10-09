@@ -12,14 +12,19 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          @if(role === 'trainer'){
-            <li class="nav-item mx-3 d-flex">
-              <a *ngIf="isLoggedIn" class="nav-link" (click)="class()">Class</a>
-            </li>
-          }
+          @if(isLoggedIn && role==='trainer'){
           <li class="nav-item mx-3 d-flex">
-            <a *ngIf="isLoggedIn" class="nav-link" (click)="profile()">Profile</a>
+            <a class="nav-link" (click)="class()">Class</a>
           </li>
+          } @else if (isLoggedIn && (role === 'trainee' || role === 'trainer')){
+          <li class="nav-item mx-3 d-flex">
+            <a class="nav-link" (click)="profile()">Profile</a>
+          </li>
+          }@else if (isLoggedIn && role==='admin'){
+          <li class="nav-item mx-3 d-flex">
+            <a class="nav-link" (click)="trainers()">Trainers</a>
+          </li>
+          }
           <li class="nav-item mx-3">
             <a class="nav-link" href="/home" (click)="closeMenu()">Home</a>
           </li>
@@ -32,12 +37,15 @@
           <li class="nav-item mx-3">
             <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
           </li>
-          <li class="nav-item mx-3 d-flex" *ngIf="!loading && !isLoggedIn">
-            <button class="btn" routerLinkActive="active" (click)="closeMenu()">Login</button><!--routerLink="/login"-->
+          @if(!isLoggedIn && !loading){
+          <li class="nav-item mx-3 d-flex">
+            <button class="btn" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</button>
           </li>
-          <li class="nav-item mx-3 d-flex" *ngIf="!loading && isLoggedIn">
+          }@else if (isLoggedIn && !loading){
+          <li class="nav-item mx-3 d-flex">
             <button class="btn" (click)="logout()">Logout</button>
           </li>
+          }
         </ul>
       </div>
     </div>
