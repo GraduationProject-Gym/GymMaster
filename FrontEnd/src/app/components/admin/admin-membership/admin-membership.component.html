@@ -5,18 +5,18 @@
       <h1>MEMBERSHIP
       </h1>
       <div class="membership-options d-flex justify-content-around w-100 mt-4">
-        <div *ngFor="let membershipType of memberships | keyvalue" class="membership p-4">
+        <div *ngFor="let membershipType of memberships | keyvalue" class="membership-option p-4">
           <h2>
             {{ membershipType.key }}
             <a [routerLink]="['/admin-editMembership', membershipType.value[0]?.id]" class="edit-icon">
               <i class="fas fa-edit mb-2" style="font-size: 20px; color: gray; margin-bottom: 4px;"></i>
             </a>
+            <i class="material-icons delete-icon" style="font-size: 20px; color: gray; cursor: pointer;"
+                  (click)="deleteMembershipPrice(membershipType.value.id)">delete</i>
           </h2>
           <div class="subscription-options">
             <div *ngFor="let subscription of membershipType.value" class="pricing-option mb-3">
               <h5>{{ capitalizeFirstLetter(subscription.subscribe_type) }}
-                <i class="material-icons delete-icon" style="font-size: 20px; color: gray; cursor: pointer;"
-                  (click)="deleteMembershipPrice(subscription.id)">delete</i>
               </h5>
               <p>Price: EGP {{ subscription.amount }}</p>
             </div>

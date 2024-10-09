@@ -26,20 +26,21 @@ export class AllExersiseComponent {
   currentSlide: number = 0;
   constructor(private adminService: AdminService, private router: Router) {
   }
-  
+
   ngOnInit() {
     this.exersises = this.adminService.getSelectedData();
     this.dataFlag = true;
     if (!this.exersises) {
-      this.allExersises();
+      this.allExercises();
       console.log(this.exersises);
       this.groupExercises();
       return;
     }
-    this.groupExercises(); // Group exersises into sets for the carousel
+    this.groupExercises(); // Group equipments into sets for the carousel
   }
+
   //reload
-  allExersises(){
+  allExercises(){
     this.errorMessage = null; // Reset the error message 
     this.adminService.indexExercises().subscribe({
       next: (response) => {
@@ -47,12 +48,12 @@ export class AllExersiseComponent {
         this.adminService.setSelectedData(response);
         this.exersises = response;
         this.groupExercises();
-        this.router.navigate(['/admin-allExercises']);
+        this.router.navigate(['/admin-allExersise']);
       },
       error: (error) => {
         console.log(error);
         if (error.status === 401) {
-          this.router.navigate(['/admin-allExercises']);
+          this.router.navigate(['/admin-allExersise']);
           this.errorMessage = error.error?.message;
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;
