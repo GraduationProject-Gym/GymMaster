@@ -4,41 +4,37 @@
   
   <!-- Main content area -->
   <div class="main">
-    <!-- Title section for Equipments -->
-    <h1 class="custom-title text-center">All Equipments</h1>
+    <ng-container *ngFor="let group of groupedEquipments; let i = index">
+      <div class="carousel-item" [class.active]="i === currentSlide">
+          <div class="container ">
+              <!-- Title section for Exercises -->
+              <h1 class="custom-title text-center">All Equipments</h1>
 
-    <!-- Carousel for organizing equipment cards -->
-    <div class="carousel">
-      <div class="carousel-inner">
-        <ng-container *ngFor="let group of groupedEquipments; let i = index">
-          <div class="carousel-item" [class.active]="i === currentSlide">
+               <!-- Carousel for organizing exercise cards -->
+    
             <div class="row d-flex justify-content-center">
               <div class="card shadow-lg col-md-4 col-lg-3 mx-2 my-2" *ngFor="let equipment of group">
                 <div class="card-body">
-                  <!-- Equipment details -->
+                  <!-- Exercise details -->
                   <h5 class="card-title mb-3">{{ equipment.name }}</h5>
                   <p class="card-text"><strong>Used Weight:</strong> {{ equipment.used_weight }} kg</p>
                   <p class="card-text"><strong>Number of Equipments:</strong> {{ equipment.number_of_equipments }}</p>
                 </div> <!-- End card body -->
               </div> <!-- End card -->
             </div> <!-- End row -->
-          </div> <!-- End carousel-item -->
-        </ng-container>
-      </div> <!-- End carousel-inner -->
-    </div> <!-- End carousel -->
-   
-  </div> <!-- End main -->
-  <!-- Carousel controls for navigating between slides -->
 
-  <div class="carousel-controls">
-    <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
-      <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-  <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
-    <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div> <!-- End carousel-controls -->
-
-</div>
+            <div class="carousel-controls">
+              <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button id="nextBtn" class="carousel-control-next" type="button" (click)="nextSlide()">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color:#ff6207; width: 50px; height: 50px;"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div> 
+          </div> 
+      </div> <!-- End carousel -->
+    </ng-container>
+    </div>
+    </div>

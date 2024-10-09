@@ -77,6 +77,8 @@ export const routes: Routes = [
     // { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
     { path: 'admin-addClass', component: AdminAddClassComponent },
     { path: 'payment/verify', component:PaymentVerifyComponent},
+
+
     { path: 'admin-membership', component: AdminMembershipComponent},
     { path: 'admin-editMembership/:id', component: AppAdminEditMembershipComponent},
     { path: 'admin-addMembership', component: AdminAddMembershipComponent},

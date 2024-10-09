@@ -35,6 +35,29 @@ export class AdminService {
     return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
   }
 
+  // Classes services
+  indexClasses(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/gym-classes`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
+
+   // Equipments services
+   indexEquipments(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/equipments`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
+
+  // Exercises services
+  indexExercises(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/exercises`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
+
+  // Membership services
+  indexMemberships(): Observable<any> {
+    const indexTraineesUrl = `${environment.domain}/membership`;
+    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+  }
 
   // Setter and getter to move data between components
   setSelectedData(data: any) {
@@ -73,5 +96,14 @@ export class AdminService {
   getReports(): Observable<any> {
     const getOwnerReports = `${environment.domain}/reportAdmin`;
     return this.http.get(getOwnerReports, { headers: this.getHeaders() });
+  }
+  addEquipment(data:any): Observable<any>{
+    const indexTraineesUrl = `${environment.domain}/equipments`;
+    return this.http.post(indexTraineesUrl,{...data},{ headers: this.getHeaders() });
+  }
+
+  addExercise(data:any): Observable<any>{
+    const indexTraineesUrl = `${environment.domain}/exercises`;
+    return this.http.post(indexTraineesUrl,{...data},{ headers: this.getHeaders() });
   }
 }

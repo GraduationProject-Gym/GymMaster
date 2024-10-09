@@ -71,8 +71,7 @@
             <button type="submit" class="btn btn-primary" [disabled]="equipmentForm.invalid">Save</button>
             <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
           </div>
-  
-          <!-- عرض رسائل الأخطاء من الباك إند -->
+  <!-- error messages from backend -->
           <div *ngIf="serverErrors.length > 0" class="text-danger mt-3">
             <div *ngFor="let error of serverErrors">
               <small>{{ error }}</small>

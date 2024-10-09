@@ -31,8 +31,13 @@ img{
 
 .container {
   width: 100%;
+  margin-top: 15%;
 }
 
+h1{
+  color: #ff6207;
+  font-weight: bold;
+}
 .card {
   background-color: rgba(255, 255, 255, 0.9);
 }
@@ -51,11 +56,13 @@ h2, h4 {
 }
 
 .carousel-control-prev-icon {
-  margin-right: 138px;
+  margin-right: 10px;
+  margin-top: 100%;
 }
 
 .carousel-control-next-icon {
-  margin-left: 138px;
+  margin-left: 13px;
+  margin-top: 100%;
 }
 
 body {
@@ -110,17 +117,7 @@ p, span {
     margin: auto;
   }
 }
-        /* edit icon*/
-.edit-icon {
-  color: #333;
-  margin-left: 5px;
-  text-decoration: none;
-  font-size: 20px;
-}
-
-.edit-icon:hover {
-  color: #ff8c00;
-}
+ 
 
 @media (max-width: 576px) {
   body {

@@ -49,9 +49,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('report', [ReviewController::class, 'report']);
     // trainees on one class
     // Route::post('trainees', [TraineeClassController::class, 'trainees']);
-    // show all trainee data
+    // show all trainee data in admin profile
     Route::get('/alltrainees', [AuthController::class, 'indexalltrainee']);
-    //show all trainer data
+    //show all trainer data in admin profile
     Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
     //update users data
     Route::put('/updateusers/{id}', [AuthController::class, 'update']);
@@ -59,9 +59,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
     // show all trainee data in admin profile
-    Route::get('/alltrainees', [AuthController::class, 'indexalltrainee']);
     //show all trainer datain admin profile
-    Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
 
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
@@ -89,7 +87,7 @@ Route::apiResource('users', AuthController::class);
 Route::post('users/{id}', [AuthController::class, 'update']);
 // Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
-// membership
+// joinedClasses
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::get('trainee-class/joined-classes-trainers', [TraineeClassController::class, 'indexJoinedClassesTrainers']);
 Route::apiResource('trainee-class', TraineeClassController::class);
