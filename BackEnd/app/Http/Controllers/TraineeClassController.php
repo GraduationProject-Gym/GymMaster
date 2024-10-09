@@ -9,6 +9,7 @@ use App\Http\Resources\TraineeScheduleResource;
 use App\Http\Resources\TraineeExerciseResource;
 use App\Http\Resources\TraineeEquipmentResource;
 use App\Http\Resources\TraineeClassesResource;
+use App\Http\Resources\TrainerResource;
 use App\Models\GymClass;
 use App\Models\UserClass;
 use App\Models\Trainee;
@@ -37,7 +38,7 @@ class TraineeClassController extends Controller
     }
     public function trainees(){
         try{
-            $this->authorize('view', UserClass::class);
+            $this->authorize('viewTrainer', UserClass::class);
             $user = Auth::user();
             $class = GymClass::where('trainer_id', $user->id)->first();
             if(!$class){
@@ -135,32 +136,41 @@ class TraineeClassController extends Controller
     {
         //
         $request->validate([
-            'class_id' => 'required|exists:gym_classes,id',
+            // 'class_id' => 'required|exists:gym_classes,id',
+            'class_id' => 'required|exists:gymclass,id',
         ]);
+        $trainee = Trainee::where('user_id',auth::id());
         $class_id = $request->class_id;
-        $trainee = Trainee::findOrFail(auth::id());
-        $currentUser = User::findOrFail(auth::id());
+        $currentUser = User::find(auth::id());
+
         // $this->authorize('create', $trainee);
         try {
             $this->authorize('create', UserClass::class);
         } catch (AuthorizationException $e) {
             return response()->json([
                 'message' => 'You are not authorized to join the class'
-            ], 403);
+            ], 401);
         }
 
         $trainee_class = GymClass::findOrFail($class_id);
+        // return ["message"=>$class_id];
+        $no_trainees = UserClass::where('class_id', $request->class_id)->count();
         $exists = UserClass::where('user_id', auth::id())
             ->where('class_id', $class_id)
             ->exists();
 
-        if (!$exists) {
-            $user_class = UserClass::create([
-                'user_id' => auth::id(),
-                'class_id' => $request->class_id
-            ]);
+        if ($trainee_class->max_trainee > $no_trainees) {
+            if (!$exists) {
+                $user_class = UserClass::create([
+                    'user_id' => auth::id(),
+                    'class_id' => $request->class_id
+                ]);
+            } else {
+                return response()->json(['joined' => 'You already joined to this class'], 403);
+            }
         } else {
-            return response()->json(['message' => 'You joined to this class']);
+            return response()->json(
+                ['message' => 'You cannot join to this class, max number of trainees is exceeded'],403);
         }
         return response()->json([
             'message' => 'You joined to class successfully',
@@ -181,27 +191,44 @@ class TraineeClassController extends Controller
                 'message' => 'You are not authorized to join the class'
             ], 403);
         }
-   
-        $user = User::findOrFail(Auth::id());
+
+        $user = User::find(Auth::id());
 
         if($user->role == 'trainee')
         {
-            $joinedClasses = $user->gymClass()
-            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
-            ->get();
-
+            $joinedClasses = $user->gymClass;
         }
         else if($user->role == 'admin')
         {
-            $trainee = User::findOrFail($request->trainee_id);
-            $joinedClasses = $trainee->gymClass()
-            ->with(['schedule', 'equipments', 'exercises', 'trainer'])
-            ->get();
+            $trainee = User::find($request->trainee_id);
+            $joinedClasses = $trainee->gymClass;
         }
         return response()->json([
             // 'traineeData' => $user,
             'joinedClasses' => TraineeClassResource::collection($joinedClasses),
         ]);
+    }
+    function indexJoinedClassesTrainers()
+    {
+        try {
+            $this->authorize('view', UserClass::class);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to show trainers of classes'
+            ], 403);
+        }
+        $user = User::findOrFail(Auth::id());
+
+        if ($user->role == 'trainee') {
+            $joinedClasses = $user->gymClass()->with('trainer')->get();
+            $trainers = $joinedClasses->map(function ($class) {
+                return $class->trainer;
+            });
+
+            return response()->json([
+                'trainers' => TrainerResource::collection($trainers)
+            ]);
+        }
     }
 
     /**

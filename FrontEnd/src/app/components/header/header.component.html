@@ -37,11 +37,11 @@
           <li class="nav-item mx-3">
             <a class="nav-link" href="#Schedules" routerLinkActive="active" (click)="closeMenu()">Schedules</a>
           </li>
-          @if(!isLoggedIn){
+          @if(!isLoggedIn && !loading){
           <li class="nav-item mx-3 d-flex">
             <button class="btn" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</button>
           </li>
-          }@else if (isLoggedIn){
+          }@else if (isLoggedIn && !loading){
           <li class="nav-item mx-3 d-flex">
             <button class="btn" (click)="logout()">Logout</button>
           </li>

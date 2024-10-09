@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\TraineeClassResource;
 use App\Models\GymClass;
 use App\Models\Review;
 use App\Models\Trainee;
@@ -19,6 +20,7 @@ use App\Models\UserClass;
 use App\Http\Resources\ReportResource;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\ReportTraineeResource;
+use App\Http\Resources\TraineeJoinedClassReviews;
 
 class ReviewController extends Controller
 {
@@ -89,7 +91,7 @@ class ReviewController extends Controller
                 'trainee_id' => $trainee,
                 'trainer_id' => $trainer
             ]);
-            return response()->json(["message"=>"done"]);
+            // return response()->json(["message"=>"done"]);
         }catch(AuthorizationException $e){
             return response()->json([
                 'message' => "You are not user to show this"
@@ -98,27 +100,65 @@ class ReviewController extends Controller
     }
     public function report(Request $request){
 
-        $user = Auth::user();// trainer
-        $trainee = User::where("id",$request->trainee_id)->first();
-        $class = GymClass::where("trainer_id",$user->id)->first();
-        $reviews = Review::where("trainee_id", $request->trainee_id)
-                 ->where("class_id", $class->id)
-                 ->get();
-        return response()->json([
-            'class' => new ReportResource($class),
-            'review'=> ReviewResource::collection($reviews),
-            'trainee'=>new UserResource($trainee),
-        ], 200);
+        try {
+            $this->authorize("report", Review::class);
+            $user = Auth::user();// trainer
+            $trainee = User::where("id",$request->trainee_id)->first();
+            $class = GymClass::where("trainer_id",$user->id)->first();
+            $reviews = Review::where("trainee_id", $request->trainee_id)
+                    ->where("class_id", $class->id)
+                    ->get();
+            return response()->json([
+                'class' => new ReportResource($class),
+                'review'=> ReviewResource::collection($reviews),
+                'trainee'=>new UserResource($trainee),
+            ], 200);
+        }catch(AuthorizationException $e){
+            return response()->json([
+                'message' => "You are not trainer owner to show this"
+            ], 403);
+        }
+
+
     }
 
     public function reportTrainee(Request $request){
+        try {
 
+            $this->authorize("traineeReports", Review::class);
+            $trainee = Auth::user();
+            $gymClasses = $trainee->ClassesTrainees;
+            return response()->json([
+                'trainee' => new UserResource($trainee),
+                'data'=>ReportTraineeResource::collection($gymClasses),
+            ], 200);
+        }catch(AuthorizationException $e){
+            return response()->json([
+                'message' => "You are not owner to show this"
+            ], 403);
+        }
+
+
+    }
+
+    // index all auth trainee reviews
+    public function indexTraineeReviews()
+    {
+        try {
+            $this->authorize("traineeReports", Review::class);
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'message' => 'You are not authorized to show these reviews'
+            ], 403);
+        }
         $trainee = Auth::user();
-        $gymClasses = $trainee->ClassesTrainees;
+        $joinedClasses = $trainee->gymClass()
+            ->with(['classTrainer.user','review'])
+            ->get();
         return response()->json([
-            'trainee' => new UserResource($trainee),
-            'data'=>ReportTraineeResource::collection($gymClasses),
-        ], 200);
+            // 'message' => $joinedClasses
+            'joinedClasses' => TraineeJoinedClassReviews::collection($joinedClasses)
+        ]);
     }
     /**
      * Display the specified resource.

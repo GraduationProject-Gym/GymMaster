@@ -55,13 +55,30 @@
   transform: scale(1.1);
 }
 
-.card-title {
+/* .card-title {
   font-size: 1.8rem;
   color: #e9472a;
   font-weight: bold;
   margin-bottom: 10px;
   text-transform: uppercase;
+} */
+
+.card-title {
+  font-size: 1.8rem; /* Adjust this size to fit with your card layout */
+  color: #e9472a;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-transform: uppercase;
 }
+
+.card-subtitle {
+  font-size: 1.6rem; /* Subtitle smaller than title */
+  color: #666;
+  font-weight: 500;
+  margin: 8px 0px 15px;
+  text-transform: capitalize;
+}
+
 
 .card-text {
   color: #333;

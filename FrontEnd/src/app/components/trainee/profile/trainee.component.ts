@@ -21,9 +21,10 @@ import { SidebarService } from '../../../services/trainee/sidebar/sidebar.servic
   styleUrl: './trainee.component.css'
 })
 export class TraineeComponent implements OnInit {
-  constructor(private sidebarService: SidebarService, private router: Router) {}
+  constructor(private sidebarService: SidebarService, private router: Router) { }
   data: any;
   errorMessage: string | null = null;
+  successMessage: string | null = null;
   dataFlag = false;
 
   ngOnInit() {
@@ -62,8 +63,44 @@ export class TraineeComponent implements OnInit {
   }
 
   setProfileImage(data: any) {
-    if (!data.srcImg) {
-      data.srcImg = data.gender === 'female' ? "/female.png" : "/male.png";
+    if (!data.image || data.image === '') {
+      data.srcImg = data.gender === 'female' ? '/female.png' : '/male.png';
+    } else {
+      data.srcImg = data.image; // Use the actual image from the response
     }
   }
+
+  // updateProfile(id: string) {
+  //   let idNumber: number = Number(id);
+  //   const updatedData = {
+  //     age: this.data.age,
+  //     address: this.data.address,
+  //     phone: this.data.phone,
+  //     image: this.data?.srcImg
+  //   };
+  //   console.log(updatedData);
+
+
+    // this.sidebarService.updateProfileData(idNumber, updatedData).subscribe({
+    //   next: (response: any) => {
+    //     console.log(response);
+
+    //     // this.successMessage = 'Profile updated successfully!';
+    //     setTimeout(() => {
+    //       this.successMessage = null;
+    //     }, 3000);
+    //   },
+    //   error: (error) => {
+    //     console.log(error);
+    //     if (error.status === 401) {
+    //       this.router.navigate(['/login']);
+    //     } else {
+    //       this.errorMessage = 'An error occurred while updating the profile. Please try again later.';
+    //     }
+    //     setTimeout(() => {
+    //       this.errorMessage = null;
+    //     }, 5000);
+    //   }
+    // });
+  // }
 }

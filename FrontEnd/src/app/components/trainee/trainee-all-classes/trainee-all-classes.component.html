@@ -12,9 +12,12 @@
               <h4 class="card-title"><strong>Class Details</strong></h4>
               <div class="row">
                 <div class="col-md-6">
-                  <p><strong>Trainer Name:</strong> <span class="badge">{{ classObj.trainer.user.name }}</span></p>
-
-                  <p><strong>Number of Sessions:</strong> <span class="badge">{{ classObj.total_no_of_session }}</span>
+                  <p><strong>Trainer Name:</strong> <span class="badge">{{ classObj.trainer.name }}</span></p>
+                  <p>
+                    <strong>Number of Sessions:</strong>
+                    <span class="badge">
+                      {{ classObj.total_no_of_sessions}}
+                    </span>
                   </p>
                   <p>
                     <strong>Equipment:</strong>
@@ -27,8 +30,7 @@
                   <p>
                     <strong>Status:</strong>
                     <span class="badge">
-                      @if(classObj.status === 1){Active}
-                      @else if (classObj.status === 0){Inactive}
+                      {{ classObj.status === 1 ? 'Active' : 'Inactive' }}
                     </span>
                   </p>
                   <p>
@@ -53,9 +55,24 @@
                   </span>
                 </p>
               </div>
-              <div class="text-center">
-                <button class="btn">Join</button>
+
+              @if(successMessage){
+              <div class="alert alert-success">
+                {{successMessage}}
               </div>
+              }
+              @if(errorMessage){
+              <div class="alert alert-danger">
+                {{errorMessage}}
+              </div>
+              }
+
+              <input type="hidden" [value]="classObj.id" #classIdInput>
+
+              <div class="text-center">
+                <button class="btn" (click)="joinClass(classIdInput.value)">Join</button>
+              </div>
+
               <div class="buttons">
                 <button id="prevBtn" class="carousel-control-prev" type="button" (click)="prevSlide()">
                   <span class="carousel-control-prev-icon" aria-hidden="true"

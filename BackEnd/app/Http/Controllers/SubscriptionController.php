@@ -84,9 +84,9 @@ class SubscriptionController extends Controller
     {
         //payment
         try {
-
             $this->authorize('create', Subscription::class);
             Stripe::setApiKey(config('stripe.stripe_sk'));
+            // return ["message"=>111];
 
             $membership = Memberships::find($request->id);
             if($membership){
@@ -101,7 +101,7 @@ class SubscriptionController extends Controller
                 'name' => $membership->subscribe_type,
                 // Additional product data can be added here if needed
             ];
-    
+
             // Create the product in Stripe
             $product = \Stripe\Product::create($productData);
 
@@ -114,13 +114,13 @@ class SubscriptionController extends Controller
                             //     'name' => $member,
                             // ],
                             'product' => $product->id, // Use the created product ID
-                            'unit_amount' => intval($amount),  // Price is already in cents
+                            'unit_amount' => intval($amount*100),  // Price is already in cents
                         ],
                         'quantity' => 1,
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => route('success'),
+                'success_url' => url(env('Front_Domin').'/payment/verify?status=success&member_id='.$membership->id),
                 'cancel_url' => route('cancel'),
             ]);
             return response()->json(['url' => $session->url]);
@@ -134,9 +134,10 @@ class SubscriptionController extends Controller
         }
 
     }
-    public function success(){
+    public function success(Request $request){
         try{
             $user_id = Auth::user()->id;
+            // return $user_id;
             $trainee = Trainee::where('user_id', $user_id)->first();
             if(!$trainee){
                 return response()->json(['message' => 'Please Do Registe First'], 404);
@@ -144,34 +145,32 @@ class SubscriptionController extends Controller
             // $user_id = Auth::user()->id;
             $trainee = Trainee::where('user_id', $user_id)->first();
             // $trainee = Trainee::where('user_id', $user_id)->first();
-
+            $membership = Memberships::where('id', $request->membership_id)->first();
             $trainee_ = Subscription::create([
-                // TraineeMembership
                 'user_id'=> $user_id,// $user_id
-                // 'payment_method'=> $payment_method,
-                'amount' => $trainee->TraineeMembership->amount,
+                'amount' => $membership->amount,
             ]);
+            // update
+            $trainee->membership_id = $membership->id;
+            $trainee->save();
             $NO_days = 0;
-            if($trainee->TraineeMembership->subscribe_type == 'weekly'){
+            if($membership->subscribe_type == 'weekly'){
                 $NO_days = 7;
             }
-            else if($trainee->TraineeMembership->subscribe_type == 'Monthly'){
+            else if($membership->subscribe_type == 'Monthly'){
                 $NO_days = 30;
             }
-            else if($trainee->TraineeMembership->subscribe_type == 'Yearly'){
+            else if($membership->subscribe_type == 'Yearly'){
                 $NO_days = 365;
-
             }
             $trainee->expiration_date = Carbon::now()->addDays($NO_days);
             $trainee->save();
             return response()->json([
-                'message' => $trainee_],
-                    403);
+                'message' => $trainee_]);
             }
             catch (Exception $e) {
                 return response()->json(['error' => $e->getMessage()], 500);
             }
-
     }
 
     public function cancel(){

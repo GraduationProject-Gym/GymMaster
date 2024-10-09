@@ -85,13 +85,21 @@ export class LoginComponent {
         next: (response) => {
           console.log(response);
           if (response.role === 'trainee'){
-            this.router.navigate(['/trainee-profile']);
+            let traineesArray = response;
+            this.loginService.setSelectedclass(traineesArray);
+            window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/trainee-profile']));
+            // this.router.navigate(['/trainee-profile'])
+            //   .then(() => {
+            //     window.location.reload();
+            //   });
           } else if (response.role === 'trainer'){
             let traineesArray = response;
             this.loginService.setSelectedclass(traineesArray);
-            this.router.navigate(['/trainer/classes']);
+            // this.router.navigate(['/trainer/classes']);
+            window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/trainer/classes']));
           } else if (response.role === 'admin'){
-            this.router.navigate(['/admin-trainers']);
+            window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/admin-trainers']));
+            // this.router.navigate(['/admin-trainers']);
           }
         },
         error: (error) => {

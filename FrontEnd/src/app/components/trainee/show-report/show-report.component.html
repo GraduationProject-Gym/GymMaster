@@ -6,25 +6,25 @@
     <ng-container *ngFor="let group of groupedTrainees; let i = index">
       <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
         <div class="container report-container">
-          <ng-container *ngFor="let trainees of group; let i = index; trackBy: trackByReportId">
+          <ng-container *ngFor="let trainees of group; let k = index;">
                     <!-- Hidden input for the report ID -->
                     <input type="hidden" [(ngModel)]="reportId" />
                     <!-- Main title of the report -->
-                    <h1>Report for: {{ trainees.name }}</h1>
+                    <h1>Report for: {{ data.trainee.name }}</h1>
 
                     <!-- Section for Trainee Details -->
                     <h5 class="card-title">Trainee Details</h5>
                     <div class="row text-start">
                       <div class="col-md-6">
-                        <p><strong>Age:</strong> {{ trainees.age }}</p>
-                        <p><strong>Email:</strong> {{ trainees.email }}</p>
-                        <p><strong>Phone:</strong> {{ trainees.phone }}</p>
-                        <p><strong>Gender:</strong> {{ trainees.gender }}</p>
+                        <p><strong>Age:</strong> {{ data.trainee.age }}</p>
+                        <p><strong>Email:</strong> {{ data.trainee.email }}</p>
+                        <p><strong>Phone:</strong> {{ data.trainee.phone }}</p>
+                        <p><strong>Gender:</strong> {{ data.trainee.gender }}</p>
                       </div>
                       <div class="col-md-6">
-                        <p><strong>Address:</strong> {{ trainees.address }}</p>
-                        <p><strong>Membership Type:</strong> {{ trainees.membership }}</p>
-                        <p><strong>Subscription:</strong> {{ trainees.subscription }}</p>
+                        <p><strong>Address:</strong> {{ data.trainee.address }}</p>
+                        <p><strong>Membership Type:</strong> {{ data.trainee.membership.type }}</p>
+                        <p><strong>Subscription:</strong> {{ data.trainee.membership.subscribe_type }}</p>
                       </div>
                     </div>
 
@@ -32,13 +32,13 @@
                     <h5 class="card-title">Class Overview</h5>
                     <div class="row text-start">
                       <div class="col-md-6">
-                        <p><strong>Trainer:</strong> {{ trainees.trainerName }}</p>
-                        <p><strong>Equipment used in class:</strong> {{ trainees.equipment }}</p>
-                        <p><strong>Exercise done in class:</strong> {{ trainees.exercise }}</p>
+                        <p><strong>Trainer:</strong> {{ trainees.trainer.name }}</p>
+                        <p><strong>Equipment used in class:</strong> {{ equipments[i] }}</p>
+                        <p><strong>Exercise done in class:</strong> {{ exercises[i] }}</p>
                       </div>
                       <div class="col-md-6">
-                        <p><strong>Class:</strong> {{ trainees.className }}</p>
-                        <p><strong>Total Number of Sessions:</strong> {{ trainees.totalNoOfSession }}</p>
+                        <p><strong>Class:</strong> {{ trainees.class.name }}</p>
+                        <p><strong>Total Number of Sessions:</strong> {{ trainees.class.total_no_of_sessions }}</p>
                       </div>
                     </div>
 
@@ -46,13 +46,13 @@
                     <h5 class="card-title">Coach feedback</h5>
                     <div class="row text-start">
                       <div class="col-md-6">
-                        <div *ngFor="let feedback of trainees.comments; let i = index">
-                          <p><strong>Comment {{ i + 1 }}:</strong> {{ feedback.comment }}</p>
-                          <p><strong>Rating:</strong>
+                        <div *ngFor="let feedback of trainees.reviews; let l = index;">
+                          <p><strong>Comment {{ l + 1 }}:</strong> {{ feedback.comments }}</p>
+                          <p><strong>Rating:{{feedback.rating}}</strong>
                             <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
-                              <i class="fa" [ngClass]="j < feedback.rate ? 'fas fa-star' : 'far fa-star'"></i>
+                              <i class="fa" [ngClass]="j < feedback.rating ? 'fas fa-star' : 'far fa-star'"></i>
                             </span>
-                            ({{ feedback.rate }} out of 5)
+                            ({{ feedback.rating }} out of 5)
                           </p>
                         </div>
                       </div>
@@ -60,26 +60,24 @@
                         <div>
                           <!-- <canvas id="ratingChart"></canvas> -->
                           <canvas id="ratingChart{{ i }}" width="400" height="200"></canvas>
-
                         </div>
-
                         <!-- Section for Overall Rating -->
                         <div class="overall-rating">
                           <p><strong>Overall Rating:</strong></p>
                           <span *ngFor="let star of [1, 2, 3, 4, 5]; let j = index">
-                            <i class="fa" [ngClass]="j < traineeReport.overallRating ? 'fas fa-star' : 'far fa-star'"></i>
+                            <i class="fa" [ngClass]="j < traineeReports[i].overallRating ? 'fas fa-star' : 'far fa-star'"></i>
                           </span>
-                          <p>{{ traineeReport.overallRating | number:'1.1-1' }} out of 5</p>
+                          <p>{{ traineeReports[i].overallRating | number:'1.1-1' }} out of 5</p>
                         </div>
 
                         <!-- Section for Overall Comment -->
                         <div class="overall-comment mt-4">
-                          <p><strong>Overall Comment:</strong> {{ trainees.overallComment }}</p>
+                          <span><strong>Overall Comment:</strong> {{ trainees.recommend?.over_all_comment }}</span>
                         </div>
 
                         <!-- Section for Future Recommendations -->
                         <div class="overall-comment mt-4">
-                          <p><strong>Future Recommendations:</strong> {{ trainees.futureRecommendations }}</p>
+                          <span><strong>Future Recommendations:</strong> {{ trainees.recommend?.recommend }}</span>
                         </div>
                       </div>
                     </div>

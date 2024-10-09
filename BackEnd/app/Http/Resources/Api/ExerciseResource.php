@@ -19,8 +19,8 @@ class ExerciseResource extends JsonResource
             'name' => $this->name,
             'category' => $this->category,
             'no_of_times' => $this->no_of_times,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            // 'created_at' => $this->created_at,
+            // 'updated_at' => $this->updated_at,
         ];
     }
 }

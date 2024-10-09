@@ -15,13 +15,27 @@
             </div>
 
             <!-- Trainer Name -->
-            <div class="form-group">
+            <!-- <div class="form-group ">
               <label for="trainerName">Trainer Name:</label>
               <input id="trainerName" type="text" name="trainerName" [(ngModel)]="trainerName" #trainerNameField="ngModel" required class="form-control">
               <div *ngIf="trainerNameField.invalid && trainerNameField.touched" class="text-danger">
                 <small *ngIf="trainerNameField.errors?.['required']">Trainer name is required.</small>
               </div>
+            </div> -->
+
+            <div class="form-group">
+              <label for="trainerName">Trainer Name:</label>
+              <select id="trainerName" name="trainerName" [(ngModel)]="trainerID" #trainerNameField="ngModel" (change)="onTrainerChange($event)" required class="form-control">
+                <option value="" disabled selected>Select a trainer</option>
+                <option *ngFor="let trainer of trainers" [value]="trainer.id">
+                  {{ trainer.name }}
+              </option>
+              </select>
+              <div *ngIf="trainerNameField.invalid && trainerNameField.touched" class="text-danger">
+                <small *ngIf="trainerNameField.errors?.['required']">Trainer name is required.</small>
+              </div>
             </div>
+
 
             <!-- Number of Sessions -->
             <div class="form-group">
@@ -30,6 +44,15 @@
               <div *ngIf="sessionsField.invalid && sessionsField.touched" class="text-danger">
                 <small *ngIf="sessionsField.errors?.['required']">Number of sessions is required.</small>
                 <small *ngIf="sessionsField.errors?.['min']">There must be at least 8 session.</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="sessions">Max Number of trainee:</label>
+              <input id="sessions" type="number" name="sessions" [(ngModel)]="maxTrainee" #maxTraineeField="ngModel" required max="50" class="form-control">
+              <div *ngIf="maxTraineeField.invalid && maxTraineeField.touched" class="text-danger">
+                <small *ngIf="maxTraineeField.errors?.['required']">Number of trainee is required.</small>
+                <small *ngIf="maxTraineeField.errors?.['min']">There must be at least 10 trainee.</small>
               </div>
             </div>
 
@@ -58,7 +81,7 @@
              <h5 class="mt-2">Sessions Per week</h5>
              <div *ngFor="let group of groups; let i = index" class="mb-3 border p-3 rounded bg-light shadow-sm">
                <h6 class="text-secondary">Session {{ i + 1 }}</h6>
-
+               <!-- duration -->
                <!-- Days control -->
                 <label for="groupDate{{ i }}">Date (Session {{ i + 1 }}):</label>
                 <input id="groupDate{{ i }}" type="date" [(ngModel)]="group.date" name="groupDate{{i}}" class="form-control">
@@ -96,7 +119,12 @@
 
 
              <!-- Add Session button -->
-             <button type="button" class="btn mt-3" (click)="addSession()">Add Session</button>
+              @if(!add_Session){
+                <button type="button" class="btn mt-3" (click)="addSession()">Add Session</button>
+
+              }@else {
+                <p>you can add only 2 seesion</p>
+              }
 
              <div class="d-flex justify-content-start">
               <!-- Equipment Information -->
@@ -104,8 +132,11 @@
                 <div class="form-group m-5">
                   <label for="equipment">Equipment Name:</label>
                   <div *ngFor="let item of equipmentList">
-                    <input type="checkbox" [id]="item" [value]="item" [(ngModel)]="selectedEquipment[item]" name="equipment-{{item}}" class="form-check-input">
-                    <label [for]="item" class="form-check-label">{{ item }}</label>
+                    <input type="checkbox" [id]="'equipment-' + item.id"
+                          (change)="onEquipmentChange($event, item.id)"
+                          class="form-check-input" [checked]="selectedEquipment.includes(item.id)">
+                    <label [for]="'equipment-' + item.id" class="form-check-label">{{ item.name }}</label>
+                    <input *ngIf="selectedEquipment.includes(item.id)" type="hidden" name="equipmentIds" [value]="item.id">
                   </div>
                 </div>
               </div>
@@ -115,8 +146,12 @@
                 <div class="form-group m-5">
                   <label for="exercise">Exercise:</label>
                   <div *ngFor="let exercise of exerciseList">
-                    <input type="checkbox" [id]="exercise" [value]="exercise" [(ngModel)]="selectedExercises[exercise]" name="exercise-{{exercise}}" class="form-check-input">
-                    <label [for]="exercise" class="form-check-label">{{ exercise }}</label>
+                    <input type="checkbox" [id]="'exercise-' + exercise.id" [value]="exercise.id"
+                      (change)="onExerciseChange($event, exercise.id)" class="form-check-input"
+                      [checked]="selectedExercises.includes(exercise.id)">
+                    <label [for]="'exercise-' + exercise.id" class="form-check-label">{{ exercise.name }}</label>
+      <!-- Hidden input to hold selected exercise IDs -->
+                    <input *ngIf="selectedExercises.includes(exercise.id)" type="hidden" name="exerciseIds" [value]="exercise.id">
                   </div>
                 </div>
               </div>
@@ -124,7 +159,7 @@
 
             <!-- Save Button -->
             <div class="text-center">
-              <button type="submit" class="btn" [disabled]="classForm.invalid">Save</button>
+              <button type="submit" class="btn"  [disabled]="classForm.invalid">Save</button>
               <button type="button" class="btn" (click)="cancel()">Cancel</button>
             </div>
           </form>

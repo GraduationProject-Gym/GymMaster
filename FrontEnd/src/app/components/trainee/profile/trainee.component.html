@@ -7,32 +7,31 @@
         <div>
           <h1>
             {{data.name?data.name:'doaa'}}
-            <a href="trainee-profile/edit" class="edit-icon">
+            <!-- <a (click)="updateProfile(classIdInput.value)" class="edit-icon"> -->
+              <a routerLink="/trainee-profile/edit" class="edit-icon">
+                <!-- <a href="trainee-profile/edit" class="edit-icon"> -->
+
               <i class="fas fa-edit"></i>
             </a>
           </h1>
-
+          <input type="hidden" [value]="data.id" #classIdInput>
           <p><strong>Email:</strong> {{ data.email }}</p>
           <p><strong>Phone:</strong> {{ data.phone }}</p>
           <p><strong>Address:</strong> {{ data.address }}</p>
           <p><strong>Age:</strong> {{ data.age }}</p>
           <p><strong>Gender:</strong> {{ data.gender }}</p>
           <p><strong>Membership Type:</strong> {{ data.membership_type }}
-            <a href="/trainee-membership" class="edit-icon">
+            <a routerLink="/trainee-membership" class="edit-icon">
               <i class="fas fa-edit"></i>
             </a>
           </p>
-          <p><strong>Subscription:</strong> {{ data.subscription }}
-            <a href="/trainee-membership" class="edit-icon">
-              <i class="fas fa-edit"></i>
-            </a>
-          </p>
+          <p><strong>Subscription:</strong> {{ data.subscription }}</p>
         </div>
         <img [src]="data.srcImg" alt="Trainee Profile Picture" class="profile-img ms-auto">
       </div>
     </div>
 
-    } @else if(errorMessage){
+    }@else if(errorMessage){
     <div class="alert alert-danger profile d-flex flex-column">
       {{errorMessage}}
     </div>

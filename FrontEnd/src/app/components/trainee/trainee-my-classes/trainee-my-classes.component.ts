@@ -28,7 +28,7 @@ export class TraineeMyClassesComponent {
   // Index classes
   ngOnInit() {
     this.classes = this.sidebarService.getSelectedData();
-    // console.log(this.classes);
+    console.log(this.classes);
     if (!this.classes) {
       this.router.navigate(['/trainee']);
       return;
@@ -38,9 +38,11 @@ export class TraineeMyClassesComponent {
 
   groupClasses(classes: any[] = []) {
     const groupSize = 1;
+    // console.log()
     for (let i = 0; i < classes.length; i += groupSize) {
       this.groupedClasses.push(classes.slice(i, i + groupSize));
     }
+    console.log(this.groupedClasses);
   }
 
   formatTime(time: string): string {

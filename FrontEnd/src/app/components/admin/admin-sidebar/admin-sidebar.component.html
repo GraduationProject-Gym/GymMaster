@@ -1,7 +1,7 @@
-<div class="sidebar w-20" >
+<div class="sidebar w-20">
   <nav>
     <ul>
-                        <!-- Trainers -->
+      <!-- Trainers -->
       <li class="dropdown">
         <a (click)="trainers()" (click)="toggleDropdownTrainers()">Trainers</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenTrainers">
@@ -9,48 +9,39 @@
           <li><a routerLink="/admin-addTrainer">Add Trainer</a></li>
         </ul>
       </li>
-                        <!-- Trainees -->
+      <!-- Trainees -->
       <li><a (click)="trainees()">Trainees</a></li>
-                        <!-- classes -->
+      <!-- classes -->
       <li class="dropdown">
         <a routerLink="/admin-allClasses" (click)="toggleDropdownClasses()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClasses">
           <li><a routerLink="/admin-allClasses">All Classes</a></li>
-          <li><a routerLink="/admin-addClass">Add Class</a></li>
+          <li><a (click)="addClass()">Add Class</a></li><!--routerLink="/admin-addClass"-->
         </ul>
       </li>
+      <!-- memberhip -->
+      <li class="dropdown">
+        <a (click)="toggleDropdownMembership()">Membership</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenMembership">
+          <li><a routerLink="/admin-membership">All Membership</a></li>
+          <li><a routerLink="/admin-addMembership">Add Membership</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a (click)="toggleDropdownAttendance()">Attendance</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenAttendance">
+          <li><a routerLink="/admin-trainees-attendance"> Trainees Attendance</a></li>
+          <li><a routerLink="/admin-trainers-attendance">Trainers Attendance</a></li>
+        </ul>
+      </li>
+      <li><a routerLink="/admin-trainees-attendance"> Trainees Attendance</a></li>
+      <li><a routerLink="/admin-reports">Reports</a></li>
 
-      <li><a routerLink="/trainee-goal">Goals</a></li>
-      <li><a routerLink="/trainee-membership">Membership</a></li>
-      <!-- <li class="dropdown">
-        <a routerLink="/trainee-myClasses" (click)="toggleDropdownClass()">Classes</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpenClass">
-          <li><a routerLink="/trainee-allClasses" (click)="classes()">All Classes</a></li>
-          <li><a routerLink="/trainee-myClasses">My Class</a></li>
-        </ul>
-      </li> -->
-      <li class="dropdown">
-        <a routerLink="/trainee-showReviews" (click)="toggleDropdownReview()">Reviews</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpenReview">
-          <li><a routerLink="/trainee-doReview">Do Review</a></li>
-          <li><a routerLink="/trainee-showReviews">Show Reviews</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a routerLink="/admin-allEquipments" (click)="toggleDropdownReview()">ُEquipments</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpenReview">
-          <li><a routerLink="/admin-allEquipments" (click)="trainers()">Show Equipment</a></li>
-          <li><a routerLink="/trainee-showReviews">Show Reviews</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a routerLink="/admin-allExersise" (click)="toggleDropdownReview()">ُExercises</a>
-        <ul class="dropdown-content" [class.show]="dropdownOpenReview">
-          <li><a routerLink="/admin-allExersise" (click)="trainers()">Show ُExercises</a></li>
-          <li><a routerLink="/trainee-showReviews">Show Reviews</a></li>
-        </ul>
-      </li>
-      <li><a routerLink="/admin-trainees-attendance" > Trainees Attendance</a></li>
+
+      <!-- <li><a routerLink="/equipment">Equipment</a></li>
+      <li><a routerLink="/trainee-attendance">Attendance</a></li>
+      <li><a routerLink="/trainee-showReport">Reports</a></li>
+      <li><a routerLink="/vouchers">Vouchers</a></li> -->
     </ul>
   </nav>
 </div>

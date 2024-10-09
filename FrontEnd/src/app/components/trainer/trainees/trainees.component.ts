@@ -85,8 +85,9 @@ export class TraineesComponent implements OnInit {
       error: (error) => {
         if (error.status === 403) {
           // this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
+          
         }else if (error.status === 401) {
-          console.log("not Auth");
+          // console.log("not Auth");
           this.router.navigate(['login']);
         }
         else {

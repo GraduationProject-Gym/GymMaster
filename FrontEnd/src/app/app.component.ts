@@ -26,6 +26,11 @@ import { AllTraineesComponent } from './components/admin/all-trainees/all-traine
 import { MoreDetailsTraineeComponent } from './components/admin/more-details-trainee/more-details-trainee.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { LoginService } from './services/authentication/login/login.service';
+import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
+import { ClassesService } from './services/trainee/classes/classes.service';
+import { AdminAllReportsComponent } from './components/admin/admin-all-reports/admin-all-reports.component';
+import { AppAdminEditMembershipComponent } from './components/admin/app-admin-edit-membership/app-admin-edit-membership.component';
+import { AdminMembershipComponent } from './components/admin/admin-membership/admin-membership.component';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
@@ -61,6 +66,10 @@ import { AuthorizedComponent } from './components/authorized/authorized.componen
     AllTraineesComponent,
     MoreDetailsTraineeComponent,
     AdminAddClassComponent ,
+    PaymentVerifyComponent,
+    AdminMembershipComponent,
+    AppAdminEditMembershipComponent,
+    AdminAllReportsComponent,
     AllEquipmentsComponent,
     AllExersiseComponent,
     AdminAddExerciseComponent,
@@ -74,7 +83,8 @@ import { AuthorizedComponent } from './components/authorized/authorized.componen
     ClassService,
     SidebarService,
     MembershipService,
-    LoginService
+    LoginService,
+    ClassesService
   ],
 
   templateUrl: './app.component.html',

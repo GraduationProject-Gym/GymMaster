@@ -29,6 +29,11 @@ import { AdminAllClassesComponent } from './components/admin/admin-all-classes/a
 // import { AdminEditClassComponent } from './components/admin/admin-edit-class/admin-edit-class.component';
 import { AdminAddClassComponent } from './components/admin/admin-add-class/admin-add-class.component';
 import { TrainerComponent } from './components/trainer/profile/trainer.component';
+import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
+import { AdminAllReportsComponent } from './components/admin/admin-all-reports/admin-all-reports.component';
+import { AdminAddMembershipComponent } from './components/admin/admin-add-membership/admin-add-membership.component';
+import { AppAdminEditMembershipComponent } from './components/admin/app-admin-edit-membership/app-admin-edit-membership.component';
+import { AdminMembershipComponent } from './components/admin/admin-membership/admin-membership.component';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component';
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
@@ -71,6 +76,11 @@ export const routes: Routes = [
     { path: 'admin-allClasses', component: AdminAllClassesComponent },
     // { path: 'admin-editClass/:classId', component: AdminEditClassComponent },
     { path: 'admin-addClass', component: AdminAddClassComponent },
+    { path: 'payment/verify', component:PaymentVerifyComponent},
+    { path: 'admin-membership', component: AdminMembershipComponent},
+    { path: 'admin-editMembership/:id', component: AppAdminEditMembershipComponent},
+    { path: 'admin-addMembership', component: AdminAddMembershipComponent},
+     { path: 'admin-reports', component: AdminAllReportsComponent},
     { path: 'admin-allEquipments', component: AllEquipmentsComponent },
     { path: 'admin-allExersise', component: AllExersiseComponent },
     { path: 'admin-addExersise', component: AdminAddExerciseComponent },
@@ -79,6 +89,6 @@ export const routes: Routes = [
     { path: 'admin-history-attendance/:id', component: AdminHistoryAttendanceComponent},
     { path: 'Not-Authorized', component: AuthorizedComponent},
     { path: "**", component: ErrorComponent }
-    
+
 ];
 

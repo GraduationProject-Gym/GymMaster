@@ -15,10 +15,7 @@ export class LogoutService {
   private readonly logoutUrl = `${environment.domain}/logout`;
 
   logout() {
-    // Clear tokens and user data
     this.authTokenService.removeToken();
-
-    // Redirect to the login page or home page
-    this.router.navigate(['/login']);
+    window.location.href = this.router.serializeUrl(this.router.createUrlTree(['/login']));
   }
 }

@@ -1,27 +1,33 @@
 <div class="sidebar w-20">
   <nav>
     <ul>
-      <li><a routerLink="/trainee-profile" (click)="profile()">Profile</a></li>
+      <li><a (click)="profile()">Profile</a></li>
       <li><a routerLink="/trainee-goal">Goals</a></li>
-      <li><a routerLink="/trainee-membership" (click)="membership()">Membership</a></li>
+      <li><a (click)="membership()">Membership</a></li>
       <li class="dropdown">
         <a (click)="toggleDropdownClass()">Classes</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenClass">
           <li><a (click)="classes()">All Classes</a></li>
+          @if(warningMessage){
+            <div class="alert alert-warning">
+              {{ warningMessage }}
+            </div>
+          }
           <li><a (click)="myClasses()">My Class</a></li>
         </ul>
       </li>
       <li class="dropdown">
-        <a routerLink="/trainee-showReviews" (click)="toggleDropdownReview()">Reviews</a>
+        <a (click)="toggleDropdownReview()">Reviews</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenReview">
-          <li><a routerLink="/trainee-doReview" (click)="trainers()">Do Review</a></li>
-          <li><a routerLink="/trainee-showReviews">Show Reviews</a></li>
+          <li><a (click)="trainers()">Do Review</a></li>
+          <li><a (click)="showMyReviews()">Show Reviews</a></li> <!--routerLink="/trainee-showReviews" -->
         </ul>
       </li>
-      <li><a routerLink="/trainee-attendance">Attendance</a></li>
-      <li><a routerLink="/trainee-showReport">Reports</a></li>
-      
-      <!-- <li><a routerLink="/vouchers">Vouchers</a></li> -->
+
+      <!-- <li><a routerLink="/equipment">Equipment</a></li> -->
+      <li><a (click)="attendance()">Attendance</a></li>
+      <li><a  (click)="showReports()">Reports</a></li>
+      <!-- <li><a routerLink="/vouchers">Vouchers</a>routerLink="/trainee-showReport"</li> -->
     </ul>
   </nav>
 </div>

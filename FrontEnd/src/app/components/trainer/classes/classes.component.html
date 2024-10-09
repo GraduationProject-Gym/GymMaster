@@ -7,10 +7,10 @@ Title Section
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 
   <!-- Content Container: Contains both the Class Info and Image sections -->
-  <div class="d-flex m-5" style="width: 100%; max-width: 1200px;">
+  <div class="d-flex m-5">
 
     <!-- Left Section: Class Details and Actions -->
-    <div style="flex: 1;" class="m-5">
+    <div style="flex: 1;" class="m-5 card-class" style="width:50%">
 
       <!-- Card: Class Overview -->
       <div class="card mb-4">
@@ -29,7 +29,7 @@ Title Section
             <!-- Equipments Card -->
             <div class="card">
               <div class="card-body text-start">
-                <h6 class="mt-4"><strong>Equipments:</strong></h6>
+                <h6 class="m-4"><strong>Equipments:</strong></h6>
                 <div>
                   <ul>
                     <!-- Loop through equipments array -->
@@ -66,7 +66,7 @@ Title Section
       </div>
 
       <!-- Loop through Classes Array -->
-      <div *ngFor="let class of data.class.scheduals; let i = index" style="width: 100%; max-width: 600px; text-align: center;">
+      <div *ngFor="let class of data.class.schedule; let i = index" style="width:100%; text-align: center;">
 
         <!-- Class Card -->
         <div class="card mb-3" (click)="toggleDetails(class.id)">
@@ -74,7 +74,7 @@ Title Section
         </div>
 
         <!-- Class Details: Displayed when clicked -->
-        <div *ngIf="activeClassId === class.id" class="details p-3 border rounded text-start" style="width: 100%; max-width: 600px;">
+        <div *ngIf="activeClassId === class.id" class="details p-3 border rounded text-start" style="width: 100%;">
           <p class="details-title"><strong>Details:</strong></p>
           <p><strong>Days:</strong> <span class="details-info">{{ class.nameDay }}</span></p>
           <p><strong>Hours:</strong>: <span class="details-info">{{ class.session_start }}</span></p>
@@ -84,10 +84,7 @@ Title Section
 
       <!-- Action Buttons -->
       <div class="buttons mt-3 text-center">
-        <a routerLink="/trainer/trainees" (click)="viewTrainees()" routerLinkActive="active" class="btn ">View Trainees</a>
-        <button class="btn " (click)="addClass()">Add</button>
-        <button class="btn " (click)="goToUpdatePage()">Update</button>
-        <button class="btn " (click)="goToShowPage()">Show</button>
+        <a (click)="viewTrainees()" routerLinkActive="active" class="btn ">View Trainees</a>
       </div>
 
     </div>

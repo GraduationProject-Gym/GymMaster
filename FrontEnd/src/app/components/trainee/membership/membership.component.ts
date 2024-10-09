@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../../services/trainee/sidebar/sidebar.service';
 import { MembershipService } from '../../../services/trainee/membership/membership.service';
+import { HttpClient } from '@angular/common/http';  // Import HttpClient
+import { environment } from '../../../../environments/environment';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 
 @Component({
   selector: 'app-membership',
@@ -17,7 +20,9 @@ export class MembershipComponent implements OnInit {
   constructor(
     private sidebarService: SidebarService,
     private membershipService: MembershipService,
-    private router: Router
+    private router: Router,
+    private httpClient: HttpClient,
+
   ) { }
 
   data: any;
@@ -38,16 +43,17 @@ export class MembershipComponent implements OnInit {
   // Handle reload case
   membership() {
     this.errorMessage = null; // Reset the error message
-
     this.sidebarService.indexMemberships().subscribe({
       next: (response) => {
         this.data = response.Memberships;
-        this.toArray(this.data);        
+        this.toArray(this.data);
       },
       error: (error) => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
-        } else {
+        } else if(error.status === 403){
+
+          this.router.navigate(['trainer/classes']);
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
       }
@@ -73,20 +79,21 @@ export class MembershipComponent implements OnInit {
   // Subscribe a membership
   subscribe(membershipId: number) {
     this.errorMessage = null; // Reset the error message
+    console.log(membershipId);
     this.membershipService.subscribeMemberShip(membershipId).subscribe({
-      next: (response: any) => {
+      next:(response) => {
         this.membershipService.setSelectedData(response);
-        // console.log(response);
+        console.log(response);
         window.location.href = response.url;
       },
-      error: (error) => {
+      error:(error) => {
         if (error.status === 401) {
           this.router.navigate(['/login']);
           // this.errorMessage = error.error?.message;
           // console.log(error);
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;
-          // console.log(error);
+          console.log(error);
         } else {
           this.errorMessage = 'An unexpected error occurred. Please try again later.';
         }
