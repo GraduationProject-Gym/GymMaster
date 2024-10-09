@@ -27,12 +27,7 @@ export class AddEquipmentComponent {
 
   save(equipmentForm: NgForm) {
     if (equipmentForm.valid) {
-      const equipmentData = {
-        name: this.name,
-        used_weight: this.used_weight,
-        number_of_equipments: this.number_of_equipments
-      };
-
+    
       const data_equipment =  {
         name: this.name,
         used_weight: this.used_weight,

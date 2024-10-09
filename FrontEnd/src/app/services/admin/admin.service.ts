@@ -97,4 +97,9 @@ export class AdminService {
     const indexTraineesUrl = `${environment.domain}/equipments`;
     return this.http.post(indexTraineesUrl,{...data},{ headers: this.getHeaders() });
   }
+
+  addExercise(data:any): Observable<any>{
+    const indexTraineesUrl = `${environment.domain}/exercises`;
+    return this.http.post(indexTraineesUrl,{...data},{ headers: this.getHeaders() });
+  }
 }

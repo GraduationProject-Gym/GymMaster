@@ -4,6 +4,7 @@ import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component'
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AdminService } from '../../../services/admin/admin.service';
 
 @Component({
   selector: 'app-admin-add-exercise',
@@ -43,21 +44,27 @@ export class AdminAddExerciseComponent {
   name: string = '';
   category: string = '';
   no_of_times: number | null = null;
+  data: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  // constructor(private http: HttpClient, private router: Router) {}
+  constructor(private adminService: AdminService,private router: Router) {
+  }
 
   save(exerciseForm: NgForm) {
     if (exerciseForm.valid) {
-      const exerciseData = {
+      
+      const data_exercise =  {
         name: this.name,
         category: this.category,
-        no_of_times: this.no_of_times
+        no_of_times:this.no_of_times
       };
-      this.http.post('/api/exercises', exerciseData).subscribe({
-        next: (response) => {
+
+      this.adminService.addExercise(data_exercise).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.data = this.adminService.getSelectedData();
           console.log('Exercise saved:', response);
-         
-          this.router.navigate(['/admin/exercises']);
+          this.router.navigate(['admin-allExersise']);
         },
         error: (error) => {
           if (error.status === 422) {
