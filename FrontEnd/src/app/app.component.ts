@@ -29,6 +29,7 @@ import { LoginService } from './services/authentication/login/login.service';
 import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
 import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
+import { AddEquipmentComponent } from './components/admin/add-equipment/add-equipment.component';
 
 @Component({
   selector: 'app-root',
@@ -60,6 +61,7 @@ import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-e
     AllEquipmentsComponent,
     AllExersiseComponent,
     AdminAddExerciseComponent,
+    AddEquipmentComponent,
   ],
 
   providers: [
