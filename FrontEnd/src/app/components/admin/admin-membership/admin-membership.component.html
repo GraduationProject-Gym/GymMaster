@@ -13,14 +13,18 @@
             </a>
           </h2>
           
-          <div *ngFor="let price of option.prices" class="pricing-option mb-3">
-            <h5>{{ price.period }}
+          <div  class="pricing-option mb-3"> <!--*ngFor="let price of option.prices"-->
+            <h5>{{ option.subscribe_type }}
+              <!-- <i class="material-icons delete-icon" 
+              style="font-size: 20px; color: gray; cursor: pointer;"
+              (click)="deleteMembershipPrice(option.id, price.periodID)">delete</i> -->
+
               <i class="material-icons delete-icon" 
               style="font-size: 20px; color: gray; cursor: pointer;"
-              (click)="deleteMembershipPrice(option.id, price.periodID)">delete</i>
-
+              (click)="deleteMembershipPrice(option.id)">delete</i>
+             
             </h5>
-            <p>Price: EGP {{ price.price }}</p>
+            <p>Price: EGP {{ option.amount }}</p>
           </div>
         </div>
       </div>

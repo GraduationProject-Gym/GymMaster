@@ -173,4 +173,28 @@ export class AdminSidebarComponent {
       }
     });
   }
+
+
+  //indexMemberships
+  allMemberships(){
+    this.errorMessage = null; // Reset the error message 
+    this.adminService.indexMemberships().subscribe({
+      next: (response) => {
+        console.log(response.Memberships);
+        this.adminService.setSelectedData(response.Memberships);
+        this.router.navigate(['/admin-membership']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/admin-membership']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
+  }
 }

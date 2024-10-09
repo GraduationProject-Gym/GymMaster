@@ -24,7 +24,7 @@
       <li class="dropdown">
         <a (click)="toggleDropdownMembership()">Membership</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenMembership">
-          <li><a routerLink="/admin-membership">All Membership</a></li>
+          <li><a (click)="allMemberships()">All Membership</a></li> <!--routerLink="/admin-membership"-->
           <li><a routerLink="/admin-addMembership">Add Membership</a></li>
         </ul>
       </li>

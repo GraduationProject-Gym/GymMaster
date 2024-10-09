@@ -85,7 +85,7 @@ Route::apiResource('users', AuthController::class);
 Route::post('users/{id}', [AuthController::class, 'update']);
 // Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
-// membership
+// joinedClasses
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::get('trainee-class/joined-classes-trainers', [TraineeClassController::class, 'indexJoinedClassesTrainers']);
 Route::apiResource('trainee-class', TraineeClassController::class);
