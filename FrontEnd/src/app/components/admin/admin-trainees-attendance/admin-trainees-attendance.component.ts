@@ -145,8 +145,26 @@ export class AdminTraineesAttendanceComponent implements OnInit {
     return trainee.id;
   }
 
-  getHistory() {
-
+  getAttendanceHistory(userId: any) {
+    let user_id: number = userId ? Number(userId) : 0;
+    this.adminService.indexAttendanceHistory(user_id).subscribe({
+      next: (response:any) => {
+        console.log(response.attendance);
+        this.adminService.setSelectedData(response.attendance);
+        this.router.navigate([`/admin-history-attendance/${userId}`]);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          this.router.navigate(['/login']);
+          this.errorMessage = error.error?.message;
+        } else if (error.status === 403) {
+          this.errorMessage = error.error?.message;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      }
+    });
   }
 
   // Function to go to the previous slide

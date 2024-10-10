@@ -51,6 +51,11 @@ export class AdminService {
     return this.http.post(checkInUrl, { "user_id": user_id }, { headers: this.getHeaders() });
   }
 
+  indexAttendanceHistory(user_id: number) {
+    const indexAttendanceHistoryURL = `${environment.domain}/attendance`;
+    return this.http.post(indexAttendanceHistoryURL, { "user_id": user_id }, { headers: this.getHeaders() });
+  }
+
   // Setter and getter to move data between components
   setSelectedData(data: any) {
     this.selectedData = data;

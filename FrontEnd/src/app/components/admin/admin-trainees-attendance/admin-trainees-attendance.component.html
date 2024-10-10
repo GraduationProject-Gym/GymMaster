@@ -23,16 +23,17 @@
                                     <td>
                                         <button class="btn " (click)="checkIn(traineeAttendance)">In</button>
                                         <button class="btn " (click)="checkOut(traineeAttendance)">Out</button>
-                                        <div *ngIf="traineeAttendance.message" class="message">{{traineeAttendance.message }}</div>
+                                        <div *ngIf="traineeAttendance.message" class="message">
+                                            {{traineeAttendance.message }}</div>
+                                        <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
                                     </td>
 
                                     <td>
                                         <!-- <button class="btn" [routerLink]="['/admin-history-attendance', traineeAttendance.id]">History</button> -->
                                         <button class="btn"
                                             (click)="getAttendanceHistory(traineeAttendance.id)">History</button>
-
+                                            <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
                                     </td>
-
                                 </tr>
                             </ng-container>
                         </tbody>

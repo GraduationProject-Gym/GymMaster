@@ -5,7 +5,7 @@
     <div class="main">
         <div class="container mt-5">
             <h1 class="text-center">{{ traineeData?.name }} Attendance History</h1>
-
+            <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
             <div class="table-responsive">
                 <table class="table custom-table text-center">
                     <thead class="thead">
@@ -16,10 +16,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let record of traineeData?.attendanceRecords">
-                            <td>{{ record.date }}</td>
-                            <td>{{ record.checkIn }}</td>
-                            <td>{{ record.checkOut }}</td>
+                        <tr *ngFor="let record of traineeData">
+                            <td>{{ record.created_at | date: 'yyyy-MM-dd' }}</td>
+                            <td>{{ record.check_in | date: 'shortTime' }}</td>
+                            <td>{{ record.check_out | date: 'shortTime' }}</td>
                         </tr>
                     </tbody>
                 </table>
