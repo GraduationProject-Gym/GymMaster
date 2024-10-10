@@ -48,7 +48,7 @@ class AttendanceController extends Controller
         ], 200);
     }
     public function checkin(Request $request)
-    {//30|BjvahpfhfO4iHQVBdagA4qVFxHAsVg4Gi811tstaa5f0c484 
+    {//30|BjvahpfhfO4iHQVBdagA4qVFxHAsVg4Gi811tstaa5f0c484
         try {
             $this->authorize('create', Attendance::class);
         } catch (AuthorizationException $e) {
@@ -56,6 +56,7 @@ class AttendanceController extends Controller
                 'message' => 'You are not authorized to checkin'
             ], 403);
         }
+        // return ["message"=>$request->all()];
         Attendance::create([
             'check_in' => now(),
             'user_id' => $request->user_id

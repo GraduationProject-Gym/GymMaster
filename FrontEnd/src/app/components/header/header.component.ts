@@ -77,14 +77,14 @@ export class HeaderComponent implements OnInit, OnDestroy{
   }
 
   class() {
-    this.role = sessionStorage.getItem('role');
+    // this.role = sessionStorage.getItem('role');
     if (this.role === 'trainer') {
       this.router.navigate(['/trainer/classes']);
     }
   }
 
   trainers() {
-    this.role = sessionStorage.getItem('role');
+    // this.role = sessionStorage.getItem('role');
     if (this.role === 'admin') {
       this.router.navigate(['/admin-trainers']);
     }
