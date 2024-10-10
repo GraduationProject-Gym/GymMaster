@@ -35,13 +35,22 @@ export class TraineesComponent implements OnInit {
         this.traineees[i].showReview = false;
         this.groupedTrainees.push(traineesArray.slice(i, i + groupSize));
       }
+      this.setProfileImage();
     }
   }
 
   toggleReview(trainee: any) {
     trainee.showReview = !trainee.showReview;
   }
-
+  setProfileImage() {
+    this.traineees.forEach((trainer:any) => {
+      if (!trainer.image || trainer.image === '') {
+        trainer.srcImg = trainer.gender === 'female' ? '/female.png' : '/male.png';
+      } else {
+        trainer.srcImg = trainer.image;
+      }
+    });
+  }
 
   // createReport(){}
 
@@ -75,6 +84,7 @@ export class TraineesComponent implements OnInit {
         console.log(traineesArrays);
         this.classService.setTrainee(traineesArrays);
         this.traineees = response.data;//this.classService.getTrainee();
+        this.setProfileImage();
         const groupSize = 3;
         const traineesArray = this.traineees;
         for (let i = 0; i < traineesArray.length; i += groupSize) {
@@ -85,7 +95,7 @@ export class TraineesComponent implements OnInit {
       error: (error) => {
         if (error.status === 403) {
           // this.errorMessage = error.error?.message || 'You are not authorized to view this class.';
-          
+
         }else if (error.status === 401) {
           // console.log("not Auth");
           this.router.navigate(['login']);
@@ -172,84 +182,3 @@ export class TraineesComponent implements OnInit {
   }
 
 }
-// function ngOnInit() {
-//   throw new Error('Function not implemented.');
-// }
-
-
-
-// trainees: any[] = [
-//   {
-//     name: 'SANDY SAMIR1',
-//     sessionsAttended: 4,
-//     membership: 'VIP',
-//     subscription: 'Month',
-//     image: '/assets/Woman athlete exercising with kettlebell.jfif',
-//     showReview: false,
-//     Reviews: [
-//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-//     ],
-//     tempReview: { comment: '', rate: 1 }
-//   },  {
-//     name: 'SANDY SAMIR2',
-//     sessionsAttended: 4,
-//     membership: 'VIP',
-//     subscription: 'Month',
-//     image: '/assets/Woman athlete exercising with kettlebell.jfif',
-//     showReview: false,
-//     Reviews: [
-//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-//     ],
-//     tempReview: { comment: '', rate: 1 }
-//   },  {
-//     name: 'SANDY SAMIRnm3',
-//     sessionsAttended: 4,
-//     membership: 'VIP',
-//     subscription: 'Month',
-//     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-//     showReview: false,
-//     Reviews: [
-//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-//     ],
-//     tempReview: { comment: '', rate: 1 }
-//   },  {
-//     name: 'SANDY SAMIRww4',
-//     sessionsAttended: 4,
-//     membership: 'VIP',
-//     subscription: 'Month',
-//     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-//     showReview: false,
-//     Reviews: [
-//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-//     ],
-//     tempReview: { comment: '', rate: 1 }
-//   },  {
-//     name: 'SANDY SAMIRmm5',
-//     sessionsAttended: 4,
-//     membership: 'VIP',
-//     subscription: 'Month',
-//     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-//     showReview: false,
-//     Reviews: [
-//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-//     ],
-//     tempReview: { comment: '', rate: 1 }
-//   },  {
-//     name: 'SANDY SAMIRyyy6',
-//     sessionsAttended: 4,
-//     membership: 'VIP',
-//     subscription: 'Month',
-//     image: '/assets/Woman athlete exercising with kettlebell.jfif',
-//     showReview: false,
-//     Reviews: [
-//       { date: '2024-09-10', attendens: 'Present', comment: 'Great session!', rate: 5 },
-//       { date: '2024-09-12', attendens: 'Absent', comment: 'Missed the class', rate: 0 }
-//     ],
-//     tempReview: { comment: '', rate: 1 }
-//   },
-// ];

@@ -43,10 +43,10 @@ class GymClass extends Model
 
     public function schedule()
     {
-        return $this->hasMany(Schedule::class, 'class_id')->whereBetween('date_day', [
-            Carbon::today(), // Current date
-            Carbon::today()->addDays(7) // 7 days from today
-        ]);
+        return $this->hasMany(Schedule::class, 'class_id')
+        ->where('date_day', '>', Carbon::today()) // Schedules greater than today
+        ->orderBy('date_day', 'asc') // Ensure schedules are ordered by date
+        ->limit(2);
     }
     public function scheduleReport()
     {

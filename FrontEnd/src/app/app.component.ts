@@ -28,11 +28,11 @@ import { AdminAddClassComponent } from './components/admin/admin-add-class/admin
 import { LoginService } from './services/authentication/login/login.service';
 import { PaymentVerifyComponent } from './components/trainee/payment-verify/payment-verify.component';
 import { ClassesService } from './services/trainee/classes/classes.service';
+import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
+import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAllReportsComponent } from './components/admin/admin-all-reports/admin-all-reports.component';
 import { AppAdminEditMembershipComponent } from './components/admin/app-admin-edit-membership/app-admin-edit-membership.component';
 import { AdminMembershipComponent } from './components/admin/admin-membership/admin-membership.component';
-import { AllEquipmentsComponent } from './components/admin/all-equipments/all-equipments.component'; // تأكد من صحة المسار
-import { AllExersiseComponent } from './components/admin/all-exersise/all-exersise.component';
 import { AdminAddExerciseComponent } from './components/admin/add-exercise/add-exercise.component';
 import { AddEquipmentComponent } from './components/admin/add-equipment/add-equipment.component';
 import { AdminTraineesAttendanceComponent } from './components/admin/admin-trainees-attendance/admin-trainees-attendance.component';
@@ -57,7 +57,6 @@ import { AuthorizedComponent } from './components/authorized/authorized.componen
     TraineeComponent,
     EditProfileComponent,
     TraineeMyClassesComponent,
-    TraineeAllClassesComponent,
     DoReviewComponent,
     ShowReviewComponent,
     AttendanceComponent,
@@ -67,6 +66,8 @@ import { AuthorizedComponent } from './components/authorized/authorized.componen
     MoreDetailsTraineeComponent,
     AdminAddClassComponent ,
     PaymentVerifyComponent,
+    AllEquipmentsComponent,
+    AllExersiseComponent,
     AdminMembershipComponent,
     AppAdminEditMembershipComponent,
     AdminAllReportsComponent,

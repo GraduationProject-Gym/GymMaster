@@ -1,7 +1,7 @@
 <div class="d-flex">
   <app-admin-sidebar></app-admin-sidebar>
   <div class="main">
-<img src="/background5.jpg" alt="Background Image">
+<!-- <img src="/background5.jpg" alt="Background Image"> -->
 <div class="test">
   <ng-container *ngFor="let group of groupedTrainees; let i = index">
     <div class="carousel-item" [ngClass]="{'active': i === currentSlide}">
@@ -10,21 +10,21 @@
                   <!-- Hidden input for the report ID -->
                   <input type="hidden" [(ngModel)]="reportId" />
                   <!-- Main title of the report -->
-                  <h1>Report for: {{ data.trainee.name }}</h1>
+                  <h1>Report for: {{ trainees.trainee.name }}</h1>
 
                   <!-- Section for Trainee Details -->
                   <h5 class="card-title">Trainee Details</h5>
                   <div class="row text-start">
                     <div class="col-md-6">
-                      <p><strong>Age:</strong> {{ data.trainee.age }}</p>
-                      <p><strong>Email:</strong> {{ data.trainee.email }}</p>
-                      <p><strong>Phone:</strong> {{ data.trainee.phone }}</p>
-                      <p><strong>Gender:</strong> {{ data.trainee.gender }}</p>
+                      <p><strong>Age:</strong> {{ trainees.trainee.age }}</p>
+                      <p><strong>Email:</strong> {{ trainees.trainee.email }}</p>
+                      <p><strong>Phone:</strong> {{ trainees.trainee.phone }}</p>
+                      <p><strong>Gender:</strong> {{ trainees.trainee.gender }}</p>
                     </div>
                     <div class="col-md-6">
-                      <p><strong>Address:</strong> {{ data.trainee.address }}</p>
-                      <p><strong>Membership Type:</strong> {{ data.trainee.membership.type }}</p>
-                      <p><strong>Subscription:</strong> {{ data.trainee.membership.subscribe_type }}</p>
+                      <p><strong>Address:</strong> {{ trainees.trainee.address }}</p>
+                      <p><strong>Membership Type:</strong> {{ trainees.trainee.membership.type }}</p>
+                      <p><strong>Subscription:</strong> {{ trainees.trainee.membership.subscribe_type }}</p>
                     </div>
                   </div>
 
@@ -71,11 +71,11 @@
                       </div>
 
                       <!-- Section for Overall Comment -->
-                      <div class="overall-comment mt-4">
+                       <div class="overall-comment mt-4">
                         <span><strong>Overall Comment:</strong> {{ trainees.recommend?.over_all_comment }}</span>
                       </div>
 
-                      <!-- Section for Future Recommendations -->
+                      <!--Section for Future Recommendations -->
                       <div class="overall-comment mt-4">
                         <span><strong>Future Recommendations:</strong> {{ trainees.recommend?.recommend }}</span>
                       </div>

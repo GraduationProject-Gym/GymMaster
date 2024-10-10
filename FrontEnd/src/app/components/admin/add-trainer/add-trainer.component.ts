@@ -1,4 +1,4 @@
-  import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -92,7 +92,7 @@ export class AddTrainerComponent {
       const formData = new FormData();
       Object.keys(this.addTrainerForm.value).forEach(key => {
         if (key === 'image') {
-          const img = this.selectedFile;
+          const img = this.selectedImage;
           if (img) {
             formData.append('image', img);
           }
@@ -158,4 +158,3 @@ export class AddTrainerComponent {
     }
   }
 }
-

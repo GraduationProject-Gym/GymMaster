@@ -20,6 +20,8 @@ use App\Models\UserClass;
 use App\Http\Resources\ReportResource;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\ReportTraineeResource;
+use App\Http\Resources\adminReportResource;
+
 use App\Http\Resources\TraineeJoinedClassReviews;
 
 class ReviewController extends Controller
@@ -140,7 +142,20 @@ class ReviewController extends Controller
 
 
     }
-
+    public function reportAdmin(){
+    try {
+        $this->authorize("adminReports", Review::class);
+        // $user = Auth::user();
+                $user_class = UserClass::get();
+            return response()->json([
+                'data'=>adminReportResource::collection($user_class),
+            ], 200);
+        }catch(AuthorizationException $e){
+            return response()->json([
+                'message' => "You are not owner to show this"
+            ], 403);
+        }
+    }
     // index all auth trainee reviews
     public function indexTraineeReviews()
     {

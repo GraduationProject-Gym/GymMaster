@@ -13,17 +13,17 @@
       <li><a (click)="trainees()">Trainees</a></li>
       <!-- classes -->
       <li class="dropdown">
-        <a routerLink="/admin-allClasses" (click)="toggleDropdownClasses()">Classes</a>
+        <a (click)="toggleDropdownClasses()" (click)="allClasses()">Classes</a> <!--routerLink="/admin-allClasses" -->
         <ul class="dropdown-content" [class.show]="dropdownOpenClasses">
-          <li><a routerLink="/admin-allClasses">All Classes</a></li>
-          <li><a (click)="addClass()">Add Class</a></li><!--routerLink="/admin-addClass"-->
+          <li><a (click)="allClasses()">All Classes</a></li> <!--routerLink="/admin-allClasses" -->
+          <li><a  (click)="addClass()">Add Class</a></li><!--routerLink="/admin-addClass"-->
         </ul>
       </li>
       <!-- memberhip -->
       <li class="dropdown">
         <a (click)="toggleDropdownMembership()">Membership</a>
         <ul class="dropdown-content" [class.show]="dropdownOpenMembership">
-          <li><a routerLink="/admin-membership">All Membership</a></li>
+          <li><a (click)="allMemberships()">All Membership</a></li> <!--routerLink="/admin-membership"-->
           <li><a routerLink="/admin-addMembership">Add Membership</a></li>
         </ul>
       </li>
@@ -35,13 +35,23 @@
         </ul>
       </li> -->
       <li><a (click)="traineeAttendance()"> Trainees Attendance</a></li>
-      <li><a routerLink="/admin-reports">Reports</a></li>
+      <li><a (click)="allReports()">Reports</a></li>
 
+      <li class="dropdown">
+        <a (click)="toggleDropdownEquipment()">Equipments</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenEquipment">
+          <li><a (click)="allEquipments()">Show Equipment</a></li>
+          <li><a routerLink="/admin-addEquipments">Add Equipment</a></li>
+        </ul>
+      </li>
 
-      <!-- <li><a routerLink="/equipment">Equipment</a></li>
-      <li><a routerLink="/trainee-attendance">Attendance</a></li>
-      <li><a routerLink="/trainee-showReport">Reports</a></li>
-      <li><a routerLink="/vouchers">Vouchers</a></li> -->
+      <li class="dropdown">
+        <a (click)="toggleDropdownExercise()">Exercises</a>
+        <ul class="dropdown-content" [class.show]="dropdownOpenExercise">
+          <li><a (click)="allExercises()">Show Exercise</a></li>
+          <li><a routerLink="/admin-addExersise">Add Exercise</a></li>
+        </ul>
+      </li>
     </ul>
   </nav>
 </div>

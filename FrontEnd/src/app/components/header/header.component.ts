@@ -38,30 +38,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
       this.loading = false;
       this.getRole();
     });
-
-    // this.authSubscription = this.authTokenService.isAuthenticated$.subscribe(
-    //   (isAuthenticated: boolean) => {
-    //     this.isLoggedIn = isAuthenticated;
-    //     console.log(isAuthenticated);
-    //     // Uncomment the following block if you want to fetch profile data when the user is logged in
-    //     if (this.isLoggedIn) {
-    //       /*
-    //       this._AuthService.getProfile().subscribe({
-    //         next: (response) => {
-    //           this.profileData = response;
-    //           if (this.profileData?.data) {
-    //             // Uncomment this if you want to navigate to the root to refresh the role-specific UI
-    //             // this.router.navigate(['/']);
-    //           }
-    //         },
-    //         error: (err) => {
-    //           console.error('Error fetching profile:', err);
-    //         },
-    //       });
-    //       */
-    //     }
-    //   }
-    // );
   }
 
   ngOnDestroy() {

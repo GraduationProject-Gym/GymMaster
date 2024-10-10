@@ -185,7 +185,7 @@ export class AdminAddClassComponent implements OnInit{
         next: (response) => {
           console.log(response);
           this.data = this.adminService.getSelectedData();
-          this.router.navigate(['/admin-addClass']);
+          window.location.href=this.router.serializeUrl(this.router.createUrlTree(['/admin-addClass']));//;this.router.navigate(['/']);
         },
         error: (error) => {
           console.log(error);

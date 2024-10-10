@@ -19,7 +19,7 @@ use App\Http\Controllers\ReportController;
 
 use App\Models\Attendance;
 
-Route::resource('schedules', ScheduleController::class);
+// Route::resource('schedules', ScheduleController::class);
 
 
 Route::get('/user', function (Request $request) {
@@ -49,19 +49,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('report', [ReviewController::class, 'report']);
     // trainees on one class
     // Route::post('trainees', [TraineeClassController::class, 'trainees']);
-    // show all trainee data
+    // show all trainee data in admin profile
     Route::get('/alltrainees', [AuthController::class, 'indexalltrainee']);
-    //show all trainer data
+    //show all trainer data in admin profile
     Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
     //update users data
     Route::put('/updateusers/{id}', [AuthController::class, 'update']);
-    Route::get('getUserRole', [AuthController::class, 'getUserRole']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
     // show all trainee data in admin profile
-    Route::get('/alltrainees', [AuthController::class, 'indexalltrainee']);
     //show all trainer datain admin profile
-    Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
 
     Route::get('/getClassTrainer', [GymClassController::class, 'getClassTrainer']);
 
@@ -73,6 +70,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Report
     Route::apiResource('reportRecommend', ReportController::class);
     Route::get('/reportTrainee', [ReviewController::class, 'reportTrainee']);
+    Route::get('/reportAdmin', [ReviewController::class, 'reportAdmin']);
+    Route::get('getUserRole', [AuthController::class, 'getUserRole']);
+
 });
 
 //reportTrainee
@@ -87,7 +87,7 @@ Route::apiResource('users', AuthController::class);
 Route::post('users/{id}', [AuthController::class, 'update']);
 // Route::post('users/{id}/delete', [AuthController::class, 'delete']);
 
-// membership
+// joinedClasses
 Route::post('trainee-class/joined-classes', [TraineeClassController::class, 'showJoinedClasses']);
 Route::get('trainee-class/joined-classes-trainers', [TraineeClassController::class, 'indexJoinedClassesTrainers']);
 Route::apiResource('trainee-class', TraineeClassController::class);
@@ -138,8 +138,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 //schedules
+Route::get('/schedules', [ScheduleController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
     Route::get('/schedules/{id}', [ScheduleController::class, 'show'])->name('schedules.show');
     Route::put('/schedules/{id}', [ScheduleController::class, 'update'])->name('schedules.update');

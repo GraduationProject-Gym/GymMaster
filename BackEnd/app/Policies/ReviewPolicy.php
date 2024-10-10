@@ -51,6 +51,11 @@ class ReviewPolicy
         return $user->role === "trainee";
 
     }
+    public function adminReports(User $user): bool
+    {
+        return $user->role === "admin";
+
+    }
 
     /**
      * Determine whether the user can restore the model.
