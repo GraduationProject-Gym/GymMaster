@@ -16,11 +16,13 @@
           <li class="nav-item mx-3 d-flex">
             <a class="nav-link" (click)="class()">Class</a>
           </li>
-          } @else if (isLoggedIn && (role === 'trainee' || role === 'trainer')){
+          }
+          @if (isLoggedIn && (role === 'trainee' || role === 'trainer')){
           <li class="nav-item mx-3 d-flex">
             <a class="nav-link" (click)="profile()">Profile</a>
           </li>
-          }@else if (isLoggedIn && role==='admin'){
+          }
+          @if (isLoggedIn && role==='admin'){
           <li class="nav-item mx-3 d-flex">
             <a class="nav-link" (click)="trainers()">Trainers</a>
           </li>

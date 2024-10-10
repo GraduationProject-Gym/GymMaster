@@ -30,46 +30,6 @@ export class DoReviewComponent implements OnInit {
 
   currentSlide: number = 0;
 
-
-  // trainers: any[] = [
-  //   {
-  //     name: 'SANDY SAMIR1',
-  //     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12',  comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIR2',
-  //     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12',comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIRnm3',
-  //     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '',  comment: '', rate: 0 },
-  //       { date: '',comment: '', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },  {
-  //     name: 'SANDY SAMIRww4',
-  //     image: '/10 Easy Yoga Poses To Alleviate Anxiety And Depression.jfif',
-  //     showReview: false,
-  //     Reviews: [
-  //       { date: '2024-09-10', comment: 'Great session!', rate: 5 },
-  //       { date: '2024-09-12', comment: 'Missed the class', rate: 0 }
-  //     ],
-  //     tempReview: { comment: '', rate: 1 }
-  //   },
-  // ];
   ngOnInit(): void {
     this.trainers = this.sidebarService.getSelectedData();
     console.log(this.trainers);
@@ -121,16 +81,7 @@ export class DoReviewComponent implements OnInit {
     trainer.showReview = !trainer.showReview;
   }
 
-  // addReview(trainer: any) {
-  //   const newReview = {
-  //     date: new Date().toISOString().split('T')[0],
-  //     attendens: 'Present',
-  //     comment: trainer.tempReview.comment,
-  //     rate: trainer.tempReview.rate
-  //   };
-  //   trainer.Reviews.push(newReview);
-  //   trainer.tempReview = { comment: '', rate: 1 };
-  // }
+ 
 
   addReview(userId: string | null, comment: string | null, rate: string | null) {
     let user_id: number = userId ? Number(userId) : 0;

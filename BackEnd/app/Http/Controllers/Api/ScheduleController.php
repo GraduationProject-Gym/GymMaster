@@ -15,7 +15,6 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', Schedule::class);
         $schedules = Schedule::with('gymclass', 'gymclass.trainer.user')->get();
         return response()->json($schedules, 200);
         // $schedules = Schedule::all();

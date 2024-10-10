@@ -19,6 +19,6 @@ export class ScheduleService {
   // Schedule services
   indexSchedules(): Observable<any> {
     const indexTraineesUrl = `${environment.domain}/schedules`;
-    return this.http.get(indexTraineesUrl, { headers: this.getHeaders() });
+    return this.http.get(indexTraineesUrl);
   }
 }

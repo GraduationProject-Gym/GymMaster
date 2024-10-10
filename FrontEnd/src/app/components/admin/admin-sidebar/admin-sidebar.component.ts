@@ -93,12 +93,13 @@ export class AdminSidebarComponent {
       next: (response) => {
         console.log(response);
         this.adminService.setSelectedData(response);
-        this.router.navigate(['/admin-addClass']);
+        window.location.href=this.router.serializeUrl(this.router.createUrlTree(['/admin-addClass']));//;this.router.navigate(['/']);
+
       },
       error: (error) => {
         console.log(error);
         if (error.status === 401) {
-          this.router.navigate(['/admin-addClass']);
+          this.router.navigate(['/login']);
           this.errorMessage = error.error?.message;
         } else if (error.status === 403) {
           this.errorMessage = error.error?.message;

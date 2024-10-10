@@ -32,7 +32,7 @@
                       <!-- Trainer details -->
                       <h5 class="card-title mb-3">{{ trainer.name }}</h5>
                       <p class="card-text"><strong>ID:</strong> {{ trainer.id }}</p>
-                      <p class="card-text"><strong>Class:</strong> {{ trainer.classes.name }}</p>
+                      <p class="card-text"><strong>Class:</strong> {{ trainer.classes?.name }}</p>
                       <!-- <p class="card-text"><strong>Classes:</strong> </p>
                       <ul>
                         <li *ngFor="let class of trainer.classes">

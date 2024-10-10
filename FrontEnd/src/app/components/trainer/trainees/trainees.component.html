@@ -8,7 +8,7 @@
             <ng-container *ngFor="let traineee of group">
               <div class="card shadow-lg col-md-4 col-lg-3">
                 <div class="card-img-wrapper">
-                  <img [src]="traineee.image" class="card-img" [alt]="traineee.name">
+                  <img [src]="traineee.srcImg" class="card-img" [alt]="traineee.name">
                 </div>
                 <div class="card-body">
                   <p class="card-text" style="display: none;" #userId>{{ traineee.user_id ? traineee.user_id : 0}}</p>

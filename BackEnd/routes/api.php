@@ -19,7 +19,7 @@ use App\Http\Controllers\ReportController;
 
 use App\Models\Attendance;
 
-Route::resource('schedules', ScheduleController::class);
+// Route::resource('schedules', ScheduleController::class);
 
 
 Route::get('/user', function (Request $request) {
@@ -55,7 +55,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/alltrainers', [AuthController::class, 'indexalltrainer']);
     //update users data
     Route::put('/updateusers/{id}', [AuthController::class, 'update']);
-    Route::get('getUserRole', [AuthController::class, 'getUserRole']);
     Route::get('showuserdata', [AuthController::class, 'showuserdata']);
     Route::get('trainees', [TraineeClassController::class, 'trainees']);
     // show all trainee data in admin profile
@@ -72,6 +71,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('reportRecommend', ReportController::class);
     Route::get('/reportTrainee', [ReviewController::class, 'reportTrainee']);
     Route::get('/reportAdmin', [ReviewController::class, 'reportAdmin']);
+    Route::get('getUserRole', [AuthController::class, 'getUserRole']);
 
 });
 
@@ -138,8 +138,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 //schedules
+Route::get('/schedules', [ScheduleController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/schedules', [ScheduleController::class, 'index'])->name('schedules.index');
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('schedules.store');
     Route::get('/schedules/{id}', [ScheduleController::class, 'show'])->name('schedules.show');
     Route::put('/schedules/{id}', [ScheduleController::class, 'update'])->name('schedules.update');
