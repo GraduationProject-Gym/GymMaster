@@ -396,7 +396,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        return ["message"=>$user];
+
+        // return ["message"=>$user];
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'email' => ['The provided email or password is incorrect.'],
